@@ -1,0 +1,121 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Blocked Accounts - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "primary": "#00193c",
+                    "secondary": "#4f55ae",
+                    "background": "#faf9fe",
+                    "on-surface": "#1a1b1f"
+                },
+                "fontFamily": {
+                    "manrope": ["Manrope", "sans-serif"]
+                }
+            }
+        }
+    }
+</script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Blocked Accounts</h1>
+        <div class="w-10 h-10 flex items-center justify-center">
+            <span class="material-symbols-outlined text-slate-400">add</span>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-6">
+        <p class="text-xs text-slate-500 text-center font-medium px-4 mb-4">You can unblock people here. They won't be notified when you block or unblock them.</p>
+        
+        <!-- Blocked List -->
+        <div class="space-y-4" id="blocked-list">
+            <!-- User 1 -->
+            <div class="flex items-center justify-between" id="block-user-1">
+                <div class="flex items-center gap-3">
+                    <img src="https://ui-avatars.com/api/?name=Jack&background=00193c&color=fff" class="w-12 h-12 rounded-full shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-sm text-slate-800">jack_smith99</h4>
+                        <p class="text-xs text-slate-500">Jack Smith</p>
+                    </div>
+                </div>
+                <button onclick="unblock('block-user-1')" class="px-4 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-slate-700 active:scale-95 transition-transform hover:bg-slate-50">Unblock</button>
+            </div>
+            
+            <!-- User 2 -->
+            <div class="flex items-center justify-between" id="block-user-2">
+                <div class="flex items-center gap-3">
+                    <img src="https://ui-avatars.com/api/?name=Emma&background=4f55ae&color=fff" class="w-12 h-12 rounded-full shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-sm text-slate-800">emma.watson</h4>
+                        <p class="text-xs text-slate-500">Emma Watson</p>
+                    </div>
+                </div>
+                <button onclick="unblock('block-user-2')" class="px-4 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-slate-700 active:scale-95 transition-transform hover:bg-slate-50">Unblock</button>
+            </div>
+        </div>
+        
+        <div id="empty-state" class="hidden flex-col items-center justify-center py-12 text-center">
+            <div class="w-16 h-16 bg-slate-100 text-slate-300 rounded-full flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-3xl">block</span>
+            </div>
+            <h3 class="font-bold text-slate-800 mb-1">No blocked accounts</h3>
+            <p class="text-xs text-slate-500">When you block someone, they will appear here.</p>
+        </div>
+    </main>
+
+    <!-- Modal for Unblocking -->
+    <div id="unblock-modal" class="fixed inset-0 z-[100] bg-primary/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-[320px] rounded-3xl p-6 shadow-2xl scale-95 transition-transform duration-300 flex flex-col items-center text-center" id="unblock-modal-content">
+            <h3 class="text-lg font-bold text-slate-800 mb-2">Unblock account?</h3>
+            <p class="text-sm text-slate-500 mb-6">They will now be able to see your posts, follow you, and message you. They won't be notified.</p>
+            <div class="w-full space-y-2 border-t border-slate-100 pt-4">
+                <button onclick="confirmUnblock()" class="w-full py-3 text-secondary font-bold active:bg-slate-50 rounded-xl transition-colors">Unblock</button>
+                <button onclick="closeModal()" class="w-full py-3 text-slate-500 font-bold active:bg-slate-50 rounded-xl transition-colors">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUserToUnblock = null;
+        const modal = document.getElementById('unblock-modal');
+        const modalContent = document.getElementById('unblock-modal-content');
+        
+        function unblock(id) {
+            currentUserToUnblock = id;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+            currentUserToUnblock = null;
+        }
+        
+        function confirmUnblock() {
+            if (currentUserToUnblock) {
+                const el = document.getElementById(currentUserToUnblock);
+                if (el) el.remove();
+                closeModal();
+                
+                // check if empty
+                if (document.getElementById('blocked-list').children.length === 0) {
+                    document.getElementById('empty-state').classList.remove('hidden');
+                    document.getElementById('empty-state').classList.add('flex');
+                }
+            }
+        }
+    </script>
+</body></html>

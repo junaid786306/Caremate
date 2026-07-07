@@ -1,0 +1,147 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Create Blog - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">close</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Create Blog</h1>
+        <button onclick="publishBlog()" class="text-primary font-bold text-sm px-4 py-2 hover:bg-slate-50 rounded-full transition-colors">Publish</button>
+    </header>
+
+    <main class="flex-1 p-6 max-w-2xl mx-auto w-full space-y-8">
+        <!-- Image Upload (full page width) -->
+        <div class="relative w-full aspect-[4/5] bg-slate-100 rounded-[32px] overflow-hidden border-2 border-dashed border-slate-200 flex flex-col items-center justify-center group cursor-pointer" onclick="document.getElementById('blog-image').click()">
+            <img id="image-preview" class="absolute inset-0 w-full h-full object-cover hidden">
+            <div id="upload-placeholder" class="flex flex-col items-center gap-3 text-slate-400 group-hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-5xl">add_a_photo</span>
+                <span class="font-bold text-sm uppercase tracking-widest">Add Featured Image</span>
+                <span class="text-xs text-slate-300">Tap to upload</span>
+            </div>
+            <input type="file" id="blog-image" accept="image/*" class="hidden" onchange="previewImage(this)">
+            <!-- Caption overlay when image is selected -->
+            <div id="caption-overlay" class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent hidden">
+                <input type="text" id="image-caption" placeholder="Add a caption..." class="w-full bg-transparent border-b border-white/50 text-white placeholder-white/60 text-sm focus:outline-none focus:border-white pb-1" onclick="event.stopPropagation()">
+            </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Blog Title</label>
+                <input type="text" placeholder="Enter an engaging title..." class="w-full text-3xl font-extrabold text-primary border-none focus:ring-0 placeholder:text-slate-200 p-0 bg-transparent">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Category</label>
+                <div id="category-row" class="flex gap-2 overflow-x-auto pb-1" style="scrollbar-width:none">
+                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Health</button>
+                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Lifestyle</button>
+                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Nutrition</button>
+                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Story</button>
+                    <button onclick="addCategory()" class="px-5 py-2 border-2 border-dashed border-slate-300 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0 flex items-center gap-1 hover:border-primary hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-sm">add</span> New
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Tags</label>
+                <div class="flex items-center gap-2 flex-wrap" id="tags-container">
+                    <button onclick="document.getElementById('tag-input').focus()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
+                        <span class="material-symbols-outlined text-slate-500">sell</span>
+                    </button>
+                    <input type="text" id="tag-input" placeholder="Add tag & press Enter" class="flex-1 min-w-[120px] text-sm text-slate-600 border border-slate-200 rounded-full px-4 py-2 focus:ring-2 focus:ring-primary/10 focus:outline-none" onkeydown="addTag(event)">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Content</label>
+                <textarea placeholder="Start writing your thoughts..." class="w-full min-h-[300px] text-lg text-slate-600 border-none focus:ring-0 placeholder:text-slate-200 p-0 bg-transparent leading-relaxed resize-none"></textarea>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                    document.getElementById('image-preview').classList.remove('hidden');
+                    document.getElementById('upload-placeholder').classList.add('hidden');
+                    document.getElementById('caption-overlay').classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function selectCategory(btn) {
+            document.querySelectorAll('#category-row button').forEach(b => {
+                b.className = 'px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
+            });
+            btn.className = 'px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
+        }
+
+        function addCategory() {
+            const name = prompt('Enter new category name:');
+            if (name && name.trim()) {
+                const row = document.getElementById('category-row');
+                const addBtn = row.querySelector('button:last-child');
+                const newBtn = document.createElement('button');
+                newBtn.onclick = function() { selectCategory(this); };
+                newBtn.className = 'px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
+                newBtn.textContent = name.trim().toUpperCase();
+                row.insertBefore(newBtn, addBtn);
+            }
+        }
+
+        function addTag(e) {
+            if (e.key === 'Enter' && e.target.value.trim()) {
+                const tag = e.target.value.trim();
+                const container = document.getElementById('tags-container');
+                const tagEl = document.createElement('span');
+                tagEl.className = 'px-3 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-bold flex items-center gap-1';
+                tagEl.innerHTML = `#${tag} <button onclick="this.parentElement.remove()" class="text-secondary/60 hover:text-red-500 ml-1">✕</button>`;
+                container.insertBefore(tagEl, e.target);
+                e.target.value = '';
+            }
+        }
+
+        function publishBlog() {
+            alert('Your blog post has been published successfully!');
+            window.location.href = 'community_hub.html';
+        }
+    </script>
+</body></html>

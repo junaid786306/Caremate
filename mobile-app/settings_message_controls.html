@@ -1,0 +1,108 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Message Controls - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Message Controls</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-8">
+
+        <!-- Info Banner -->
+        <div class="bg-secondary/5 border border-secondary/10 rounded-[24px] p-4 flex items-start gap-3">
+            <span class="material-symbols-outlined text-secondary mt-0.5" style="font-size:20px;">info</span>
+            <p class="text-xs text-slate-600 leading-relaxed">Control who can send you messages and add you to group conversations on Caremate.</p>
+        </div>
+
+        <section class="space-y-3">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Message Requests</h2>
+            <div class="bg-white rounded-[28px] overflow-hidden border border-slate-100 shadow-sm divide-y divide-slate-50">
+                <div class="p-5 flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-slate-800">Followers</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">People who follow you</p>
+                    </div>
+                    <select class="text-xs font-bold bg-primary/5 border border-primary/10 rounded-xl px-3 py-2 text-primary outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer">
+                        <option>Message Requests</option>
+                        <option>Don't receive</option>
+                    </select>
+                </div>
+                <div class="p-5 flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-slate-800">Others on Caremate</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">People you don't follow</p>
+                    </div>
+                    <select class="text-xs font-bold bg-primary/5 border border-primary/10 rounded-xl px-3 py-2 text-primary outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer">
+                        <option>Don't receive</option>
+                        <option>Message Requests</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Group Settings</h2>
+            <div class="bg-white rounded-[28px] overflow-hidden border border-slate-100 shadow-sm">
+                <div class="p-5 flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-slate-800">Who can add you to groups</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Control group invitations</p>
+                    </div>
+                    <select class="text-xs font-bold bg-primary/5 border border-primary/10 rounded-xl px-3 py-2 text-primary outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer">
+                        <option>Only people you follow</option>
+                        <option>Everyone</option>
+                        <option>No one</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Read Receipts</h2>
+            <div class="bg-white rounded-[28px] overflow-hidden border border-slate-100 shadow-sm">
+                <div class="p-5 flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-slate-800">Show Read Receipts</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Let others know when you've read</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </section>
+    </main>
+</body></html>

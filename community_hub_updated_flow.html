@@ -1,0 +1,328 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#7796d1",
+                        "surface-container-low": "#f4f3f8",
+                        "primary-fixed": "#d7e2ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-container": "#9aa0ff",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#43474f",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "background": "#faf9fe",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary-container": "#002d62",
+                        "outline-variant": "#c4c6d1",
+                        "surface-bright": "#faf9fe",
+                        "secondary": "#4f55ae",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-secondary-container": "#2d328b",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#2a2f32",
+                        "outline": "#747781",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-tint": "#3e5e95",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#00193c",
+                        "inverse-surface": "#2f3034",
+                        "on-primary-fixed": "#001b3f",
+                        "secondary-fixed": "#e0e0ff",
+                        "surface": "#faf9fe",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "surface-dim": "#dad9df",
+                        "on-background": "#1a1b1f",
+                        "on-surface": "#1a1b1f",
+                        "on-tertiary-container": "#92969a",
+                        "on-tertiary-fixed": "#171c1f",
+                        "tertiary": "#151a1d",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "primary-fixed-dim": "#abc7ff",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "on-secondary-fixed": "#02026b",
+                        "surface-container": "#eeedf2",
+                        "inverse-primary": "#abc7ff",
+                        "inverse-on-surface": "#f1f0f5",
+                        "surface-variant": "#e3e2e7",
+                        "on-primary-fixed-variant": "#24467c",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "stack-sm": "12px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "touch-target-min": "60px",
+                        "stack-lg": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                        "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                        "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}],
+                        "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen pb-[120px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-[72px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm border-b border-slate-200/50 dark:border-slate-800/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly senior woman with silver hair and warm eyes, wearing a soft pastel blue sweater." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC3Kj0NLFFYWILOTn036aDYWPpj8nN3BvuGZIVR9zFZMYXpx5Fa_EijyLgOSk1SXcZglyzPVY4REiXLSuxAUSECUzc2nnYm5sN-PTTJ2oW6-YNDxJDrpvGHvrIweXv5wTzUWexhddTYXXvCuYQI0fszm7R8_vUAC_Tea1cgOYVbavyA2QJvNwIQhCP_9EcONNDpCBcoZ0HS-tm8eTt60Aso1BaPUA2Rg0018c1Wqul5iW5hKazm9ySQrLAIdCdzr_sKC3eUWWiBiI">
+</div>
+<h1 class="font-manrope font-bold text-2xl tracking-tight text-blue-900 dark:text-blue-200">Community</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100/50 rounded-full transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="mt-[72px] px-margin-page py-stack-md space-y-stack-lg">
+<!-- Search Bar Section -->
+<section class="relative">
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded-full px-5 h-touch-target-min shadow-sm">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-body-md px-3 font-body-md" placeholder="Search people and profiles" type="text">
+<span class="material-symbols-outlined text-outline" data-icon="tune">tune</span>
+</div>
+</section>
+<!-- Stories Section -->
+<section class="space-y-stack-sm">
+<div class="flex gap-gutter overflow-x-auto hide-scrollbar -mx-margin-page px-margin-page py-2">
+<!-- My Story -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="relative">
+<div class="w-[72px] h-[72px] rounded-full p-[3px] bg-slate-200">
+<img class="w-full h-full rounded-full object-cover border-2 border-white" data-alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC3Kj0NLFFYWILOTn036aDYWPpj8nN3BvuGZIVR9zFZMYXpx5Fa_EijyLgOSk1SXcZglyzPVY4REiXLSuxAUSECUzc2nnYm5sN-PTTJ2oW6-YNDxJDrpvGHvrIweXv5wTzUWexhddTYXXvCuYQI0fszm7R8_vUAC_Tea1cgOYVbavyA2QJvNwIQhCP_9EcONNDpCBcoZ0HS-tm8eTt60Aso1BaPUA2Rg0018c1Wqul5iW5hKazm9ySQrLAIdCdzr_sKC3eUWWiBiI">
+</div>
+<div class="absolute bottom-0 right-0 w-6 h-6 bg-primary rounded-full border-2 border-white flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="add">add</span>
+</div>
+</div>
+<span class="text-[11px] font-medium text-outline">Your Story</span>
+</div>
+<!-- Story 1 -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="w-[72px] h-[72px] rounded-full p-[3px] bg-gradient-to-tr from-primary to-secondary-container">
+<img class="w-full h-full rounded-full object-cover border-2 border-white" data-alt="Dr. Arthur Pen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa4LCTSFzuRBAsqpaN7PfMYwtfwKEbY9ZZ_67exIpccP__AOXtPVOXLSxvMz1Dp4gQ2-IiT354hd0SdR2pMgjDxELjxYwBt8W1CdMhWuauAo6bt47KZxvnRMqqc_F8JthYoLZMgqkXvNkTzx3n2M-zGcPnugaiG2Xn-V_LNH4fUQtf7DPTG76kWsmbdS_8QaK-b9E7oO-5VQ9__9EZITj9qc0g0I9WpUpDVGQSdDwqPUdwWCzlTX9jod0mTbURdgRm8bR5nh-JOI0">
+</div>
+<span class="text-[11px] font-medium truncate w-[72px] text-center">Arthur</span>
+</div>
+<!-- Story 2 -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="w-[72px] h-[72px] rounded-full p-[3px] bg-gradient-to-tr from-primary to-secondary-container">
+<img class="w-full h-full rounded-full object-cover border-2 border-white" data-alt="Elena Sterling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUODff2fNTiXLQuH8S18wlqENjx1_vMG48jE8rFJdcs6uEOYNwZKVcJjY0KyJ0zduYV_N8-uxPEHYGU-IVsj0Vf-zMoEcgsfI7Y_wG5DDP6TXkacb4sYKrJu2Vzo8hm39-i-k7dtiicgw_0tzsQFGd03nConi-mHOrGcFAI3_pPGvVqPgEMavMZd5SzpSxp9kqDzufnD2ozzxDaH_KTZ9MtCe7YBieNHylJVpMEYFCJbp9b1NepFzZMxLe2fO0qUo5PeH0twdWs_k">
+</div>
+<span class="text-[11px] font-medium truncate w-[72px] text-center">Elena</span>
+</div>
+<!-- Story 3 -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="w-[72px] h-[72px] rounded-full p-[3px] bg-gradient-to-tr from-primary to-secondary-container">
+<img class="w-full h-full rounded-full object-cover border-2 border-white" data-alt="Marcus Vane" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLmgQRRo6SRJCwrKAP8-jp8e359jQcKx3Sbx3IX91rQp89uIcxfgOZEHo4aCZLB-53gjdJ5cYZ6z3W0pZC54x9rzOuAUHgk7X_fvQgLo1xcQhRggt_MEQg0WCeosK2WnsocEWgmDsq4I7Fk5KXhen0IL8q6fCmFmbjrMMY65kqSbF7xv54-JbdUoWwRGld0C1lxZEz7QjLDlJU4ewcg_tKdNB73QUZCTy0v8uxFzIeKApqbWLR1W7IT7VRFqkcGBd_VIGBDsGoJ2Y">
+</div>
+<span class="text-[11px] font-medium truncate w-[72px] text-center">Marcus</span>
+</div>
+<!-- Story 4 -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="w-[72px] h-[72px] rounded-full p-[3px] bg-gradient-to-tr from-primary to-secondary-container">
+<img class="w-full h-full rounded-full object-cover border-2 border-white" data-alt="Sarah Jenkins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA">
+</div>
+<span class="text-[11px] font-medium truncate w-[72px] text-center">Sarah</span>
+</div>
+</div>
+</section>
+<!-- Feed Section -->
+<section class="space-y-stack-lg">
+<!-- Post Card 1: Video/Vlog -->
+<article class="bg-white rounded-lg border border-outline-variant/30 overflow-hidden shadow-[0_8px_30px_rgba(0,45,98,0.06)]">
+<div class="p-stack-md flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Sarah Jenkins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA">
+<div>
+<h3 class="font-headline-md text-base">Sarah Jenkins</h3>
+<p class="text-xs text-outline">2 hours ago • Vlog</p>
+</div>
+</div>
+<button class="px-5 py-2 border-2 border-primary text-primary font-label-caps text-xs rounded-full hover:bg-primary-fixed transition-colors">FOLLOWING</button>
+</div>
+<div class="relative aspect-video w-full group">
+<img class="w-full h-full object-cover" data-alt="A serene morning yoga session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVcXllhQuVkjfkBd9E246FM7Tj9wJN9i7mATU3dxC9hXQCtjRzPfewhkUOXaaoqvyAHKnJOiJf90sCq9Jo7PzZGcKyU2HW61aBcXD_Bz8zWq1KYUOdqW35zSZuLAWnCc3IOt7V7oNbNwPAkI9NLLUmYHezLn5Pf_9-Uqyo2eVyzTtdL4hkpZ4yFwDxiU2RYTm75e5nZGV5tM0a6w2hIX2_WEtN1bSLY92a_PpF__qhLSNUME08_x55wd0d8lISlIkXkiADRPfC6rg">
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<div class="w-16 h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border border-white/40">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-stack-md space-y-stack-sm">
+<p class="text-body-md text-on-surface-variant">Starting my morning with gentle stretching. It's amazing how much more energy I have for the community walk later!</p>
+<div class="flex items-center gap-stack-md pt-2">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-label-caps text-sm">124</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-caps text-sm">18</span>
+</div>
+<div class="ml-auto">
+<span class="material-symbols-outlined text-outline" data-icon="bookmark">bookmark</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Repositioned Suggested for You Section -->
+<section class="space-y-stack-sm">
+<div class="flex justify-between items-center px-2">
+<h2 class="font-headline-md text-primary">Suggested for You</h2>
+<a href="suggestions.html" class="text-xs font-bold text-secondary tracking-wider uppercase hover:underline py-2 px-3 -mr-3 flex items-center justify-center">View All</a>
+</div>
+<div class="flex gap-gutter overflow-x-auto hide-scrollbar -mx-margin-page px-margin-page pb-2">
+<!-- Suggestion Card 1 -->
+<div class="flex-shrink-0 w-[160px] bg-white rounded-lg p-stack-sm border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,45,98,0.04)] text-center flex flex-col items-center">
+<img class="w-16 h-16 rounded-full object-cover mb-3" data-alt="Dr. Arthur Pen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa4LCTSFzuRBAsqpaN7PfMYwtfwKEbY9ZZ_67exIpccP__AOXtPVOXLSxvMz1Dp4gQ2-IiT354hd0SdR2pMgjDxELjxYwBt8W1CdMhWuauAo6bt47KZxvnRMqqc_F8JthYoLZMgqkXvNkTzx3n2M-zGcPnugaiG2Xn-V_LNH4fUQtf7DPTG76kWsmbdS_8QaK-b9E7oO-5VQ9__9EZITj9qc0g0I9WpUpDVGQSdDwqPUdwWCzlTX9jod0mTbURdgRm8bR5nh-JOI0">
+<p class="font-headline-md text-sm truncate w-full">Dr. Arthur Pen</p>
+<p class="text-xs text-outline mb-4">Wellness Coach</p>
+<button class="w-full bg-primary text-on-primary font-label-caps py-2 rounded-full text-[10px]">FOLLOW</button>
+</div>
+<!-- Suggestion Card 2 -->
+<div class="flex-shrink-0 w-[160px] bg-white rounded-lg p-stack-sm border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,45,98,0.04)] text-center flex flex-col items-center">
+<img class="w-16 h-16 rounded-full object-cover mb-3" data-alt="Elena Sterling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUODff2fNTiXLQuH8S18wlqENjx1_vMG48jE8rFJdcs6uEOYNwZKVcJjY0KyJ0zduYV_N8-uxPEHYGU-IVsj0Vf-zMoEcgsfI7Y_wG5DDP6TXkacb4sYKrJu2Vzo8hm39-i-k7dtiicgw_0tzsQFGd03nConi-mHOrGcFAI3_pPGvVqPgEMavMZd5SzpSxp9kqDzufnD2ozzxDaH_KTZ9MtCe7YBieNHylJVpMEYFCJbp9b1NepFzZMxLe2fO0qUo5PeH0twdWs_k">
+<p class="font-headline-md text-sm truncate w-full">Elena Sterling</p>
+<p class="text-xs text-outline mb-4">Daily Walker</p>
+<button class="w-full bg-secondary-container text-on-secondary-container font-label-caps py-2 rounded-full text-[10px]">FOLLOWING</button>
+</div>
+<!-- Suggestion Card 3 -->
+<div class="flex-shrink-0 w-[160px] bg-white rounded-lg p-stack-sm border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,45,98,0.04)] text-center flex flex-col items-center">
+<img class="w-16 h-16 rounded-full object-cover mb-3" data-alt="Marcus Vane" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLmgQRRo6SRJCwrKAP8-jp8e359jQcKx3Sbx3IX91rQp89uIcxfgOZEHo4aCZLB-53gjdJ5cYZ6z3W0pZC54x9rzOuAUHgk7X_fvQgLo1xcQhRggt_MEQg0WCeosK2WnsocEWgmDsq4I7Fk5KXhen0IL8q6fCmFmbjrMMY65kqSbF7xv54-JbdUoWwRGld0C1lxZEz7QjLDlJU4ewcg_tKdNB73QUZCTy0v8uxFzIeKApqbWLR1W7IT7VRFqkcGBd_VIGBDsGoJ2Y">
+<p class="font-headline-md text-sm truncate w-full">Marcus Vane</p>
+<p class="text-xs text-outline mb-4">Yoga Enthusiast</p>
+<button class="w-full bg-primary text-on-primary font-label-caps py-2 rounded-full text-[10px]">FOLLOW</button>
+</div>
+</div>
+</section>
+<!-- Post Card 2: Image -->
+<article class="bg-white rounded-lg border border-outline-variant/30 overflow-hidden shadow-[0_8px_30px_rgba(0,45,98,0.06)]">
+<div class="p-stack-md flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Dr. Arthur Pen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_xyDJlUZhNjHZC7VzGa9pfzcUVwjk75FeGKJOKZbegigHhaeRpyLA0NVHaFjSDhNltaVBBakKV9nip4A4RlD488B_ELwct6tQ1vlRKdaq5BrF3omcOdoaUrRsm9crAhB709BwJUBHzbfUXKIOuBKFIVe-0-IWPyF1rreeQwfhLQC4FyVQmRgIcw4sGPEq_KK12H_fN_09eyI-6ezys1IQhNK5Rv_XxQ0Y8t2OwJDQgIOsJErYYFgNqfbJVgbq_4zc9RqGgaMtzjs">
+<div>
+<h3 class="font-headline-md text-base">Dr. Arthur Pen</h3>
+<p class="text-xs text-outline">5 hours ago • Image</p>
+</div>
+</div>
+<button class="px-5 py-2 bg-primary text-on-primary font-label-caps text-xs rounded-full shadow-md active:scale-95 transition-transform">FOLLOW</button>
+</div>
+<div class="px-stack-md pb-stack-md">
+<p class="text-body-md text-on-surface-variant mb-stack-sm">The garden is looking wonderful this spring. A great place for our next mindfulness session.</p>
+<img class="w-full h-64 object-cover rounded-lg" data-alt="A lush community garden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYNqMj1n2wee8wlQi5gQMiYJ5b6yWZJHsSy91tT22mncbHZhp4gDoxF1g2oavGxN-mrGiDnf5GlK5belfT7RmpsidSQGfrSlyHRrbJkk0iy1bBhh5AOW2z9WA-66c73LGdOwmydY4hVJmJbnnHAB-Qwk6OO8QS7comD4RvsWnwruDfZ5NpouOpUafbrgbbBgCAVMFWHJjBD8wQse6kP8IZ9eoWnsC7rW3jcdbA_0xr2XrgUNSv0yp8jhn8DvLP1D209UEvTeScXcQ">
+</div>
+<div class="p-stack-md pt-0 flex items-center gap-stack-md">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-error" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-caps text-sm">89</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-caps text-sm">4</span>
+</div>
+</div>
+</article>
+</section>
+</main>
+<!-- Create Post Floating Action Button (FAB) Menu -->
+<div class="fixed right-6 bottom-[110px] flex flex-col items-end gap-3 z-50">
+<div class="flex flex-col gap-2 mb-2 items-end">
+<button class="flex items-center gap-3 bg-white px-4 py-2 rounded-full border border-outline-variant shadow-lg text-primary hover:bg-surface-container-low transition-all">
+<span class="font-label-caps text-xs">VIDEO</span>
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="videocam">videocam</span>
+</div>
+</button>
+<button class="flex items-center gap-3 bg-white px-4 py-2 rounded-full border border-outline-variant shadow-lg text-primary hover:bg-surface-container-low transition-all">
+<span class="font-label-caps text-xs">VLOG</span>
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="podcasts">podcasts</span>
+</div>
+</button>
+<button class="flex items-center gap-3 bg-white px-4 py-2 rounded-full border border-outline-variant shadow-lg text-primary hover:bg-surface-container-low transition-all">
+<span class="font-label-caps text-xs">IMAGE</span>
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="image">image</span>
+</div>
+</button>
+</div>
+<button class="w-[72px] h-[72px] rounded-full bg-primary-container text-on-primary-container shadow-[0_12px_40px_rgba(0,45,98,0.3)] flex items-center justify-center transition-transform active:scale-90">
+<span class="material-symbols-outlined text-4xl text-white" data-icon="add">add</span>
+</button>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 h-[88px] pb-safe bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl shadow-[0_-8px_30px_rgba(0,45,98,0.08)] border-t border-white/20">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-blue-50/50" href="home_dashboard.html">
+<span class="material-symbols-outlined" data-icon="home_health">home_health</span>
+<span class="font-manrope font-semibold text-[13px] tracking-wide">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 rounded-full px-5 py-2 scale-105" href="community_hub.html">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-manrope font-semibold text-[13px] tracking-wide">Community</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-blue-50/50" href="home_dashboard.html">
+<span class="material-symbols-outlined" data-icon="emergency_home">emergency_home</span>
+<span class="font-manrope font-semibold text-[13px] tracking-wide">Safety</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-blue-50/50" href="user_profile.html">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-manrope font-semibold text-[13px] tracking-wide">Profile</span>
+</a>
+</nav>
+</body></html>

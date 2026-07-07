@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Assistance - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: "#001b3f", secondary: "#4f55ae", "primary-fixed": "#d7e2ff" },
+                    fontFamily: { manrope: ["Manrope", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .typing span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4f55ae; animation: bounce 1.2s infinite; }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+        #messages { scroll-behavior: smooth; }
+        .msg-in { animation: slideIn 0.25s ease-out; }
+        @keyframes slideIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    </style>
+</head>
+<body class="bg-[#f0f4ff] font-manrope antialiased h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-xl border-b border-slate-200/60 px-4 h-[68px] flex items-center justify-between flex-shrink-0 shadow-sm relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors relative z-10">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+            <h1 class="font-bold text-base text-primary leading-tight">Scam Assistance</h1>
+            <p class="text-[10px] text-emerald-500 font-bold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block"></span> Online
+            </p>
+        </div>
+        <div class="w-10 h-10 relative z-10"></div>
+    </header>
+
+    <!-- Chat area -->
+    <div id="messages" class="flex-1 overflow-y-auto px-4 py-6 space-y-5">
+
+        <!-- Date divider -->
+        <div class="flex items-center gap-3">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Today</span>
+            <div class="flex-1 h-px bg-slate-200"></div>
+        </div>
+
+        <!-- Greeting message -->
+        <div class="flex gap-3 items-end msg-in">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center flex-shrink-0 shadow">
+                <span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">security</span>
+            </div>
+            <div class="max-w-[80%] space-y-1">
+                <div class="bg-white rounded-[20px] rounded-bl-sm px-4 py-3 shadow-sm border border-slate-100">
+                    <p class="text-sm text-slate-700 leading-relaxed">Good morning, Shreya! 🌸 I'm your Scam Assistance. I can help you track medications, answer health questions, check for scams, or just have a friendly chat. How are you feeling today?</p>
+                </div>
+                <p class="text-[10px] text-slate-400 ml-1">09:00 AM</p>
+            </div>
+        </div>
+
+        <!-- User message -->
+        <div class="flex flex-col items-end msg-in">
+            <div class="max-w-[80%] space-y-1">
+                <div class="bg-primary rounded-[20px] rounded-br-sm px-4 py-3 shadow-sm">
+                    <p class="text-sm text-white leading-relaxed">I feel good! Can you remind me when to take my Lisinopril?</p>
+                </div>
+                <p class="text-[10px] text-slate-400 mr-1 text-right">09:02 AM</p>
+            </div>
+        </div>
+
+        <!-- AI reply -->
+        <div class="flex gap-3 items-end msg-in">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center flex-shrink-0 shadow">
+                <span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">security</span>
+            </div>
+            <div class="max-w-[80%] space-y-1">
+                <div class="bg-white rounded-[20px] rounded-bl-sm px-4 py-3 shadow-sm border border-slate-100">
+                    <p class="text-sm text-slate-700 leading-relaxed">Of course! 💊 Your Lisinopril (10mg) is scheduled for <strong>8:00 AM with food</strong>. Since you're already up, please take it now if you haven't yet! Would you like me to set a daily reminder?</p>
+                </div>
+                <p class="text-[10px] text-slate-400 ml-1">09:02 AM</p>
+            </div>
+        </div>
+
+        <!-- Suggestion chips -->
+        <div class="flex gap-2 flex-wrap ml-11">
+            <button onclick="sendChip(this)" class="chip bg-white border border-secondary/30 text-secondary text-xs font-bold px-3 py-1.5 rounded-full hover:bg-secondary hover:text-white transition-all active:scale-95">Yes, set reminder</button>
+            <button onclick="sendChip(this)" class="chip bg-white border border-secondary/30 text-secondary text-xs font-bold px-3 py-1.5 rounded-full hover:bg-secondary hover:text-white transition-all active:scale-95">Check my medicines</button>
+            <button onclick="sendChip(this)" class="chip bg-white border border-secondary/30 text-secondary text-xs font-bold px-3 py-1.5 rounded-full hover:bg-secondary hover:text-white transition-all active:scale-95">Today's health tips</button>
+        </div>
+
+    </div>
+
+    <!-- Input -->
+    <div class="bg-white/90 backdrop-blur-xl border-t border-slate-200/50 px-4 py-3 pb-8 flex-shrink-0">
+        <div class="flex items-center gap-3">
+            <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition-colors">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+            <div class="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 flex items-center gap-2 focus-within:border-secondary transition-colors">
+                <input id="chat-input" type="text" placeholder="Ask Scam Assistance" class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder:text-slate-400" onkeydown="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()" class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center hover:opacity-90 active:scale-95 transition-all flex-shrink-0">
+                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">arrow_upward</span>
+                </button>
+            </div>
+            <button onclick="openVoiceMode()" class="w-10 h-10 flex items-center justify-center rounded-full bg-secondary text-white hover:opacity-90 active:scale-95 transition-all shadow-md">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Voice Mode Overlay -->
+    <div id="voice-overlay" class="fixed inset-0 bg-[#001b3f]/95 backdrop-blur-xl z-[100] flex flex-col opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Header -->
+        <div class="px-6 py-6 flex justify-between items-center flex-shrink-0">
+            <button onclick="closeVoiceMode()" class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings: 'FILL' 1;">security</span>
+                <span class="text-white font-bold text-sm">Scam Assistance</span>
+            </div>
+            <button class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">more_horiz</span>
+            </button>
+        </div>
+
+        <!-- Transcription Area -->
+        <div class="flex-1 flex flex-col justify-end px-8 pb-10 gap-6">
+            <p id="voice-user-text" class="text-white/60 text-xl font-medium text-right min-h-[32px] transition-all duration-300"></p>
+            <p id="voice-ai-text" class="text-white text-2xl font-bold min-h-[40px] leading-tight transition-all duration-300"></p>
+        </div>
+
+        <!-- Orb Area -->
+        <div class="h-[250px] flex items-center justify-center relative flex-shrink-0 mb-8">
+            <!-- Pulsing rings -->
+            <div id="orb-ring-1" class="absolute w-32 h-32 rounded-full bg-white/5 border border-white/20 scale-100 transition-all duration-300 ease-out"></div>
+            <div id="orb-ring-2" class="absolute w-32 h-32 rounded-full bg-white/10 scale-100 transition-all duration-500 ease-out"></div>
+            
+            <!-- Center Orb -->
+            <button onclick="toggleVoiceListening()" id="voice-orb" class="relative w-24 h-24 rounded-full bg-gradient-to-br from-white to-slate-200 shadow-[0_0_40px_rgba(255,255,255,0.3)] flex items-center justify-center transition-all duration-300 active:scale-90">
+                <div id="orb-inner" class="w-full h-full rounded-full bg-gradient-to-br from-[#abc7ff] to-[#4f55ae] opacity-20 absolute inset-0 transition-opacity duration-300"></div>
+            </button>
+        </div>
+        
+        <!-- Bottom Controls -->
+        <div class="flex justify-center gap-8 pb-12 flex-shrink-0">
+            <button class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">volume_up</span>
+            </button>
+            <button onclick="closeVoiceMode()" class="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center active:scale-90 transition-transform shadow-lg shadow-red-500/30">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+<script>
+// Chat Logic
+const replies = [
+    "I understand! Let me look into that for you. 😊 Your wellbeing is my top priority.",
+    "Great question! Based on your health profile, I'd recommend staying hydrated and taking a short 10-minute walk after meals.",
+    "I've noted that down. Would you like me to add this to your daily health log?",
+    "Your recent activity looks great! You've been consistent with your morning walks. Keep it up! 🌟",
+    "I'm checking that for you... According to your records, everything looks healthy. However, please consult Dr. Pen for detailed advice.",
+    "That's a fantastic habit! Consistency is key for senior wellness. You're doing amazing, Shreya! 🎉",
+    "I've set a reminder for that. You'll get a notification at the right time. Is there anything else I can help with?",
+];
+
+let replyIndex = 0;
+
+function scrollToBottom() {
+    const m = document.getElementById('messages');
+    m.scrollTop = m.scrollHeight;
+}
+
+function addMessage(text, isUser = true) {
+    const messages = document.getElementById('messages');
+    const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    
+    if (isUser) {
+        const el = document.createElement('div');
+        el.className = 'flex flex-col items-end msg-in';
+        el.innerHTML = `
+            <div class="max-w-[80%] space-y-1">
+                <div class="bg-primary rounded-[20px] rounded-br-sm px-4 py-3 shadow-sm">
+                    <p class="text-sm text-white leading-relaxed">${text}</p>
+                </div>
+                <p class="text-[10px] text-slate-400 mr-1 text-right">${time}</p>
+            </div>`;
+        messages.appendChild(el);
+    } else {
+        const el = document.createElement('div');
+        el.className = 'flex gap-3 items-end msg-in';
+        el.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center flex-shrink-0 shadow">
+                <span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">security</span>
+            </div>
+            <div class="max-w-[80%] space-y-1">
+                <div class="bg-white rounded-[20px] rounded-bl-sm px-4 py-3 shadow-sm border border-slate-100">
+                    <p class="text-sm text-slate-700 leading-relaxed">${text}</p>
+                </div>
+                <p class="text-[10px] text-slate-400 ml-1">${time}</p>
+            </div>`;
+        messages.appendChild(el);
+    }
+    scrollToBottom();
+}
+
+function showTyping() {
+    const messages = document.getElementById('messages');
+    const el = document.createElement('div');
+    el.id = 'typing-indicator';
+    el.className = 'flex gap-3 items-end msg-in';
+    el.innerHTML = `
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center flex-shrink-0 shadow">
+            <span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">security</span>
+        </div>
+        <div class="bg-white rounded-[20px] rounded-bl-sm px-4 py-3 shadow-sm border border-slate-100">
+            <div class="typing flex gap-1.5 items-center h-5"><span></span><span></span><span></span></div>
+        </div>`;
+    messages.appendChild(el);
+    scrollToBottom();
+}
+
+function hideTyping() {
+    const t = document.getElementById('typing-indicator');
+    if (t) t.remove();
+}
+
+function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    addMessage(text, true);
+
+    showTyping();
+    setTimeout(() => {
+        hideTyping();
+        const reply = replies[replyIndex % replies.length];
+        replyIndex++;
+        addMessage(reply, false);
+    }, 1200 + Math.random() * 800);
+}
+
+function sendChip(btn) {
+    addMessage(btn.textContent, true);
+    btn.closest('.flex').remove();
+    showTyping();
+    setTimeout(() => {
+        hideTyping();
+        const reply = replies[replyIndex % replies.length];
+        replyIndex++;
+        addMessage(reply, false);
+    }, 1200 + Math.random() * 600);
+}
+
+scrollToBottom();
+
+// Voice Mode Logic
+let voiceState = 'idle'; // idle, listening, thinking, speaking
+let voiceInterval = null;
+let aiTypeTimeout = null;
+
+function openVoiceMode() {
+    const overlay = document.getElementById('voice-overlay');
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    document.getElementById('voice-user-text').textContent = '';
+    document.getElementById('voice-ai-text').textContent = 'Listening...';
+    startListeningAnim();
+}
+
+function closeVoiceMode() {
+    const overlay = document.getElementById('voice-overlay');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+    stopVoiceAnim();
+    if (aiTypeTimeout) clearTimeout(aiTypeTimeout);
+}
+
+function startListeningAnim() {
+    voiceState = 'listening';
+    const orbOuter = document.getElementById('voice-orb');
+    const ring1 = document.getElementById('orb-ring-1');
+    const ring2 = document.getElementById('orb-ring-2');
+    const inner = document.getElementById('orb-inner');
+    
+    inner.classList.replace('opacity-80', 'opacity-20');
+    
+    let tick = 0;
+    if(voiceInterval) clearInterval(voiceInterval);
+    voiceInterval = setInterval(() => {
+        tick++;
+        // Random subtle pulsing for listening
+        const scale1 = 1 + (Math.sin(tick * 0.5) * 0.1);
+        const scale2 = 1.2 + (Math.sin(tick * 0.3) * 0.15);
+        ring1.style.transform = `scale(${scale1})`;
+        ring2.style.transform = `scale(${scale2})`;
+        
+        // After 3 seconds of listening, simulate speech transcription
+        if (tick === 30) {
+            document.getElementById('voice-user-text').textContent = "How are you doing today?";
+            document.getElementById('voice-ai-text').textContent = '';
+        }
+        
+        // After 4.5 seconds, start thinking
+        if (tick === 45) {
+            startThinkingAnim();
+        }
+    }, 100);
+}
+
+function startThinkingAnim() {
+    voiceState = 'thinking';
+    if(voiceInterval) clearInterval(voiceInterval);
+    
+    const ring1 = document.getElementById('orb-ring-1');
+    const ring2 = document.getElementById('orb-ring-2');
+    const inner = document.getElementById('orb-inner');
+    
+    inner.classList.replace('opacity-20', 'opacity-80');
+    ring1.style.transform = 'scale(0.8)';
+    ring2.style.transform = 'scale(0.9)';
+    
+    setTimeout(() => {
+        startSpeakingAnim();
+    }, 1500);
+}
+
+function startSpeakingAnim() {
+    voiceState = 'speaking';
+    const reply = "I'm doing wonderful, thank you for asking! How can I assist you right now?";
+    
+    const ring1 = document.getElementById('orb-ring-1');
+    const ring2 = document.getElementById('orb-ring-2');
+    const aiText = document.getElementById('voice-ai-text');
+    
+    aiText.textContent = '';
+    let charIdx = 0;
+    
+    if(voiceInterval) clearInterval(voiceInterval);
+    let tick = 0;
+    voiceInterval = setInterval(() => {
+        tick++;
+        // Active speaking pulse
+        const scale1 = 1.3 + (Math.random() * 0.4);
+        const scale2 = 1.5 + (Math.random() * 0.6);
+        ring1.style.transform = `scale(${scale1})`;
+        ring2.style.transform = `scale(${scale2})`;
+    }, 100);
+    
+    function typeWriter() {
+        if (charIdx < reply.length && voiceState === 'speaking') {
+            aiText.textContent += reply.charAt(charIdx);
+            charIdx++;
+            aiTypeTimeout = setTimeout(typeWriter, 40);
+        } else if (charIdx >= reply.length) {
+            // Done speaking
+            setTimeout(() => {
+                document.getElementById('voice-user-text').textContent = '';
+                document.getElementById('voice-ai-text').textContent = 'Listening...';
+                startListeningAnim();
+            }, 2000);
+        }
+    }
+    typeWriter();
+}
+
+function stopVoiceAnim() {
+    if(voiceInterval) clearInterval(voiceInterval);
+    const ring1 = document.getElementById('orb-ring-1');
+    const ring2 = document.getElementById('orb-ring-2');
+    ring1.style.transform = 'scale(1)';
+    ring2.style.transform = 'scale(1)';
+}
+
+function toggleVoiceListening() {
+    if (voiceState === 'listening') {
+        startThinkingAnim();
+    } else {
+        document.getElementById('voice-user-text').textContent = '';
+        document.getElementById('voice-ai-text').textContent = 'Listening...';
+        startListeningAnim();
+    }
+}
+</script>
+<script src="./assistant-api.js" data-assistant="scam"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Notifications - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10 relative">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Notifications</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-4">
+        
+        <div class="flex justify-between items-center mb-2 px-2">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Recent Activity</span>
+            <button class="text-[10px] font-extrabold text-secondary uppercase tracking-widest hover:text-primary transition-colors">Mark All Read</button>
+        </div>
+
+        <!-- Notification: Senior Alert -->
+        <div class="bg-white rounded-[24px] p-5 shadow-sm border border-red-100 flex gap-4 items-start relative overflow-hidden">
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+            <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100 text-red-500">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-extrabold text-slate-800 text-sm">Issue with Senior</h3>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">10m ago</span>
+                </div>
+                <p class="text-xs text-slate-600 font-medium mt-1">Irregular heart rate detected. Please check on Mom.</p>
+            </div>
+        </div>
+
+        <!-- Notification: Payment Completed -->
+        <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex gap-4 items-start">
+            <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0 border border-green-100 text-green-600">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-extrabold text-slate-800 text-sm">Payment Completed</h3>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">1h ago</span>
+                </div>
+                <p class="text-xs text-slate-600 font-medium mt-1">Your payment for Plus Plan renewal was successful.</p>
+            </div>
+        </div>
+
+        <!-- Notification: Medication Completed -->
+        <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex gap-4 items-start">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-[#4f55ae]">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pill</span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-extrabold text-slate-800 text-sm">Medication Completed</h3>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">3h ago</span>
+                </div>
+                <p class="text-xs text-slate-600 font-medium mt-1">Mom has successfully taken her morning medication.</p>
+            </div>
+        </div>
+
+        <!-- Notification: Subscription Modified -->
+        <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex gap-4 items-start">
+            <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100 text-orange-500">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sync</span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-extrabold text-slate-800 text-sm">Subscription Modified</h3>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">5h ago</span>
+                </div>
+                <p class="text-xs text-slate-600 font-medium mt-1">You have requested a modification to your current plan (Pending).</p>
+            </div>
+        </div>
+
+        <!-- Notification: Medication Pending -->
+        <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex gap-4 items-start opacity-75">
+            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200 text-slate-500">
+                <span class="material-symbols-outlined">schedule</span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-slate-800 text-sm">Medication Pending</h3>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Yesterday</span>
+                </div>
+                <p class="text-xs text-slate-600 font-medium mt-1">Evening supplements are still pending to be taken.</p>
+            </div>
+        </div>
+
+        <!-- Notification: Activity Happened -->
+        <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex gap-4 items-start opacity-75">
+            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200 text-slate-500">
+                <span class="material-symbols-outlined">directions_walk</span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-slate-800 text-sm">Activity Update</h3>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Yesterday</span>
+                </div>
+                <p class="text-xs text-slate-600 font-medium mt-1">Mom completed her daily 10-minute walk.</p>
+            </div>
+        </div>
+        
+    </main>
+</body>
+</html>

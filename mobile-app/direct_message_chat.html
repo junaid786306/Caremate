@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Chat with Dr. Aris Thompson</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "on-surface-variant": "#43474f",
+                        "outline-variant": "#c4c6d1",
+                        "primary-container": "#002d62",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#f8f9fc] text-on-surface font-manrope antialiased h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-[100] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex justify-between items-center h-[80px]">
+        <div class="flex items-center gap-3">
+            <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+                <span class="material-symbols-outlined text-primary">arrow_back</span>
+            </button>
+            <a href="public_user_profile.html" class="flex items-center gap-3 active:scale-95 transition-transform">
+                <div class="relative">
+                    <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-primary/20 flex-shrink-0 bg-slate-100">
+                        <img class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aris">
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="font-bold text-sm text-primary tracking-tight truncate">Dr. Aris Thompson</h1>
+                    <span class="text-[11px] text-green-500 font-bold mt-0.5 tracking-wider uppercase">● Online</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="flex items-center gap-1">
+            <button class="w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-slate-100 transition-colors">
+                <span class="material-symbols-outlined text-[22px]">call</span>
+            </button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-slate-100 transition-colors">
+                <span class="material-symbols-outlined text-[22px]">videocam</span>
+            </button>
+            <div class="relative">
+                <button onclick="toggleChatMenu()" class="w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-slate-100 transition-colors">
+                    <span class="material-symbols-outlined text-[22px]">more_vert</span>
+                </button>
+                <!-- Dropdown Menu -->
+                <div id="chat-dropdown" class="absolute top-[120%] right-0 w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 overflow-hidden z-[200] hidden">
+                    <div class="py-2">
+                        <button onclick="chatAction('mute')" class="w-full px-5 py-3 flex items-center gap-3 text-left hover:bg-slate-50 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-100">
+                                <span class="material-symbols-outlined text-[18px]">notifications_off</span>
+                            </div>
+                            <span class="text-xs font-bold text-slate-700">Mute Notifications</span>
+                        </button>
+                        <button onclick="chatAction('block')" class="w-full px-5 py-3 flex items-center gap-3 text-left hover:bg-slate-50 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-100">
+                                <span class="material-symbols-outlined text-[18px]">block</span>
+                            </div>
+                            <span class="text-xs font-bold text-slate-700">Block User</span>
+                        </button>
+                        <div class="my-1 border-t border-slate-50"></div>
+                        <button onclick="chatAction('delete')" class="w-full px-5 py-3 flex items-center gap-3 text-left hover:bg-red-50 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-600 group-hover:bg-red-100">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </div>
+                            <span class="text-xs font-bold text-red-600">Delete Conversation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chat Messages -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6 flex flex-col">
+        <div class="text-center">
+            <span class="bg-white/50 px-4 py-1.5 rounded-full text-[10px] font-bold text-slate-400 uppercase tracking-widest border border-slate-100">Today</span>
+        </div>
+
+        <!-- Incoming -->
+        <div class="max-w-[85%] self-start space-y-2">
+            <div class="bg-white p-4 rounded-t-3xl rounded-br-3xl rounded-bl-lg shadow-sm border border-slate-100/50">
+                <p class="text-sm text-slate-600 leading-relaxed">Hello Sarah, I reviewed your latest heart rate readings. They look very stable!</p>
+            </div>
+            <p class="text-[10px] font-bold text-slate-300 ml-2">10:30 AM</p>
+        </div>
+
+        <div class="max-w-[85%] self-start space-y-2">
+            <div class="bg-white p-4 rounded-t-3xl rounded-br-3xl rounded-bl-lg shadow-sm border border-slate-100/50">
+                <p class="text-sm text-slate-600 leading-relaxed">Would you like to schedule a quick check-up call tomorrow morning?</p>
+            </div>
+            <p class="text-[10px] font-bold text-slate-300 ml-2">10:31 AM</p>
+        </div>
+
+        <!-- Outgoing -->
+        <div class="max-w-[85%] self-end space-y-2">
+            <div class="bg-[#00193c] p-4 rounded-t-3xl rounded-bl-3xl rounded-br-lg shadow-md">
+                <p class="text-sm text-white leading-relaxed">That sounds great, Doctor! 10:00 AM works for me.</p>
+            </div>
+            <p class="text-[10px] font-bold text-slate-300 text-right mr-2">10:35 AM</p>
+        </div>
+    </main>
+
+    <!-- Input Area -->
+    <footer class="bg-white p-4 pb-10 border-t border-slate-100 relative">
+        <div id="media-menu" class="absolute bottom-full left-4 mb-4 flex flex-col gap-2 opacity-0 translate-y-4 pointer-events-none transition-all duration-300">
+            <button onclick="document.getElementById('chat-image-upload').click()" class="bg-white px-6 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-primary">image</span>
+                <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Send Image</span>
+            </button>
+            <button onclick="document.getElementById('chat-video-upload').click()" class="bg-white px-6 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-primary">videocam</span>
+                <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Send Video</span>
+            </button>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button id="media-toggle" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-all">
+                <span id="plus-icon" class="material-symbols-outlined text-3xl">add</span>
+            </button>
+            <div class="flex-1 relative">
+                <input type="text" placeholder="Write your message..." class="w-full h-14 bg-slate-50 border-none rounded-2xl px-6 text-sm placeholder:text-slate-300 focus:ring-0 transition-all">
+            </div>
+            <button class="w-14 h-14 flex items-center justify-center rounded-full bg-[#00193c] text-white shadow-lg">
+                <span class="material-symbols-outlined text-2xl">send</span>
+            </button>
+        </div>
+
+        <input type="file" id="chat-image-upload" accept="image/*" class="hidden">
+        <input type="file" id="chat-video-upload" accept="video/*" class="hidden">
+
+        <script>
+            const toggle = document.getElementById('media-toggle');
+            const menu = document.getElementById('media-menu');
+            const icon = document.getElementById('plus-icon');
+            let isMenuOpen = false;
+
+            toggle.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    menu.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+                    icon.style.transform = 'rotate(45deg)';
+                    toggle.classList.add('bg-slate-200');
+                } else {
+                    menu.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                    icon.style.transform = 'rotate(0deg)';
+                    toggle.classList.remove('bg-slate-200');
+                }
+            });
+
+            document.getElementById('chat-image-upload').addEventListener('change', (e) => {
+                if(e.target.files.length > 0) alert('Sending image: ' + e.target.files[0].name);
+            });
+            document.getElementById('chat-video-upload').addEventListener('change', (e) => {
+                if(e.target.files.length > 0) alert('Sending video: ' + e.target.files[0].name);
+            });
+        </script>
+    </footer>
+    <script>
+        function toggleChatMenu() {
+            const dd = document.getElementById('chat-dropdown');
+            dd.classList.toggle('hidden');
+            // Close when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', function handler(e) {
+                    if (!dd.contains(e.target)) { dd.classList.add('hidden'); document.removeEventListener('click', handler); }
+                });
+            }, 50);
+        }
+        function chatAction(type) {
+            document.getElementById('chat-dropdown').classList.add('hidden');
+            if (type === 'delete') { if (confirm('Delete this entire chat conversation?')) history.back(); }
+            else if (type === 'mute') { alert('Chat muted. You will no longer receive notifications.'); }
+            else if (type === 'block') { if (confirm('Block this user? They will not be able to message you.')) history.back(); }
+        }
+    </script>
+</body>
+</html>

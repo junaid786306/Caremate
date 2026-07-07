@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Book Expert - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[120px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 flex justify-between items-center border-b border-slate-100 shadow-sm">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-lg tracking-tight">Booking Details</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        
+        <!-- Booking Summary -->
+        <div class="bg-white rounded-[32px] p-5 shadow-sm border border-slate-100 flex gap-4">
+            <div class="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-slate-100">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dr. Sarah Jenkins" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <h2 class="font-bold text-slate-800 text-lg">Dr. Sarah Jenkins</h2>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Clinical Nutrition</p>
+                <div class="mt-2 inline-block bg-blue-50 text-secondary text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md">
+                    ₹999 / Session
+                </div>
+            </div>
+        </div>
+
+        <!-- Verification Form -->
+        <div class="space-y-4">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Patient Details</h3>
+            <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-5">
+                
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Patient Name</label>
+                    <input type="text" value="Mom (Shreya)" class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-primary/20 outline-none font-bold text-sm text-slate-800 transition-all">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Patient ID / Guardian ID</label>
+                    <input type="text" value="GRD-9482" disabled class="w-full px-5 py-3.5 rounded-2xl bg-slate-50/50 border border-slate-100 outline-none font-bold text-sm text-slate-400 cursor-not-allowed">
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Verification (OTP) -->
+        <div class="space-y-4">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Security Verification</h3>
+            <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-5">
+                <p class="text-xs font-medium text-slate-500">Please verify your booking by entering the OTP sent to your registered phone number (+91 98765 *****).</p>
+                
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Enter OTP</label>
+                    <div class="flex gap-2">
+                        <input type="text" maxlength="1" class="w-12 h-14 text-center text-xl font-bold rounded-2xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-primary/20 outline-none">
+                        <input type="text" maxlength="1" class="w-12 h-14 text-center text-xl font-bold rounded-2xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-primary/20 outline-none">
+                        <input type="text" maxlength="1" class="w-12 h-14 text-center text-xl font-bold rounded-2xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-primary/20 outline-none">
+                        <input type="text" maxlength="1" class="w-12 h-14 text-center text-xl font-bold rounded-2xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-primary/20 outline-none">
+                    </div>
+                </div>
+                
+                <button class="text-xs font-bold text-secondary uppercase tracking-widest hover:text-primary transition-colors">Resend OTP</button>
+            </div>
+        </div>
+
+        <!-- Payment Option -->
+        <div class="space-y-4">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Payment Option</h3>
+            <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-4">
+                
+                <!-- Card Option -->
+                <label class="flex items-center gap-4 p-4 border border-primary rounded-2xl bg-blue-50/30 cursor-pointer">
+                    <input type="radio" name="payment" checked class="w-5 h-5 text-primary focus:ring-primary">
+                    <div class="flex-1">
+                        <p class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">credit_card</span>
+                            Credit / Debit Card
+                        </p>
+                        <p class="text-xs text-slate-500 mt-0.5">Visa ending in 4242</p>
+                    </div>
+                </label>
+
+                <!-- UPI Option -->
+                <label class="flex items-center gap-4 p-4 border border-slate-100 rounded-2xl hover:bg-slate-50 cursor-pointer transition-colors">
+                    <input type="radio" name="payment" class="w-5 h-5 text-primary focus:ring-primary">
+                    <div class="flex-1">
+                        <p class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">account_balance_wallet</span>
+                            UPI / Netbanking
+                        </p>
+                        <p class="text-xs text-slate-500 mt-0.5">Google Pay, PhonePe, Paytm</p>
+                    </div>
+                </label>
+
+            </div>
+        </div>
+
+        <button onclick="alert('Booking Confirmed! The expert will contact you shortly.')" class="w-full py-5 bg-primary text-white font-extrabold rounded-[24px] shadow-xl shadow-primary/20 active:scale-95 transition-transform mt-4 flex items-center justify-center gap-2">
+            Confirm & Pay ₹999
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+        
+    </main>
+
+</body>
+</html>

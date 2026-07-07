@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Caremate Signup</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f0f2f8] text-primary font-manrope antialiased min-h-screen flex flex-col items-center py-12 px-6">
+    <!-- Logo & Title -->
+    <div class="flex flex-col items-center gap-4 mb-10 text-center">
+        <div class="w-16 h-16 bg-[#001b3f] rounded-full flex items-center justify-center shadow-lg">
+            <span class="material-symbols-outlined text-white text-3xl">verified_user</span>
+        </div>
+        <div>
+            <h1 class="text-3xl font-extrabold tracking-tight">Caremate</h1>
+            <p class="text-slate-500 font-medium">Create your safety network</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="w-full bg-white rounded-[48px] p-8 shadow-2xl space-y-8 max-w-md">
+        <!-- Toggle Switch -->
+        <div class="bg-slate-100 p-1.5 rounded-full flex gap-2">
+            <a href="login.html" class="flex-1 py-3 text-center text-[11px] font-bold uppercase tracking-widest text-slate-500 rounded-full transition-all">Login</a>
+            <button class="flex-1 py-3 text-[11px] font-bold uppercase tracking-widest bg-white shadow-sm rounded-full transition-all">Sign Up</button>
+        </div>
+
+        <!-- Form Section: Senior Information -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-3 text-primary">
+                <span class="material-symbols-outlined text-xl">person</span>
+                <h2 class="font-bold">Senior Information</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Full Name</label>
+                    <input type="text" placeholder="e.g. Jane Doe" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Age</label>
+                    <input type="text" placeholder="e.g. 75" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Email</label>
+                    <input type="email" placeholder="senior@email.com" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Phone Number</label>
+                    <input type="text" placeholder="(555) 000-0000" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section: Guardian Information -->
+        <section class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 text-primary">
+                <span class="material-symbols-outlined text-xl">shield</span>
+                <h2 class="font-bold">Guardian Information</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Guardian Name</label>
+                    <input type="text" placeholder="e.g. John Smith" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Relationship</label>
+                    <select class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm text-slate-500 appearance-none">
+                        <option>Select relationship</option>
+                        <option>Son</option>
+                        <option>Daughter</option>
+                        <option>Spouse</option>
+                        <option>Professional Caregiver</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Guardian Email</label>
+                    <input type="email" placeholder="guardian@email.com" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Guardian Phone</label>
+                    <input type="text" placeholder="(555) 000-0000" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Guardian Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full h-14 px-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-300">
+                </div>
+            </div>
+        </section>
+
+        <!-- Submit Button -->
+        <div class="pt-6 text-center space-y-4">
+            <a href="home_dashboard.html" class="w-full h-16 bg-[#001b3f] text-white rounded-2xl flex items-center justify-center gap-3 shadow-xl active:scale-95 transition-all">
+                <span class="text-lg font-bold">Create Account</span>
+                <span class="material-symbols-outlined">person_add</span>
+            </a>
+            <p class="text-[10px] text-slate-400 font-medium leading-relaxed px-4">
+                By signing up, you agree to our <a href="#" class="text-[#4f55ae] underline decoration-dotted">Terms of Service</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

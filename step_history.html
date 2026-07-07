@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Step History - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+        .day-block{border-left:3px solid #e2e8f0;padding-left:20px;position:relative;}
+        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#3b82f6;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
+        .status-pill { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+        .status-pill:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .status-pill:active { transform: scale(0.97); }
+    </style>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-10">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Step History</h1>
+        <button onclick="toggleFilter()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors text-primary">
+            <span class="material-symbols-outlined">calendar_month</span>
+        </button>
+    </header>
+
+    <div id="filter-panel" class="hidden bg-white border-b border-slate-100 px-6 py-4">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Filter by Date Range</p>
+        <div class="flex gap-3">
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">From</label><input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:border-primary outline-none"></div>
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">To</label><input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:border-primary outline-none"></div>
+            <div class="flex items-end"><button onclick="toggleFilter()" class="h-10 px-4 bg-primary text-white rounded-xl text-sm font-bold active:scale-95">Apply</button></div>
+        </div>
+    </div>
+
+    <!-- Status Toast -->
+    <div id="status-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[400] opacity-0 pointer-events-none" style="transition: opacity 0.3s, transform 0.3s; transform: translateX(-50%) translateY(-10px);">
+        <div id="status-toast-inner" class="bg-[#0d1b2e] text-white rounded-2xl px-5 py-4 shadow-2xl min-w-[280px] max-w-[340px] text-sm font-semibold leading-relaxed"></div>
+    </div>
+    <div class="bg-white border-b border-slate-100 px-6 py-3 flex gap-3 overflow-x-auto hide-scrollbar">
+        <div id="filter-all" onclick="filterStatus('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary">
+            <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
+        </div>
+        <div id="filter-met" onclick="filterStatus('met')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-blue-50 border border-blue-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-[11px] font-extrabold text-blue-700 uppercase tracking-widest">Goal Met</span></div>
+        <div id="filter-missed" onclick="filterStatus('missed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-slate-50 border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-slate-400 rounded-full"></div><span class="text-[11px] font-extrabold text-slate-600 uppercase tracking-widest">Missed</span></div>
+    </div>
+
+    <main class="max-w-md mx-auto p-6">
+        <div id="timeline" class="space-y-8"></div>
+        <div id="load-more" class="mt-8 flex justify-center">
+            <button onclick="loadMore()" class="px-8 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-primary shadow-sm hover:bg-slate-50 active:scale-95">Load More</button>
+        </div>
+    </main>
+
+    <script>
+        const stepData = [
+            { date:"Today, 8 May", entries:[{steps:"4,520", dur:"45 min active", status:"missed", dist:"2.8 km", cals:"210"}]},
+            { date:"Yesterday, 7 May", entries:[{steps:"5,120", dur:"55 min active", status:"met", dist:"3.2 km", cals:"245"}]},
+            { date:"6 May", entries:[{steps:"6,050", dur:"1h 10m active", status:"met", dist:"3.8 km", cals:"300"}]},
+            { date:"5 May", entries:[{steps:"3,200", dur:"30 min active", status:"missed", dist:"1.9 km", cals:"140"}]},
+            { date:"4 May", entries:[{steps:"5,500", dur:"1h active", status:"met", dist:"3.5 km", cals:"260"}]},
+        ];
+        const moreDates=["3 May","2 May","1 May","30 Apr","29 Apr"];
+        let loadedExtra=0;
+        let currentFilter = 'all';
+
+        function renderDay(day) {
+            let filteredEntries = day.entries;
+            if (currentFilter !== 'all') {
+                filteredEntries = day.entries.filter(e => e.status === currentFilter);
+            }
+            if (filteredEntries.length === 0) return '';
+
+            const entries = filteredEntries.map(e=>`
+                <div class="flex items-start gap-4 p-4 rounded-2xl border ${e.status==='met'?'bg-blue-50 border-blue-100':'bg-white border-slate-100'} mb-2 last:mb-0 shadow-sm">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] flex-shrink-0 border border-slate-100">
+                        <span class="material-symbols-outlined ${e.status==='met'?'text-blue-500':'text-slate-400'} text-[24px]" style="font-variation-settings:'FILL' 1">directions_walk</span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center h-12">
+                        <div class="flex items-baseline gap-2 mb-0.5">
+                            <p class="font-display text-2xl font-black ${e.status==='met'?'text-blue-700':'text-slate-700'}">${e.steps}</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Steps</span>
+                        </div>
+                        <p class="text-[11px] font-semibold text-slate-500">${e.dist} · ${e.cals} kcal · ${e.dur}</p>
+                    </div>
+                    <div class="h-12 flex items-center">
+                        <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider ${e.status==='met'?'bg-blue-100 text-blue-600':'bg-slate-100 text-slate-500'}">${e.status}</span>
+                    </div>
+                </div>
+            `).join('');
+            return `<div class="day-block"><h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">${day.date}</h3>${entries}</div>`;
+        }
+
+        function loadTimeline() {
+            const container = document.getElementById('timeline');
+            container.innerHTML = stepData.map(renderDay).join('');
+            if(container.innerHTML === '') container.innerHTML = '<p class="text-center text-sm font-bold text-slate-400 mt-10">No records found for this filter.</p>';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('status-toast');
+            document.getElementById('status-toast-inner').innerHTML = msg;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            setTimeout(()=>{
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(-10px)';
+            }, 2000);
+        }
+
+        function filterStatus(status) {
+            currentFilter = status;
+            document.querySelectorAll('.status-pill').forEach(el => el.style.opacity = '0.5');
+            document.querySelectorAll('.status-pill').forEach(el => el.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
+            const activeEl = document.getElementById(`filter-${status}`);
+            if (activeEl) {
+                activeEl.style.opacity = '1';
+                activeEl.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
+            }
+            showToast(status === 'all' ? 'Showing all records' : `Filtered by: ${status}`);
+            loadTimeline();
+        }
+
+        function toggleFilter() {
+            const p = document.getElementById('filter-panel');
+            p.classList.toggle('hidden');
+        }
+
+        function loadMore() {
+            if(loadedExtra >= moreDates.length) {
+                document.getElementById('load-more').innerHTML = '<p class="text-xs font-bold text-slate-400">All caught up!</p>';
+                return;
+            }
+            const date = moreDates[loadedExtra];
+            const randSteps = Math.floor(Math.random() * 3000) + 3000;
+            const isMet = randSteps >= 5000;
+            stepData.push({
+                date: date,
+                entries: [{
+                    steps: randSteps.toLocaleString(),
+                    dur: Math.floor(randSteps / 100) + " min active",
+                    status: isMet ? "met" : "missed",
+                    dist: (randSteps * 0.0007).toFixed(1) + " km",
+                    cals: Math.floor(randSteps * 0.04)
+                }]
+            });
+            loadedExtra++;
+            loadTimeline();
+        }
+
+        loadTimeline();
+    </script>
+</body>
+</html>
+

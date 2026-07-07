@@ -1,0 +1,107 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Live Tracking Detail</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-fixed": "#d6e3ff", "tertiary-container": "#bd5700", "on-error-container": "#93000a", tertiary: "#964400", "inverse-primary": "#aac7ff", "on-primary-container": "#fefcff", "on-primary-fixed-variant": "#00458d", "on-tertiary-fixed": "#321200", "primary-fixed-dim": "#aac7ff", "on-error": "#ffffff", "on-secondary-container": "#3f5881", "error-container": "#ffdad6", "inverse-surface": "#2d3037", "primary-container": "#0a73e0", "tertiary-fixed-dim": "#ffb68c", "primary-fixed": "#d6e3ff", surface: "#f9f9ff", "tertiary-fixed": "#ffdbc9", "on-tertiary-container": "#fffbff", "on-tertiary": "#ffffff", background: "#f9f9ff", "surface-container-highest": "#e0e2eb", "surface-bright": "#f9f9ff", "outline-variant": "#c1c6d5", "surface-container-high": "#e6e8f1", "on-background": "#181c22", "on-secondary-fixed-variant": "#2d476f", "secondary-container": "#b6d0ff", "on-secondary": "#ffffff", error: "#ba1a1a", "surface-variant": "#e0e2eb", secondary: "#465f88", "surface-dim": "#d7dae3", "on-secondary-fixed": "#001b3d", "inverse-on-surface": "#eef0fa", "on-tertiary-fixed-variant": "#763400", primary: "#005ab4", "secondary-fixed-dim": "#aec7f7", "surface-tint": "#005db8", "surface-container": "#ebedf7", "surface-container-low": "#f1f3fc", outline: "#717785", "on-surface-variant": "#414753", "on-primary-fixed": "#001b3e", "surface-container-lowest": "#ffffff", "on-surface": "#181c22", "on-primary": "#ffffff"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {xs: "4px", gutter: "16px", unit: "8px", xl: "32px", "container-margin": "16px", lg: "24px", md: "16px", sm: "8px", base: "8px", margin: "24px"}, fontFamily: {"body-base": ["Inter"], "label-caps": ["Inter"], "body-sm": ["Inter"], "display-lg": ["Manrope"], "headline-md": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "label-md": ["Inter"]}, fontSize: {"body-base": ["17px", {lineHeight: "22px", letterSpacing: "-0.4px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.5px", fontWeight: "600"}], "body-sm": ["15px", {lineHeight: "20px", letterSpacing: "-0.2px", fontWeight: "400"}], "display-lg": ["34px", {lineHeight: "41px", letterSpacing: "-0.4px", fontWeight: "700"}], "headline-md": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", fontWeight: "700"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.5px", fontWeight: "500"}]}}}};</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="relative w-full h-screen overflow-hidden bg-surface text-on-surface font-body-base">
+<!-- Full Screen Map Layer -->
+<div class="absolute inset-0 w-full h-full bg-surface-container z-0" data-alt="A clean, minimalist, light-mode digital street map interface viewing from top-down. The map features soft gray roads, subtle beige landmasses, and light blue waterways, adhering to a premium, iOS-native corporate aesthetic. No text or labels are visible, providing a calm, uncluttered backdrop for tracking elements that evokes trust and clarity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZrz079bHt4Uty2ToFyxfYJ2IDK9UF3_ZS_wL1lP9HcgO4I-EsFbH359J-6TAarL_urq9QzwEwXH7QULO9x8nu69Pwhxldx-Rxc3LztgQSEAkWxQZi-fgWV-KeY78af2cnr2ASsdVKzoyp8JCBlkan4tobcsM9KEm8rNuEnKgoxjcEvpNCv4fc3qcakF5rfblrvznD-PvSu6JV1yneUa60nrGCS9ZscemvrXcHvx_g9pwSakM-4Q23mVVd2Q_E5Zjc__guKR3G7dI'); background-size: cover; background-position: center;">
+</div>
+<!-- Geofence & Subject Marker Overlay -->
+<div class="absolute top-[35%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+<!-- Safe Zone Geofence -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-secondary/10 border-[1.5px] border-secondary/30 border-dashed"></div>
+<!-- Subject Avatar Marker -->
+<div class="relative z-20 flex flex-col items-center">
+<!-- Ripple Effect Rings -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary-fixed/20"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-primary-fixed/30"></div>
+<!-- Avatar Pin -->
+<div class="w-16 h-16 rounded-full border-[3px] border-surface-container-lowest shadow-lg overflow-hidden relative bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young woman named Shreya, serving as a map avatar. She has dark hair, a warm smile, and is set against a bright, modern background that aligns with the app's clean, trustworthy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6KrpYnNust07eJbyebU-4V1Dt2Xe7lFzl-UzKEB81J8D3flMQooagRz_5x7kHDobUtXwKfYfQ5hK8uI0ZjfaJ9XByFzPMUSGT7NVsKjTZHCNDbBk4xFDysfydoK_-2EUpNYAMT8_4RZZHchAkY77jYyV-5bUcj0Njrv3BNWV7XFZPOuiiXM9nWHLEn-Hrk2oPrRaPqUHOVhOYVeDuWQ9_Fzg-9B-sqR2RlW9NVkzFs2zlhd4kRgx_4u2IxdtnKt4c2eu9mrWgiuA">
+</div>
+<!-- Status indicator dot on avatar -->
+<div class="absolute bottom-0 right-1 w-4 h-4 rounded-full bg-[#34C759] border-2 border-surface-container-lowest shadow-sm"></div>
+</div>
+</div>
+<!-- Top Floating Controls -->
+<div class="absolute top-0 left-0 w-full p-container-margin pt-12 flex justify-between items-start z-30 pointer-events-none">
+<!-- Back Action (Task departure intent) -->
+<a href="javascript:history.back()" class="w-12 h-12 rounded-full bg-surface-container-lowest/80 backdrop-blur-xl shadow-sm border border-outline-variant/30 flex items-center justify-center pointer-events-auto text-on-surface transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</a>
+<!-- Alerts Toggle -->
+<button class="h-12 px-5 rounded-full bg-primary-container/95 backdrop-blur-xl shadow-sm border border-primary-container/20 flex items-center gap-2 pointer-events-auto text-on-primary-container transition-opacity">
+<span class="material-symbols-outlined text-inverse-primary" data-icon="notifications_active" data-weight="fill" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+<span class="font-label-caps text-label-caps tracking-wide">Alerts Active</span>
+</button>
+</div>
+<!-- Floating Action Button (Recenter Context) -->
+<div class="absolute right-container-margin bottom-[310px] z-30">
+<button class="w-[52px] h-[52px] rounded-full bg-surface-container-lowest/90 backdrop-blur-2xl shadow-lg border border-outline-variant/20 flex items-center justify-center text-primary transition-transform">
+<span class="material-symbols-outlined" data-icon="my_location">my_location</span>
+</button>
+</div>
+<!-- Bottom Sheet (Glassmorphism Native Style) -->
+<div class="absolute bottom-0 left-0 w-full bg-surface-container-lowest/85 backdrop-blur-[40px] border-t border-outline-variant/20 shadow-[0_-12px_40px_rgba(0,0,0,0.08)] rounded-t-[36px] z-40 pb-10 pt-3 px-container-margin">
+<!-- Drag Handle Indicator -->
+<div class="w-full flex justify-center mb-6">
+<div class="w-10 h-[5px] rounded-full bg-outline-variant/60"></div>
+</div>
+<div class="flex flex-col gap-lg">
+<!-- Header Section -->
+<div class="flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Shreya's Status</h2>
+<div class="px-3 py-1.5 bg-surface-container-low rounded-full font-label-caps text-label-caps border border-outline-variant/30 flex items-center gap-1.5 text-on-surface-variant">
+<div class="w-2 h-2 rounded-full bg-[#34C759]"></div> Live
+                </div>
+</div>
+<!-- Detail Grid (Bento Pattern) -->
+<div class="grid grid-cols-3 gap-unit">
+<!-- Last Seen -->
+<div class="bg-surface/60 rounded-2xl p-3 flex flex-col items-center justify-center text-center border border-outline-variant/20 shadow-sm">
+<span class="material-symbols-outlined text-outline mb-1.5 text-[20px]" data-icon="schedule">schedule</span>
+<span class="font-label-caps text-label-caps text-outline mb-0.5 uppercase tracking-wider">Last Seen</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold">2 mins ago</span>
+</div>
+<!-- Battery -->
+<div class="bg-surface/60 rounded-2xl p-3 flex flex-col items-center justify-center text-center border border-outline-variant/20 shadow-sm">
+<span class="material-symbols-outlined text-[#34C759] mb-1.5 text-[20px]" data-icon="battery_5_bar" data-weight="fill" style="font-variation-settings: 'FILL' 1;">battery_5_bar</span>
+<span class="font-label-caps text-label-caps text-outline mb-0.5 uppercase tracking-wider">Battery</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold">85%</span>
+</div>
+<!-- Movement -->
+<div class="bg-surface/60 rounded-2xl p-3 flex flex-col items-center justify-center text-center border border-outline-variant/20 shadow-sm">
+<span class="material-symbols-outlined text-secondary mb-1.5 text-[20px]" data-icon="directions_walk">directions_walk</span>
+<span class="font-label-caps text-label-caps text-outline mb-0.5 uppercase tracking-wider">Movement</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold">Walking</span>
+</div>
+</div>
+<!-- Primary CTA -->
+<button class="w-full h-14 bg-[#007AFF] text-white rounded-xl flex items-center justify-center gap-2 font-body-base text-body-base font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="navigation" data-weight="fill" style="font-variation-settings: 'FILL' 1;">navigation</span>
+                Navigate to Location
+            </button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Community Post - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "on-surface-variant": "#43474f",
+                        "outline-variant": "#c4c6d1",
+                        "primary-container": "#002d62",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-variant": "#e3e2e7",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f4f3f8",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-[120px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-lg text-primary">Post Detail</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        <!-- Post Content -->
+        <div class="glass-card rounded-[32px] overflow-hidden shadow-sm border border-white/50">
+            <!-- Author Header -->
+            <div class="p-5 flex items-center gap-3">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah" class="w-12 h-12 rounded-full border-2 border-white shadow-sm">
+                <div>
+                    <h3 class="font-bold text-slate-800">Sarah Jenkins</h3>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">2 hours ago</p>
+                </div>
+            </div>
+
+            <!-- Post Text -->
+            <div class="px-5 pb-4">
+                <p class="text-slate-600 font-medium leading-relaxed">The Power of Mindful Walking. I took a 20-minute walk this morning without my phone, and the difference in my mood is incredible. Highly recommend to everyone in the community! 🌿✨</p>
+            </div>
+
+            <!-- Post Media -->
+            <div class="w-full h-64 bg-slate-100">
+                <img src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070&auto=format&fit=crop" alt="Walking" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Stats -->
+            <div class="px-5 py-3 flex items-center justify-between border-t border-white/30">
+                <div class="flex items-center -space-x-2">
+                    <div class="w-6 h-6 rounded-full bg-pink-500 border-2 border-white flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[10px] text-white" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    </div>
+                    <div class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[10px] text-white" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+                    </div>
+                    <span class="ml-4 text-[11px] font-bold text-slate-400">84 people liked this</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-400">12 Comments</span>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="space-y-4 pb-12">
+            <h3 class="font-bold text-primary text-sm uppercase tracking-widest px-2">Comments</h3>
+            
+            <!-- Comment 1 -->
+            <div class="flex gap-3">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" alt="Arthur" class="w-9 h-9 rounded-full">
+                <div class="flex-1 bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100">
+                    <p class="font-bold text-slate-800 text-xs mb-1">Dr. Arthur</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">This is excellent advice, Sarah. Mindful movement is proven to reduce cortisol levels significantly.</p>
+                </div>
+            </div>
+
+            <!-- Comment 2 -->
+            <div class="flex gap-3">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" alt="Elena" class="w-9 h-9 rounded-full">
+                <div class="flex-1 bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100">
+                    <p class="font-bold text-slate-800 text-xs mb-1">Elena S.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">I'll try this tomorrow! Which park was this at?</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Post Comment Input (Fixed) -->
+    <div class="fixed bottom-[100px] left-0 w-full px-6 py-4 bg-white/80 backdrop-blur-xl border-t border-slate-100">
+        <div class="max-w-md mx-auto flex gap-3">
+            <input type="text" placeholder="Write a comment..." class="flex-1 h-12 px-5 bg-slate-100 border-none rounded-full focus:ring-2 focus:ring-secondary/20 text-sm font-medium">
+            <button class="w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-all">
+                <span class="material-symbols-outlined">send</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="home_dashboard.html">
+            <span class="material-symbols-outlined text-[26px]">home</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="wellness_exercises.html">
+            <span class="material-symbols-outlined text-[26px]">directions_run</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="health_summary.html">
+            <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="community_hub.html">
+            <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">group</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest text-primary">Community</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="user_profile.html">
+            <span class="material-symbols-outlined text-[26px]">person</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+        </a>
+    </nav>
+</body>
+</html>

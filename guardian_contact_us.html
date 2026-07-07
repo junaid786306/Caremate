@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Contact Us - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 flex justify-between items-center border-b border-slate-100 shadow-sm">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-lg tracking-tight">Contact Us</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        <!-- Support Methods -->
+        <div class="space-y-4">
+            <h2 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">How can we help?</h2>
+            
+            <a href="tel:+18001234567" class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex items-center gap-4 hover:border-slate-300 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-blue-50 text-secondary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-slate-800 text-base">Call Support</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Available 24/7 for emergencies</p>
+                </div>
+            </a>
+
+            <a href="mailto:support@caremate.com" class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex items-center gap-4 hover:border-slate-300 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-blue-50 text-secondary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mail</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-slate-800 text-base">Email Us</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">We'll respond within 24 hours</p>
+                </div>
+            </a>
+
+            <a href="#" class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex items-center gap-4 hover:border-slate-300 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-blue-50 text-secondary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-slate-800 text-base">Live Chat</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Talk to a representative now</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 mt-8 space-y-4">
+            <h3 class="font-extrabold text-slate-800 text-lg">Send a Message</h3>
+            
+            <div class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Subject</label>
+                    <input type="text" placeholder="What is this regarding?" class="w-full bg-slate-50 px-4 py-3 rounded-2xl border-none outline-none font-medium text-sm text-slate-800 focus:ring-2 focus:ring-primary/20">
+                </div>
+                
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Message</label>
+                    <textarea rows="4" placeholder="Describe your issue..." class="w-full bg-slate-50 px-4 py-3 rounded-2xl border-none outline-none font-medium text-sm text-slate-800 focus:ring-2 focus:ring-primary/20"></textarea>
+                </div>
+
+                <button class="w-full bg-primary text-white font-extrabold py-4 rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-transform mt-2">
+                    Send Message
+                </button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

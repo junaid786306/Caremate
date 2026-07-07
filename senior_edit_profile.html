@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Edit Profile - Senior</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-primary font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-slate-100">
+        <a href="user_profile.html" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </a>
+        <h1 class="font-bold text-lg text-center flex-1">Edit Profile</h1>
+        <button onclick="saveProfile()" class="font-bold text-secondary hover:opacity-80 active:scale-95 transition-all">Save</button>
+    </header>
+
+    <main class="max-w-md mx-auto p-8 space-y-10">
+        <!-- Profile Image -->
+        <div class="flex justify-center">
+            <div class="relative">
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-50 shadow-lg bg-slate-100 flex items-center justify-center">
+                    <img id="profile-pic" src="shreya_senior_profile_1777714702221.png" alt="Shreya" class="w-full h-full object-cover">
+                </div>
+                <button onclick="document.getElementById('profile-upload').click()" class="absolute bottom-1 right-1 w-10 h-10 bg-primary text-white rounded-full shadow-lg flex items-center justify-center border-2 border-white active:scale-90 transition-transform">
+                    <span class="material-symbols-outlined text-xl">photo_camera</span>
+                </button>
+                <input type="file" id="profile-upload" class="hidden" accept="image/*">
+            </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-1">Full Name</label>
+                <div class="relative">
+                    <input type="text" value="Shreya" readonly class="w-full px-6 py-4 rounded-2xl bg-slate-100 border-none outline-none font-semibold text-slate-400 cursor-not-allowed">
+                    <span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">lock</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-1">Username</label>
+                <input type="text" id="username-input" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-primary outline-none font-semibold transition-all">
+                <p id="username-help" class="text-[11px] text-slate-400 font-medium px-1 mt-1"></p>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-1">Bio (max 13 characters)</label>
+                <textarea id="bio-input" rows="3" maxlength="13" class="w-full px-6 py-4 rounded-[28px] bg-slate-50 border-none focus:ring-2 focus:ring-primary outline-none font-semibold transition-all resize-none leading-relaxed"></textarea>
+                <p id="bio-char-count" class="text-xs text-slate-400 px-1 text-right mt-1">0 / 13 characters</p>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="space-y-4 pt-10">
+            <button id="save-btn" onclick="saveProfile()" class="block w-full bg-primary text-white py-5 rounded-3xl font-bold text-center shadow-xl shadow-blue-900/20 active:scale-95 transition-transform">
+                Confirm Changes
+            </button>
+            <a href="user_profile.html" class="block w-full py-2 text-slate-400 font-bold text-center hover:text-red-500 transition-colors">
+                Cancel
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // DOM Elements
+        const profilePic = document.getElementById('profile-pic');
+        const profileUpload = document.getElementById('profile-upload');
+        const usernameInput = document.getElementById('username-input');
+        const usernameHelp = document.getElementById('username-help');
+        const bioInput = document.getElementById('bio-input');
+        const bioCharCount = document.getElementById('bio-char-count');
+        const saveBtn = document.getElementById('save-btn');
+
+        // Initial values
+        const defaultUsername = "@shreya_wellness";
+        const defaultBio = "Active gran";
+
+        // Load profile state
+        window.addEventListener('DOMContentLoaded', () => {
+            // Seed a demo date (2 days ago) so it shows exactly 28 days remaining on first view!
+            if (localStorage.getItem('last_username_change_date') === null) {
+                const twoDaysAgo = new Date();
+                twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+                localStorage.setItem('last_username_change_date', twoDaysAgo.toISOString());
+            }
+
+            // 1. Load Profile Image
+            const storedImg = localStorage.getItem('user_profile_img');
+            if (storedImg) {
+                profilePic.src = storedImg;
+            }
+
+            // 2. Load Username
+            const storedUsername = localStorage.getItem('user_username') || defaultUsername;
+            usernameInput.value = storedUsername;
+
+            // 3. Load Bio
+            const storedBio = localStorage.getItem('user_bio') || defaultBio;
+            bioInput.value = storedBio.substring(0, 13);
+            updateBioCharCount();
+
+            // 4. Check Lockout Rule
+            checkUsernameLockout(storedUsername);
+        });
+
+        // Bio character counting
+        bioInput.addEventListener('input', updateBioCharCount);
+
+        function updateBioCharCount() {
+            const len = bioInput.value.length;
+            bioCharCount.innerText = `${len} / 13 characters`;
+        }
+
+        // Profile Image Upload
+        profileUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    profilePic.src = event.target.result;
+                    localStorage.setItem('user_profile_img', event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Clear lockout helper for demo testing
+        function clearLockoutForDemo() {
+            localStorage.removeItem('last_username_change_date');
+            localStorage.setItem('user_username', defaultUsername);
+            usernameInput.readOnly = false;
+            usernameInput.classList.remove('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+            usernameInput.classList.add('bg-slate-50');
+            usernameHelp.innerHTML = "You can change your username once a month. <span class='text-secondary font-bold cursor-pointer hover:underline' onclick='seedLockoutForDemo()'>[Lock for 28 Days]</span>";
+            saveBtn.style.display = 'block';
+            headerSaveBtn.style.display = 'block';
+        }
+
+        function seedLockoutForDemo() {
+            const twoDaysAgo = new Date();
+            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+            localStorage.setItem('last_username_change_date', twoDaysAgo.toISOString());
+            checkUsernameLockout(usernameInput.value);
+        }
+
+        // Check Lockout Rule
+        function checkUsernameLockout(currentUsername) {
+            const lastChangeDateStr = localStorage.getItem('last_username_change_date');
+            if (lastChangeDateStr) {
+                const lastChange = new Date(lastChangeDateStr);
+                const diffTime = Math.abs(new Date() - lastChange);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const remaining = 30 - diffDays;
+
+                if (remaining > 0) {
+                    // Lock input and hide save buttons
+                    usernameInput.readOnly = true;
+                    usernameInput.classList.remove('bg-slate-50');
+                    usernameInput.classList.add('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+                    usernameHelp.innerHTML = `Username can only be changed once a month.<br><span class="text-secondary font-bold">Remaining ${remaining} days</span> <span class="text-slate-400 cursor-pointer hover:underline text-[10px] ml-1" onclick="clearLockoutForDemo()">[Reset for Demo]</span>`;
+                    
+                    // Hide Save buttons
+                    saveBtn.style.display = 'none';
+                    headerSaveBtn.style.display = 'none';
+                    return true;
+                }
+            }
+            usernameHelp.innerHTML = "You can change your username once a month. <span class='text-secondary font-bold cursor-pointer hover:underline' onclick='seedLockoutForDemo()'>[Lock for 28 Days]</span>";
+            return false;
+        }
+
+        // Save Profile Action
+        function saveProfile() {
+            const oldUsername = localStorage.getItem('user_username') || defaultUsername;
+            const newUsername = usernameInput.value.trim();
+            const newBio = bioInput.value.trim();
+
+            if (!newUsername) {
+                alert("Username cannot be empty.");
+                return;
+            }
+
+            // Save basic profile details
+            localStorage.setItem('user_bio', newBio);
+            localStorage.setItem('user_username', newUsername);
+
+            // If username changed, log the lockout timestamp
+            if (newUsername !== oldUsername) {
+                localStorage.setItem('last_username_change_date', new Date().toISOString());
+            }
+
+            // Redirect back
+            window.location.href = 'user_profile.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#faf9fe",
+                    "secondary-fixed": "#e0e0ff",
+                    "surface-tint": "#3e5e95",
+                    "tertiary": "#151a1d",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#171c1f",
+                    "on-background": "#1a1b1f",
+                    "background": "#faf9fe",
+                    "on-secondary-container": "#2d328b",
+                    "surface": "#faf9fe",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#dad9df",
+                    "secondary-container": "#9aa0ff",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f1f0f5",
+                    "on-secondary-fixed-variant": "#373c95",
+                    "on-primary-container": "#7796d1",
+                    "secondary": "#4f55ae",
+                    "surface-container": "#eeedf2",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2f3034",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed": "#001b3f",
+                    "surface-container-high": "#e8e7ed",
+                    "surface-variant": "#e3e2e7",
+                    "secondary-fixed-dim": "#bfc2ff",
+                    "tertiary-fixed": "#dfe3e7",
+                    "surface-container-highest": "#e3e2e7",
+                    "primary-fixed-dim": "#abc7ff",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "outline": "#747781",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#24467c",
+                    "inverse-primary": "#abc7ff",
+                    "tertiary-fixed-dim": "#c3c7cb",
+                    "primary": "#00193c",
+                    "on-surface": "#1a1b1f",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d7e2ff",
+                    "primary-container": "#002d62",
+                    "tertiary-container": "#2a2f32",
+                    "on-secondary-fixed": "#02026b",
+                    "outline-variant": "#c4c6d1",
+                    "on-tertiary-container": "#92969a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "touch-target-min": "60px",
+                    "stack-md": "24px",
+                    "unit": "8px",
+                    "stack-lg": "40px",
+                    "margin-page": "24px",
+                    "stack-sm": "12px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "label-caps": ["Manrope"],
+                    "display": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}],
+                    "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .voice-listening {
+            box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.5);
+            animation: pulse-listen 1.5s infinite;
+        }
+        @keyframes pulse-listen {
+            0% { box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.5); }
+            70% { box-shadow: 0 0 0 18px rgba(186, 26, 26, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(186, 26, 26, 0); }
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    
+        .glass-card { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5)); border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(16px); }
+    @keyframes listen-waves {
+        0% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.6), inset 0 0 16px rgba(255,255,255,0.2), 0 10px 30px rgba(0,45,98,0.3); }
+        70% { box-shadow: 0 0 0 30px rgba(167, 139, 250, 0), inset 0 0 16px rgba(255,255,255,0.2), 0 10px 30px rgba(0,45,98,0.3); }
+        100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0), inset 0 0 16px rgba(255,255,255,0.2), 0 10px 30px rgba(0,45,98,0.3); }
+    }
+    .listening-waves { animation: listen-waves 2s infinite; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  
+        .glass-card { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5)); border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(16px); }
+    @keyframes listen-waves {
+        0% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.6), inset 0 0 16px rgba(255,255,255,0.2), 0 10px 30px rgba(0,45,98,0.3); }
+        70% { box-shadow: 0 0 0 30px rgba(167, 139, 250, 0), inset 0 0 16px rgba(255,255,255,0.2), 0 10px 30px rgba(0,45,98,0.3); }
+        100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0), inset 0 0 16px rgba(255,255,255,0.2), 0 10px 30px rgba(0,45,98,0.3); }
+    }
+    .listening-waves { animation: listen-waves 2s infinite; }
+    </style>
+  </head>
+<body class="bg-surface-bright text-on-background font-body-md min-h-screen pb-32">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+    <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+        <span class="material-symbols-outlined text-primary">arrow_back</span>
+    </button>
+    <h1 class="font-bold text-xl text-primary">Scam Shield</h1>
+    <div class="w-10"></div> <!-- Spacer -->
+</header>
+<main class="pt-6 px-margin-page max-w-screen-xl mx-auto space-y-stack-lg">
+
+<!-- Suspicious Activity Check -->
+<section class="space-y-stack-md">
+<h3 class="font-headline-lg text-primary">Check Suspicious Activity</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<!-- Text Check Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-lg shadow-sm">
+<div class="flex items-center gap-3 mb-stack-sm">
+<div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(145deg,#5b9cf6,#1d4ed8); box-shadow: inset 0 2px 4px rgba(255,255,255,0.35), 0 6px 16px rgba(29,78,216,0.4);">
+<span class="material-symbols-outlined text-white text-[26px]" data-icon="sms_failed" style="font-variation-settings:'FILL' 1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));">sms_failed</span>
+</div>
+<span class="font-headline-md text-primary">Check a Message</span>
+</div>
+<textarea id="scam-text-input" class="w-full h-32 p-4 bg-surface-container-low border-none rounded-DEFAULT font-body-md text-on-surface focus:ring-2 focus:ring-primary-container transition-all" placeholder="Paste the suspicious text here..."></textarea>
+<div id="analyze-result" class="hidden mt-3 p-4 rounded-2xl text-sm font-bold"></div>
+<button onclick="analyzeScamText()" class="w-full h-touch-target-min mt-4 bg-primary text-white rounded-full font-headline-md shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all">
+    Analyze Text
+</button>
+</div>
+<!-- Call/Screenshot Check Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-stack-sm">
+<div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(145deg,#34d399,#059669); box-shadow: inset 0 2px 4px rgba(255,255,255,0.35), 0 6px 16px rgba(5,150,105,0.4);">
+<span class="material-symbols-outlined text-white text-[26px]" data-icon="add_a_photo" style="font-variation-settings:'FILL' 1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));">add_a_photo</span>
+</div>
+<span class="font-headline-md text-primary">Upload Screenshot</span>
+</div>
+<p class="font-body-md text-on-surface-variant mb-stack-md">Take a picture of a scam email or a strange phone number.</p>
+</div>
+<label class="border-2 border-dashed border-outline-variant rounded-lg p-stack-lg flex flex-col items-center justify-center bg-surface-container-low cursor-pointer hover:bg-surface-variant transition-colors group">
+<input type="file" accept="image/*" class="hidden" id="scam-image-upload" onchange="handleScamImageUpload(event)">
+<span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<span class="font-label-caps text-outline group-hover:text-primary">TAP TO UPLOAD PHOTO</span>
+</label>
+</div>
+</div>
+</section>
+<!-- Scam History Button (matches Reports page style) -->
+<a href="scam_history.html" class="w-full bg-surface-container-low rounded-lg p-stack-md ambient-shadow min-h-touch-target-min border border-outline-variant/20 flex items-center justify-between mt-2 active:scale-[0.98] transition-transform">
+  <div class="flex items-center gap-4">
+    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(145deg,#818cf8,#4f46e5); box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 6px 16px rgba(79,70,229,0.4);">
+      <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));">shield_person</span>
+    </div>
+    <div>
+      <h3 class="font-headline-md text-[18px] text-primary">Scam History</h3>
+      <p class="font-label-caps text-label-caps text-outline uppercase">Latest AI protection</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-green-600 text-3xl" style="font-variation-settings:'FILL' 1;">check_circle</span>
+    <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+  </div>
+</a>
+<!-- Safety Tips Carousel/Grid -->
+<section class="space-y-stack-md pb-stack-lg">
+<h3 class="font-headline-lg text-primary">Daily Safety Tips</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md">
+<!-- Tip 1 -->
+<div class="bg-primary-container text-white p-stack-md rounded-lg relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-stack-sm opacity-90" data-icon="security_update_warning">security_update_warning</span>
+<p class="font-headline-md mb-2">Never share your PIN</p>
+<p class="font-body-md opacity-80">Real banks will never ask for your password or PIN over the phone.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[120px]" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Tip 2 -->
+<div class="bg-secondary text-white p-stack-md rounded-lg relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-stack-sm opacity-90" data-icon="notification_important">notification_important</span>
+<p class="font-headline-md mb-2">Watch for Urgency</p>
+<p class="font-body-md opacity-80">Scammers use 'Urgent' or 'Action Required' to make you panic. Stay calm.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[120px]" data-icon="timer">timer</span>
+</div>
+</div>
+<!-- Tip 3 -->
+<div class="bg-surface-container-high border border-outline-variant p-stack-md rounded-lg relative overflow-hidden group md:hidden lg:block">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-stack-sm text-primary" data-icon="verified">verified</span>
+<p class="font-headline-md text-primary mb-2">Trust Your Gut</p>
+<p class="font-body-md text-on-surface-variant">If a deal sounds too good to be true, it probably is. Check with us first.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] bg-primary-fixed/50 text-primary rounded-[22px] hover:scale-105 active:scale-95 transition-all duration-300" href="home_dashboard.html">
+        <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="wellness_exercises.html">
+        <span class="material-symbols-outlined text-[26px]">directions_run</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="health_summary.html">
+        <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="community_hub.html">
+        <span class="material-symbols-outlined text-[26px]">group</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="user_profile.html">
+        <span class="material-symbols-outlined text-[26px]">person</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+    </a>
+</nav>
+
+<!-- Scam Protector Popup (Clone of Home Caremate) -->
+<div id="scam-protect-popup" class="fixed inset-0 z-[300] flex items-center justify-center pointer-events-none p-4">
+    <div id="scam-protect-backdrop" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeScamProtector()"></div>
+    <div id="scam-protect-sheet" class="relative w-full h-[90vh] max-w-lg bg-white/70 backdrop-blur-[24px] border border-white/60 rounded-[32px] flex flex-col scale-95 opacity-0 transition-all duration-400 ease-out pointer-events-none shadow-[0_20px_60px_rgba(0,45,98,0.15)] z-10 overflow-hidden">
+        <!-- Scrollable Area containing Sticky Header and Content -->
+        <div id="scam-protect-scroll-area" class="flex-1 overflow-y-auto flex flex-col min-h-0 relative">
+            <!-- Top Section: Sphere and Status (Sticky) -->
+            <div class="sticky top-0 z-20 flex flex-col items-center justify-center pt-10 pb-6 flex-shrink-0">
+                <button onclick="closeScamProtector()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black flex items-center justify-center hover:bg-slate-800 transition-colors shadow-md">
+                    <span class="material-symbols-outlined text-white text-[20px]">close</span>
+                </button>
+                <!-- Sphere (same as home caremate) -->
+                <button id="scam-protect-mic-btn" onclick="toggleScamProtectMic(this)" class="w-[88px] h-[88px] rounded-full flex items-center justify-center shadow-[inset_0_0_16px_rgba(255,255,255,0.2),_0_10px_30px_rgba(0,45,98,0.3)] mb-4 relative overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95" style="background: radial-gradient(ellipse at 35% 25%, #a78bfa 0%, #3b0764 55%, #150030 100%);">
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/25 to-transparent opacity-60 pointer-events-none rounded-full"></div>
+                    <span id="scam-protect-mic-icon" class="material-symbols-outlined text-white text-[40px] relative z-20" style="font-variation-settings:'FILL' 1; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">mic</span>
+                </button>
+                <p id="scam-protect-status" class="text-on-surface-variant font-bold text-sm tracking-wide mt-2 text-center">Tap to talk</p>
+            </div>
+            <!-- Image & Results Area -->
+            <div id="scam-protect-content" class="px-6 py-4 flex flex-col gap-4">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+        <!-- Bottom bar (Input) -->
+        <div class="px-4 py-3 flex-shrink-0 bg-white/40 backdrop-blur-md border-t border-white/50">
+            <div class="w-full bg-white/90 rounded-full flex items-center pl-5 pr-2 py-2 shadow-sm border border-slate-200 focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                <input type="text" id="scam-protect-input" placeholder="Type a message..." class="flex-1 bg-transparent border-none focus:ring-0 text-slate-700 placeholder-slate-400 text-[15px] font-medium p-0">
+                <input type="file" id="scam-protect-file-upload" class="hidden" accept="image/*,.pdf,.doc,.docx" onchange="handleScamProtectFileUpload(event)">
+                <button onclick="document.getElementById('scam-protect-file-upload').click()" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-primary transition-colors active:scale-95 mx-1">
+                    <span class="material-symbols-outlined text-[26px]" style="transform: rotate(45deg);">attach_file</span>
+                </button>
+                <button onclick="sendScamProtectMessage()" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white active:scale-95 transition-transform ml-2"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">send</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AI Chat Popup (Scam Shield) -->
+<div id="ai-chat-popup" class="fixed inset-0 z-[300] flex items-end justify-center pointer-events-none">
+    <div id="ai-chat-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeAIChat()"></div>
+    <div id="ai-chat-sheet" class="relative w-full max-w-lg bg-[#0d1b2e] rounded-[32px] flex flex-col scale-95 opacity-0 transition-transform duration-400 ease-out pointer-events-none shadow-[0_-20px_60px_rgba(0,0,0,0.4)] z-10" style="height:78vh;">
+        <div class="w-10 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-2 flex-shrink-0"></div>
+        <div class="flex items-center justify-between px-5 pb-3 border-b border-white/10 flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-white text-[28px]" style="font-variation-settings:'FILL' 1;">security</span>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-base leading-tight">Scam Protect Assistance</p>
+                    <p id="scam-chat-status" class="text-emerald-400 text-[11px] font-semibold tracking-wide">● Listening...</p>
+                </div>
+            </div>
+            <button onclick="closeAIChat()" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                <span class="material-symbols-outlined text-slate-600 text-[18px]">close</span>
+            </button>
+        </div>
+        <div id="scam-chat-messages" class="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 min-h-0">
+            <div class="flex gap-3 items-end">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center flex-shrink-0 mb-1">
+                    <span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings:'FILL' 1;">security</span>
+                </div>
+                <div class="bg-white/10 text-white rounded-[18px] rounded-bl-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">
+                    Hi! I'm your Scam Protect Assistance. 🛡️<br>Tell me about any suspicious call, text, or message — I'll analyze it for you!
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 px-4 py-4 border-t border-white/10 flex-shrink-0 bg-[#0d1b2e]">
+            <div class="flex-1 bg-white/10 rounded-full flex items-center px-4 py-2.5 border border-white/10">
+                <input id="scam-ai-input" type="text" placeholder="Describe the suspicious activity..." class="flex-1 bg-transparent text-white placeholder-white/40 text-sm outline-none" onkeydown="if(event.key==='Enter') sendScamMessage()">
+            </div>
+            <button onclick="sendScamMessage()" class="w-11 h-11 rounded-full bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform flex-shrink-0">
+                <span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings:'FILL' 1;">send</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let scamProtectMicActive = false;
+    let scamMicActive = false;
+
+    function toggleScamProtectMic(btn) {
+        const icon = document.getElementById('scam-protect-mic-icon');
+        const status = document.getElementById('scam-protect-status');
+        if (!scamProtectMicActive) {
+            scamProtectMicActive = true;
+            btn.style.background = 'radial-gradient(ellipse at 35% 25%, #e0e7ff 0%, #6366f1 55%, #312e81 100%)';
+            icon.textContent = 'graphic_eq';
+            status.textContent = 'Listening... Tap to stop';
+            status.classList.add('animate-pulse', 'text-primary');
+            status.classList.remove('text-on-surface-variant');
+            btn.classList.add('listening-waves');
+        } else {
+            scamProtectMicActive = false;
+            btn.style.background = 'radial-gradient(ellipse at 35% 25%, #a78bfa 0%, #3b0764 55%, #150030 100%)';
+            icon.textContent = 'mic';
+            status.textContent = 'Tap to talk';
+            status.classList.remove('animate-pulse', 'text-primary');
+            status.classList.add('text-on-surface-variant');
+            btn.classList.remove('listening-waves');
+        }
+    }
+
+    function toggleScamMic(btn) {
+        const icon = document.getElementById('scam-mic-icon');
+        const label = document.getElementById('scam-mic-label');
+        const glow = document.getElementById('scam-orb-glow');
+        if (!scamMicActive) {
+            scamMicActive = true;
+            btn.classList.remove('from-blue-400', 'via-primary', 'to-[#000a18]');
+            btn.classList.add('from-red-500', 'via-rose-700', 'to-[#3f0000]', 'voice-listening');
+            glow.classList.remove('bg-primary/40');
+            glow.classList.add('bg-red-500/50');
+            icon.innerText = 'graphic_eq';
+            label.textContent = 'Listening...';
+            // openAIChat();
+        } else {
+            scamMicActive = false;
+            btn.classList.remove('from-red-500', 'via-rose-700', 'to-[#3f0000]', 'voice-listening');
+            btn.classList.add('from-blue-400', 'via-primary', 'to-[#000a18]');
+            glow.classList.remove('bg-red-500/50');
+            glow.classList.add('bg-primary/40');
+            icon.innerText = 'mic';
+            label.textContent = 'Talk to AI Assistant';
+            const lbl = document.getElementById('scam-chat-status');
+            if (lbl) { lbl.textContent = '● Online'; lbl.style.color = '#6ee7b7'; }
+        }
+    }
+
+    function openAIChat() {
+        const popup = document.getElementById('ai-chat-popup');
+        const backdrop = document.getElementById('ai-chat-backdrop');
+        const sheet = document.getElementById('ai-chat-sheet');
+        popup.classList.remove('pointer-events-none');
+        backdrop.classList.remove('pointer-events-none', 'opacity-0');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+        sheet.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+        sheet.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+    }
+
+    function closeAIChat() {
+        const popup = document.getElementById('ai-chat-popup');
+        const backdrop = document.getElementById('ai-chat-backdrop');
+        const sheet = document.getElementById('ai-chat-sheet');
+        if (scamMicActive) {
+            const btn = document.getElementById('scam-mic-btn');
+            if (btn) toggleScamMic(btn);
+        }
+        backdrop.classList.add('opacity-0');
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        sheet.classList.add('scale-95', 'opacity-0');
+        sheet.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+        setTimeout(() => {
+            popup.classList.add('pointer-events-none');
+            backdrop.classList.add('pointer-events-none');
+            sheet.classList.add('pointer-events-none');
+        }, 400);
+    }
+
+    const scamReplies = [
+        "🚨 That sounds suspicious! Real banks never ask for your OTP or PIN over the phone. Hang up immediately!",
+        "✅ Based on your description, this appears to be a common phishing attempt. Do NOT click any links.",
+        "⚠️ Urgency is a classic scam tactic. Take your time, don't panic, and verify through official channels.",
+        "🛡️ Good instinct reporting this! I'd recommend blocking this number and reporting it to your carrier.",
+        "📞 Legitimate companies will never demand gift card payments. This is almost certainly a scam.",
+        "✨ You're being very smart by checking! When in doubt, always verify by calling the official number directly."
+    ];
+    let scamReplyIdx = 0;
+
+    function sendScamMessage() {
+        const input = document.getElementById('scam-ai-input');
+        const msg = input.value.trim();
+        if (!msg) return;
+        const messages = document.getElementById('scam-chat-messages');
+        const userBubble = document.createElement('div');
+        userBubble.className = 'flex justify-end';
+        userBubble.innerHTML = `<div class="bg-red-700/80 text-white rounded-[18px] rounded-br-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${msg}</div>`;
+        messages.appendChild(userBubble);
+        input.value = '';
+        setTimeout(() => {
+            const reply = scamReplies[scamReplyIdx % scamReplies.length];
+            scamReplyIdx++;
+            const aiBubble = document.createElement('div');
+            aiBubble.className = 'flex gap-3 items-end';
+            aiBubble.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center flex-shrink-0 mb-1">
+                    <span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings:'FILL' 1;">security</span>
+                </div>
+                <div class="bg-white/10 text-white rounded-[18px] rounded-bl-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${reply}</div>`;
+            messages.appendChild(aiBubble);
+            messages.scrollTop = messages.scrollHeight;
+        }, 700);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+        function openScamProtector(imgSrc) {
+        const popup = document.getElementById('scam-protect-popup');
+        const backdrop = document.getElementById('scam-protect-backdrop');
+        const sheet = document.getElementById('scam-protect-sheet');
+        popup.classList.remove('pointer-events-none');
+        backdrop.classList.remove('pointer-events-none', 'opacity-0');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+        sheet.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+        sheet.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+        
+        const content = document.getElementById('scam-protect-content');
+        content.innerHTML = `<img src="${imgSrc}" class="rounded-xl w-full max-h-48 object-cover mb-4 border border-white/10">`;
+        
+        // Simulating Analysis
+        const status = document.getElementById('scam-protect-status');
+        status.textContent = '? Scanning Image...';
+        status.className = 'text-blue-400 text-[11px] font-semibold tracking-wide animate-pulse';
+        
+        setTimeout(() => {
+            status.textContent = '? High Risk Detected';
+            status.className = 'text-red-400 text-[11px] font-semibold tracking-wide';
+            
+            const resultHtml = `<div class="bg-white text-primary rounded-[18px] rounded-tl-[6px] px-4 py-3 max-w-full text-sm leading-relaxed shadow-sm border border-red-100 mt-2">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="material-symbols-outlined text-red-500 text-2xl">warning</span>
+                    <h3 class="font-bold text-lg text-red-400">Scam Detected</h3>
+                </div>
+                <p class="text-sm text-slate-600 mb-3 leading-relaxed">This image contains elements of a known phishing scam. The sender is attempting to create false urgency to steal your personal information.</p>
+                <div class="bg-red-50 border border-red-100 rounded-xl p-3">
+                    <ul class="text-sm text-red-600 list-disc pl-4 space-y-1 font-medium">
+                        <li>Do not click any links.</li>
+                        <li>Do not call the number provided.</li>
+                        <li>Delete the message immediately.</li>
+                    </ul>
+                </div>
+            </div>`;
+            content.insertAdjacentHTML('beforeend', resultHtml);
+            content.scrollTop = content.scrollHeight;
+        }, 2000);
+    }
+
+    function closeScamProtector() {
+        const popup = document.getElementById('scam-protect-popup');
+        const backdrop = document.getElementById('scam-protect-backdrop');
+        const sheet = document.getElementById('scam-protect-sheet');
+        backdrop.classList.add('opacity-0'); backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        sheet.classList.add('scale-95', 'opacity-0'); sheet.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+        setTimeout(() => {
+            popup.classList.add('pointer-events-none');
+            backdrop.classList.add('pointer-events-none');
+            sheet.classList.add('pointer-events-none');
+            document.getElementById('scam-protect-content').innerHTML = '';
+        }, 400);
+    }
+    
+    function handleScamImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Open chat window automatically
+            // openAIChat();
+
+            openScamProtector(e.target.result); return;
+            const messages = document.getElementById('scam-chat-messages');
+            const userBubble = document.createElement('div');
+            userBubble.className = 'self-end bg-white/20 text-white rounded-2xl rounded-tr-sm p-2 max-w-[85%] border border-white/10';
+            userBubble.innerHTML = `<img src="${e.target.result}" class="rounded-xl w-full max-h-48 object-cover mb-2"><p class="text-sm px-2">Is this a scam?</p>`;
+            messages.appendChild(userBubble);
+            messages.scrollTop = messages.scrollHeight;
+
+            // Simulate AI analyzing
+            setTimeout(() => {
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'self-start bg-black/40 backdrop-blur-md text-white border border-white/10 rounded-2xl rounded-tl-sm p-4 max-w-[85%] mt-3';
+                aiBubble.innerHTML = `<div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-sm text-blue-300 animate-spin">sync</span><span class="text-xs text-blue-200 uppercase tracking-widest font-bold">Scanning Image</span></div><p class="text-sm">I'm scanning the image for suspicious numbers, links, or urgent requests... Give me a moment.</p>`;
+                messages.appendChild(aiBubble);
+                messages.scrollTop = messages.scrollHeight;
+
+                // Final AI response
+                setTimeout(() => {
+                    const finalBubble = document.createElement('div');
+                    finalBubble.className = 'self-start bg-black/40 backdrop-blur-md text-white border border-white/10 rounded-2xl rounded-tl-sm p-4 max-w-[85%] mt-3';
+                    finalBubble.innerHTML = `<div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-sm text-red-400">warning</span><span class="text-xs text-red-400 uppercase tracking-widest font-bold">High Risk Detected</span></div><p class="text-sm text-slate-200">This looks like a classic phishing attempt. They are trying to create false urgency to steal your personal information.</p><ul class="mt-2 text-sm text-slate-300 list-disc pl-4 space-y-1"><li><strong>Do not click any links.</strong></li><li><strong>Do not call the number.</strong></li><li><strong>Delete the message immediately.</strong></li></ul>`;
+                    messages.appendChild(finalBubble);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 2500);
+
+            }, 800);
+            
+            // Reset input
+            event.target.value = '';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function analyzeScamText() {
+        const text = document.getElementById('scam-text-input').value.trim();
+        const result = document.getElementById('analyze-result');
+        if (!text) {
+            result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-amber-50 border border-amber-200 text-amber-800';
+            result.textContent = '⚠️ Please paste a suspicious message first.';
+            result.classList.remove('hidden');
+            return;
+        }
+        result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-slate-100 border border-slate-200 text-slate-600';
+        result.textContent = '🔍 Analyzing...';
+        result.classList.remove('hidden');
+        const scamKeywords = ['urgent','account locked','verify','prize','won','click here','otp','pin','bank alert','suspended','wire transfer','gift card','limited time','act now'];
+        const lower = text.toLowerCase();
+        const hits = scamKeywords.filter(k => lower.includes(k));
+        setTimeout(() => {
+            if (hits.length >= 2) {
+                result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-red-50 border border-red-200 text-red-800';
+                result.innerHTML = `🚨 <strong>HIGH RISK — Likely Scam!</strong><br><span class="font-normal mt-1 block">Detected suspicious keywords: <em>${hits.join(', ')}</em>. Do NOT respond, click links, or share personal information. Block this sender immediately.</span>`;
+            } else if (hits.length === 1) {
+                result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-amber-50 border border-amber-200 text-amber-800';
+                result.innerHTML = `⚠️ <strong>SUSPICIOUS — Proceed with Caution</strong><br><span class="font-normal mt-1 block">Found a potentially suspicious pattern. Verify with the official source before taking any action.</span>`;
+            } else {
+                result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-green-50 border border-green-200 text-green-800';
+                result.innerHTML = `✅ <strong>Appears Safe</strong><br><span class="font-normal mt-1 block">No obvious scam patterns detected. However, always be cautious with unsolicited messages.</span>`;
+            }
+        }, 1000);
+    }
+</script>
+
+<script>
+        function toggleFilter() { document.getElementById('filter-panel').classList.toggle('hidden'); }
+                function filterScamStatus(status) {
+            document.querySelectorAll('.status-pill').forEach(el => el.style.opacity = '0.5');
+            document.querySelectorAll('.status-pill').forEach(el => el.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
+            const activeEl = document.getElementById(ilter-+status);
+            if (activeEl) {
+                activeEl.style.opacity = '1';
+                activeEl.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
+            }
+            
+            const items = document.querySelectorAll('.scam-item');
+            items.forEach(item => {
+                if (status === 'all' || item.getAttribute('data-status') === status) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        }
+        const extraScams = [
+            {icon:'sms_failed',color:'bg-error-container',tcolor:'text-error',title:'Lottery SMS',date:'4 May at 11:20 AM',badge:'Fraud',badgeCls:'bg-error-container text-on-error-container',msg:'"You have won ₹1,00,000! Send ₹500 processing fee to claim."',note:'Classic advance-fee fraud. Do not respond.',noteCls:'text-error'},
+            {icon:'call',color:'bg-orange-50',tcolor:'text-orange-600',title:'IVR Call Scam',date:'3 May at 3:00 PM',badge:'High Risk',badgeCls:'bg-orange-100 text-orange-700',msg:'Automated call claiming your Aadhaar is linked to illegal activity.',note:'Government impersonation detected.',noteCls:'text-orange-600'},
+            {icon:'mail',color:'bg-green-50',tcolor:'text-green-600',title:'Hospital Email',date:'2 May at 8:45 AM',badge:'Safe',badgeCls:'bg-green-100 text-green-700',msg:'Appointment reminder from Apollo Hospital confirmed.',note:'Sender verified as trusted health provider.',noteCls:'text-green-600'},
+        ];
+        let scamIdx = 0;
+        function loadMoreScam() {
+            if (scamIdx >= extraScams.length) { document.getElementById('load-more-btn').innerHTML='<p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">All records loaded</p>'; return; }
+            const s = extraScams[scamIdx++];
+            const html = `<div class="glass-card rounded-[24px] p-5 shadow-sm flex flex-col gap-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full ${s.color} flex items-center justify-center"><span class="material-symbols-outlined ${s.tcolor}" style="font-variation-settings:'FILL' 1">${s.icon}</span></div>
+                        <div><h3 class="font-bold text-slate-800 text-lg">${s.title}</h3><p class="text-xs text-slate-400 font-medium">${s.date}</p></div>
+                    </div>
+                    <span class="px-3 py-1 ${s.badgeCls} rounded-full text-[10px] font-black uppercase tracking-wider">${s.badge}</span>
+                </div>
+                <div class="bg-white/40 rounded-2xl p-4 border border-white/50"><p class="text-sm text-slate-600 font-medium">${s.msg}</p></div>
+                <p class="text-xs ${s.noteCls} font-bold flex items-center gap-1"><span class="material-symbols-outlined text-sm">info</span>${s.note}</p>
+            </div>`;
+            document.getElementById('scam-list').insertAdjacentHTML('beforeend', html);
+        }
+    </script>
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+

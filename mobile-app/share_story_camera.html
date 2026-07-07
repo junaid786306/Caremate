@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Share a Story - Camera</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-sidebar {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .capture-ring {
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+        .btn-active {
+            background-color: #4f55ae !important;
+            color: white !important;
+        }
+        .btn-active span {
+            color: white !important;
+        }
+        /* Custom styles for progress circle */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.1s linear;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-[#1e2022] text-white font-manrope antialiased h-screen flex flex-col overflow-hidden">
+    <!-- Top Bar -->
+    <header class="bg-white/95 backdrop-blur-md px-6 py-4 flex justify-between items-center z-50 text-primary border-b border-slate-100">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-2xl font-bold">close</span>
+        </button>
+        <h1 class="font-bold text-lg tracking-tight">Camera Studio</h1>
+        <button onclick="publishStory()" id="publish-btn" class="hidden px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-black uppercase tracking-wider rounded-2xl flex items-center gap-1 active:scale-95 transition-all shadow-md shadow-emerald-500/20">
+            <span class="material-symbols-outlined text-sm">send</span> Share
+        </button>
+        <div id="header-spacer" class="w-10 h-10"></div>
+    </header>
+
+    <!-- Text Styling Toolbar -->
+    <div id="text-toolbar" class="absolute top-20 left-6 right-6 z-50 flex items-center justify-between transition-all opacity-0 pointer-events-none translate-y-[-20px]">
+        <button onclick="cycleTextBackground()" class="w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 shadow-lg active:scale-95 transition-all">
+            <span class="material-symbols-outlined">text_format</span>
+        </button>
+        <div class="flex gap-2">
+            <button onclick="cycleTextFont()" id="font-toggle-btn" class="px-4 py-2 bg-black/40 backdrop-blur-md rounded-full text-white font-bold text-[10px] border border-white/20 shadow-lg active:scale-95 transition-all uppercase tracking-wider">Classic</button>
+        </div>
+        <button onclick="cycleTextColor()" class="w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 shadow-lg active:scale-95 transition-all">
+            <span class="material-symbols-outlined">palette</span>
+        </button>
+    </div>
+
+    <!-- Camera Preview Area -->
+    <main class="flex-1 relative bg-black flex items-center justify-center overflow-hidden">
+        <!-- Mock Camera Preview -->
+        <div class="w-full h-full relative" id="preview-container">
+            <!-- Background Image -->
+            <img id="camera-image" src="seniors_gardening_story_1777713699901.png" alt="Camera Preview" class="w-full h-full object-cover transition-all duration-300">
+            
+            <!-- Video Recording Indicator Overlay -->
+            <div id="video-overlay" class="absolute inset-0 bg-red-500/5 mix-blend-overlay opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col justify-between p-6">
+                <div class="flex items-center justify-between z-30">
+                    <div class="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                        <span class="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-red-500">REC</span>
+                        <span id="video-timer" class="text-xs font-bold text-white font-mono">0.0s</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Focus Ring Overlay (hidden during edit mode) -->
+            <div id="focus-ring" class="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity">
+                <div class="w-64 h-64 border border-white/20 rounded-full animate-pulse"></div>
+            </div>
+
+            <!-- DRAWING CANVAS -->
+            <canvas id="drawing-canvas" class="absolute inset-0 z-20 pointer-events-none"></canvas>
+
+            <!-- TEXT OVERLAY CONTAINER -->
+            <div id="text-container" class="absolute inset-0 z-30 pointer-events-none"></div>
+
+            <!-- Left Sidebar Tools -->
+            <div class="absolute left-6 top-1/2 -translate-y-1/2 flex flex-col gap-1 z-40">
+                <div class="glass-sidebar rounded-3xl py-6 px-3 flex flex-col items-center gap-6 shadow-xl">
+                    <button onclick="toggleDrawMode()" id="tool-draw" class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-primary hover:bg-slate-100 transition-colors">
+                        <span class="material-symbols-outlined">edit</span>
+                        <span class="text-[9px] font-black uppercase tracking-wide">Draw</span>
+                    </button>
+                    <div class="w-8 h-[1px] bg-primary/10"></div>
+                    <button onclick="addTextSticker()" id="tool-text" class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-primary hover:bg-slate-100 transition-colors">
+                        <span class="material-symbols-outlined">title</span>
+                        <span class="text-[9px] font-black uppercase tracking-wide">Text</span>
+                    </button>
+                    <div class="w-8 h-[1px] bg-primary/10"></div>
+                    <button onclick="clearCanvas()" class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-red-500 hover:bg-red-50 transition-colors">
+                        <span class="material-symbols-outlined">delete_sweep</span>
+                        <span class="text-[9px] font-black uppercase tracking-wide">Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Drawing Brush Palette (Visible only in draw mode) -->
+            <div id="brush-palette" class="absolute bottom-6 left-6 right-6 z-40 bg-white/95 backdrop-blur-md rounded-3xl p-4 flex flex-col gap-4 border border-slate-200 shadow-xl transition-all translate-y-32 opacity-0 pointer-events-none max-w-sm mx-auto">
+                <div class="flex items-center justify-between w-full">
+                    <span class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Size</span>
+                    <input type="range" id="brush-size" min="2" max="25" value="5" class="w-2/3 accent-primary" oninput="brushSize = this.value">
+                </div>
+                <div class="flex items-center justify-between w-full">
+                    <span class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Colors</span>
+                    <div class="flex gap-2">
+                        <button onclick="selectColor(this, '#ef4444')" class="w-7 h-7 rounded-full bg-red-500 border-2 border-white shadow-sm ring-2 ring-red-500 transition-all"></button>
+                        <button onclick="selectColor(this, '#3b82f6')" class="w-7 h-7 rounded-full bg-blue-500 border-2 border-white shadow-sm transition-all"></button>
+                        <button onclick="selectColor(this, '#10b981')" class="w-7 h-7 rounded-full bg-emerald-500 border-2 border-white shadow-sm transition-all"></button>
+                        <button onclick="selectColor(this, '#eab308')" class="w-7 h-7 rounded-full bg-yellow-500 border-2 border-white shadow-sm transition-all"></button>
+                        <button onclick="selectColor(this, '#ffffff')" class="w-7 h-7 rounded-full bg-white border-2 border-slate-200 shadow-sm transition-all"></button>
+                        <button onclick="selectEraser(this)" class="w-7 h-7 rounded-full bg-slate-200 border-2 border-slate-300 shadow-sm transition-all flex items-center justify-center text-slate-500"><span class="material-symbols-outlined text-[14px]">ink_eraser</span></button>
+                    </div>
+                </div>
+                <div class="flex justify-end border-t border-slate-100 pt-3">
+                    <button onclick="toggleDrawMode()" class="text-xs font-bold text-primary px-4 py-1.5 bg-slate-100 rounded-full hover:bg-slate-200">Done</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Controls / Footer -->
+    <footer id="camera-footer" class="bg-[#2a2d32] px-8 py-8 flex justify-between items-center z-50 transition-all duration-300">
+        <!-- Gallery Thumbnail -->
+        <button class="w-14 h-14 rounded-full border-2 border-white/20 overflow-hidden shadow-lg active:scale-95 transition-transform flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=100&h=100&fit=crop" alt="Gallery" class="w-full h-full object-cover">
+        </button>
+
+        <!-- Capture / Video Long Press Button -->
+        <div class="flex flex-col items-center gap-3 relative flex-1">
+            <div class="relative w-24 h-24 flex items-center justify-center">
+                <!-- SVG Progress Circle for 30s Recording -->
+                <svg class="absolute inset-0 w-24 h-24 pointer-events-none" viewBox="0 0 100 100">
+                    <circle class="text-white/10" stroke="currentColor" stroke-width="6" fill="transparent" r="42" cx="50" cy="50"/>
+                    <circle id="progress-circle" class="progress-ring__circle text-red-500" stroke="currentColor" stroke-width="6" stroke-dasharray="264" stroke-dashoffset="264" stroke-linecap="round" fill="transparent" r="42" cx="50" cy="50"/>
+                </svg>
+
+                <button id="capture-btn" class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl active:scale-90 transition-all focus:outline-none z-10">
+                    <div id="capture-btn-inner" class="w-12 h-12 rounded-full border-4 border-slate-100 bg-white transition-all"></div>
+                </button>
+            </div>
+            <span id="capture-label" class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hold for Video / Tap Photo</span>
+        </div>
+
+        <!-- Flip Camera & Upload -->
+        <div class="flex flex-col gap-3 flex-shrink-0">
+            <button class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center shadow-lg active:rotate-180 transition-all duration-500">
+                <span class="material-symbols-outlined text-2xl">flip_camera_ios</span>
+            </button>
+            <button onclick="document.getElementById('media-upload').click()" class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-primary text-2xl">photo_library</span>
+            </button>
+            <input type="file" id="media-upload" accept="image/*,video/*" class="hidden" onchange="handleMediaUpload(event)">
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 z-[100] bg-slate-900/90 text-white font-extrabold text-xs tracking-wider uppercase px-6 py-3 rounded-full flex items-center gap-2 shadow-2xl backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <span class="material-symbols-outlined text-emerald-400 text-sm">check_circle</span>
+        <span id="toast-text">Story saved</span>
+    </div>
+
+    <!-- Video Trimmer Modal -->
+    <div id="video-trimmer-modal" class="fixed inset-0 z-[150] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-full max-w-md p-6 flex flex-col gap-6">
+            <div class="flex justify-between items-center text-white">
+                <h3 class="font-bold text-lg">Trim Video</h3>
+                <button onclick="closeTrimmer()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/10">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-300">Your video is longer than 30 seconds. Please select a 30s segment.</p>
+            
+            <div class="w-full h-32 bg-slate-800 rounded-xl overflow-hidden relative border border-slate-700 mt-4">
+                <!-- Mock Timeline frames -->
+                <div class="absolute inset-0 flex">
+                    <div class="flex-1 border-r border-slate-700/50 bg-slate-700/30"></div>
+                    <div class="flex-1 border-r border-slate-700/50 bg-slate-700/30"></div>
+                    <div class="flex-1 border-r border-slate-700/50 bg-slate-700/30"></div>
+                    <div class="flex-1 bg-slate-700/30"></div>
+                </div>
+                <!-- Selection window -->
+                <div class="absolute top-0 bottom-0 left-4 right-12 border-4 border-yellow-400 bg-yellow-400/10 cursor-ew-resize">
+                    <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-3 h-8 bg-white rounded-l-md shadow-md flex items-center justify-center"><div class="w-0.5 h-4 bg-slate-300"></div></div>
+                    <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-3 h-8 bg-white rounded-r-md shadow-md flex items-center justify-center"><div class="w-0.5 h-4 bg-slate-300"></div></div>
+                </div>
+            </div>
+            
+            <button onclick="confirmTrim()" class="w-full py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-black text-sm uppercase tracking-wider rounded-full mt-4 active:scale-95 transition-all">Trim to 30s &amp; Upload</button>
+        </div>
+    </div>
+
+    <!-- Drawing & Recording JS -->
+    <script>
+        // DOM Elements
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+        const captureBtn = document.getElementById('capture-btn');
+        const captureBtnInner = document.getElementById('capture-btn-inner');
+        const progressCircle = document.getElementById('progress-circle');
+        const cameraImage = document.getElementById('camera-image');
+        const publishBtn = document.getElementById('publish-btn');
+        const headerSpacer = document.getElementById('header-spacer');
+        const brushPalette = document.getElementById('brush-palette');
+        const toolDraw = document.getElementById('tool-draw');
+        const textContainer = document.getElementById('text-container');
+        const videoOverlay = document.getElementById('video-overlay');
+        const videoTimer = document.getElementById('video-timer');
+        const focusRing = document.getElementById('focus-ring');
+        const captureLabel = document.getElementById('capture-label');
+
+        // State
+        let isDrawing = false;
+        let drawModeActive = false;
+        let currentColor = '#ef4444';
+        let isEraser = false;
+        let brushSize = 5;
+        let lastX = 0;
+        let lastY = 0;
+
+        let recordTimer = null;
+        let recordDuration = 0;
+        const MAX_RECORD_TIME = 30000; // 30 seconds
+        let isRecording = false;
+        let recordingTriggered = false;
+
+        // Resize Canvas
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+        window.addEventListener('load', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
+
+        // Drawing Event Listeners
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            startDrawing({ clientX: touch.clientX, clientY: touch.clientY });
+            e.preventDefault();
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            draw({ clientX: touch.clientX, clientY: touch.clientY });
+            e.preventDefault();
+        });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            if (!drawModeActive) return;
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+        }
+
+        function draw(e) {
+            if (!isDrawing || !drawModeActive) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            if (isEraser) {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = currentColor;
+            }
+            
+            ctx.lineWidth = brushSize;
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            lastX = x;
+            lastY = y;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function toggleDrawMode() {
+            drawModeActive = !drawModeActive;
+            if (drawModeActive) {
+                canvas.className = "absolute inset-0 z-20 pointer-events-auto cursor-crosshair";
+                toolDraw.classList.add('btn-active');
+                brushPalette.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                brushPalette.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                focusRing.style.opacity = '0';
+            } else {
+                canvas.className = "absolute inset-0 z-20 pointer-events-none";
+                toolDraw.classList.remove('btn-active');
+                brushPalette.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                brushPalette.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                focusRing.style.opacity = '1';
+            }
+        }
+
+        function selectEraser(btn) {
+            isEraser = true;
+            brushPalette.querySelectorAll('button[onclick*="selectColor"], button[onclick*="selectEraser"]').forEach(b => {
+                b.classList.remove('ring-2', 'ring-red-500', 'ring-blue-500', 'ring-emerald-500', 'ring-yellow-500', 'ring-slate-400', 'ring-primary');
+            });
+            btn.classList.add('ring-2', 'ring-primary');
+        }
+
+        function selectColor(btn, color) {
+            isEraser = false;
+            currentColor = color;
+            brushPalette.querySelectorAll('button[onclick*="selectColor"], button[onclick*="selectEraser"]').forEach(b => {
+                b.classList.remove('ring-2', 'ring-red-500', 'ring-blue-500', 'ring-emerald-500', 'ring-yellow-500', 'ring-slate-400', 'ring-primary');
+            });
+            if (color === '#ffffff') btn.classList.add('ring-2', 'ring-slate-400');
+            else if (color === '#ef4444') btn.classList.add('ring-2', 'ring-red-500');
+            else if (color === '#3b82f6') btn.classList.add('ring-2', 'ring-blue-500');
+            else if (color === '#10b981') btn.classList.add('ring-2', 'ring-emerald-500');
+            else if (color === '#eab308') btn.classList.add('ring-2', 'ring-yellow-500');
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            textContainer.innerHTML = '';
+            showToast('Canvas reset successfully!');
+        }
+
+        // Draggable Editable Text Sticker
+        const textToolbar = document.getElementById('text-toolbar');
+        let activeSticker = null;
+        let textBgStyle = 0;
+        let textFontIndex = 0;
+        let textColorIndex = 0;
+        const fonts = ['font-manrope', 'font-serif', 'font-mono'];
+        const fontLabels = ['Classic', 'Typewriter', 'Code'];
+        const textColors = ['text-white', 'text-black', 'text-red-500', 'text-yellow-400', 'text-emerald-400'];
+
+        function showTextToolbar(sticker) {
+            activeSticker = sticker;
+            textToolbar.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+        }
+        
+        function hideTextToolbar() {
+            textToolbar.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+            setTimeout(() => { if(!document.activeElement.isContentEditable) activeSticker = null; }, 100);
+        }
+
+        function cycleTextBackground() {
+            if (!activeSticker) return;
+            textBgStyle = (textBgStyle + 1) % 4;
+            activeSticker.classList.remove('bg-primary/95', 'bg-white', 'bg-black', 'bg-transparent', 'text-black', 'text-white');
+            activeSticker.classList.add(textColors[textColorIndex]);
+            if (textBgStyle === 0) {
+                activeSticker.classList.add('bg-primary/95');
+                if(textColorIndex === 1) { activeSticker.classList.remove('text-black'); activeSticker.classList.add('text-white'); textColorIndex=0; }
+            } else if (textBgStyle === 1) {
+                activeSticker.classList.add('bg-white');
+                if(textColorIndex === 0) { activeSticker.classList.remove('text-white'); activeSticker.classList.add('text-black'); textColorIndex=1; }
+            } else if (textBgStyle === 2) {
+                activeSticker.classList.add('bg-black');
+            } else {
+                activeSticker.classList.add('bg-transparent');
+            }
+        }
+
+        function cycleTextFont() {
+            if (!activeSticker) return;
+            activeSticker.classList.remove(fonts[textFontIndex]);
+            textFontIndex = (textFontIndex + 1) % fonts.length;
+            activeSticker.classList.add(fonts[textFontIndex]);
+            document.getElementById('font-toggle-btn').innerText = fontLabels[textFontIndex];
+        }
+
+        function cycleTextColor() {
+            if (!activeSticker) return;
+            activeSticker.classList.remove(textColors[textColorIndex]);
+            textColorIndex = (textColorIndex + 1) % textColors.length;
+            if (textBgStyle === 1 && textColorIndex === 0) textColorIndex = 1;
+            if ((textBgStyle === 0 || textBgStyle === 2) && textColorIndex === 1) textColorIndex = 0;
+            activeSticker.classList.add(textColors[textColorIndex]);
+        }
+
+        function addTextSticker() {
+            // Disable draw mode to prevent overlaps
+            if (drawModeActive) toggleDrawMode();
+
+            const sticker = document.createElement('div');
+            sticker.className = `absolute z-30 bg-primary/95 text-white ${fonts[textFontIndex]} font-extrabold text-sm px-4 py-2.5 rounded-2xl shadow-2xl border border-white/20 select-text cursor-move min-w-[140px] text-center pointer-events-auto select-none outline-none focus:ring-2 focus:ring-secondary/50 transition-colors`;
+            sticker.contentEditable = "true";
+            sticker.innerText = "Double tap to edit";
+            sticker.style.top = '40%';
+            sticker.style.left = '25%';
+
+            // Simple Drag Mechanics
+            let isDraggingSticker = false;
+            let offsetOffsetX = 0;
+            let offsetOffsetY = 0;
+
+            sticker.addEventListener('mousedown', (e) => {
+                if (document.activeElement === sticker) return; // Don't drag while editing text
+                isDraggingSticker = true;
+                const rect = sticker.getBoundingClientRect();
+                offsetOffsetX = e.clientX - rect.left;
+                offsetOffsetY = e.clientY - rect.top;
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDraggingSticker) return;
+                const parentRect = textContainer.getBoundingClientRect();
+                let x = e.clientX - parentRect.left - offsetOffsetX;
+                let y = e.clientY - parentRect.top - offsetOffsetY;
+                
+                // Bounds checking
+                x = Math.max(10, Math.min(x, parentRect.width - sticker.offsetWidth - 10));
+                y = Math.max(10, Math.min(y, parentRect.height - sticker.offsetHeight - 10));
+
+                sticker.style.left = x + 'px';
+                sticker.style.top = y + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDraggingSticker = false;
+            });
+
+            // Touch events
+            sticker.addEventListener('touchstart', (e) => {
+                if (document.activeElement === sticker) return;
+                isDraggingSticker = true;
+                const touch = e.touches[0];
+                const rect = sticker.getBoundingClientRect();
+                offsetOffsetX = touch.clientX - rect.left;
+                offsetOffsetY = touch.clientY - rect.top;
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDraggingSticker) return;
+                const touch = e.touches[0];
+                const parentRect = textContainer.getBoundingClientRect();
+                let x = touch.clientX - parentRect.left - offsetOffsetX;
+                let y = touch.clientY - parentRect.top - offsetOffsetY;
+
+                x = Math.max(10, Math.min(x, parentRect.width - sticker.offsetWidth - 10));
+                y = Math.max(10, Math.min(y, parentRect.height - sticker.offsetHeight - 10));
+
+                sticker.style.left = x + 'px';
+                sticker.style.top = y + 'px';
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchend', () => {
+                isDraggingSticker = false;
+            });
+
+            // Focus interactions
+            sticker.addEventListener('focus', () => {
+                if (sticker.innerText === "Double tap to edit") {
+                    sticker.innerText = "";
+                }
+                showTextToolbar(sticker);
+            });
+
+            sticker.addEventListener('blur', () => {
+                if (sticker.innerText.trim() === "") {
+                    sticker.innerText = "Double tap to edit";
+                }
+                hideTextToolbar();
+            });
+
+            textContainer.appendChild(sticker);
+            sticker.focus();
+        }
+
+        // Tap/Long Press Capturing Logic
+        let pressTimer = null;
+        
+        function handlePressStart(e) {
+            e.preventDefault();
+            recordingTriggered = false;
+            pressTimer = setTimeout(() => {
+                startVideoRecording();
+            }, 300); // Wait 300ms to distinguish long press from single tap
+        }
+
+        function handlePressEnd(e) {
+            e.preventDefault();
+            clearTimeout(pressTimer);
+            if (isRecording) {
+                stopVideoRecording();
+            } else {
+                takePhoto();
+            }
+        }
+
+        // Bind Capture Button
+        captureBtn.addEventListener('mousedown', handlePressStart);
+        captureBtn.addEventListener('mouseup', handlePressEnd);
+        captureBtn.addEventListener('touchstart', handlePressStart);
+        captureBtn.addEventListener('touchend', handlePressEnd);
+
+        // Photo capture
+        function takePhoto() {
+            captureBtnInner.classList.add('scale-75');
+            setTimeout(() => captureBtnInner.classList.remove('scale-75'), 150);
+            
+            showToast('Photo captured successfully! 📸');
+            onCaptureComplete();
+        }
+
+        // 30s Video recording
+        function startVideoRecording() {
+            isRecording = true;
+            recordingTriggered = true;
+            recordDuration = 0;
+            focusRing.style.opacity = '0';
+            videoOverlay.classList.remove('opacity-0');
+            videoOverlay.classList.add('opacity-100');
+            captureBtnInner.classList.add('bg-red-500', 'rounded-lg', 'scale-75');
+            captureBtnInner.classList.remove('bg-white');
+            captureLabel.innerText = "Recording... Release to Stop";
+
+            const interval = 100; // ms
+            recordTimer = setInterval(() => {
+                recordDuration += interval;
+                
+                // Update SVG progress ring
+                const pct = (recordDuration / MAX_RECORD_TIME) * 100;
+                const strokeDashoffset = 264 - (264 * pct) / 100;
+                progressCircle.style.strokeDashoffset = strokeDashoffset;
+
+                // Update REC Timer
+                videoTimer.innerText = (recordDuration / 1000).toFixed(1) + 's';
+
+                if (recordDuration >= MAX_RECORD_TIME) {
+                    stopVideoRecording();
+                }
+            }, interval);
+        }
+
+        function stopVideoRecording() {
+            if (!isRecording) return;
+            clearInterval(recordTimer);
+            isRecording = false;
+            
+            focusRing.style.opacity = '1';
+            videoOverlay.classList.add('opacity-0');
+            videoOverlay.classList.remove('opacity-100');
+            captureBtnInner.classList.remove('bg-red-500', 'rounded-lg', 'scale-75');
+            captureBtnInner.classList.add('bg-white');
+            progressCircle.style.strokeDashoffset = 264;
+            captureLabel.innerText = "Hold for Video / Tap Photo";
+
+            showToast(`Video recorded successfully! 🎥 (${(recordDuration/1000).toFixed(1)}s)`);
+            
+            // Switch image to simulated playing state
+            cameraImage.classList.add('scale-105', 'brightness-110');
+            setTimeout(() => cameraImage.classList.remove('scale-105', 'brightness-110'), 600);
+
+            onCaptureComplete();
+        }
+
+        // Transition interface to edit / ready-to-share state
+        function onCaptureComplete() {
+            publishBtn.classList.remove('hidden');
+            headerSpacer.classList.add('hidden');
+        }
+
+        function publishStory() {
+            showToast('Uploading Story... 🚀');
+            setTimeout(() => {
+                showToast('Story Shared Successfully! ✨');
+                setTimeout(() => {
+                    history.back();
+                }, 1000);
+            }, 1500);
+        }
+
+        // Helper Toast function
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const text = document.getElementById('toast-text');
+            text.innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+                toast.classList.remove('opacity-100');
+            }, 2500);
+        }
+
+        // --- Media Upload & Trimmer Logic ---
+        const trimmerModal = document.getElementById('video-trimmer-modal');
+
+        function handleMediaUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type.startsWith('video/')) {
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = function() {
+                    window.URL.revokeObjectURL(video.src);
+                    if (video.duration > 30) {
+                        openTrimmer();
+                    } else {
+                        processUpload(file);
+                    }
+                }
+                video.src = URL.createObjectURL(file);
+            } else if (file.type.startsWith('image/')) {
+                const url = URL.createObjectURL(file);
+                cameraImage.src = url;
+                publishBtn.classList.remove('hidden');
+                publishBtn.classList.add('flex');
+            }
+        }
+
+        function openTrimmer() {
+            trimmerModal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeTrimmer() {
+            trimmerModal.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('media-upload').value = '';
+        }
+
+        function confirmTrim() {
+            closeTrimmer();
+            showToast('Video trimmed to 30s and ready!');
+            publishBtn.classList.remove('hidden');
+            publishBtn.classList.add('flex');
+        }
+
+        function processUpload(file) {
+            showToast('Media ready for upload!');
+            publishBtn.classList.remove('hidden');
+            publishBtn.classList.add('flex');
+        }
+    </script>
+</body>
+</html>

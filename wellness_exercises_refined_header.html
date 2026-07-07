@@ -1,0 +1,287 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Wellness - Exercise Section</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Hide scrollbar for horizontal scroll areas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "primary": "#00193c",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "primary-container": "#002d62",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary": "#4f55ae",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "outline-variant": "#c4c6d1",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff",
+                        "tertiary-fixed-dim": "#c3c7cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "60px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "stack-sm": "12px",
+                        "stack-lg": "40px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-caps": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "500" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700" }],
+                        "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen flex flex-col"><header class="w-full h-[72px] px-margin-page flex justify-center items-center bg-background/80 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant/30">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Your Activity</h1>
+</header>
+<!-- TopAppBar -->
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-5xl mx-auto pb-[120px] md:pb-margin-page flex flex-col gap-stack-lg px-margin-page pb-[120px] pt-stack-md">
+<!-- Welcome & Widgets Section -->
+<section class="flex flex-col gap-gutter">
+<!-- Bento Grid Widgets -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Heart Rate Widget -->
+<article class="bg-primary-container rounded-lg p-margin-page relative overflow-hidden flex flex-col justify-between min-h-[160px] shadow-[0_8px_30px_rgba(0,45,98,0.08)]">
+<!-- Glassmorphism Flare -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="flex items-center gap-unit z-10 text-secondary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Heart Rate</span>
+</div>
+<div class="z-10 mt-auto">
+<div class="flex items-baseline gap-2">
+<span class="font-display text-display text-on-primary text-[48px] leading-[48px]">72</span>
+<span class="font-headline-md text-headline-md text-secondary-fixed-dim">BPM</span>
+</div>
+<p class="font-body-md text-body-md text-secondary-fixed-dim mt-1">Resting average</p>
+</div>
+</article>
+<!-- Sleep Widget -->
+<article class="bg-surface-container rounded-lg p-margin-page flex flex-col justify-between min-h-[160px] border border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-unit text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Sleep Last Night</span>
+</div>
+<div class="mt-auto">
+<div class="flex items-baseline gap-2 text-primary">
+<span class="font-display text-display text-[48px] leading-[48px]">7<span class="font-headline-md text-headline-md text-on-surface-variant">h</span></span>
+<span class="font-display text-display text-[48px] leading-[48px]">45<span class="font-headline-md text-headline-md text-on-surface-variant">m</span></span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-2 h-2 rounded-full bg-[#10b981]"></div>
+<p class="font-body-md text-body-md text-on-surface-variant">Quality: Optimal</p>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Exercises Section -->
+<section class="flex flex-col gap-stack-md">
+<!-- Segmented Control Tabs -->
+<div class="flex bg-surface-container rounded-full p-2 gap-2 overflow-x-auto no-scrollbar shadow-inner border border-outline-variant/20 justify-start md:justify-center">
+<button class="h-touch-target-min px-6 rounded-full bg-primary text-on-primary font-headline-md text-headline-md shadow-md whitespace-nowrap flex items-center justify-center transition-all">Beginner</button>
+<button class="h-touch-target-min px-6 rounded-full text-on-surface-variant font-headline-md text-headline-md hover:bg-surface-variant whitespace-nowrap flex items-center justify-center transition-all">Intermediate</button>
+<button class="h-touch-target-min px-6 rounded-full text-on-surface-variant font-headline-md text-headline-md hover:bg-surface-variant whitespace-nowrap flex items-center justify-center transition-all">Advanced</button>
+</div>
+<!-- Exercise Cards List -->
+<div class="flex flex-col gap-stack-md">
+<!-- Card 1 -->
+<article class="bg-surface rounded-lg shadow-[0_8px_30px_rgba(0,45,98,0.06)] border border-outline-variant/30 overflow-hidden flex flex-col md:flex-row group hover:shadow-[0_12px_40px_rgba(0,45,98,0.1)] transition-all duration-300">
+<!-- Video Thumbnail -->
+<div class="relative w-full md:w-[280px] h-[220px] md:h-auto bg-surface-variant shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Active senior woman smiling while doing gentle stretching exercises in a bright, sunlit modern living room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-K-kG3bWPW_ZOt9Ns5GvQdtIWI2wqQP7ybi42_rPYbkQE8r2K3CK_wAPcRktIdtxNh7GKvc4mwKVErnVKLA72pFupRfIokNYY0_HmiskQo-RkZLF_E3wqS0orR98FFNFNu8S0KyefRF6z0vAJhUKXJ3XDmrB24kc4C1DA8D8lZ_1rbC9K3yA6f17F8cC_y1nUzk6gJVjY70wOj1KLz67qZDzkGyHJOC9cRfewC5BFTLTkj1S_dJ_Ir60ItP91G6RFzpq4A_g8CMs">
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<button class="w-[72px] h-[72px] bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-[36px] ml-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Content -->
+<div class="p-margin-page flex flex-col justify-center flex-1 bg-surface-container-lowest">
+<div class="flex justify-between items-start mb-stack-sm gap-4">
+<div>
+<span class="inline-block px-4 py-1.5 bg-secondary-fixed text-on-secondary-fixed font-label-caps text-label-caps uppercase rounded-full mb-3">Beginner</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">Morning Mobility</h3>
+</div>
+<button class="w-[60px] h-[60px] shrink-0 rounded-full border-2 border-surface-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-md line-clamp-2">Gentle full-body stretching to improve circulation and reduce joint stiffness. Perfect for safely starting your day.</p>
+<div class="flex flex-wrap items-center gap-6 mt-auto">
+<div class="flex items-center gap-2 text-on-surface-variant bg-surface-container px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span class="font-body-md text-body-md font-semibold">15 Min</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant bg-surface-container px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+<span class="font-body-md text-body-md font-semibold">Low Impact</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface rounded-lg shadow-[0_8px_30px_rgba(0,45,98,0.06)] border border-outline-variant/30 overflow-hidden flex flex-col md:flex-row group hover:shadow-[0_12px_40px_rgba(0,45,98,0.1)] transition-all duration-300">
+<!-- Video Thumbnail -->
+<div class="relative w-full md:w-[280px] h-[220px] md:h-auto bg-surface-variant shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Senior man confidently practicing seated yoga poses on a sturdy chair in a peaceful, minimalist studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz5KharIkya-Jh8Tbtem9LrDhRT8Gh_6raOrLqLj83Hwy_EIgTzPaYh0Ko512Tyocec36-N8QcNWAmNLa0XCSVeYGEKBRRLpVA8_t9pNra4otf_T9JfKkXkhZRAJ1k_pFYX51pbP9SnSWK2KuW895Lp6R-3lDeu1zHriade9UY58oB8Yrj7iys5VMtWl3u79PJpV_m9Vmyto7EHrdBYkMpU9IrRmI3_Ze6Qhdn234XEwHcYW6UOO8PfHIaiBwgExGqp0d21snIKNs">
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<button class="w-[72px] h-[72px] bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-[36px] ml-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Content -->
+<div class="p-margin-page flex flex-col justify-center flex-1 bg-surface-container-lowest">
+<div class="flex justify-between items-start mb-stack-sm gap-4">
+<div>
+<span class="inline-block px-4 py-1.5 bg-secondary-fixed text-on-secondary-fixed font-label-caps text-label-caps uppercase rounded-full mb-3">Beginner</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">Seated Core Strength</h3>
+</div>
+<button class="w-[60px] h-[60px] shrink-0 rounded-full border-2 border-surface-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-md line-clamp-2">Build core stability and improve posture safely from a seated position. No floor work required, ideal for balance confidence.</p>
+<div class="flex flex-wrap items-center gap-6 mt-auto">
+<div class="flex items-center gap-2 text-on-surface-variant bg-surface-container px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span class="font-body-md text-body-md font-semibold">20 Min</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant bg-surface-container px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-[20px]">chair</span>
+<span class="font-body-md text-body-md font-semibold">Equipment: Chair</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pt-3 pb-8 h-[100px] bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl shadow-[0_-10px_40px_rgba(0,45,98,0.08)] rounded-t-[32px] border-t border-white/30 border-slate-200/30 dark:border-slate-800/30">
+<!-- Home (Inactive) -->
+<a href="home_dashboard.html" class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:text-primary dark:hover:text-blue-200 transition-all h-[72px] flex-1">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Home</span>
+</a>
+<!-- Exercise (Active) -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-blue-300 bg-blue-50/50 dark:bg-blue-900/30 rounded-2xl px-3 py-2 h-[72px] flex-1">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Exercise</span>
+</button>
+<!-- Report (Inactive) -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:text-primary dark:hover:text-blue-200 transition-all h-[72px] flex-1">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Report</span>
+</button>
+<!-- Community (Inactive) -->
+<a href="community_hub.html" class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:text-primary dark:hover:text-blue-200 transition-all h-[72px] flex-1">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Community</span>
+</a>
+<!-- Profile (Inactive) -->
+<a href="user_profile.html" class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:text-primary dark:hover:text-blue-200 transition-all h-[72px] flex-1">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Profile</span>
+</a>
+</nav>
+</body></html>

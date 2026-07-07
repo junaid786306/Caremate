@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos - Caremate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Manrope', sans-serif; background: #000; color: #fff; overflow: hidden; height: 100dvh; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .reel-container { height: 100dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: y mandatory; }
+        .reel-item { height: 100dvh; position: relative; overflow: hidden; scroll-snap-align: start; }
+        .vinyl-spin { animation: spin 4s linear infinite; }
+        @keyframes spin { from {transform: rotate(0deg)} to {transform: rotate(360deg)} }
+        .like-pop { animation: pop 0.3s cubic-bezier(0.36,0.07,0.19,0.97); }
+        @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
+        .sheet { transition: transform 0.35s cubic-bezier(0.32,0.72,0,1); transform: translateY(100%); }
+        .sheet.open { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<div id="reel-container" class="reel-container">
+
+    <!-- Reel 1 -->
+    <div class="reel-item" style="background: linear-gradient(160deg, #0f2444 0%, #1a3a6b 50%, #2d1b5e 100%);">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=800&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-60">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+
+        <!-- Top bar (Fixed) -->
+        <div class="fixed top-0 left-0 right-0 px-4 pt-12 pb-4 flex items-center justify-between z-50 pointer-events-none">
+            <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md text-white shadow-md pointer-events-auto border border-white/10">
+                <span class="material-symbols-outlined drop-shadow-md">arrow_back</span>
+            </button>
+            <div class="bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-md pointer-events-auto">
+                <h2 class="font-bold text-sm text-white tracking-widest uppercase drop-shadow-md">Videos</h2>
+            </div>
+            <div class="w-10 h-10"></div>
+        </div>
+
+
+
+        <!-- Side actions -->
+        <div class="absolute right-3 bottom-32 flex flex-col gap-5 items-center z-20">
+            <!-- Avatar -->
+            <div class="flex flex-col items-center gap-1">
+                <div class="w-11 h-11 rounded-full border-2 border-white overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <!-- Like -->
+            <button onclick="toggleReelLike(this, 'r1')" id="like-r1" class="flex flex-col items-center gap-1" data-liked="false">
+                <span class="material-symbols-outlined text-white text-3xl transition-transform">favorite</span>
+                <span class="text-xs font-bold text-white like-c">42</span>
+            </button>
+            <!-- Comment -->
+            <button onclick="openComments('r1')" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">chat_bubble</span>
+                <span class="text-xs font-bold text-white">8</span>
+            </button>
+            <!-- Share -->
+            <button onclick="openShare()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">send</span>
+                <span class="text-xs font-bold text-white">Share</span>
+            </button>
+            <!-- More -->
+            <button onclick="openMore()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">more_vert</span>
+            </button>
+        </div>
+
+        <!-- Bottom user info -->
+        <div class="absolute bottom-20 left-4 right-20 z-20">
+            <div class="flex items-center gap-2 mb-2">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya" class="w-8 h-8 rounded-full border border-white">
+                <span class="font-bold text-sm">shreya_wellness</span>
+            </div>
+            <p class="text-sm text-white/90 leading-relaxed">My morning stretch routine 🧘‍♀️ Feeling amazing! #SeniorFitness #MorningVibes</p>
+            <!-- Music bar -->
+            <div class="flex items-center gap-2 mt-3">
+                <div class="vinyl-spin w-5 h-5 rounded-full border-2 border-white/40 flex items-center justify-center bg-white/10">
+                    <span class="material-symbols-outlined text-white text-[10px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+                </div>
+                <span class="text-[11px] text-white/80 font-medium">Morning Calm — Relaxing Piano</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reel 2 -->
+    <div class="reel-item" style="background: linear-gradient(160deg, #1a2e1a 0%, #2d4a2d 50%, #0a1f0a 100%);">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-55">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+
+
+
+        <!-- Side actions -->
+        <div class="absolute right-3 bottom-32 flex flex-col gap-5 items-center z-20">
+            <div class="flex flex-col items-center gap-1">
+                <div class="w-11 h-11 rounded-full border-2 border-white overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <button onclick="toggleReelLike(this, 'r2')" id="like-r2" class="flex flex-col items-center gap-1" data-liked="false">
+                <span class="material-symbols-outlined text-white text-3xl transition-transform">favorite</span>
+                <span class="text-xs font-bold text-white like-c">119</span>
+            </button>
+            <button onclick="openComments('r2')" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">chat_bubble</span>
+                <span class="text-xs font-bold text-white">22</span>
+            </button>
+            <button onclick="openShare()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">send</span>
+                <span class="text-xs font-bold text-white">Share</span>
+            </button>
+            <button onclick="openMore()" class="active:scale-90 transition-transform"><span class="material-symbols-outlined text-white text-3xl">more_vert</span></button>
+        </div>
+
+        <div class="absolute bottom-20 left-4 right-20 z-20">
+            <div class="flex items-center gap-2 mb-2">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-8 h-8 rounded-full border border-white">
+                <span class="font-bold text-sm">elena_active</span>
+            </div>
+            <p class="text-sm text-white/90 leading-relaxed">Daily walk in the park 🌳 Nature is the best medicine! #ActiveSenior #WalkMore</p>
+            <div class="flex items-center gap-2 mt-3">
+                <div class="vinyl-spin w-5 h-5 rounded-full border-2 border-white/40 flex items-center justify-center bg-white/10">
+                    <span class="material-symbols-outlined text-white text-[10px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+                </div>
+                <span class="text-[11px] text-white/80 font-medium">Nature Sounds — Healing Tones</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reel 3 -->
+    <div class="reel-item" style="background: linear-gradient(160deg, #2e1a1a 0%, #4a2d2d 50%, #1f0a0a 100%);">
+        <img src="https://images.unsplash.com/photo-1518611012118-29a83679f223?q=80&w=800&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+
+
+
+        <!-- Side actions -->
+        <div class="absolute right-3 bottom-32 flex flex-col gap-5 items-center z-20">
+            <div class="flex flex-col items-center gap-1">
+                <div class="w-11 h-11 rounded-full border-2 border-white overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <button onclick="toggleReelLike(this, 'r3')" id="like-r3" class="flex flex-col items-center gap-1" data-liked="false">
+                <span class="material-symbols-outlined text-white text-3xl transition-transform">favorite</span>
+                <span class="text-xs font-bold text-white like-c">67</span>
+            </button>
+            <button onclick="openComments('r3')" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">chat_bubble</span>
+                <span class="text-xs font-bold text-white">15</span>
+            </button>
+            <button onclick="openShare()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl">send</span>
+                <span class="text-xs font-bold text-white">Share</span>
+            </button>
+            <button onclick="openMore()" class="active:scale-90 transition-transform"><span class="material-symbols-outlined text-white text-3xl">more_vert</span></button>
+        </div>
+
+        <div class="absolute bottom-20 left-4 right-20 z-20">
+            <div class="flex items-center gap-2 mb-2">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-8 h-8 rounded-full border border-white">
+                <span class="font-bold text-sm">arthur_fit</span>
+            </div>
+            <p class="text-sm text-white/90 leading-relaxed">Yoga at 70! Age is just a number 💪 #YogaLife #SeniorHealth #NeverTooLate</p>
+            <div class="flex items-center gap-2 mt-3">
+                <div class="vinyl-spin w-5 h-5 rounded-full border-2 border-white/40 flex items-center justify-center bg-white/10">
+                    <span class="material-symbols-outlined text-white text-[10px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+                </div>
+                <span class="text-[11px] text-white/80 font-medium">Zen Garden — Ambient Flow</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Sheets -->
+<div id="sheet-overlay" onclick="closeAllSheets()" class="fixed inset-0 bg-black/50 z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+<!-- Comments Sheet -->
+<div id="comment-sheet" class="sheet fixed bottom-0 left-0 right-0 z-[110] bg-white text-slate-800 rounded-t-[32px] shadow-2xl max-h-[85vh] flex flex-col">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 flex-shrink-0">
+        <h3 class="font-bold text-[#00193c] text-base">Comments</h3>
+        <button onclick="closeAllSheets()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
+            <span class="material-symbols-outlined text-slate-500 text-[20px]">close</span>
+        </button>
+    </div>
+    <div id="comments-list" class="flex-1 overflow-y-auto px-6 py-4 space-y-4"></div>
+    <div class="px-6 py-4 border-t border-slate-100 flex items-center gap-3 flex-shrink-0 bg-white pb-8">
+        <div class="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 flex items-center gap-2 focus-within:border-secondary transition-colors">
+            <input id="comment-input" type="text" placeholder="Add a comment..." class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder:text-slate-400" onkeydown="if(event.key==='Enter') postComment()">
+        </div>
+        <button onclick="postComment()" class="w-10 h-10 bg-[#00193c] text-white rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform flex-shrink-0">
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">send</span>
+        </button>
+    </div>
+</div>
+
+<!-- Share Sheet -->
+<div id="share-sheet" class="sheet fixed bottom-0 left-0 right-0 z-[110] bg-white text-slate-800 rounded-t-[32px] shadow-2xl pb-10">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+        <h3 class="font-bold text-[#00193c] text-base">Share Reel</h3>
+        <button onclick="closeAllSheets()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
+            <span class="material-symbols-outlined text-slate-500 text-[20px]">close</span>
+        </button>
+    </div>
+    <div class="grid grid-cols-4 gap-4 px-6 py-6">
+        <button onclick="doAction('WhatsApp')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+            <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-green-700 text-2xl">chat</span></div>
+            <span class="text-[10px] font-bold text-slate-500">WhatsApp</span>
+        </button>
+        <button onclick="doAction('Messages')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-blue-700 text-2xl">sms</span></div>
+            <span class="text-[10px] font-bold text-slate-500">Messages</span>
+        </button>
+        <button onclick="doAction('Copy Link')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+            <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-slate-700 text-2xl">link</span></div>
+            <span class="text-[10px] font-bold text-slate-500">Copy Link</span>
+        </button>
+        <button onclick="doAction('Email')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+            <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-slate-700 text-2xl">mail</span></div>
+            <span class="text-[10px] font-bold text-slate-500">Email</span>
+        </button>
+    </div>
+</div>
+
+<!-- More Sheet -->
+<div id="more-sheet" class="sheet fixed bottom-0 left-0 right-0 z-[110] bg-white text-slate-800 rounded-t-[32px] shadow-2xl pb-10">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+        <h3 class="font-bold text-[#00193c] text-base">Options</h3>
+        <button onclick="closeAllSheets()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
+            <span class="material-symbols-outlined text-slate-500 text-[20px]">close</span>
+        </button>
+    </div>
+    <div class="flex flex-col px-4 py-2">
+        <button onclick="doAction('Report')" class="flex items-center gap-4 px-4 py-4 active:bg-slate-50 transition-colors text-red-500 font-bold rounded-xl">
+            <span class="material-symbols-outlined">flag</span> Report Inappropriate
+        </button>
+        <button onclick="doAction('Not Interested')" class="flex items-center gap-4 px-4 py-4 active:bg-slate-50 transition-colors text-slate-700 font-bold rounded-xl">
+            <span class="material-symbols-outlined">visibility_off</span> Not Interested
+        </button>
+        <button onclick="doAction('Archive Video')" class="flex items-center gap-4 px-4 py-4 active:bg-slate-50 transition-colors text-slate-700 font-bold rounded-xl">
+            <span class="material-symbols-outlined">archive</span> Archive Video
+        </button>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 bg-white text-slate-900 px-6 py-3 rounded-full text-sm font-bold shadow-xl z-[300] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+<script>
+    function toggleReelLike(btn, id) {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const countEl = btn.querySelector('.like-c');
+        const liked = btn.dataset.liked === 'true';
+        const count = parseInt(countEl.textContent);
+        btn.dataset.liked = !liked;
+        if (!liked) {
+            icon.style.color = '#ef4444';
+            icon.style.fontVariationSettings = "'FILL' 1";
+            countEl.textContent = count + 1;
+            icon.classList.add('like-pop');
+            setTimeout(() => icon.classList.remove('like-pop'), 300);
+        } else {
+            icon.style.color = '';
+            icon.style.fontVariationSettings = "'FILL' 0";
+            countEl.textContent = count - 1;
+        }
+    }
+
+    // ── Sheets ───────────────────────────────────────────────────
+    const overlay = document.getElementById('sheet-overlay');
+    let activePost = null;
+
+    function showOverlay() {
+        overlay.classList.remove('opacity-0','pointer-events-none');
+        overlay.classList.add('opacity-100');
+    }
+    function hideOverlay() {
+        overlay.classList.add('opacity-0','pointer-events-none');
+        overlay.classList.remove('opacity-100');
+    }
+    function closeAllSheets() {
+        document.getElementById('comment-sheet').classList.remove('open');
+        document.getElementById('share-sheet').classList.remove('open');
+        document.getElementById('more-sheet').classList.remove('open');
+        hideOverlay();
+    }
+
+    const commentData = {
+        r1: [{ name: 'Elena', text: 'Love the stretches! 🧘‍♀️', time: '2h' }, { name: 'Arthur', text: 'Great routine!', time: '5h' }],
+        r2: [{ name: 'Shreya', text: 'Beautiful park! 🌳', time: '1h' }],
+        r3: [{ name: 'Sarah', text: 'So inspiring! 💪', time: '3h' }]
+    };
+
+    function openComments(postId) {
+        activePost = postId;
+        renderComments(postId);
+        document.getElementById('comment-sheet').classList.add('open');
+        showOverlay();
+    }
+
+    function renderComments(postId) {
+        const list = document.getElementById('comments-list');
+        const comments = commentData[postId] || [];
+        list.innerHTML = comments.length === 0 ? '<p class="text-center text-slate-400 text-sm py-8">No comments yet.</p>' :
+            comments.map(c => `
+                <div class="flex gap-3">
+                    <div class="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-xs flex-shrink-0">${c.name[0]}</div>
+                    <div class="flex-1">
+                        <div class="bg-slate-50 rounded-2xl rounded-tl-sm px-4 py-3">
+                            <div class="flex items-baseline gap-2 mb-1">
+                                <span class="font-bold text-[#00193c] text-sm">${c.name}</span>
+                                <span class="text-[10px] text-slate-400">${c.time}</span>
+                            </div>
+                            <p class="text-sm text-slate-600">${c.text}</p>
+                        </div>
+                    </div>
+                </div>`).join('');
+    }
+
+    function postComment() {
+        const input = document.getElementById('comment-input');
+        if (!input.value.trim() || !activePost) return;
+        if (!commentData[activePost]) commentData[activePost] = [];
+        commentData[activePost].unshift({ name: 'You', text: input.value, time: 'Now' });
+        renderComments(activePost);
+        input.value = '';
+        showToast('Comment posted!');
+    }
+
+    function openShare() {
+        document.getElementById('share-sheet').classList.add('open');
+        showOverlay();
+    }
+    function openMore() {
+        document.getElementById('more-sheet').classList.add('open');
+        showOverlay();
+    }
+    
+    function doAction(action) {
+        closeAllSheets();
+        showToast(`${action} successful!`);
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.remove('opacity-0');
+        t.classList.add('opacity-100');
+        setTimeout(() => { t.classList.add('opacity-0'); t.classList.remove('opacity-100'); }, 2500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const storedImg = localStorage.getItem('user_profile_img');
+        if (storedImg) {
+            document.querySelectorAll('img[src*="seed=Shreya"]').forEach(img => {
+                img.src = storedImg;
+            });
+        }
+        const storedUsername = localStorage.getItem('user_username');
+        if (storedUsername) {
+            const rawUser = storedUsername.startsWith('@') ? storedUsername.substring(1) : storedUsername;
+            document.querySelectorAll('span').forEach(el => {
+                if (el.textContent.trim() === 'shreya_wellness') {
+                    el.textContent = rawUser;
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

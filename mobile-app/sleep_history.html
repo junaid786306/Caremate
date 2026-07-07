@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sleep History - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+        .day-block{border-left:3px solid #e2e8f0;padding-left:20px;position:relative;}
+        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#8b5cf6;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
+        .status-pill { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+        .status-pill:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .status-pill:active { transform: scale(0.97); }
+    </style>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-10">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Sleep History</h1>
+        <button onclick="toggleFilter()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors text-primary">
+            <span class="material-symbols-outlined">calendar_month</span>
+        </button>
+    </header>
+
+    <div id="filter-panel" class="hidden bg-white border-b border-slate-100 px-6 py-4">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Filter by Date Range</p>
+        <div class="flex gap-3">
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">From</label><input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:border-primary outline-none"></div>
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">To</label><input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:border-primary outline-none"></div>
+            <div class="flex items-end"><button onclick="toggleFilter()" class="h-10 px-4 bg-primary text-white rounded-xl text-sm font-bold active:scale-95">Apply</button></div>
+        </div>
+    </div>
+
+    <!-- Status Toast -->
+    <div id="status-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[400] opacity-0 pointer-events-none" style="transition: opacity 0.3s, transform 0.3s; transform: translateX(-50%) translateY(-10px);">
+        <div id="status-toast-inner" class="bg-[#0d1b2e] text-white rounded-2xl px-5 py-4 shadow-2xl min-w-[280px] max-w-[340px] text-sm font-semibold leading-relaxed"></div>
+    </div>
+    <div class="bg-white border-b border-slate-100 px-6 py-3 flex gap-3 overflow-x-auto hide-scrollbar">
+        <div id="filter-all" onclick="filterStatus('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary">
+            <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
+        </div>
+        <div id="filter-optimal" onclick="filterStatus('optimal')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-purple-50 border border-purple-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-purple-500 rounded-full"></div><span class="text-[11px] font-extrabold text-purple-700 uppercase tracking-widest">Optimal</span></div>
+        <div id="filter-poor" onclick="filterStatus('poor')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-orange-50 border border-orange-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-orange-400 rounded-full"></div><span class="text-[11px] font-extrabold text-orange-600 uppercase tracking-widest">Poor</span></div>
+    </div>
+
+    <main class="max-w-md mx-auto p-6">
+        <div id="timeline" class="space-y-8"></div>
+        <div id="load-more" class="mt-8 flex justify-center">
+            <button onclick="loadMore()" class="px-8 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-primary shadow-sm hover:bg-slate-50 active:scale-95">Load More</button>
+        </div>
+    </main>
+
+    <script>
+        const sleepData = [
+            { date:"Last Night, 7-8 May", entries:[{dur:"7h 45m", sleep:"10:30 PM", wake:"6:15 AM", status:"optimal", awake:"1"}]},
+            { date:"6-7 May", entries:[{dur:"6h 20m", sleep:"11:45 PM", wake:"6:05 AM", status:"poor", awake:"3"}]},
+            { date:"5-6 May", entries:[{dur:"8h 10m", sleep:"10:00 PM", wake:"6:10 AM", status:"optimal", awake:"0"}]},
+            { date:"4-5 May", entries:[{dur:"7h 30m", sleep:"10:45 PM", wake:"6:15 AM", status:"optimal", awake:"1"}]},
+            { date:"3-4 May", entries:[{dur:"5h 50m", sleep:"12:10 AM", wake:"6:00 AM", status:"poor", awake:"2"}]},
+        ];
+        const moreDates=["2-3 May","1-2 May","30 Apr-1 May","29-30 Apr"];
+        let loadedExtra=0;
+        let currentFilter = 'all';
+
+        function renderDay(day) {
+            let filteredEntries = day.entries;
+            if (currentFilter !== 'all') {
+                filteredEntries = day.entries.filter(e => e.status === currentFilter);
+            }
+            if (filteredEntries.length === 0) return '';
+
+            const entries = filteredEntries.map(e=>`
+                <div class="flex flex-col gap-3 p-4 rounded-2xl border ${e.status==='optimal'?'bg-purple-50 border-purple-100':'bg-orange-50 border-orange-100'} mb-2 last:mb-0 shadow-sm">
+                    <div class="flex items-center justify-between border-b ${e.status==='optimal'?'border-purple-200/50':'border-orange-200/50'} pb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] border border-slate-100">
+                                <span class="material-symbols-outlined ${e.status==='optimal'?'text-purple-500':'text-orange-500'} text-[22px]" style="font-variation-settings:'FILL' 1">bedtime</span>
+                            </div>
+                            <div>
+                                <p class="font-display text-2xl font-black ${e.status==='optimal'?'text-purple-700':'text-orange-700'} leading-none">${e.dur}</p>
+                                <span class="text-[10px] font-bold uppercase tracking-wider ${e.status==='optimal'?'text-purple-500':'text-orange-500'}">Total Sleep</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider ${e.status==='optimal'?'bg-purple-100 text-purple-600':'bg-orange-100 text-orange-600'}">${e.status}</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center px-1">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sleep Time</span>
+                            <span class="font-bold text-sm text-slate-700">${e.sleep}</span>
+                        </div>
+                        <div class="h-px bg-slate-300 flex-1 mx-4 relative flex items-center justify-center">
+                            <span class="bg-${e.status==='optimal'?'purple':'orange'}-50 px-2 text-[10px] font-bold text-slate-400">${e.awake} times awake</span>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Wake Time</span>
+                            <span class="font-bold text-sm text-slate-700">${e.wake}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            return `<div class="day-block"><h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">${day.date}</h3>${entries}</div>`;
+        }
+
+        function loadTimeline() {
+            const container = document.getElementById('timeline');
+            container.innerHTML = sleepData.map(renderDay).join('');
+            if(container.innerHTML === '') container.innerHTML = '<p class="text-center text-sm font-bold text-slate-400 mt-10">No records found for this filter.</p>';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('status-toast');
+            document.getElementById('status-toast-inner').innerHTML = msg;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            setTimeout(()=>{
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(-10px)';
+            }, 2000);
+        }
+
+        function filterStatus(status) {
+            currentFilter = status;
+            document.querySelectorAll('.status-pill').forEach(el => el.style.opacity = '0.5');
+            document.querySelectorAll('.status-pill').forEach(el => el.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
+            const activeEl = document.getElementById(`filter-${status}`);
+            if (activeEl) {
+                activeEl.style.opacity = '1';
+                activeEl.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
+            }
+            showToast(status === 'all' ? 'Showing all records' : `Filtered by: ${status}`);
+            loadTimeline();
+        }
+
+        function toggleFilter() {
+            const p = document.getElementById('filter-panel');
+            p.classList.toggle('hidden');
+        }
+
+        function loadMore() {
+            if(loadedExtra >= moreDates.length) {
+                document.getElementById('load-more').innerHTML = '<p class="text-xs font-bold text-slate-400">All caught up!</p>';
+                return;
+            }
+            const date = moreDates[loadedExtra];
+            const isOpt = Math.random() > 0.3;
+            sleepData.push({
+                date: date,
+                entries: [{
+                    dur: isOpt ? "7h 20m" : "5h 45m",
+                    sleep: isOpt ? "10:30 PM" : "12:15 AM",
+                    wake: isOpt ? "5:50 AM" : "6:00 AM",
+                    status: isOpt ? "optimal" : "poor",
+                    awake: Math.floor(Math.random() * 3).toString()
+                }]
+            });
+            loadedExtra++;
+            loadTimeline();
+        }
+
+        loadTimeline();
+    </script>
+</body>
+</html>
+

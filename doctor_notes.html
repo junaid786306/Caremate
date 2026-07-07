@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Doctor Notes - Vitality Care</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#00193c","primary-fixed":"#d7e2ff","surface":"#faf9fe","background":"#faf9fe","on-background":"#1a1b1f"},fontFamily:{manrope:["Manrope","sans-serif"]}}}}</script>
+<style>
+body{min-height:max(884px,100dvh);}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+</style>
+</head>
+<body class="bg-background text-on-background font-manrope antialiased pb-32">
+
+<!-- Header -->
+<header class="flex justify-between items-center px-6 h-20 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
+    <div class="flex items-center gap-3">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="text-xl font-bold text-primary">Doctor Notes</h1>
+    </div>
+    <div class="flex items-center gap-2">
+        <a href="doctor_appointments_history.html" class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 transition-colors" title="History">
+            <span class="material-symbols-outlined text-xl">history</span>
+        </a>
+    </div>
+</header>
+
+<main class="max-w-2xl mx-auto pt-6 px-6 pb-8 space-y-6">
+
+    <!-- Doctor Header -->
+    <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+        <div class="w-[68px] h-[68px] rounded-[20px] bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-3xl text-blue-600" style="font-variation-settings:'FILL' 1;">local_hospital</span>
+        </div>
+        <div>
+            <h2 class="font-bold text-lg text-slate-800">Dr. Aris Thorne</h2>
+            <p class="text-[10px] font-black text-primary uppercase tracking-widest">Cardiologist</p>
+        </div>
+    </div>
+
+    <!-- Notes List -->
+    <div class="space-y-4">
+        <h3 class="font-bold text-base text-slate-800 ml-1">Recent Consultations</h3>
+        
+        <!-- Note Card 1 -->
+        <div class="bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings:'FILL' 1;">event_note</span>
+                    <span class="font-bold text-primary">June 15, 2026</span>
+                </div>
+                <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">Video Call</span>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Diagnosis</h4>
+                    <p class="text-sm font-medium text-slate-800">Routine Checkup. BP is slightly elevated.</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Prescriptions</h4>
+                    <div class="bg-primary/5 rounded-[16px] p-3 border border-primary/10">
+                        <ul class="list-disc pl-4 text-sm text-slate-700 font-medium space-y-1">
+                            <li>Lisinopril 10mg - 1 tablet daily (Morning)</li>
+                            <li>Atorvastatin 20mg - 1 tablet daily (Night)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Advice</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">Reduce sodium intake. Continue daily 30-min walking. Schedule a follow-up in 4 weeks to monitor blood pressure levels.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Note Card 2 -->
+        <div class="bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-400 text-[20px]" style="font-variation-settings:'FILL' 1;">event_note</span>
+                    <span class="font-bold text-slate-600">May 10, 2026</span>
+                </div>
+                <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">Clinic Visit</span>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Diagnosis</h4>
+                    <p class="text-sm font-medium text-slate-800">Initial consultation for mild chest pain.</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Advice</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">ECG results are normal. Pain is likely muscular. Recommended rest and prescribed a mild muscle relaxant for 3 days if pain persists.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

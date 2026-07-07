@@ -1,0 +1,92 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Help & Support - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Help & Support</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-8">
+        <!-- Support Options -->
+        <section class="space-y-4">
+            <div class="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm">
+                <button class="w-full p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors border-b border-slate-50 text-left">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
+                        <span class="material-symbols-outlined">quiz</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-slate-700 text-lg">FAQ</h3>
+                        <p class="text-xs text-slate-400 font-medium">Common questions and answers</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </button>
+                <button class="w-full p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors border-b border-slate-50 text-left">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center">
+                        <span class="material-symbols-outlined">support_agent</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-slate-700 text-lg">Contact Us</h3>
+                        <p class="text-xs text-slate-400 font-medium">Chat with our support team</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </button>
+                <button class="w-full p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors text-left">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center">
+                        <span class="material-symbols-outlined">bug_report</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-slate-700 text-lg">Report a Problem</h3>
+                        <p class="text-xs text-slate-400 font-medium">Help us improve the app</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Social -->
+        <section class="text-center space-y-4 pt-8">
+            <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Follow our community</p>
+            <div class="flex justify-center gap-6">
+                <button class="w-12 h-12 bg-white rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">public</span>
+                </button>
+                <button class="w-12 h-12 bg-white rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+            </div>
+        </section>
+    </main>
+</body></html>

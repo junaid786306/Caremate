@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Group Settings - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff","primary-container":"#002d62","on-surface":"#1a1b1f","error":"#ba1a1a","error-container":"#ffdad6"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-on-surface font-manrope antialiased min-h-screen pb-10">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1">Group Settings</h1>
+        <button onclick="saveGroupSettings()" class="px-4 py-2 bg-primary text-white rounded-full text-sm font-bold active:scale-95 transition-transform">Save</button>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        <!-- Group Image + Name -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col items-center gap-4">
+            <div class="relative">
+                <img id="group-img" class="w-24 h-24 rounded-2xl object-cover shadow-md border-4 border-white" src="https://api.dicebear.com/7.x/shapes/svg?seed=CaremateGroup" alt="Group">
+                <label for="group-img-upload" class="absolute -bottom-2 -right-2 w-9 h-9 bg-primary text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:opacity-80 transition-opacity">
+                    <span class="material-symbols-outlined text-sm">camera_alt</span>
+                </label>
+                <input type="file" id="group-img-upload" accept="image/*" class="hidden" onchange="previewImg(this)">
+            </div>
+            <div class="w-full">
+                <label class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-1 block">Group Name</label>
+                <input type="text" value="Morning Wellness Warriors 🌿" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-base font-bold text-primary focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none transition-all">
+            </div>
+            <div class="w-full">
+                <label class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-1 block">Description</label>
+                <textarea rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-600 focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none transition-all resize-none" placeholder="What is this group about?">A supportive space for seniors to share wellness tips and morning routines together.</textarea>
+            </div>
+        </div>
+
+        <!-- Members -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div class="p-5 border-b border-slate-50 flex justify-between items-center">
+                <div>
+                    <h2 class="font-bold text-primary">Members <span class="text-slate-400 font-normal text-sm">(5)</span></h2>
+                </div>
+                <button class="flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-full text-[11px] font-bold uppercase tracking-wider active:scale-95 transition-transform">
+                    <span class="material-symbols-outlined text-sm">person_add</span> Add
+                </button>
+            </div>
+            <div id="member-list" class="divide-y divide-slate-50">
+                <div class="p-4 flex items-center gap-4">
+                    <img class="w-11 h-11 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=You" alt="">
+                    <div class="flex-1"><p class="font-bold text-sm text-primary">You</p><p class="text-[10px] text-slate-400">Admin • Owner</p></div>
+                    <span class="px-3 py-1 bg-primary-fixed text-primary rounded-full text-[10px] font-bold">Admin</span>
+                </div>
+                <div class="p-4 flex items-center gap-4">
+                    <img class="w-11 h-11 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="">
+                    <div class="flex-1"><p class="font-bold text-sm text-slate-800">Sarah Jenkins</p><p class="text-[10px] text-slate-400">Member</p></div>
+                    <button onclick="this.closest('.p-4').remove()" class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors"><span class="material-symbols-outlined text-sm">person_remove</span></button>
+                </div>
+                <div class="p-4 flex items-center gap-4">
+                    <img class="w-11 h-11 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" alt="">
+                    <div class="flex-1"><p class="font-bold text-sm text-slate-800">Dr. Arthur Pen</p><p class="text-[10px] text-slate-400">Member</p></div>
+                    <button onclick="this.closest('.p-4').remove()" class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors"><span class="material-symbols-outlined text-sm">person_remove</span></button>
+                </div>
+                <div class="p-4 flex items-center gap-4">
+                    <img class="w-11 h-11 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" alt="">
+                    <div class="flex-1"><p class="font-bold text-sm text-slate-800">Elena Sterling</p><p class="text-[10px] text-slate-400">Member</p></div>
+                    <button onclick="this.closest('.p-4').remove()" class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors"><span class="material-symbols-outlined text-sm">person_remove</span></button>
+                </div>
+                <div class="p-4 flex items-center gap-4">
+                    <img class="w-11 h-11 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus" alt="">
+                    <div class="flex-1"><p class="font-bold text-sm text-slate-800">Marcus Williams</p><p class="text-[10px] text-slate-400">Member</p></div>
+                    <button onclick="this.closest('.p-4').remove()" class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors"><span class="material-symbols-outlined text-sm">person_remove</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Controls -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div class="p-5 border-b border-slate-50"><h2 class="font-bold text-primary">Chat Controls</h2></div>
+            <div class="p-5 space-y-5">
+                <div class="flex justify-between items-center">
+                    <div><p class="font-semibold text-sm text-slate-800">Only Admins Can Message</p><p class="text-[11px] text-slate-400">Members can only read</p></div>
+                    <button onclick="toggleSwitch(this)" class="w-12 h-6 bg-slate-200 rounded-full relative transition-colors duration-300 flex-shrink-0" data-on="false"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300"></span></button>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div><p class="font-semibold text-sm text-slate-800">Allow Media Sharing</p><p class="text-[11px] text-slate-400">Photos, videos &amp; files</p></div>
+                    <button onclick="toggleSwitch(this)" class="w-12 h-6 bg-primary rounded-full relative transition-colors duration-300 flex-shrink-0" data-on="true"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 translate-x-6"></span></button>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div><p class="font-semibold text-sm text-slate-800">Mute Group Notifications</p><p class="text-[11px] text-slate-400">Silence all alerts</p></div>
+                    <button onclick="toggleSwitch(this)" class="w-12 h-6 bg-slate-200 rounded-full relative transition-colors duration-300 flex-shrink-0" data-on="false"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300"></span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy & Invite Link -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div class="p-5 border-b border-slate-50"><h2 class="font-bold text-primary">Privacy &amp; Invite</h2></div>
+            <div class="divide-y divide-slate-50">
+                <div class="p-4 flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center text-secondary flex-shrink-0"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">lock</span></div>
+                    <div class="flex-1"><p class="font-semibold text-sm text-slate-800">Group Type</p><p class="text-[11px] text-slate-400">Private — Invite only</p></div>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </div>
+                <div class="p-4 flex items-center gap-4 cursor-pointer" onclick="copyInviteLink()">
+                    <div class="w-10 h-10 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 flex-shrink-0"><span class="material-symbols-outlined text-[20px]">link</span></div>
+                    <div class="flex-1"><p class="font-semibold text-sm text-slate-800">Invite Link</p><p class="text-[11px] text-slate-400 font-mono truncate">caremate.app/g/mww2025</p></div>
+                    <span class="material-symbols-outlined text-slate-300">content_copy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policies & Support -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <a href="settings_privacy_policy.html" class="p-4 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+                <div class="w-10 h-10 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-500 flex-shrink-0"><span class="material-symbols-outlined text-[20px]">policy</span></div>
+                <p class="flex-1 font-semibold text-sm text-slate-800">Community Policies</p>
+                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+            </a>
+            <a href="settings_help.html" class="p-4 flex items-center gap-4 hover:bg-slate-50 transition-colors border-t border-slate-50">
+                <div class="w-10 h-10 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-500 flex-shrink-0"><span class="material-symbols-outlined text-[20px]">help</span></div>
+                <p class="flex-1 font-semibold text-sm text-slate-800">Get Support</p>
+                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+            </a>
+        </div>
+
+        <button onclick="saveGroupSettings()" class="w-full h-14 bg-primary text-white rounded-2xl font-bold text-base shadow-lg active:scale-95 transition-transform">Save Changes</button>
+        <button onclick="if(confirm('Leave this group?'))history.back()" class="w-full h-12 text-red-500 font-semibold text-sm">Leave Group</button>
+    </main>
+
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl z-[300] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <script>
+        function previewImg(input) {
+            if (input.files && input.files[0]) {
+                const r = new FileReader();
+                r.onload = e => document.getElementById('group-img').src = e.target.result;
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+        function toggleSwitch(btn) {
+            const isOn = btn.getAttribute('data-on') === 'true';
+            const knob = btn.querySelector('span');
+            if (isOn) { btn.setAttribute('data-on','false'); btn.classList.remove('bg-primary'); btn.classList.add('bg-slate-200'); knob.classList.remove('translate-x-6'); }
+            else { btn.setAttribute('data-on','true'); btn.classList.add('bg-primary'); btn.classList.remove('bg-slate-200'); knob.classList.add('translate-x-6'); }
+        }
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.classList.remove('opacity-0'); t.classList.add('opacity-100');
+            setTimeout(() => { t.classList.add('opacity-0'); t.classList.remove('opacity-100'); }, 2000);
+        }
+        function saveGroupSettings() { showToast('✓ Group settings saved!'); }
+        function copyInviteLink() {
+            navigator.clipboard.writeText('https://caremate.app/g/mww2025').then(() => showToast('🔗 Invite link copied!'));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Account Settings - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { primary: "#001b3f", secondary: "#4f55ae" }, fontFamily: { manrope: ["Manrope","sans-serif"] } } } }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-10">
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 z-10">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Account Settings</h1>
+        <button id="editBtn" onclick="toggleEditMode()" class="px-3 py-1.5 bg-blue-50 text-secondary text-sm font-bold rounded-xl active:scale-95 transition-all z-10">
+            Edit
+        </button>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+
+
+        <!-- Personal Info -->
+        <section class="space-y-3">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Personal Information</h3>
+            <div class="bg-white rounded-[32px] shadow-sm border border-slate-100 overflow-hidden">
+                <div class="p-5 border-b border-slate-50 space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name</label>
+                    <input type="text" disabled value="Eleanor Fitzgerald" class="edit-input w-full text-sm font-bold text-slate-800 bg-transparent border-none focus:ring-0 p-0 outline-none disabled:opacity-70 disabled:text-slate-500">
+                </div>
+                <div class="p-5 border-b border-slate-50 space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
+                    <input type="email" disabled value="eleanor@gmail.com" class="edit-input w-full text-sm font-bold text-slate-800 bg-transparent border-none focus:ring-0 p-0 outline-none disabled:opacity-70 disabled:text-slate-500">
+                </div>
+                <div class="p-5 space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Phone Number</label>
+                    <input type="tel" disabled value="+91 98765 43210" class="edit-input w-full text-sm font-bold text-slate-800 bg-transparent border-none focus:ring-0 p-0 outline-none disabled:opacity-70 disabled:text-slate-500">
+                </div>
+            </div>
+        </section>
+
+        <!-- Notification Preferences -->
+        <section class="space-y-3">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Notification Preferences</h3>
+            <div class="bg-white rounded-[32px] shadow-sm border border-slate-100 overflow-hidden">
+                <div class="flex items-center justify-between p-5 border-b border-slate-50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-800">
+                            <span class="material-symbols-outlined text-lg">notifications_active</span>
+                        </div>
+                        <span class="font-bold text-slate-700 text-sm">Push Notifications</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-5 border-b border-slate-50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-800">
+                            <span class="material-symbols-outlined text-lg">sms</span>
+                        </div>
+                        <span class="font-bold text-slate-700 text-sm">SMS Alerts</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-800">
+                            <span class="material-symbols-outlined text-lg">email</span>
+                        </div>
+                        <span class="font-bold text-slate-700 text-sm">Email Digests</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Danger Zone -->
+        <section class="space-y-3">
+            <h3 class="text-[11px] font-bold text-red-400 uppercase tracking-widest px-2">Danger Zone</h3>
+            <div class="bg-white rounded-[32px] shadow-sm border border-red-50 overflow-hidden">
+                <a href="#" class="flex items-center justify-between p-5 border-b border-slate-50 hover:bg-red-50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-red-500">
+                            <span class="material-symbols-outlined text-lg">block</span>
+                        </div>
+                        <span class="font-bold text-red-500 text-sm">Deactivate Account</span>
+                    </div>
+                    <span class="material-symbols-outlined text-red-300">chevron_right</span>
+                </a>
+                <a href="#" class="flex items-center justify-between p-5 hover:bg-red-50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-red-500">
+                            <span class="material-symbols-outlined text-lg">delete_forever</span>
+                        </div>
+                        <span class="font-bold text-red-500 text-sm">Delete Account</span>
+                    </div>
+                    <span class="material-symbols-outlined text-red-300">chevron_right</span>
+                </a>
+            </div>
+        </section>
+
+        <button id="saveBtn" class="hidden w-full py-5 bg-primary text-white font-extrabold rounded-[24px] shadow-xl shadow-primary/20 active:scale-95 transition-all">
+            Save Changes
+        </button>
+    </main>
+
+    <script>
+        let isEditMode = false;
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const btn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const inputs = document.querySelectorAll('.edit-input');
+
+            if (isEditMode) {
+                btn.innerText = 'Cancel';
+                btn.classList.replace('bg-blue-50', 'bg-red-50');
+                btn.classList.replace('text-secondary', 'text-red-500');
+                saveBtn.classList.remove('hidden');
+                inputs.forEach(input => input.disabled = false);
+            } else {
+                btn.innerText = 'Edit';
+                btn.classList.replace('bg-red-50', 'bg-blue-50');
+                btn.classList.replace('text-red-500', 'text-secondary');
+                saveBtn.classList.add('hidden');
+                inputs.forEach(input => input.disabled = true);
+            }
+        }
+    </script>
+</body>
+</html>

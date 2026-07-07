@@ -1,0 +1,258 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#faf9fe",
+                    "secondary-fixed": "#e0e0ff",
+                    "surface-tint": "#3e5e95",
+                    "tertiary": "#151a1d",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#171c1f",
+                    "on-background": "#1a1b1f",
+                    "background": "#faf9fe",
+                    "on-secondary-container": "#2d328b",
+                    "surface": "#faf9fe",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#dad9df",
+                    "secondary-container": "#9aa0ff",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f1f0f5",
+                    "on-secondary-fixed-variant": "#373c95",
+                    "on-primary-container": "#7796d1",
+                    "secondary": "#4f55ae",
+                    "surface-container": "#eeedf2",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2f3034",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed": "#001b3f",
+                    "surface-container-high": "#e8e7ed",
+                    "surface-variant": "#e3e2e7",
+                    "secondary-fixed-dim": "#bfc2ff",
+                    "tertiary-fixed": "#dfe3e7",
+                    "surface-container-highest": "#e3e2e7",
+                    "primary-fixed-dim": "#abc7ff",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "outline": "#747781",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#24467c",
+                    "inverse-primary": "#abc7ff",
+                    "tertiary-fixed-dim": "#c3c7cb",
+                    "primary": "#00193c",
+                    "on-surface": "#1a1b1f",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d7e2ff",
+                    "primary-container": "#002d62",
+                    "tertiary-container": "#2a2f32",
+                    "on-secondary-fixed": "#02026b",
+                    "outline-variant": "#c4c6d1",
+                    "on-tertiary-container": "#92969a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "touch-target-min": "60px",
+                    "stack-md": "24px",
+                    "unit": "8px",
+                    "stack-lg": "40px",
+                    "margin-page": "24px",
+                    "stack-sm": "12px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "label-caps": ["Manrope"],
+                    "display": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}],
+                    "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .voice-pulse {
+            box-shadow: 0 0 0 0 rgba(0, 45, 98, 0.4);
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(0, 45, 98, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 45, 98, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 45, 98, 0); }
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface-bright text-on-background font-body-md min-h-screen pb-32">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+    <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+        <span class="material-symbols-outlined text-primary">arrow_back</span>
+    </button>
+    <h1 class="font-bold text-xl text-primary">Scam Shield</h1>
+    <div class="w-10"></div> <!-- Spacer -->
+</header>
+<main class="pt-8 px-margin-page max-w-screen-xl mx-auto space-y-stack-lg">
+<!-- Voice AI Interface Section -->
+<section class="flex flex-col items-center justify-center py-stack-md text-center">
+<div class="relative mb-stack-sm">
+<button class="voice-pulse w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-white shadow-xl hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined text-5xl" data-icon="mic" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+</div>
+<h2 class="font-display text-display text-primary mt-4">Talk to AI Assistant</h2>
+<p class="font-body-lg text-on-surface-variant max-w-md mx-auto">I'm listening. Tell me about a call or text that feels suspicious.</p>
+</section>
+<!-- Suspicious Activity Check -->
+<section class="space-y-stack-md">
+<h3 class="font-headline-lg text-primary">Check Suspicious Activity</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<!-- Text Check Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-lg shadow-sm">
+<div class="flex items-center gap-3 mb-stack-sm">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="sms_failed">sms_failed</span>
+</div>
+<span class="font-headline-md text-primary">Check a Message</span>
+</div>
+<textarea class="w-full h-32 p-4 bg-surface-container-low border-none rounded-DEFAULT font-body-md text-on-surface focus:ring-2 focus:ring-primary-container transition-all" placeholder="Paste the suspicious text here..."></textarea>
+<button class="w-full h-touch-target-min mt-4 bg-primary text-white rounded-full font-headline-md shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all">
+                        Analyze Text
+                    </button>
+</div>
+<!-- Call/Screenshot Check Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-stack-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="add_a_photo">add_a_photo</span>
+</div>
+<span class="font-headline-md text-primary">Upload Screenshot</span>
+</div>
+<p class="font-body-md text-on-surface-variant mb-stack-md">Take a picture of a scam email or a strange phone number.</p>
+</div>
+<label class="border-2 border-dashed border-outline-variant rounded-lg p-stack-lg flex flex-col items-center justify-center bg-surface-container-low cursor-pointer hover:bg-surface-variant transition-colors group">
+<input type="file" accept="image/*" class="hidden">
+<span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<span class="font-label-caps text-outline group-hover:text-primary">TAP TO UPLOAD PHOTO</span>
+</label>
+</div>
+</div>
+</section>
+<!-- Scam History -->
+<section class="space-y-stack-md">
+<div class="flex justify-between items-end">
+<h3 class="font-headline-lg text-primary">Recent Checks</h3>
+<button class="text-primary font-label-caps hover:underline">VIEW ALL</button>
+</div>
+<div class="bg-white rounded-lg shadow-sm border border-outline-variant overflow-hidden">
+<!-- History Item 1 -->
+<div class="flex items-center justify-between p-stack-md border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-2xl" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<p class="font-headline-md text-on-surface">Unknown SMS</p>
+<p class="font-body-md text-on-surface-variant">"Urgent: Your account is locked..."</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-4 py-1 bg-error-container text-on-error-container rounded-full font-label-caps">FRAUD</span>
+<span class="text-sm text-outline">Today, 2:15 PM</span>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="flex items-center justify-between p-stack-md border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<p class="font-headline-md text-on-surface">Bank Verification Call</p>
+<p class="font-body-md text-on-surface-variant">Matched known support number</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-4 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-caps">SAFE</span>
+<span class="text-sm text-outline">Yesterday</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Safety Tips Carousel/Grid -->
+<section class="space-y-stack-md pb-stack-lg">
+<h3 class="font-headline-lg text-primary">Daily Safety Tips</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md">
+<!-- Tip 1 -->
+<div class="bg-primary-container text-white p-stack-md rounded-lg relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-stack-sm opacity-90" data-icon="security_update_warning">security_update_warning</span>
+<p class="font-headline-md mb-2">Never share your PIN</p>
+<p class="font-body-md opacity-80">Real banks will never ask for your password or PIN over the phone.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[120px]" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Tip 2 -->
+<div class="bg-secondary text-white p-stack-md rounded-lg relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-stack-sm opacity-90" data-icon="notification_important">notification_important</span>
+<p class="font-headline-md mb-2">Watch for Urgency</p>
+<p class="font-body-md opacity-80">Scammers use 'Urgent' or 'Action Required' to make you panic. Stay calm.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[120px]" data-icon="timer">timer</span>
+</div>
+</div>
+<!-- Tip 3 -->
+<div class="bg-surface-container-high border border-outline-variant p-stack-md rounded-lg relative overflow-hidden group md:hidden lg:block">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-stack-sm text-primary" data-icon="verified">verified</span>
+<p class="font-headline-md text-primary mb-2">Trust Your Gut</p>
+<p class="font-body-md text-on-surface-variant">If a deal sounds too good to be true, it probably is. Check with us first.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+</body></html>

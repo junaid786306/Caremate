@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Book Appointment - Senior Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "on-surface-variant": "#43474f",
+                        "outline-variant": "#c4c6d1",
+                        "primary-container": "#002d62",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-variant": "#e3e2e7",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-[120px]">
+    <header class="flex justify-between items-center px-6 h-20 pt-2 pb-2 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
+    <div class="flex items-center gap-4">
+        <a href="doctor_appointments.html" class="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-slate-600 shadow-sm active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+        </a>
+        <h1 class="text-xl font-bold text-primary tracking-tight">Book Appointment</h1>
+    </div>
+</header>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <main class="max-w-md mx-auto p-6 space-y-8">
+        <!-- Introduction -->
+        <div class="space-y-2">
+            <h2 class="text-2xl font-extrabold tracking-tight">Schedule Visit</h2>
+            <p class="text-slate-500 font-medium text-sm">Book a session with your healthcare provider.</p>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-6" onsubmit="saveAppointment(event)">
+            <!-- Doctor Name -->
+            <div class="space-y-2">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Doctor Name</label>
+                <div class="relative group">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">medical_services</span>
+                    <input type="text" required placeholder="e.g., Dr. Elizabeth Smith" class="w-full h-14 pl-12 pr-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold">
+                </div>
+            </div>
+
+            <!-- Appointment Type -->
+            <div class="space-y-4">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Visit Type</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button" id="type-video" onclick="toggleType('video')" class="flex flex-col items-center justify-center p-4 rounded-2xl border-2 border-primary bg-primary/5 text-primary transition-all">
+                        <span class="material-symbols-outlined text-3xl mb-2">videocam</span>
+                        <span class="font-bold">Video Call</span>
+                    </button>
+                    <button type="button" id="type-direct" onclick="toggleType('direct')" class="flex flex-col items-center justify-center p-4 rounded-2xl border-2 border-slate-100 bg-white text-slate-400 transition-all">
+                        <span class="material-symbols-outlined text-3xl mb-2">directions</span>
+                        <span class="font-bold">Direct Visit</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Input Based on Type -->
+            <div id="dynamic-input" class="space-y-2">
+                <label id="dynamic-label" class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Video Call URL</label>
+                <div class="relative group">
+                    <span id="dynamic-icon" class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">link</span>
+                    <input id="dynamic-field" type="text" placeholder="https://zoom.us/j/..." class="w-full h-14 pl-12 pr-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold">
+                </div>
+            </div>
+
+            <!-- Date and Time -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Date</label>
+                    <input type="date" required class="w-full h-14 px-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Time</label>
+                    <input type="time" required class="w-full h-14 px-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm">
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="pt-4">
+                <button type="submit" class="w-full h-16 bg-primary text-white rounded-[24px] font-bold text-lg shadow-xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-3">
+                    <span class="material-symbols-outlined">event_available</span>
+                    <span>Confirm Booking</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+
+        let selectedType = 'video';
+
+        function toggleType(type) {
+            selectedType = type;
+            const videoBtn = document.getElementById('type-video');
+            const directBtn = document.getElementById('type-direct');
+            const label = document.getElementById('dynamic-label');
+            const icon = document.getElementById('dynamic-icon');
+            const field = document.getElementById('dynamic-field');
+
+            if (type === 'video') {
+                videoBtn.classList.add('border-primary', 'bg-primary/5', 'text-primary');
+                videoBtn.classList.remove('border-slate-100', 'bg-white', 'text-slate-400');
+                directBtn.classList.remove('border-primary', 'bg-primary/5', 'text-primary');
+                directBtn.classList.add('border-slate-100', 'bg-white', 'text-slate-400');
+                
+                label.innerText = 'Video Call URL';
+                icon.innerText = 'link';
+                field.placeholder = 'https://zoom.us/j/...';
+            } else {
+                directBtn.classList.add('border-primary', 'bg-primary/5', 'text-primary');
+                directBtn.classList.remove('border-slate-100', 'bg-white', 'text-slate-400');
+                videoBtn.classList.remove('border-primary', 'bg-primary/5', 'text-primary');
+                videoBtn.classList.add('border-slate-100', 'bg-white', 'text-slate-400');
+
+                label.innerText = 'Directions / Address';
+                icon.innerText = 'location_on';
+                field.placeholder = '123 Medical Dr, City, State';
+            }
+        }
+
+        function saveAppointment(event) {
+            event.preventDefault();
+            localStorage.setItem('lastAppointmentType', selectedType);
+            window.location.href = 'home_dashboard.html';
+        }
+    </script>
+
+    <!-- BottomNavBar spacer -->
+    <div class="h-24"></div>
+</body>
+</html>
+

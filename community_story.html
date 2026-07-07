@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Community Story</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .story-progress { animation: progress 5s linear forwards; }
+        @keyframes progress { from { width: 0%; } to { width: 100%; } }
+    </style>
+</head>
+<body class="bg-black text-white font-manrope antialiased min-h-screen flex flex-col overflow-hidden">
+    <!-- Progress Bars -->
+    <div class="absolute top-4 left-0 w-full px-4 flex gap-1 z-50">
+        <div class="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
+            <div class="h-full bg-white story-progress"></div>
+        </div>
+        <div class="h-1 flex-1 bg-white/20 rounded-full overflow-hidden"></div>
+        <div class="h-1 flex-1 bg-white/20 rounded-full overflow-hidden"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="absolute top-8 left-0 w-full px-4 flex justify-between items-center z-50">
+        <a href="public_user_profile.html" class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUODff2fNTiXLQuH8S18wlqENjx1_vMG48jE8rFJdcs6uEOYNwZKVcJjY0KyJ0zduYV_N8-uxPEHYGU-IVsj0Vf-zMoEcgsfI7Y_wG5DDP6TXkacb4sYKrJu2Vzo8hm39-i-k7dtiicgw_0tzsQFGd03nConi-mHOrGcFAI3_pPGvVqPgEMavMZd5SzpSxp9kqDzufnD2ozzxDaH_KTZ9MtCe7YBieNHylJVpMEYFCJbp9b1NepFzZMxLe2fO0qUo5PeH0twdWs_k">
+            </div>
+            <div>
+                <h4 class="text-sm font-bold">Elena Sterling</h4>
+                <p class="text-[10px] text-white/70">2h ago</p>
+            </div>
+        </a>
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md">
+            <span class="material-symbols-outlined text-white">close</span>
+        </button>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 flex items-center justify-center relative">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVcXllhQuVkjfkBd9E246FM7Tj9wJN9i7mATU3dxC9hXQCtjRzPfewhkUOXaaoqvyAHKnJOiJf90sCq9Jo7PzZGcKyU2HW61aBcXD_Bz8zWq1KYUOdqW35zSZuLAWnCc3IOt7V7oNbNwPAkI9NLLUmYHezLn5Pf_9-Uqyo2eVyzTtdL4hkpZ4yFwDxiU2RYTm75e5nZGV5tM0a6w2hIX2_WEtN1bSLY92a_PpF__qhLSNUME08_x55wd0d8lISlIkXkiADRPfC6rg">
+        
+        <!-- Story Caption/Overlay (Optional) -->
+        <div class="absolute bottom-32 left-0 w-full px-6 text-center">
+            <p class="text-lg font-medium text-white drop-shadow-lg">Morning stretches in the garden! 🌸</p>
+        </div>
+    </main>
+
+    <!-- Footer Action -->
+    <footer class="absolute bottom-10 left-0 w-full px-6 flex items-center gap-4 z-50">
+        <div class="flex-1 h-12 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex items-center px-4">
+            <input type="text" placeholder="Send a message..." class="bg-transparent border-none focus:ring-0 text-sm text-white placeholder:text-white/60 flex-1">
+        </div>
+        <button class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+            <span class="material-symbols-outlined text-white">favorite</span>
+        </button>
+        <button class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+            <span class="material-symbols-outlined text-white">send</span>
+        </button>
+    </footer>
+</body>
+</html>

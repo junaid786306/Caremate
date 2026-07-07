@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Post - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: { extend: { colors: { "primary": "#00193c", "secondary": "#4f55ae" }, fontFamily: { "manrope": ["Manrope", "sans-serif"] } } }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1); }
+        .bottom-sheet.open { transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-manrope antialiased min-h-screen pb-20">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-lg text-primary text-center flex-1">Post</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto pt-4 space-y-6">
+        
+        <!-- Post Card -->
+        <article class="bg-white border-y sm:border sm:rounded-[32px] border-slate-200 shadow-sm overflow-hidden">
+            <!-- Post Header -->
+            <div class="p-4 flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <h3 class="font-bold text-primary text-sm">Eleanor Fitzgerald</h3>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">2 hours ago</p>
+                </div>
+                <button onclick="openMoreSheet()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50">
+                    <span class="material-symbols-outlined text-slate-400">more_horiz</span>
+                </button>
+            </div>
+
+            <!-- Post Media -->
+            <div class="w-full aspect-square bg-slate-100 relative">
+                <img id="post-img" src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&h=800&fit=crop" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Actions -->
+            <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button id="btn-like" class="flex items-center gap-1.5 group" onclick="this.querySelector('span').classList.toggle('icon-filled'); this.querySelector('span').classList.toggle('text-red-500');">
+                        <span class="material-symbols-outlined text-3xl text-slate-700 transition-colors">favorite</span>
+                    </button>
+                    <button class="flex items-center gap-1.5 group" onclick="toggleComments()">
+                        <span class="material-symbols-outlined text-3xl text-slate-700">chat_bubble</span>
+                    </button>
+                    <button class="flex items-center gap-1.5 group" onclick="openShareSheet()">
+                        <span class="material-symbols-outlined text-3xl text-slate-700">send</span>
+                    </button>
+                </div>
+                <button id="btn-save" class="flex items-center gap-1.5 group" onclick="this.querySelector('span').classList.toggle('icon-filled'); this.querySelector('span').classList.toggle('text-secondary');">
+                    <span class="material-symbols-outlined text-3xl text-slate-700 transition-colors">bookmark</span>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="px-4 pb-2">
+                <p class="text-sm text-slate-700"><span class="font-bold text-primary mr-1">Eleanor Fitzgerald</span>Morning walks are the best way to start the day. The fresh air and peace are unmatched. 🌿✨</p>
+            </div>
+            
+        </article>
+    </main>
+
+    <!-- Shared Overlay -->
+    <div id="sheet-overlay" class="fixed inset-0 bg-slate-900/40 z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- More Options Sheet -->
+    <div id="more-sheet" class="fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[32px] transition-transform duration-300 translate-y-full shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pb-8 max-w-md mx-auto">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+            <h3 class="font-bold text-primary text-base">Post Options</h3>
+            <button onclick="closeMoreSheet()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+        <div class="px-4 py-2 flex flex-col">
+            <button onclick="doPostAction('Edit Post')" class="flex items-center gap-4 px-4 py-4 text-slate-700 font-bold active:bg-slate-50 rounded-xl">
+                <span class="material-symbols-outlined">edit</span> Edit Post
+            </button>
+            <button onclick="doPostAction('Archive Post')" class="flex items-center gap-4 px-4 py-4 text-slate-700 font-bold active:bg-slate-50 rounded-xl">
+                <span class="material-symbols-outlined">archive</span> Archive Post
+            </button>
+            <button onclick="doPostAction('Delete Post')" class="flex items-center gap-4 px-4 py-4 text-red-500 font-bold active:bg-red-50 rounded-xl">
+                <span class="material-symbols-outlined">delete</span> Delete Post
+            </button>
+        </div>
+    </div>
+
+    <!-- Comments Bottom Sheet -->
+    <div id="comments-sheet" class="bottom-sheet fixed bottom-0 left-0 right-0 bg-white z-[110] rounded-t-[32px] h-[50vh] flex flex-col max-w-md mx-auto shadow-2xl">
+        
+        <!-- Drag Handle -->
+        <div class="w-full flex justify-center py-3 cursor-pointer shrink-0" onclick="toggleComments()">
+            <div class="w-12 h-1.5 bg-slate-300 rounded-full"></div>
+        </div>
+        
+        <!-- Sheet Header -->
+        <div class="px-6 pb-3 border-b border-slate-100 flex justify-between items-center shrink-0">
+            <h2 class="font-bold text-primary text-lg">Comments</h2>
+        </div>
+
+        <!-- Comments List (Scrollable) -->
+        <div id="comments-section" class="px-4 py-4 space-y-5 overflow-y-auto flex-1">
+            <!-- Comment 1 -->
+            <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=You&background=00193c&color=fff" class="w-8 h-8 rounded-full shrink-0">
+                <div class="flex-1">
+                    <p class="text-sm"><span class="font-bold text-primary mr-1">You</span>Great tips on breathing techniques! I've been feeling much better today.</p>
+                    <div class="flex items-center gap-4 mt-1 text-xs text-slate-500">
+                        <span>1h</span>
+                        <button class="font-bold">Reply</button>
+                    </div>
+                </div>
+                <button onclick="this.querySelector('span').classList.toggle('icon-filled'); this.querySelector('span').classList.toggle('text-red-500');">
+                    <span class="material-symbols-outlined text-sm">favorite</span>
+                </button>
+            </div>
+            
+            <!-- Comment 2 -->
+            <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=Sunita+Sharma&background=059669&color=fff" class="w-8 h-8 rounded-full shrink-0">
+                <div class="flex-1">
+                    <p class="text-sm"><span class="font-bold text-primary mr-1">Sunita Sharma</span>I completely agree! Adding 10 mins of meditation makes it even better.</p>
+                    <div class="flex items-center gap-4 mt-1 text-xs text-slate-500">
+                        <span>2h</span>
+                        <button class="font-bold">Reply</button>
+                    </div>
+                </div>
+                <button onclick="this.querySelector('span').classList.toggle('icon-filled'); this.querySelector('span').classList.toggle('text-red-500');">
+                    <span class="material-symbols-outlined text-sm">favorite_border</span>
+                </button>
+            </div>
+
+            <!-- Comment 3 -->
+            <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=Rajan+Mehta&background=4f55ae&color=fff" class="w-8 h-8 rounded-full shrink-0">
+                <div class="flex-1">
+                    <p class="text-sm"><span class="font-bold text-primary mr-1">Rajan Mehta</span>Beautiful picture! Which park is this?</p>
+                    <div class="flex items-center gap-4 mt-1 text-xs text-slate-500">
+                        <span>3h</span>
+                        <button class="font-bold">Reply</button>
+                    </div>
+                </div>
+                <button onclick="this.querySelector('span').classList.toggle('icon-filled'); this.querySelector('span').classList.toggle('text-red-500');">
+                    <span class="material-symbols-outlined text-sm">favorite_border</span>
+                </button>
+            </div>
+            <!-- Extra filler comments for scrollability -->
+            <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=Priya+Nair&background=d97706&color=fff" class="w-8 h-8 rounded-full shrink-0">
+                <div class="flex-1">
+                    <p class="text-sm"><span class="font-bold text-primary mr-1">Priya Nair</span>Thanks for sharing this motivation! ❤️</p>
+                    <div class="flex items-center gap-4 mt-1 text-xs text-slate-500">
+                        <span>5h</span>
+                        <button class="font-bold">Reply</button>
+                    </div>
+                </div>
+                <button onclick="this.querySelector('span').classList.toggle('icon-filled'); this.querySelector('span').classList.toggle('text-red-500');">
+                    <span class="material-symbols-outlined text-sm">favorite_border</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Comment Input Fixed inside Sheet -->
+        <div id="comment-input-bar" class="bg-white border-t border-slate-200 p-3 flex gap-3 items-center shrink-0">
+            <img src="https://ui-avatars.com/api/?name=You&background=00193c&color=fff" class="w-9 h-9 rounded-full shrink-0">
+            <input type="text" placeholder="Add a comment..." class="flex-1 bg-slate-100 border-none rounded-full px-4 py-2 text-sm focus:ring-0">
+            <button class="text-secondary font-bold text-sm px-2">Post</button>
+        </div>
+    </div>
+
+    <!-- INSTAGRAM-STYLE SHARE SHEET -->
+    <div id="share-sheet-container" class="fixed inset-0 z-[120] pointer-events-none">
+        <div id="share-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeShareSheet()"></div>
+        <div id="share-sheet" class="absolute bottom-0 left-0 w-full bg-white rounded-t-[36px] shadow-[0_-20px_60px_rgba(0,25,60,0.18)] translate-y-full transition-transform duration-500 pointer-events-none max-h-[80vh] flex flex-col max-w-md mx-auto">
+            <!-- Handle -->
+            <div class="flex justify-center pt-4 pb-2 flex-shrink-0" onclick="closeShareSheet()">
+                <div class="w-10 h-1.5 bg-slate-200 rounded-full cursor-pointer"></div>
+            </div>
+            <!-- Header -->
+            <div class="px-6 pb-4 flex items-center justify-between flex-shrink-0">
+                <h3 class="font-bold text-lg text-primary">Share with Friends</h3>
+                <button onclick="closeShareSheet()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <!-- Search bar -->
+            <div class="px-6 pb-4 flex-shrink-0">
+                <div class="flex items-center gap-2 bg-slate-100 rounded-full px-4 py-2.5">
+                    <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
+                    <input type="text" placeholder="Search friends…" class="bg-transparent text-sm outline-none flex-1 text-slate-700">
+                </div>
+            </div>
+            <!-- Contacts list -->
+            <div class="overflow-y-auto flex-1 px-4 pb-8 space-y-2">
+                <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Eleanor" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-sm text-primary truncate">Eleanor Fitzgerald</p>
+                        <p class="text-[11px] text-slate-400">Your Guardian · Family</p>
+                    </div>
+                    <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+                </div>
+                <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-sm text-primary truncate">Dr. Arthur Pen</p>
+                        <p class="text-[11px] text-slate-400">@arthur_fit · Following</p>
+                    </div>
+                    <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+                </div>
+                <!-- Copy link row -->
+                <div class="pt-2 border-t border-slate-100 mt-2">
+                    <button onclick="copyLink()" class="w-full flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors text-left">
+                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-slate-600">link</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm text-primary">Copy Link</p>
+                            <p class="text-[11px] text-slate-400">Share anywhere</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feed Toast Notification -->
+    <div id="feed-toast" class="fixed top-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-lg text-sm font-bold z-[200] opacity-0 pointer-events-none transition-all duration-300 translate-y-[-20px]">
+        Shared successfully!
+    </div>
+
+    <script>
+        // Get image and states from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const imgUrl = urlParams.get('img');
+        if(imgUrl) {
+            document.getElementById('post-img').src = imgUrl;
+        }
+
+        // Handle Liked state
+        if (urlParams.get('liked') === 'true') {
+            const likeBtn = document.getElementById('btn-like').querySelector('span');
+            likeBtn.classList.add('icon-filled', 'text-red-500');
+        }
+
+        // Handle Saved state
+        if (urlParams.get('saved') === 'true') {
+            const saveBtn = document.getElementById('btn-save').querySelector('span');
+            saveBtn.classList.add('icon-filled', 'text-secondary');
+        }
+
+        // Handle opening comments from URL
+        if (urlParams.get('open_comments') === 'true') {
+            setTimeout(toggleComments, 100);
+        }
+
+        function toggleComments() {
+            const sheet = document.getElementById('comments-sheet');
+            const overlay = document.getElementById('sheet-overlay');
+            if (sheet.classList.contains('open')) {
+                sheet.classList.remove('open');
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                sheet.classList.add('open');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        // Share Sheet Functions
+        function openShareSheet() {
+            document.getElementById('share-sheet-container').classList.remove('pointer-events-none');
+            document.getElementById('share-backdrop').classList.remove('pointer-events-none', 'opacity-0');
+            document.getElementById('share-backdrop').classList.add('opacity-100');
+            document.getElementById('share-sheet').classList.remove('translate-y-full', 'pointer-events-none');
+            document.getElementById('share-sheet').classList.add('translate-y-0', 'pointer-events-auto');
+        }
+
+        function closeShareSheet() {
+            document.getElementById('share-backdrop').classList.add('opacity-0');
+            document.getElementById('share-backdrop').classList.remove('opacity-100');
+            document.getElementById('share-sheet').classList.add('translate-y-full');
+            document.getElementById('share-sheet').classList.remove('translate-y-0');
+            
+            setTimeout(() => {
+                document.getElementById('share-sheet-container').classList.add('pointer-events-none');
+                document.getElementById('share-sheet').classList.add('pointer-events-none');
+                document.getElementById('share-backdrop').classList.add('pointer-events-none');
+            }, 500); // match duration-500
+        }
+
+        function sendToContact(btn) {
+            btn.textContent = 'Sent';
+            btn.classList.remove('bg-secondary');
+            btn.classList.add('bg-slate-200', 'text-slate-700');
+            const name = btn.parentElement.querySelector('p').textContent;
+            showFeedToast(`Shared with ${name}!`);
+            
+            setTimeout(() => {
+                btn.textContent = 'Send';
+                btn.classList.add('bg-secondary');
+                btn.classList.remove('bg-slate-200', 'text-slate-700');
+                closeShareSheet();
+            }, 1500);
+        }
+
+        function copyLink() {
+            showFeedToast("Link copied to clipboard!");
+            closeShareSheet();
+        }
+
+        function showFeedToast(message) {
+            const toast = document.getElementById('feed-toast');
+            toast.textContent = message;
+            toast.classList.remove('opacity-0', 'translate-y-[-20px]');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-20px]');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

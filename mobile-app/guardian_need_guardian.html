@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Find a Guardian - Stitch</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { primary: "#001b3f", secondary: "#4f55ae" }, fontFamily: { manrope: ["Manrope","sans-serif"] } } } }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-10">
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 z-10">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Need a Guardian</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+
+        <!-- Hero Banner -->
+        <div class="bg-primary rounded-[32px] p-6 text-white space-y-3 relative overflow-hidden">
+            <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-white/5 rounded-full"></div>
+            <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mb-2">
+                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">elderly</span>
+            </div>
+            <h2 class="text-xl font-black">Connect Seniors to a Guardian</h2>
+            <p class="text-white/70 text-sm font-medium leading-relaxed">Seniors without a family guardian can be matched with certified professional caregivers on the Stitch network.</p>
+        </div>
+
+        <!-- Search / Filter -->
+        <div class="bg-white border border-slate-200 rounded-2xl h-12 flex items-center px-4 shadow-sm">
+            <span class="material-symbols-outlined text-slate-400 mr-2 text-[20px]">search</span>
+            <input class="bg-transparent border-none focus:ring-0 flex-1 text-sm placeholder:text-slate-400" placeholder="Search senior by name or ID..." type="text">
+        </div>
+
+        <!-- Seniors Pending Guardian -->
+        <section class="space-y-3">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Seniors Looking for a Guardian</h3>
+            <div class="space-y-3">
+
+                <!-- Senior 1 -->
+                <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-slate-100 overflow-hidden shrink-0">
+                        <img src="https://ui-avatars.com/api/?name=Ram+Gupta&background=e0e7ff&color=4f55ae&size=100" alt="Ram Gupta" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-extrabold text-slate-800">Ram Gupta</p>
+                        <p class="text-xs text-slate-400">78 yrs · Delhi · Diabetic care needed</p>
+                        <div class="flex items-center gap-1.5 mt-1.5">
+                            <span class="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full">Diabetes</span>
+                            <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">BP</span>
+                        </div>
+                    </div>
+                    <button class="bg-primary text-white text-xs font-extrabold px-4 py-2.5 rounded-xl active:scale-95 transition-all shrink-0">Accept</button>
+                </div>
+
+                <!-- Senior 2 -->
+                <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-slate-100 overflow-hidden shrink-0">
+                        <img src="https://ui-avatars.com/api/?name=Kamla+Devi&background=fce7f3&color=be185d&size=100" alt="Kamla Devi" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-extrabold text-slate-800">Kamla Devi</p>
+                        <p class="text-xs text-slate-400">82 yrs · Mumbai · Lives alone</p>
+                        <div class="flex items-center gap-1.5 mt-1.5">
+                            <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">Memory</span>
+                            <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Mobility</span>
+                        </div>
+                    </div>
+                    <button class="bg-primary text-white text-xs font-extrabold px-4 py-2.5 rounded-xl active:scale-95 transition-all shrink-0">Accept</button>
+                </div>
+
+                <!-- Senior 3 -->
+                <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-slate-100 overflow-hidden shrink-0">
+                        <img src="https://ui-avatars.com/api/?name=Suresh+Pillai&background=d1fae5&color=065f46&size=100" alt="Suresh Pillai" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-extrabold text-slate-800">Suresh Pillai</p>
+                        <p class="text-xs text-slate-400">74 yrs · Chennai · Post-surgery care</p>
+                        <div class="flex items-center gap-1.5 mt-1.5">
+                            <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">Post-Surgery</span>
+                        </div>
+                    </div>
+                    <button class="bg-primary text-white text-xs font-extrabold px-4 py-2.5 rounded-xl active:scale-95 transition-all shrink-0">Accept</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Already Guarding -->
+        <section class="space-y-3">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-2">Seniors You're Guarding</h3>
+            <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-14 h-14 rounded-full overflow-hidden shrink-0">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA" alt="Mom Shreya" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1">
+                    <p class="font-extrabold text-slate-800">Mom (Shreya)</p>
+                    <p class="text-xs text-slate-400">72 yrs · Current primary senior</p>
+                    <div class="flex items-center gap-1 mt-1.5">
+                        <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                        <span class="text-[10px] font-bold text-green-600">Active & Safe</span>
+                    </div>
+                </div>
+                <a href="guardian_dashboard.html" class="bg-slate-100 text-primary text-xs font-extrabold px-4 py-2.5 rounded-xl">View</a>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>

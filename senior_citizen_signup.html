@@ -1,0 +1,360 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dad9df",
+                    "on-background": "#1a1b1f",
+                    "surface": "#faf9fe",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "primary": "#00193c",
+                    "tertiary-fixed": "#dfe3e7",
+                    "surface-tint": "#3e5e95",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001b3f",
+                    "inverse-surface": "#2f3034",
+                    "secondary-fixed": "#e0e0ff",
+                    "primary-fixed-dim": "#abc7ff",
+                    "tertiary-fixed-dim": "#c3c7cb",
+                    "on-secondary-fixed": "#02026b",
+                    "surface-variant": "#e3e2e7",
+                    "on-primary-fixed-variant": "#24467c",
+                    "error": "#ba1a1a",
+                    "surface-container": "#eeedf2",
+                    "inverse-primary": "#abc7ff",
+                    "inverse-on-surface": "#f1f0f5",
+                    "on-surface": "#1a1b1f",
+                    "on-tertiary-container": "#92969a",
+                    "tertiary": "#151a1d",
+                    "on-secondary-fixed-variant": "#373c95",
+                    "on-tertiary-fixed": "#171c1f",
+                    "on-surface-variant": "#43474f",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "background": "#faf9fe",
+                    "on-primary-container": "#7796d1",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f4f3f8",
+                    "primary-fixed": "#d7e2ff",
+                    "surface-container-high": "#e8e7ed",
+                    "secondary-container": "#9aa0ff",
+                    "error-container": "#ffdad6",
+                    "secondary": "#4f55ae",
+                    "secondary-fixed-dim": "#bfc2ff",
+                    "on-secondary-container": "#2d328b",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "outline": "#747781",
+                    "tertiary-container": "#2a2f32",
+                    "surface-container-highest": "#e3e2e7",
+                    "surface-bright": "#faf9fe",
+                    "primary-container": "#002d62",
+                    "outline-variant": "#c4c6d1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "stack-sm": "12px",
+                    "margin-page": "24px",
+                    "gutter": "16px",
+                    "stack-md": "24px",
+                    "touch-target-min": "60px",
+                    "stack-lg": "40px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "display": ["Manrope"],
+                    "body-md": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}],
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                    "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf9fe;
+            background-image: radial-gradient(at 0% 0%, rgba(215, 226, 255, 0.3) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(154, 160, 255, 0.1) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .clean-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: none !important;
+        }
+        .clean-select::-ms-expand {
+            display: none;
+        }        input::placeholder {
+            color: #92969a;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-background flex flex-col items-center p-margin-page">
+<!-- Auth Layout Container -->
+<main class="w-full max-w-md mx-auto flex flex-col gap-stack-lg pt-12 pb-24">
+<!-- Header Section -->
+<header class="flex flex-col items-center text-center gap-stack-sm mb-4">
+<div class="w-20 h-20 rounded-xl bg-primary-container flex items-center justify-center shadow-lg shadow-primary/10 mb-4">
+<span class="material-symbols-outlined text-primary-fixed text-4xl" data-icon="health_and_safety">health_and_safety</span>
+</div>
+<h1 class="font-display text-display text-primary">Caremate</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant px-4">Create your safety network</p>
+</header>
+<!-- Form Section -->
+<section class="glass-panel p-8 rounded-xl shadow-[0_8px_32px_rgba(0,25,60,0.06)] flex flex-col gap-stack-md">
+<nav class="w-full max-w-[300px] mx-auto flex p-1 bg-surface-container rounded-full mb-6 min-h-[48px] items-center"><a href="login.html" class="flex-1 h-10 px-3 rounded-full font-label-caps text-[11px] leading-none tracking-[0.08em] text-on-surface-variant text-center hover:text-primary transition-colors flex items-center justify-center whitespace-nowrap">LOGIN</a><button type="button" class="flex-1 h-10 px-3 rounded-full bg-white shadow-sm font-label-caps text-[11px] leading-none tracking-[0.08em] text-primary active:scale-95 transition-all flex items-center justify-center whitespace-nowrap">CREATE ACCOUNT</button></nav><form class="flex flex-col gap-8" onsubmit="window.location.href='home_dashboard.html'; return false;">
+<!-- User Information Section -->
+<div class="flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="person">person</span>
+                        User Information
+                    </h2>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">User Type</label>
+<div class="relative">
+<select id="user-type-select" onchange="toggleUserTypeSections()" class="clean-select w-full h-touch-target-min pl-6 pr-14 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-primary focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none appearance-none">
+<option selected>Personal care</option>
+<option>Guardian support</option>
+<option>Doctor care</option>
+<option>Dietitian guidance</option>
+<option>Fitness coach</option>
+</select>
+<span class="dropdown-arrow absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-secondary transition-transform duration-200"><span class="material-symbols-outlined text-[26px] leading-none">expand_more</span></span>
+</div>
+</div>
+<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Full Name</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="e.g. Jane Doe" type="text">
+</div>
+
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Email</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="user@email.com" type="email">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Phone Number</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="(555) 000-0000" type="tel">
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">OTP Code</label>
+<button type="button" class="text-secondary font-bold text-sm hover:underline">Get OTP</button>
+</div>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none tracking-[0.5em] font-bold text-center" placeholder="••••" type="text" maxlength="4">
+</div>
+</div>
+</div>
+<!-- Guardian Information Section -->
+<div id="guardian-info-section" class="hidden flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="shield_with_heart">shield_with_heart</span>
+                        Guardian Information
+                    </h2>
+<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Guardian Name</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="e.g. John Smith" type="text">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Relationship</label>
+<select class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none appearance-none">
+<option disabled="" selected="" value="">Select relationship</option>
+<option>Child</option>
+<option>Spouse</option>
+<option>Professional Caregiver</option>
+<option>Grandchild</option>
+<option>Other</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Guardian Email</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="guardian@email.com" type="email">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Guardian Phone</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="(555) 000-0000" type="tel">
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Guardian OTP Code</label>
+<button type="button" class="text-secondary font-bold text-sm hover:underline">Get OTP</button>
+</div>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none tracking-[0.5em] font-bold text-center" placeholder="••••" type="text" maxlength="4">
+</div>
+</div>
+</div>
+<!-- Doctor Care Section -->
+<div id="doctor-care-section" class="hidden flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">stethoscope</span>
+Doctor Care
+</h2>
+<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Hospital Name</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="e.g. City Care Hospital" type="text">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Doctor Type</label>
+<div class="relative">
+<select class="clean-select w-full h-touch-target-min pl-6 pr-14 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-primary focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none appearance-none">
+<option selected>General physician</option>
+<option>Cardiologist</option>
+<option>Neurologist</option>
+<option>Dermatologist</option>
+<option>Orthopedic doctor</option>
+<option>ENT specialist</option>
+<option>Dentist</option>
+<option>Eye doctor</option>
+<option>Psychiatrist</option>
+<option>Other</option>
+</select>
+<span class="dropdown-arrow absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-secondary transition-transform duration-200"><span class="material-symbols-outlined text-[26px] leading-none">expand_more</span></span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Hospital Address</label>
+<textarea class="w-full min-h-[110px] px-6 py-4 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none resize-none" placeholder="Street, city, state"></textarea>
+</div>
+</div>
+</div>
+<!-- Dietitian Guidance Section -->
+<div id="dietitian-section" class="hidden flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">restaurant</span>
+Dietitian Guidance
+</h2>
+<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Diet Type</label>
+<div class="relative">
+<select class="clean-select w-full h-touch-target-min pl-6 pr-14 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-primary focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none appearance-none">
+<option selected>Vegetarian</option>
+<option>Non vegetarian</option>
+<option>Vegan</option>
+<option>Eggetarian</option>
+<option>Keto</option>
+<option>Diabetic diet</option>
+<option>Weight loss</option>
+<option>Weight gain</option>
+<option>Other</option>
+</select>
+<span class="dropdown-arrow absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-secondary transition-transform duration-200"><span class="material-symbols-outlined text-[26px] leading-none">expand_more</span></span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Diet Goal</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="e.g. Better energy, weight control" type="text">
+</div>
+</div>
+</div>
+<!-- Fitness Coach Section -->
+<div id="fitness-section" class="hidden flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">fitness_center</span>
+Fitness Coach
+</h2>
+<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Exercise Type</label>
+<div class="relative">
+<select class="clean-select w-full h-touch-target-min pl-6 pr-14 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-primary focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none appearance-none">
+<option selected>Yoga</option>
+<option>Cardio</option>
+<option>Strength training</option>
+<option>Walking</option>
+<option>Stretching</option>
+<option>Balance training</option>
+<option>Pilates</option>
+<option>HIIT</option>
+<option>Other</option>
+</select>
+<span class="dropdown-arrow absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-secondary transition-transform duration-200"><span class="material-symbols-outlined text-[26px] leading-none">expand_more</span></span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1 uppercase">Fitness Goal</label>
+<input class="w-full h-touch-target-min px-6 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all outline-none" placeholder="e.g. Mobility, stamina, strength" type="text">
+</div>
+</div>
+</div><!-- Create Account Action -->
+<button class="w-full h-touch-target-min bg-primary text-on-primary font-headline-md text-headline-md rounded-DEFAULT shadow-xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-3 mt-4">
+                    Create Account
+                    <span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</button>
+</form>
+<!-- T&C Link -->
+<p class="text-center text-[12px] text-on-surface-variant mt-4 font-label-caps">
+                By signing up, you agree to our <a class="text-secondary underline" href="#">Terms of Service</a>
+</p>
+<div class="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] font-bold text-on-surface-variant/70"><a href="#" class="hover:text-primary transition-colors">Terms</a><a href="settings_privacy_policy.html" class="hover:text-primary transition-colors">Privacy Policy</a><a href="settings_help.html" class="hover:text-primary transition-colors">Help</a><a href="settings_contact.html" class="hover:text-primary transition-colors">Contact</a></div></section>
+</main>
+<script>
+function setDropdownArrow(select, isOpen) {
+  const arrow = select.closest('.relative')?.querySelector('.dropdown-arrow');
+  if (arrow) arrow.classList.toggle('rotate-180', isOpen);
+}
+function setupReactiveSelects() {
+  document.querySelectorAll('select').forEach(select => {
+    select.addEventListener('pointerdown', () => setDropdownArrow(select, true));
+    select.addEventListener('focus', () => setDropdownArrow(select, true));
+    select.addEventListener('change', () => setDropdownArrow(select, false));
+    select.addEventListener('blur', () => setDropdownArrow(select, false));
+    select.addEventListener('keyup', (event) => {
+      if (event.key === 'Escape' || event.key === 'Enter') setDropdownArrow(select, false);
+    });
+  });
+}
+function toggleUserTypeSections() {
+  const userType = document.getElementById('user-type-select');
+  if (!userType) return;
+  const sections = {
+    'Guardian support': document.getElementById('guardian-info-section'),
+    'Doctor care': document.getElementById('doctor-care-section'),
+    'Dietitian guidance': document.getElementById('dietitian-section'),
+    'Fitness coach': document.getElementById('fitness-section')
+  };
+  Object.entries(sections).forEach(([type, section]) => {
+    if (section) section.classList.toggle('hidden', userType.value !== type);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  setupReactiveSelects();
+  toggleUserTypeSections();
+});
+</script></body></html>

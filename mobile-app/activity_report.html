@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Activity Report</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                        "accent-blue": "#eff4ff"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[120px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 flex justify-between items-center border-b border-slate-100">
+        <span class="material-symbols-outlined text-primary">shield</span>
+        <h1 class="font-bold text-lg">Guardian</h1>
+        <div class="relative">
+            <span class="material-symbols-outlined text-primary">notifications</span>
+            <div class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></div>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-8">
+        <!-- Page Title -->
+        <div class="space-y-2">
+            <h2 class="text-[32px] font-extrabold tracking-tight">Activity Report</h2>
+            <p class="text-slate-500 font-medium">Review recent health and daily activities.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex gap-3">
+            <button class="px-8 py-3.5 bg-primary text-white rounded-2xl font-bold text-xs shadow-lg">Daily</button>
+            <button class="px-8 py-3.5 bg-[#e8ecf4] text-slate-600 rounded-2xl font-bold text-xs">Weekly</button>
+            <button class="px-8 py-3.5 bg-[#e8ecf4] text-slate-600 rounded-2xl font-bold text-xs">Monthly</button>
+        </div>
+
+        <!-- Medicine Section -->
+        <section class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-4">
+            <div class="flex justify-between items-start">
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Medicine</h3>
+                        <p class="text-xs text-slate-400 mt-1">2/3 Taken</p>
+                    </div>
+                </div>
+                <button onclick="showStatus('med', 'pending')" class="bg-blue-50 text-secondary px-3 py-1 rounded-full text-[10px] font-bold active:scale-95 transition-transform cursor-pointer">Pending</button>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span class="text-xs font-bold text-slate-700">Morning Meds</span>
+                    <button onclick="showStatus('med', 'complete')" class="material-symbols-outlined text-green-500 text-xl active:scale-90 transition-transform">check_circle</button>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span class="text-xs font-bold text-slate-700">Afternoon Vitamins</span>
+                    <button onclick="showStatus('med', 'complete')" class="material-symbols-outlined text-green-500 text-xl active:scale-90 transition-transform">check_circle</button>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-red-50 rounded-2xl border border-red-100">
+                    <span class="text-xs font-bold text-red-600">Evening Dose</span>
+                    <button onclick="showStatus('med', 'missing')" class="text-[10px] font-bold text-red-500 uppercase active:scale-95 transition-transform cursor-pointer">Missed</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diet Section -->
+        <section class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-4">
+            <div class="flex justify-between items-start">
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Diet</h3>
+                        <p class="text-xs text-slate-400 mt-1">All Meals Logged</p>
+                    </div>
+                </div>
+                <button onclick="showStatus('diet', 'complete')" class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold active:scale-95 transition-transform cursor-pointer">Completed</button>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span class="text-xs font-bold text-slate-700">Breakfast - 8:00 AM</span>
+                    <span class="text-[10px] font-bold text-slate-400">Oatmeal</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span class="text-xs font-bold text-slate-700">Lunch - 1:00 PM</span>
+                    <span class="text-[10px] font-bold text-slate-400">Salad</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointment Section -->
+        <section class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-4">
+            <div class="flex justify-between items-start">
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event_note</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Appointment</h3>
+                        <p class="text-xs text-slate-400 mt-1">1 Scheduled</p>
+                    </div>
+                </div>
+                <span class="bg-blue-50 text-secondary px-3 py-1 rounded-full text-[10px] font-bold">Upcoming</span>
+            </div>
+            <div class="p-6 bg-slate-50 rounded-[24px] border border-slate-100 space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-slate-700">medical_services</span>
+                    <h4 class="font-bold">Dr. Smith - Checkup</h4>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Tomorrow at 10:00 AM. Bring recent lab results.
+                </p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-4">
+            <div class="flex justify-between items-start">
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_walk</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Exercise</h3>
+                        <p class="text-xs text-slate-400 mt-1">30 Min Goal</p>
+                    </div>
+                </div>
+                <button onclick="showStatus('exercise', 'complete')" class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold active:scale-95 transition-transform cursor-pointer">Completed</button>
+            </div>
+            <div class="p-6 bg-slate-50 rounded-[24px] border border-slate-100 flex justify-between items-center">
+                <div>
+                    <h4 class="font-bold">Morning Walk</h4>
+                    <p class="text-xs text-slate-400 mt-1">Park Route - 35 mins</p>
+                </div>
+                <button onclick="showStatus('exercise', 'complete')" class="material-symbols-outlined text-green-500 text-3xl active:scale-90 transition-transform cursor-pointer">check_circle</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 h-[100px] bg-white rounded-t-[40px] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_dashboard.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">HOME</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 bg-blue-50 text-primary rounded-2xl py-2" href="activity_report.html">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">REPORT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="payment_plans.html">
+            <span class="material-symbols-outlined">payments</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PAYMENT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_profile.html">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PROFILE</span>
+        </a>
+    </nav>
+
+    <!-- Status Toast -->
+    <div id="status-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[400] opacity-0 pointer-events-none transition-all duration-300">
+        <div id="status-toast-inner" class="bg-[#0d1b2e] text-white rounded-2xl px-5 py-4 shadow-2xl min-w-[280px] max-w-[340px] text-sm font-semibold leading-relaxed"></div>
+    </div>
+
+    <script>
+    const statusMessages = {
+        med: {
+            complete: { icon: '✅', title: 'Medicines Complete!', msg: 'All medications taken for today. Great job staying on track with your health routine!', color: 'bg-emerald-600' },
+            pending: { icon: '⏳', title: 'Medicines Pending', msg: 'You have medications scheduled but not yet confirmed. Please take them and mark as done.', color: 'bg-amber-600' },
+            missing: { icon: '❌', title: 'Medicines Missed', msg: "You missed today's medications. Please consult your guardian or doctor if needed.", color: 'bg-red-700' }
+        },
+        diet: {
+            complete: { icon: '✅', title: 'Diet Complete!', msg: 'All your meals today were on plan. Excellent nutritional discipline!', color: 'bg-emerald-600' },
+            pending: { icon: '⏳', title: 'Diet Pending', msg: 'Some meals are not yet logged for today. Keep track of your nutrition plan.', color: 'bg-amber-600' },
+            missing: { icon: '❌', title: 'Diet Missed', msg: "Diet plan wasn't followed today. Try to get back on track tomorrow.", color: 'bg-red-700' }
+        },
+        exercise: {
+            complete: { icon: '✅', title: 'Exercise Complete!', msg: "Today's workout session is done. Your body thanks you for staying active!", color: 'bg-emerald-600' },
+            pending: { icon: '⏳', title: 'Exercise Pending', msg: 'Your exercise session is scheduled but not completed. Get moving!', color: 'bg-amber-600' },
+            missing: { icon: '❌', title: 'Exercise Missed', msg: "No activity logged today. Even a short walk counts — try again tomorrow!", color: 'bg-red-700' }
+        }
+    };
+
+    let toastTimer = null;
+    function showStatus(category, type) {
+        const toast = document.getElementById('status-toast');
+        const inner = document.getElementById('status-toast-inner');
+        const info = statusMessages[category]?.[type];
+        if (!info) return;
+        inner.innerHTML = `<div class="flex items-start gap-3"><span class="text-2xl flex-shrink-0">${info.icon}</span><div><p class="font-bold text-base mb-1">${info.title}</p><p class="text-white/80 text-sm font-normal">${info.msg}</p></div></div>`;
+        toast.classList.remove('pointer-events-none', 'opacity-0');
+        toast.classList.add('opacity-100', 'pointer-events-auto');
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(-10px)';
+            setTimeout(() => {
+                toast.classList.add('pointer-events-none');
+                toast.classList.remove('opacity-100');
+            }, 300);
+        }, 3500);
+    }
+    </script>
+</body>
+</html>

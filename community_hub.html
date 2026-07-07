@@ -1,0 +1,852 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Community - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "on-surface-variant": "#43474f",
+                        "outline-variant": "#c4c6d1",
+                        "primary-container": "#002d62",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .post-card { box-shadow: 0 10px 40px rgba(0,45,98,0.06); }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-on-surface font-manrope antialiased min-h-screen pb-[120px]">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-center items-center h-[72px]">
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center">Community</h1>
+    </header>
+
+    <main class="max-w-2xl mx-auto space-y-8 pt-8 px-margin-page">
+<!-- Search & Filter -->
+<div class="px-6 flex items-center gap-4">
+<div class="flex-1 bg-white border border-slate-200 rounded-full h-12 flex items-center px-4 shadow-sm">
+<span class="material-symbols-outlined text-slate-400 mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 flex-1 text-sm placeholder:text-slate-400" placeholder="Search people and profiles" type="text">
+</div>
+<div class="flex items-center gap-2">
+<a href="notifications_hub.html" class="w-11 h-11 flex items-center justify-center bg-white border border-slate-200 rounded-full shadow-sm text-primary hover:bg-slate-50 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+</a>
+<a href="messages.html" class="w-11 h-11 flex items-center justify-center bg-white border border-slate-200 rounded-full shadow-sm text-primary hover:bg-slate-50 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+</a>
+</div>
+</div>
+<!-- Stories / Highlights Row (Redesigned to Vertical Cards) -->
+<div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 py-4">
+    <!-- Add Story Card -->
+    <a href="share_story_camera.html" class="flex-shrink-0 w-28 h-40 rounded-3xl border-2 border-dashed border-primary/20 bg-slate-50 flex flex-col items-center justify-center p-3 text-center gap-2 group active:scale-95 transition-all hover:bg-slate-100 hover:border-primary/40 relative overflow-hidden">
+        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+            <span class="material-symbols-outlined text-xl">add</span>
+        </div>
+        <span class="text-[11px] font-black text-primary tracking-wide">Add Story</span>
+    </a>
+    
+    <!-- Family Card -->
+    <a href="story_highlight_viewer.html" class="flex-shrink-0 w-28 h-40 rounded-3xl overflow-hidden relative shadow-md border border-slate-100/50 group active:scale-95 transition-transform">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+        <img class="w-full h-full object-cover absolute inset-0 z-0 group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&fit=crop" alt="Family Background">
+        <div class="absolute top-3 left-3 w-8 h-8 rounded-full border-2 border-secondary overflow-hidden z-20">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=100&h=100&fit=crop" alt="Family">
+        </div>
+        <span class="absolute bottom-3 left-3 right-3 text-white font-extrabold text-[11px] tracking-wide leading-none z-20 truncate">Family</span>
+    </a>
+
+    <!-- Rohan Card -->
+    <a href="story_highlight_viewer.html" class="flex-shrink-0 w-28 h-40 rounded-3xl overflow-hidden relative shadow-md border border-slate-100/50 group active:scale-95 transition-transform">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+        <img class="w-full h-full object-cover absolute inset-0 z-0 group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&fit=crop" alt="Rohan Background">
+        <div class="absolute top-3 left-3 w-8 h-8 rounded-full border-2 border-secondary overflow-hidden z-20">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop" alt="Rohan">
+        </div>
+        <span class="absolute bottom-3 left-3 right-3 text-white font-extrabold text-[11px] tracking-wide leading-none z-20 truncate">Rohan</span>
+    </a>
+
+    <!-- Dr. Aris Card -->
+    <a href="story_highlight_viewer.html" class="flex-shrink-0 w-28 h-40 rounded-3xl overflow-hidden relative shadow-md border border-slate-100/50 group active:scale-95 transition-transform">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+        <img class="w-full h-full object-cover absolute inset-0 z-0 group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&fit=crop" alt="Dr. Aris Background">
+        <div class="absolute top-3 left-3 w-8 h-8 rounded-full border-2 border-slate-200 overflow-hidden z-20">
+            <img class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priya" alt="Dr. Aris">
+        </div>
+        <span class="absolute bottom-3 left-3 right-3 text-white font-extrabold text-[11px] tracking-wide leading-none z-20 truncate font-semibold">Dr. Aris</span>
+    </a>
+    <!-- End Spacer -->
+    <div class="w-6 flex-shrink-0"></div>
+</div>
+<!-- Blog Post -->
+<article class="px-6 mb-6">
+    <div class="bg-white rounded-3xl overflow-hidden post-card border border-slate-100 block transition-all">
+        <!-- Blog Header & Cover -->
+        <div class="relative w-full h-48 bg-slate-100 flex items-end">
+            <img class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop" alt="Nutrition Blog Cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div class="relative z-10 p-5 w-full">
+                <span class="inline-block px-3 py-1 bg-secondary text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Nutrition Blog</span>
+                <h2 class="text-white font-bold text-xl leading-tight">5 Heart-Healthy Recipes for Spring</h2>
+            </div>
+        </div>
+        
+        <!-- Author Info -->
+        <div class="px-5 pt-4 pb-2 flex justify-between items-center border-b border-slate-50">
+            <div class="flex items-center gap-3">
+                <img class="w-10 h-10 rounded-full object-cover cursor-pointer border border-slate-200" src="https://api.dicebear.com/7.x/avataaars/svg?seed=BettyAnn" onclick="window.location.href='sarah_profile.html'">
+                <div>
+                    <h3 class="font-bold text-sm text-primary cursor-pointer hover:underline" onclick="window.location.href='sarah_profile.html'">Betty Ann Wilson</h3>
+                    <p class="text-[10px] text-slate-400">1 hour ago • 4 min read</p>
+                </div>
+            </div>
+            <button class="px-4 py-1.5 bg-primary text-white rounded-full text-[10px] font-bold tracking-wider uppercase">Follow</button>
+        </div>
+        
+        <!-- Blog Excerpt -->
+        <div class="p-5">
+            <div class="caption-container mb-6">
+                <p class="text-sm text-slate-600 leading-relaxed caption-text line-clamp-3">
+                    Spring is the perfect time to refresh our diets with vibrant, nutrient-packed ingredients. In this week's blog, I'm sharing my top 5 favorite heart-healthy recipes that are not only delicious but also incredibly easy to prepare. From a refreshing citrus quinoa salad to baked salmon with roasted asparagus, these meals will keep you feeling light and energized. I've also included some tips on how to lower sodium without sacrificing flavor...
+                </p>
+                <button class="text-primary text-xs font-bold mt-1 more-btn" onclick="expandCaption(this)">Read Full Blog</button>
+            </div>
+            <div class="flex items-center gap-6 text-slate-400">
+                <button class="flex items-center gap-2 group" onclick="toggleLike(this)">
+                    <span class="material-symbols-outlined transition-colors group-active:scale-125">favorite</span>
+                    <span class="text-xs font-bold like-count">245</span>
+                </button>
+                <button class="flex items-center gap-2" onclick="openComments()">
+                    <span class="material-symbols-outlined">chat_bubble_outline</span>
+                    <span class="text-xs font-bold">32</span>
+                </button>
+                <button class="flex items-center gap-2" onclick="sharePost()">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+                <div class="ml-auto">
+                    <button class="group" onclick="toggleSave(this)">
+                        <span class="material-symbols-outlined transition-colors">bookmark_border</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Feed Post 1 -->
+<article class="px-6">
+    <div class="bg-white rounded-3xl overflow-hidden post-card border border-slate-100 block transition-all">
+        <div class="p-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img class="w-12 h-12 rounded-full object-cover cursor-pointer" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" onclick="window.location.href='sarah_profile.html'">
+                <div>
+                    <h3 class="font-bold text-primary cursor-pointer hover:underline" onclick="window.location.href='sarah_profile.html'">Sarah Jenkins</h3>
+                    <p class="text-[11px] text-slate-400">2 hours ago • Blog</p>
+                    <p class="text-[10px] text-slate-400 flex items-center gap-0.5 mt-0.5"><span class="material-symbols-outlined text-[12px] text-slate-300">location_on</span>Pune, Maharashtra</p>
+                </div>
+            </div>
+            <button class="px-5 py-2 border border-slate-800 rounded-full text-[10px] font-bold tracking-wider uppercase">Following</button>
+        </div>
+        <div class="relative bg-black flex items-center justify-center overflow-hidden">
+            <img class="w-full object-contain" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop">
+            <div class="absolute w-16 h-16 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 cursor-pointer" onclick="window.location.href='reels.html'">
+                <span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            </div>
+        </div>
+        <div class="p-5">
+            <div class="caption-container mb-6">
+                <p class="text-sm text-slate-600 leading-relaxed caption-text line-clamp-3">
+                    Starting my morning with gentle stretching. It's amazing how much more energy I have for the community walk later! I've been doing this for three weeks now and the results are truly life-changing. My joints feel more mobile and my overall mood has significantly improved. Can't wait to see everyone at the park today for our weekly group session!
+                </p>
+                <button class="text-primary text-xs font-bold mt-1 more-btn" onclick="expandCaption(this)">more</button>
+            </div>
+            <div class="flex items-center gap-6 text-slate-400">
+                <button class="flex items-center gap-2 group" onclick="toggleLike(this)">
+                    <span class="material-symbols-outlined transition-colors group-active:scale-125">favorite</span>
+                    <span class="text-xs font-bold like-count">124</span>
+                </button>
+                <button class="flex items-center gap-2" onclick="openComments()">
+                    <span class="material-symbols-outlined">chat_bubble_outline</span>
+                    <span class="text-xs font-bold">16</span>
+                </button>
+                <button class="flex items-center gap-2" onclick="sharePost()">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+                <div class="ml-auto">
+                    <button class="group" onclick="toggleSave(this)">
+                        <span class="material-symbols-outlined transition-colors">bookmark_border</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Suggested Profiles -->
+<section class="space-y-4 py-4">
+<div class="px-8 flex justify-between items-center">
+<h2 class="font-bold text-slate-800">Suggested for You</h2>
+<a href="suggestions.html" class="text-xs font-bold text-secondary tracking-wider uppercase hover:underline py-2 px-3 -mr-3 flex items-center justify-center">View All</a>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar px-6">
+<div class="flex-shrink-0 w-44 bg-white rounded-3xl p-6 border border-slate-100 text-center flex flex-col items-center shadow-sm cursor-pointer" onclick="window.location.href='sarah_profile.html'">
+<img class="w-16 h-16 rounded-full object-cover mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa4LCTSFzuRBAsqpaN7PfMYwtfwKEbY9ZZ_67exIpccP__AOXtPVOXLSxvMz1Dp4gQ2-IiT354hd0SdR2pMgjDxELjxYwBt8W1CdMhWuauAo6bt47KZxvnRMqqc_F8JthYoLZMgqkXvNkTzx3n2M-zGcPnugaiG2Xn-V_LNH4fUQtf7DPTG76kWsmbdS_8QaK-b9E7oO-5VQ9__9EZITj9qc0g0I9WpUpDVGQSdDwqPUdwWCzlTX9jod0mTbURdgRm8bR5nh-JOI0">
+<h4 class="font-bold text-sm text-primary">Dr. Arthur Pen</h4>
+<p class="text-[10px] text-slate-400 mb-4">Wellness Coach</p>
+<button class="w-full py-2 bg-primary text-white rounded-full text-[10px] font-bold tracking-wider uppercase">Follow</button>
+</div>
+<div class="flex-shrink-0 w-44 bg-white rounded-3xl p-6 border border-slate-100 text-center flex flex-col items-center shadow-sm cursor-pointer" onclick="window.location.href='sarah_profile.html'">
+<img class="w-16 h-16 rounded-full object-cover mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUODff2fNTiXLQuH8S18wlqENjx1_vMG48jE8rFJdcs6uEOYNwZKVcJjY0KyJ0zduYV_N8-uxPEHYGU-IVsj0Vf-zMoEcgsfI7Y_wG5DDP6TXkacb4sYKrJu2Vzo8hm39-i-k7dtiicgw_0tzsQFGd03nConi-mHOrGcFAI3_pPGvVqPgEMavMZd5SzpSxp9kqDzufnD2ozzxDaH_KTZ9MtCe7YBieNHylJVpMEYFCJbp9b1NepFzZMxLe2fO0qUo5PeH0twdWs_k">
+<h4 class="font-bold text-sm text-primary">Elena Sterling</h4>
+<p class="text-[10px] text-slate-400 mb-4">Daily Walker</p>
+<button class="w-full py-2 bg-slate-200 text-slate-600 rounded-full text-[10px] font-bold tracking-wider uppercase">Following</button>
+</div>
+</div>
+</section>
+
+<!-- Feed Post 2 -->
+<article class="px-6 pb-24">
+    <div class="bg-white rounded-3xl overflow-hidden post-card border border-slate-100 block transition-all">
+        <div class="p-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img class="w-12 h-12 rounded-full object-cover cursor-pointer" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" onclick="window.location.href='sarah_profile.html'">
+                <div>
+                    <h3 class="font-bold text-primary cursor-pointer hover:underline" onclick="window.location.href='sarah_profile.html'">Dr. Arthur Pen</h3>
+                    <p class="text-[11px] text-slate-400">5 hours ago • Post</p>
+                    <p class="text-[10px] text-slate-400 flex items-center gap-0.5 mt-0.5"><span class="material-symbols-outlined text-[12px] text-slate-300">location_on</span>Mumbai, Maharashtra</p>
+                </div>
+            </div>
+            <button class="px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold tracking-wider uppercase">Follow</button>
+        </div>
+        <div class="p-4 pt-0">
+            <div class="caption-container mb-4">
+                <p class="text-sm text-slate-600 leading-relaxed caption-text line-clamp-3">
+                    The garden is looking wonderful this spring. A great place for our next mindfulness session. We have planted new lavender and peonies which should be in full bloom by next weekend. Looking forward to sharing this peaceful space with you all!
+                </p>
+                <button class="text-primary text-xs font-bold mt-1 more-btn" onclick="expandCaption(this)">more</button>
+            </div>
+            <div class="relative rounded-3xl overflow-hidden bg-black">
+                <img class="w-full object-contain" src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070&auto=format&fit=crop">
+            </div>
+        </div>
+        <div class="p-5 pt-0 flex items-center gap-6 text-slate-400">
+            <button class="flex items-center gap-2 group" onclick="toggleLike(this)">
+                <span class="material-symbols-outlined transition-colors group-active:scale-125">favorite</span>
+                <span class="text-xs font-bold like-count">89</span>
+            </button>
+            <button class="flex items-center gap-2" onclick="openComments()">
+                <span class="material-symbols-outlined">chat_bubble_outline</span>
+                <span class="text-xs font-bold">4</span>
+            </button>
+            <button class="flex items-center gap-2" onclick="sharePost()">
+                <span class="material-symbols-outlined">share</span>
+            </button>
+            <div class="ml-auto">
+                <button class="group" onclick="toggleSave(this)">
+                    <span class="material-symbols-outlined transition-colors">bookmark_border</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Comment Bottom Sheet -->
+<div id="comment-sheet" class="fixed inset-0 z-[60] pointer-events-none">
+    <div id="comment-overlay" class="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeComments()"></div>
+    <div id="comment-content" class="absolute bottom-0 left-0 w-full bg-white rounded-t-[40px] h-[70vh] translate-y-full transition-transform duration-500 pointer-events-auto p-6 flex flex-col shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-bold text-xl text-primary text-center mb-6">Comments</h3>
+        <div id="comments-list" class="flex-1 overflow-y-auto space-y-6 hide-scrollbar mb-6">
+            <div class="flex gap-4">
+                <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus">
+                <div class="bg-slate-50 rounded-2xl p-4 flex-1">
+                    <h4 class="font-bold text-sm text-primary mb-1">Marcus Aurelius</h4>
+                    <p class="text-sm text-slate-600">This is so inspiring! Thank you for sharing.</p>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena">
+                <div class="bg-slate-50 rounded-2xl p-4 flex-1">
+                    <h4 class="font-bold text-sm text-primary mb-1">Elena Sterling</h4>
+                    <p class="text-sm text-slate-600">Can't wait for the walk!</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 bg-slate-50 rounded-2xl p-2 pr-4 border border-slate-200">
+            <input type="text" id="new-comment-input" placeholder="Add a comment..." class="bg-transparent border-none focus:ring-0 flex-1 text-sm font-medium px-4 outline-none">
+            <button onclick="submitComment()" class="text-primary font-bold text-sm px-2">Post</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Hidden File Inputs -->
+<input type="file" id="video-upload" accept="video/*" class="hidden">
+<input type="file" id="image-upload" accept="image/*" class="hidden">
+
+<script>
+    const videoUpload = document.getElementById('video-upload');
+    const imageUpload = document.getElementById('image-upload');
+
+    videoUpload.addEventListener('change', (e) => {
+        if(e.target.files.length > 0) {
+            const file = e.target.files[0];
+            if (!file.type.startsWith('video/')) {
+                alert('Please select a video file only.');
+                return;
+            }
+            alert('Video selected: ' + file.name + '\nUploading to community...');
+        }
+    });
+
+    imageUpload.addEventListener('change', (e) => {
+        if(e.target.files.length > 0) {
+            const file = e.target.files[0];
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file only.');
+                return;
+            }
+            alert('Image selected: ' + file.name + '\nUploading to community...');
+        }
+    });
+
+    function expandCaption(btn) {
+        const text = btn.previousElementSibling;
+        text.classList.toggle('line-clamp-3');
+        btn.innerText = text.classList.contains('line-clamp-3') ? 'more' : 'less';
+    }
+
+    function toggleLike(btn) {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const count = btn.querySelector('.like-count');
+        let current = parseInt(count.innerText);
+        
+        if (icon.style.fontVariationSettings.includes("'FILL' 1")) {
+            icon.style.fontVariationSettings = "'FILL' 0, 'wght' 400";
+            icon.classList.remove('text-red-500');
+            count.innerText = current - 1;
+        } else {
+            icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400";
+            icon.classList.add('text-red-500');
+            count.innerText = current + 1;
+        }
+    }
+
+    function toggleSave(btn) {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon.innerText === 'bookmark_border') {
+            icon.innerText = 'bookmark';
+            icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400";
+            icon.classList.add('text-blue-500');
+        } else {
+            icon.innerText = 'bookmark_border';
+            icon.style.fontVariationSettings = "'FILL' 0, 'wght' 400";
+            icon.classList.remove('text-blue-500');
+        }
+    }
+
+    function openComments() {
+        document.getElementById('comment-sheet').classList.remove('pointer-events-none');
+        document.getElementById('comment-overlay').classList.remove('pointer-events-none');
+        document.getElementById('comment-overlay').classList.add('opacity-100');
+        document.getElementById('comment-content').style.transform = 'translateY(0)';
+        setTimeout(() => document.getElementById('new-comment-input').focus(), 400);
+    }
+
+    function closeComments() {
+        document.getElementById('comment-sheet').classList.add('pointer-events-none');
+        document.getElementById('comment-overlay').classList.add('pointer-events-none');
+        document.getElementById('comment-overlay').classList.remove('opacity-100');
+        document.getElementById('comment-content').style.transform = 'translateY(100%)';
+    }
+
+    function submitComment() {
+        const input = document.getElementById('new-comment-input');
+        const text = input.value.trim();
+        if (!text) return;
+        const list = document.getElementById('comments-list');
+        const pfp = localStorage.getItem('user_profile_img') || 'shreya_senior_profile_1777714702221.png';
+        const username = localStorage.getItem('user_username') || 'Shreya';
+        const name = username.startsWith('@') ? username.substring(1) : username;
+        const div = document.createElement('div');
+        div.className = 'flex gap-4';
+        div.innerHTML = `
+            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="${pfp}">
+            <div class="bg-primary/5 rounded-2xl p-4 flex-1">
+                <h4 class="font-bold text-sm text-primary mb-1">${name.charAt(0).toUpperCase() + name.slice(1)}</h4>
+                <p class="text-sm text-slate-600">${text}</p>
+            </div>`;
+        list.appendChild(div);
+        input.value = '';
+        list.scrollTop = list.scrollHeight;
+    }
+
+    function sharePost() {
+        openShareSheet();
+    }
+
+    function openShareSheet() {
+        document.getElementById('share-sheet-container').classList.remove('pointer-events-none');
+        document.getElementById('share-backdrop').classList.remove('pointer-events-none', 'opacity-0');
+        document.getElementById('share-backdrop').classList.add('opacity-100');
+        document.getElementById('share-sheet').classList.remove('translate-y-full', 'pointer-events-none');
+        document.getElementById('share-sheet').classList.add('translate-y-0', 'pointer-events-auto');
+    }
+
+    function closeShareSheet() {
+        document.getElementById('share-backdrop').classList.add('opacity-0');
+        document.getElementById('share-backdrop').classList.remove('opacity-100');
+        document.getElementById('share-sheet').classList.add('translate-y-full');
+        document.getElementById('share-sheet').classList.remove('translate-y-0');
+        setTimeout(() => {
+            document.getElementById('share-sheet-container').classList.add('pointer-events-none');
+            document.getElementById('share-sheet').classList.add('pointer-events-none');
+            document.getElementById('share-backdrop').classList.add('pointer-events-none');
+        }, 350);
+    }
+
+    function sendToContact(btn) {
+        const name = btn.previousElementSibling.querySelector('p').textContent;
+        btn.textContent = 'Sent ✓';
+        btn.classList.remove('bg-secondary', 'text-white');
+        btn.classList.add('bg-emerald-100', 'text-emerald-700');
+        btn.disabled = true;
+        showFeedToast(`Shared with ${name}!`);
+    }
+
+    function copyLink() {
+        const url = window.location.href;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).then(() => {
+                closeShareSheet();
+                showFeedToast('🔗 Link copied to clipboard!');
+            });
+        } else {
+            closeShareSheet();
+            showFeedToast('🔗 Link copied!');
+        }
+    }
+</script>
+</article>
+</main>
+
+<!-- Floating Action Button for Posting -->
+<div class="fixed bottom-[120px] right-6 z-[60] flex flex-col items-end gap-4 pointer-events-none" id="fab-menu">
+    <!-- Menu Options -->
+    <div class="flex flex-col gap-3 opacity-0 translate-y-10 transition-all duration-300 items-end" id="fab-options">
+
+        <!-- Post Image -->
+        <label class="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-lg border border-slate-100 cursor-pointer pointer-events-auto hover:bg-slate-50 transition-colors" onclick="">
+            <span class="font-bold text-[#00193c] text-sm whitespace-nowrap">Post Image</span>
+            <div class="w-10 h-10 rounded-full bg-[#e0e0ff] text-[#02026b] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">image</span>
+            </div>
+            <input type="file" accept="image/*" class="hidden" onchange="handleImagePick(this)">
+        </label>
+
+        <!-- Upload Video -->
+        <label class="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-lg border border-slate-100 cursor-pointer pointer-events-auto hover:bg-slate-50 transition-colors">
+            <span class="font-bold text-[#00193c] text-sm whitespace-nowrap">Upload Video</span>
+            <div class="w-10 h-10 rounded-full bg-[#ffdad6] text-[#93000a] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">videocam</span>
+            </div>
+            <input type="file" accept="video/*" class="hidden" onchange="handleVideoPick(this)">
+        </label>
+
+        <!-- Create Blog -->
+        <button onclick="toggleFab(); window.location.href='create_blog.html'" class="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-lg border border-slate-100 pointer-events-auto hover:bg-slate-50 transition-colors">
+            <span class="font-bold text-[#00193c] text-sm whitespace-nowrap">Create Blog</span>
+            <div class="w-10 h-10 rounded-full bg-[#d7e2ff] text-[#001b3f] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">edit_document</span>
+            </div>
+        </button>
+    </div>
+
+    <!-- Main FAB -->
+    <button onclick="toggleFab()" class="relative w-16 h-16 rounded-[22px] flex items-center justify-center shadow-[0_12px_24px_rgba(0,45,98,0.3),inset_0_-6px_0_rgba(0,0,0,0.2),inset_0_4px_0_rgba(255,255,255,0.25)] active:scale-95 active:translate-y-1.5 active:shadow-[0_4px_12px_rgba(0,45,98,0.3),inset_0_-2px_0_rgba(0,0,0,0.2),inset_0_2px_0_rgba(255,255,255,0.25)] pointer-events-auto transition-all duration-300 z-10 overflow-hidden" id="main-fab" style="background: linear-gradient(135deg, #002d62 0%, #00193c 100%);">
+        <div class="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent opacity-60 pointer-events-none"></div>
+        <span class="material-symbols-outlined text-white text-[32px] transition-transform duration-300 relative z-10" id="fab-icon" style="text-shadow: 0 2px 4px rgba(0,0,0,0.4); font-variation-settings: 'wght' 600;">add</span>
+    </button>
+</div>
+
+<!-- FAB Overlay -->
+<div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[55] opacity-0 pointer-events-none transition-opacity duration-300" id="fab-overlay" onclick="toggleFab()"></div>
+
+<!-- ── IMAGE PREVIEW MODAL ── -->
+<div id="img-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
+    <div id="img-backdrop" class="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeImgModal()"></div>
+    <div id="img-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-6 translate-y-full transition-transform duration-500 pointer-events-none">
+        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5"></div>
+        <h2 class="font-bold text-xl text-primary mb-4 text-center">Preview & Post</h2>
+        <!-- Image Preview -->
+        <div id="img-preview-wrap" class="w-full h-64 rounded-2xl bg-slate-100 overflow-hidden mb-4 flex items-center justify-center">
+            <img id="img-preview" class="w-full h-full object-cover hidden" alt="">
+            <span class="material-symbols-outlined text-slate-300 text-6xl">image</span>
+        </div>
+        <!-- Caption -->
+        <textarea id="post-caption" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-700 focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none resize-none mb-4" placeholder="Write a caption... add location, hashtags, or tag someone 🌿"></textarea>
+        <!-- Location Tag -->
+        <div class="flex items-center gap-3 mb-4">
+            <span class="material-symbols-outlined text-slate-400 text-xl">location_on</span>
+            <input type="text" id="post-location" placeholder="Add location (e.g. Pune, Maharashtra)" class="flex-1 bg-transparent text-sm text-slate-600 outline-none font-medium">
+        </div>
+        <!-- Buttons -->
+        <div class="flex gap-3">
+            <button onclick="closeImgModal()" class="flex-1 h-12 border border-slate-200 rounded-2xl text-sm font-bold text-slate-500 active:scale-95 transition-transform">Cancel</button>
+            <button onclick="publishPost()" class="flex-1 h-12 bg-primary text-white rounded-2xl text-sm font-bold shadow-lg active:scale-95 transition-transform">Post Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- VIDEO PREVIEW MODAL -->
+<div id="vid-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
+    <div id="vid-backdrop" class="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeVidModal()"></div>
+    <div id="vid-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-6 translate-y-full transition-transform duration-500 pointer-events-none">
+        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5"></div>
+        <h2 class="font-bold text-xl text-primary mb-4 text-center">Preview Video</h2>
+        <div class="w-full h-56 rounded-2xl bg-slate-100 overflow-hidden mb-4 flex items-center justify-center relative">
+            <video id="vid-preview" class="w-full h-full object-cover hidden" controls></video>
+            <div id="vid-placeholder" class="flex flex-col items-center gap-2 text-slate-400">
+                <span class="material-symbols-outlined text-5xl">videocam</span>
+                <p class="text-sm font-bold">Video selected</p>
+            </div>
+        </div>
+        <textarea id="vid-caption" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-700 focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none resize-none mb-4" placeholder="Write something about this video... 🎥"></textarea>
+        <div class="flex gap-3">
+            <button onclick="closeVidModal()" class="flex-1 h-12 border border-slate-200 rounded-2xl text-sm font-bold text-slate-500 active:scale-95">Cancel</button>
+            <button onclick="publishVideo()" class="flex-1 h-12 bg-primary text-white rounded-2xl text-sm font-bold shadow-lg active:scale-95">Share Video</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let fabOpen = false;
+    function toggleFab() {
+        fabOpen = !fabOpen;
+        const options = document.getElementById('fab-options');
+        const icon = document.getElementById('fab-icon');
+        const overlay = document.getElementById('fab-overlay');
+        if (fabOpen) {
+            options.classList.remove('opacity-0','translate-y-10'); options.classList.add('opacity-100','translate-y-0');
+            icon.style.transform='rotate(45deg)';
+            overlay.classList.remove('opacity-0','pointer-events-none'); overlay.classList.add('opacity-100','pointer-events-auto');
+        } else {
+            options.classList.add('opacity-0','translate-y-10'); options.classList.remove('opacity-100','translate-y-0');
+            icon.style.transform='rotate(0deg)';
+            overlay.classList.add('opacity-0','pointer-events-none'); overlay.classList.remove('opacity-100','pointer-events-auto');
+        }
+    }
+
+    // ── Image Upload ──
+    function handleImagePick(input) {
+        if (!input.files || !input.files[0]) return;
+        toggleFab();
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = e => {
+            const preview = document.getElementById('img-preview');
+            const placeholder = preview.previousElementSibling;
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+            if (placeholder) placeholder.classList.add('hidden');
+            openModal('img');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function handleVideoPick(input) {
+        if (!input.files || !input.files[0]) return;
+        toggleFab();
+        const file = input.files[0];
+        const vid = document.getElementById('vid-preview');
+        const placeholder = document.getElementById('vid-placeholder');
+        vid.src = URL.createObjectURL(file);
+        vid.classList.remove('hidden');
+        if (placeholder) placeholder.classList.add('hidden');
+        openModal('vid');
+    }
+
+    function openModal(type) {
+        const backdrop = document.getElementById(type+'-backdrop');
+        const sheet = document.getElementById(type+'-sheet');
+        const modal = document.getElementById(type+'-modal');
+        modal.classList.remove('pointer-events-none');
+        backdrop.classList.remove('pointer-events-none','opacity-0'); backdrop.classList.add('opacity-100','pointer-events-auto');
+        sheet.classList.remove('translate-y-full','pointer-events-none'); sheet.classList.add('translate-y-0','pointer-events-auto');
+    }
+
+    function closeImgModal() { closeModal('img'); }
+    function closeVidModal() { closeModal('vid'); }
+
+    function closeModal(type) {
+        const backdrop = document.getElementById(type+'-backdrop');
+        const sheet = document.getElementById(type+'-sheet');
+        const modal = document.getElementById(type+'-modal');
+        backdrop.classList.add('opacity-0'); sheet.classList.add('translate-y-full');
+        setTimeout(() => { modal.classList.add('pointer-events-none'); backdrop.classList.add('pointer-events-none'); sheet.classList.add('pointer-events-none'); }, 400);
+    }
+
+    function publishPost() {
+        const caption = document.getElementById('post-caption').value.trim();
+        const location = document.getElementById('post-location').value.trim();
+        const imgSrc = document.getElementById('img-preview').src;
+        closeImgModal();
+        const feed = document.querySelector('#scam-list') || document.querySelector('main > article') || document.querySelector('main');
+        const postHTML = `
+        <div class="post-card bg-white rounded-[28px] overflow-hidden border border-slate-100 mb-6">
+            <div class="flex items-center justify-between px-5 pt-5 pb-3">
+                <div class="flex items-center gap-3">
+                    <img class="w-11 h-11 rounded-full object-cover border-2 border-primary/20" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya">
+                    <div>
+                        <p class="font-bold text-sm text-primary">Shreya</p>
+                        <p class="text-[10px] text-slate-400">Just now${location ? ' · 📍 '+location : ''}</p>
+                    </div>
+                </div>
+            </div>
+            ${imgSrc ? `<img src="${imgSrc}" class="w-full object-cover max-h-72">` : ''}
+            ${caption ? `<p class="px-5 py-3 text-sm text-slate-700 font-medium">${caption}</p>` : ''}
+            <div class="px-5 pb-4 flex items-center gap-5 text-slate-400">
+                <button class="flex items-center gap-1.5 text-sm font-bold" onclick="toggleLike(this)">
+                    <span class="material-symbols-outlined">favorite</span> 0
+                </button>
+                <button class="flex items-center gap-1.5 text-sm font-bold">
+                    <span class="material-symbols-outlined">chat_bubble_outline</span> 0
+                </button>
+                <button onclick="sharePost()" class="flex items-center gap-1.5 text-sm font-bold">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+            </div>
+        </div>`;
+        const firstPost = document.querySelector('.post-card');
+        if (firstPost) firstPost.insertAdjacentHTML('beforebegin', postHTML);
+        showFeedToast('✅ Your post is live!');
+    }
+
+    function publishVideo() {
+        closeVidModal();
+        showFeedToast('🎥 Video posted successfully!');
+    }
+
+    function showFeedToast(msg) {
+        let t = document.getElementById('feed-toast');
+        if (!t) {
+            t = document.createElement('div');
+            t.id = 'feed-toast';
+            t.className = 'fixed top-20 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl z-[300] transition-all opacity-0';
+            document.body.appendChild(t);
+        }
+        t.innerText = msg; t.classList.remove('opacity-0'); t.classList.add('opacity-100');
+        setTimeout(() => { t.classList.add('opacity-0'); t.classList.remove('opacity-100'); }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const storedImg = localStorage.getItem('user_profile_img');
+        if (storedImg) {
+            document.querySelectorAll('img[src*="shreya_senior_profile"], img[src*="seed=Shreya"]').forEach(img => {
+                img.src = storedImg;
+            });
+        }
+        const storedUsername = localStorage.getItem('user_username');
+        if (storedUsername) {
+            const rawUser = storedUsername.startsWith('@') ? storedUsername : '@' + storedUsername;
+            const plainUser = storedUsername.startsWith('@') ? storedUsername.substring(1) : storedUsername;
+            document.querySelectorAll('p, h4, span').forEach(el => {
+                if (el.textContent.trim() === 'Shreya' || el.textContent.trim() === '@shreya_wellness') {
+                    if (el.textContent.trim().startsWith('@')) {
+                        el.textContent = rawUser;
+                    } else {
+                        el.textContent = plainUser;
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+<!-- ── INSTAGRAM-STYLE SHARE SHEET ── -->
+<div id="share-sheet-container" class="fixed inset-0 z-[80] pointer-events-none">
+    <div id="share-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeShareSheet()"></div>
+    <div id="share-sheet" class="absolute bottom-0 left-0 w-full bg-white rounded-t-[36px] shadow-[0_-20px_60px_rgba(0,25,60,0.18)] translate-y-full transition-transform duration-500 pointer-events-none max-h-[80vh] flex flex-col">
+        <!-- Handle -->
+        <div class="flex justify-center pt-4 pb-2 flex-shrink-0">
+            <div class="w-10 h-1.5 bg-slate-200 rounded-full"></div>
+        </div>
+        <!-- Header -->
+        <div class="px-6 pb-4 flex items-center justify-between flex-shrink-0">
+            <h3 class="font-bold text-lg text-primary">Share with Friends</h3>
+            <button onclick="closeShareSheet()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <!-- Search bar -->
+        <div class="px-6 pb-4 flex-shrink-0">
+            <div class="flex items-center gap-2 bg-slate-100 rounded-full px-4 py-2.5">
+                <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
+                <input type="text" placeholder="Search friends…" class="bg-transparent text-sm outline-none flex-1 text-slate-700">
+            </div>
+        </div>
+        <!-- Contacts list -->
+        <div class="overflow-y-auto flex-1 px-4 pb-8 space-y-2">
+            <!-- Contact rows -->
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Eleanor" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Eleanor Fitzgerald</p>
+                    <p class="text-[11px] text-slate-400">Your Guardian · Family</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Elena Sterling</p>
+                    <p class="text-[11px] text-slate-400">@elena_active · Following</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Dr. Arthur Pen</p>
+                    <p class="text-[11px] text-slate-400">@arthur_fit · Following</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Margaret" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Margaret Clarke</p>
+                    <p class="text-[11px] text-slate-400">@margaret_joy · Following</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ruth" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Ruth Nakamura</p>
+                    <p class="text-[11px] text-slate-400">@ruth_zen · Following</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dorothy" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Dorothy Mills</p>
+                    <p class="text-[11px] text-slate-400">@dorothy_m · Following</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=BettyAnn" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm text-primary truncate">Betty Ann Wilson</p>
+                    <p class="text-[11px] text-slate-400">@bettyann_cooks · Following</p>
+                </div>
+                <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
+            </div>
+            <!-- Copy link row -->
+            <div class="pt-2 border-t border-slate-100 mt-2">
+                <button onclick="copyLink()" class="w-full flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors text-left">
+                    <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-slate-600">link</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm text-primary">Copy Link</p>
+                        <p class="text-[11px] text-slate-400">Share anywhere</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="home_dashboard.html">
+        <span class="material-symbols-outlined text-[26px]">home</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="wellness_exercises.html">
+        <span class="material-symbols-outlined text-[26px]">directions_run</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="health_summary.html">
+        <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] bg-primary-fixed/50 text-primary rounded-[22px] hover:scale-105 active:scale-95 transition-all duration-300" href="community_hub.html">
+        <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">group</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="user_profile.html">
+        <span class="material-symbols-outlined text-[26px]">person</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+    </a>
+</nav>
+</body></html>

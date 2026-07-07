@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "primary": "#00193c",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "primary-container": "#002d62",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary": "#4f55ae",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "outline-variant": "#c4c6d1",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff",
+                        "tertiary-fixed-dim": "#c3c7cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "60px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "stack-sm": "12px",
+                        "stack-lg": "40px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-caps": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}],
+                        "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                        "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; min-height: max(884px, 100dvh); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- TopAppBar Component -->
+<header class="docked full-width top-0 z-50 fixed w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm">
+<div class="flex justify-between items-center w-full px-6 py-4 h-[72px]">
+<div class="flex items-center gap-4">
+<a href="javascript:history.back()" class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</a>
+<h1 class="font-manrope font-bold text-xl tracking-tight text-[#002D62] dark:text-blue-400">Profile</h1>
+</div>
+<div class="flex items-center gap-2">
+<a href="settings_information.html" class="w-[44px] h-[44px] rounded-full flex items-center justify-center text-primary-container dark:text-blue-100 hover:bg-slate-100/50 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</a>
+<a href="emergency_sos.html" class="w-[44px] h-[44px] rounded-full flex items-center justify-center text-error hover:bg-red-50 transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emergency</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-margin-page pt-[104px] pb-[140px] flex flex-col gap-stack-md max-w-2xl mx-auto w-full">
+<!-- Profile Header -->
+<section class="flex flex-col items-center">
+<div class="relative">
+<div class="w-[128px] h-[128px] rounded-full overflow-hidden border-[4px] border-white shadow-lg">
+<img alt="User profile photo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq3ThEV92UfzCRjJpzcjizJA82EJWN9VyeUAR-hJayHLcFGeOkugYqKzHOijsbvP4AuVl-uEbNmGlYmfPb-RLon1knNb4akmmzCiy5odBKJwU8ybUX83HZffVyk_gNQg1U5J6Wq15CFxbHG7OhpB4AArAneXLeJoYSEupcWk4SRsfhM6vz-etEC-jQZhUssCosglgeFgg6DgApdEl7sIZlqjEqMoCq3J-5jYiTy6I1y0D3dDNV3xf9EdU3ibhrUQ20QOjdCFxmORc">
+</div>
+<button aria-label="Change Profile Photo" class="absolute bottom-1 right-1 w-[36px] h-[36px] bg-primary-container text-on-primary rounded-full flex items-center justify-center shadow-md border-[2px] border-white hover:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+</div>
+<div class="mt-4 flex flex-col items-center gap-1">
+<div class="flex items-center gap-2">
+<h2 class="font-display text-display text-on-background">Eleanor Vance</h2>
+<button class="text-primary-container hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" style="font-size: 20px;">edit</span>
+</button>
+</div>
+<p class="font-body-md text-on-surface-variant">@eleanor_v</p>
+<div class="flex gap-4 mt-2">
+<div class="flex gap-1 items-center">
+<span class="font-bold text-on-surface">124</span>
+<span class="text-on-surface-variant text-sm">Followers</span>
+</div>
+<div class="flex gap-1 items-center">
+<span class="font-bold text-on-surface">89</span>
+<span class="text-on-surface-variant text-sm">Following</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bio Section -->
+<section class="bg-surface-container-lowest p-5 rounded-lg border border-outline-variant/20 shadow-sm">
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-label-caps text-on-surface-variant uppercase">Bio</h3>
+<button class="text-primary-container font-semibold text-sm hover:underline">Change Bio</button>
+</div>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                Active grandmother, watercolor enthusiast, and daily walker. Sharing my journey to a healthier heart and staying connected with family.
+            </p>
+</section>
+<!-- Content Tabs & Grid -->
+<section class="space-y-4">
+<div class="flex border-b border-outline-variant/20">
+<button class="flex-1 pb-3 text-primary font-bold border-b-2 border-primary text-sm uppercase tracking-wider">Images</button>
+<button class="flex-1 pb-3 text-on-surface-variant font-medium text-sm uppercase tracking-wider">Videos</button>
+<button class="flex-1 pb-3 text-on-surface-variant font-medium text-sm uppercase tracking-wider">Vlogs</button>
+</div>
+<div class="grid grid-cols-3 gap-1">
+<!-- Row 1 -->
+<div class="aspect-square bg-surface-variant rounded-sm overflow-hidden">
+<img alt="Gallery image 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTwhp0FmPkXrFCBVevIA20A947kOYAp0ic-AR2IJbfpBgFxOFmiQxaO0r50vLPFF8ax6hwfKTZhb7yAEQiqpJct83BDcC7hYP2CaTh7fha_rd8gFjK-3ikh6HZG8qN5M5JMTo7zzCMHCwsOYiBC_la4gU7W9u7TejsNYwwQEN-ixJ0cVjhg-uoTuyDuGBnRYWCrKjVf6X2EI8BTkMbc1VVi7o4tmoH9OWQYRJxmr_GQKwkn6Fn0spy16JMDAdB5IdzdKbMaDUm0Xs">
+</div>
+<div class="aspect-square bg-surface-variant rounded-sm overflow-hidden">
+<img alt="Gallery image 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBes4YRNtlHkGXIa_Br9qhUTOLBZ84IQ9-DGDcWM3UvOtq8d4w7y88BGF6q2rKGd7lKuTr9gchwvf-E731crkquOo2H0MSRZw-wUvnFzGKO3zEo-lOPGGJ9nzgfjDDIg4oP3X2IDJgR45FphMREnA3Ov_nl5PQJ8KPbvVE5MEjT8PnC-ERt2rme0lywwSAOGLGbrbbBGyWcaqE4KU3n0091tMchEo92TaYKLBUfBSRzgbSzL-yABXbupC0rHe8CZCfTT_D9lF1rA0">
+</div>
+<div class="aspect-square bg-surface-variant rounded-sm overflow-hidden">
+<img alt="Gallery image 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_FXjTu_LCF-Ihdb63i0mFfk6-CLPJ-ZLDfrnmksVlpH_oyVzQ-TCWfKhPsoNhl3GejP9dESD2V4XIGLT9bQF9L-LCh29mFW_KJxtgyA594avVGWRjtqEbgnQBdqs-9GqvRfIEwtNmi9Qb5qfRItvT8P9TgMpnxWViElPkdcBFZNBEEoILUgLGHDPl3E54xeCI9TL_TmKne62CRjiSU0VXeiY_dWZsiqcpWAnKJdLtxQiS8YF6QKMFhNB4N1im4mK9YOKV3NG9esk">
+</div>
+<!-- Row 2 -->
+<div class="aspect-square bg-surface-variant rounded-sm overflow-hidden">
+<img alt="Gallery image 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvEm91yK32zyx75xcFYyFXdFMYh5kBP_QBakweKtHKowr01yzbtwb_3b57HFQUKqKLDXRBXeHO0z07vF_8e58khTJkcZhfDqzJLX-Ni0se1HRxS44uMwv0xXsWB_7UAtTJlPUsDqt17BvIJ_M0lUSKACKMqp1959K1-6qLbeaTVuTfVxCA6_bEQPtrUYrTfZ8I0ZWU1Eoh9dU-S-kke3VzYTZrMuYjsABxVqPpvftIINeEnk84wu_yaXEAH5ipTuWnqOGyxVpNSKU">
+</div>
+<div class="aspect-square bg-surface-variant rounded-sm overflow-hidden">
+<img alt="Gallery image 5" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0eo8Hpc62Jd_3Mn0npHsQ59gt1lcMTQIcSDglFHDI8FltbnRFO2krcC_pOjvoYvQVa2Hqeh_VVO6xcfYBOo4RQtgd391t9E9_dxN7X5qhEAEkGyWm6s6B7KcqYKfcxrDMtxexk_JYDjY-mgY5p2xNorXBy_ZwWkzxwugITztm_XiqEta7csjqdO2QCXEK5Cb80AkLLgdFy827eCmqxx6Z9SIo5D6qdrQ0h-lkalw_rVc9SiXrXi39wYM_f11a-5MDqtxb9e-EErM">
+</div>
+<div class="aspect-square bg-surface-variant rounded-sm overflow-hidden">
+<img alt="Gallery image 6" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuwOEDn5Ip1xvUdieSyF0f_JYSfjRzrLRrg9VvLJK2Q_mgIR9uUYGJdUp9LAsl7B5E2cyStO4rG3bhTbuwf-3rtKEIAzEncaohC9_tDQKiMhlYebuiDTBVQ1SlsIkqddz2smui0egFvdjvoJLIjrjlXiidGFhLL1daSiYKMT3-DqKBr9oO7ytdJEjl1asaiG7yZ5G-dZw2lEVEwuxEECC9rdZEGi-ZMya19R5ktivOHMPG44QmrNjTqCBSfFoMtoB9E5CiWEHpD4c">
+</div>
+</div>
+</section>
+<!-- Guardian Details -->
+<section>
+<h3 class="font-label-caps text-on-surface-variant mb-stack-sm ml-2 uppercase">Emergency Contact</h3>
+<div class="bg-surface-container-lowest rounded-lg shadow-sm border border-outline-variant/20 p-5 flex items-center justify-between min-h-[96px]">
+<div class="flex items-center gap-4">
+<div class="w-[56px] h-[56px] rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-headline-md font-bold">
+                        M
+                    </div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Michael Vance</h4>
+<p class="font-body-md text-on-surface-variant text-sm">Son • Primary Guardian</p>
+</div>
+</div>
+<button aria-label="Call Guardian" class="w-[52px] h-[52px] rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center hover:bg-secondary-fixed-dim transition-colors shadow-sm active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component -->
+<nav class="fixed bottom-0 w-full rounded-t-[32px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl shadow-[0_-10px_40px_rgba(0,45,98,0.1)] z-[60]">
+<div class="flex justify-around items-center px-4 pt-3 pb-8 h-[100px]">
+<!-- Home -->
+<a href="home_dashboard.html" class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:text-[#002D62] transition-all">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-manrope text-[11px] font-bold tracking-wide uppercase">Home</span>
+</a>
+<!-- Vitals -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:text-[#002D62] transition-all">
+<span class="material-symbols-outlined mb-1">monitor_heart</span>
+<span class="font-manrope text-[11px] font-bold tracking-wide uppercase">Vitals</span>
+</button>
+<!-- Safety -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:text-[#002D62] transition-all">
+<span class="material-symbols-outlined mb-1">security</span>
+<span class="font-manrope text-[11px] font-bold tracking-wide uppercase">Safety</span>
+</button>
+<!-- Profile (Active) -->
+<a href="user_profile.html" class="flex flex-col items-center justify-center text-[#002D62] bg-blue-50/80 rounded-2xl px-6 py-2 transition-all">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-manrope text-[11px] font-bold tracking-wide uppercase">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

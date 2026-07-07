@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Profile - Senior Health &amp; Safety</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#3e5e95",
+                      "surface-bright": "#faf9fe",
+                      "secondary-fixed": "#e0e0ff",
+                      "tertiary": "#151a1d",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "on-background": "#1a1b1f",
+                      "on-tertiary-fixed": "#171c1f",
+                      "surface": "#faf9fe",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#2d328b",
+                      "background": "#faf9fe",
+                      "secondary-container": "#9aa0ff",
+                      "on-tertiary": "#ffffff",
+                      "inverse-on-surface": "#f1f0f5",
+                      "surface-dim": "#dad9df",
+                      "on-secondary-fixed-variant": "#373c95",
+                      "on-primary-container": "#7796d1",
+                      "surface-container": "#eeedf2",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#2f3034",
+                      "secondary": "#4f55ae",
+                      "surface-container-high": "#e8e7ed",
+                      "on-primary-fixed": "#00193c",
+                      "surface-container-low": "#f4f3f8",
+                      "on-surface-variant": "#43474f",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#747781",
+                      "tertiary-fixed": "#dfe3e7",
+                      "surface-container-highest": "#e3e2e7",
+                      "primary-fixed-dim": "#abc7ff",
+                      "on-tertiary-fixed-variant": "#43474b",
+                      "surface-variant": "#e3e2e7",
+                      "secondary-fixed-dim": "#bfc2ff",
+                      "on-surface": "#1a1b1f",
+                      "tertiary-fixed-dim": "#c3c7cb",
+                      "primary": "#00193c",
+                      "on-primary-fixed-variant": "#24467c",
+                      "inverse-primary": "#abc7ff",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "primary-container": "#002d62",
+                      "primary-fixed": "#d7e2ff",
+                      "outline-variant": "#c4c6d1",
+                      "on-tertiary-container": "#92969a",
+                      "tertiary-container": "#2a2f32",
+                      "on-secondary-fixed": "#02026b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "12px",
+                      "margin-page": "24px",
+                      "stack-lg": "40px",
+                      "unit": "8px",
+                      "touch-target-min": "60px",
+                      "stack-md": "24px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Manrope"],
+                      "label-caps": ["Manrope"],
+                      "display": ["Manrope"],
+                      "headline-md": ["Manrope"],
+                      "headline-lg": ["Manrope"],
+                      "body-md": ["Manrope"]
+              },
+              "fontSize": {
+                      "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                      "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}],
+                      "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}],
+                      "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                      "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 shadow-[0_4px_30px_rgba(0,45,98,0.08)]">
+<a href="javascript:history.back()" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-slate-100/50 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-blue-900" data-icon="arrow_back">arrow_back</span>
+</a>
+<h1 class="font-manrope font-bold text-lg tracking-tight text-blue-900">Profile</h1>
+<a href="settings_information.html" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-slate-100/50 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-blue-900" data-icon="settings">settings</span>
+</a>
+</header>
+<main class="mt-20 px-6">
+<!-- Profile Section -->
+<section class="flex flex-col items-center gap-stack-md pt-4">
+<div class="relative">
+<div class="w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-primary-container to-secondary-container shadow-xl">
+<img alt="Eleanor Vance" class="w-full h-full object-cover rounded-full border-4 border-white" data-alt="A portrait of a cheerful, elegant senior woman with short silver hair and kind eyes, smiling warmly at the camera. She is wearing a soft blue cardigan in a bright, sunlit room with watercolor paintings in the blurred background. The style is professional lifestyle photography with soft lighting and a premium, wellness-oriented aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8NQ4HXGziGDSgYbbAD4-q-jnhfwLbt_1l7axJOpOKsNU-N6Vr-VRPD89J6UEG-GtPjEpDaBTUfc2ZoudhOvGWuQV058nmPTs-JV70g2r2y_0B3QufQvqVhLzbnXrwF2nY465V1ZMA1Wg98RRpwvv_ebtqfdtQkMunLpb_vHmkbN0M0cMLMrhBwf0U0yvho0c-SOK1zsirxOYm277kIog1qxyukHSpnUR13Zc77WfuDcgJUK-FIco6Ae_JxPCwaqtA46CYGft3kus">
+</div>
+<a href="my_profile_edit_mode.html" class="absolute bottom-0 right-0 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</a>
+</div>
+<div class="text-center">
+<div class="flex items-center justify-center gap-2">
+<h2 class="font-headline-lg text-primary">Eleanor Vance</h2>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="edit_square">edit_square</span>
+</button>
+</div>
+<p class="font-body-md text-outline">@eleanor_v</p>
+</div>
+<!-- Social Stats -->
+<div class="flex gap-10 py-2">
+<div class="text-center">
+<p class="font-headline-md text-primary">124</p>
+<p class="font-label-caps text-outline">Followers</p>
+</div>
+<div class="w-[1px] bg-slate-200 h-10 self-center"></div>
+<div class="text-center">
+<p class="font-headline-md text-primary">89</p>
+<p class="font-label-caps text-outline">Following</p>
+</div>
+</div>
+<!-- Bio Section -->
+<div class="bg-white/60 p-6 rounded-lg w-full border border-slate-100 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-caps text-primary">Bio</h3>
+<button class="text-secondary text-sm font-semibold flex items-center gap-1">
+                        Change Bio
+                    </button>
+</div>
+<p class="font-body-md text-on-surface leading-relaxed">
+                    Active grandmother, watercolor enthusiast, and daily walker.
+                </p>
+</div>
+</section>
+<!-- Content Tabs -->
+<section class="mt-stack-lg">
+<div class="flex border-b border-slate-200 mb-6">
+<button class="flex-1 py-4 font-label-caps text-primary border-b-4 border-primary">Images</button>
+<button class="flex-1 py-4 font-label-caps text-outline border-b-4 border-transparent">Videos</button>
+<button class="flex-1 py-4 font-label-caps text-outline border-b-4 border-transparent">Vlogs</button>
+</div>
+<!-- 3-Column Content Grid -->
+<div class="grid grid-cols-3 gap-2">
+<div class="aspect-square rounded-DEFAULT overflow-hidden bg-slate-100">
+<img alt="Watercolor painting" class="w-full h-full object-cover" data-alt="A beautiful, soft watercolor painting of a serene garden landscape with blooming peonies and lavender. The lighting is ethereal and bright, reflecting a peaceful morning atmosphere. The colors are predominantly soft blues, pinks, and greens, matching the app's premium wellness design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeBYHBgAb3GCi-YMo751pLIhjsEm1AijaBNav1vkMPXoHQd_H8dqWEBO4qWtmNJMVJ5UaL4FsIV7qvNkI_cNaUPMKwLMpQfw2zD6pLEnLkeE-PUb1afdXRmpKMetV0eAsFMRDmNYGCpAlyMRCLb06SvAxFGT11CvV0UQ8fOs7tw-kWWZWBQspFb4J8k634Jo-3TRV412JOaBUhIh_azPP9v3QxP7yzP7ZCDKSUUjZFu-7hnSIaz4LHnxLF2ESRKJczMNu2rWS_DrM">
+</div>
+<div class="aspect-square rounded-DEFAULT overflow-hidden bg-slate-100">
+<img alt="Morning walk" class="w-full h-full object-cover" data-alt="A POV shot of a pair of high-quality walking shoes on a sun-dappled park path lined with old oak trees. The morning light creates long, soft shadows and a warm, golden glow. The mood is revitalizing and active, perfectly embodying a healthy lifestyle for seniors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATaKYXxzLOHpP_lR6uoDR59aKIeGIv_k5GZV3Wgn86wDsOqoPJQPacresy_ZyosHLTILPOjyGi4pKREyuhxlzv-vkT1b3XG135ntQr2tORCDFi9JNHh76wE7Ur14VVRzKSw_drza2Cf13SuJZ2eqlBWwPoLiI0-gE6p2KHf5vvHHt6401DEzS7HAhf-uITuqvEARKdeXEy5-WwPJWF6vujwpIWAbDKojZ1OwHxB2XJuCMPsA6x8GNn9_meemZF-r3U4x5JRNQ1lDU">
+</div>
+<div class="aspect-square rounded-DEFAULT overflow-hidden bg-slate-100">
+<img alt="Park scenery" class="w-full h-full object-cover" data-alt="A wide-angle landscape shot of a lush green city park with a modern wooden walkway spanning over a small lake. The sky is a clear, bright blue with wispy clouds. The lighting is crisp and natural, emphasizing the peaceful and secure environment of a premium residential area." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7o1WZ2vAWGBQ5wnkifav8NlABOYn_Wjbe9xdG5uus_mgG75R03v_SLTDNM2JdVqVv8646Pv4J89_7yUNXv3XS1JwsMUYYJ3ZmC29JPUQfGiGkESt-Tm1Uh9yD1mxWkgjTNVhDjnIE29D7WiI699MzM9ihLkb9pmWTczs0seNhQO2N3s8pMGl17-lNGkbi7ng17N7kTHYMJFRDKZRkU3an6AygtZcfpA3rhUDPDiTnVuQUtpkk307S4LNcmf0is7ePujlY0mkPnF0">
+</div>
+<div class="aspect-square rounded-DEFAULT overflow-hidden bg-slate-100">
+<img alt="Healthy breakfast" class="w-full h-full object-cover" data-alt="A close-up of a vibrant, healthy breakfast bowl featuring fresh blueberries, granola, and yogurt on a pristine white marble tabletop. The shot is high-key and bright, with a soft daylight glow. The aesthetic is clean, sophisticated, and focused on nutritional wellness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZMiDm4XSRh8Oy3XkclflvKgDvpLJutgskxSS6ZUsdgM2Suv6KX_3u19eeQtZ8VcAocF5-GVMQBoODhPcdUgJueOYd7myEvImq2o8BdbBBNiwhz4Aho_oudog1VI7HHRcNaPvNyf8MUxSoI0GbKBxjsAJ4eUWUj2dqeG5Xq3MrVGk0XTCj0G3gCZf06AeQwCjiFiZhCRxuduAE0ilMvydLQ1t1c-22UhVuCP5PtXjqbUqM4lzDFYUEdXMPndiyUd1LtBBnz4Z4wtA">
+</div>
+<div class="aspect-square rounded-DEFAULT overflow-hidden bg-slate-100">
+<img alt="Family photo" class="w-full h-full object-cover" data-alt="A candid, warm photo of a multi-generational family laughing together in a sunlit garden setting. The lighting is warm and golden-hour soft, highlighting the emotional connection and joy. The style is premium lifestyle photography that evokes feelings of safety and community." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhk8Bar7Dv__Wq8abyxMMdjlB7-AG2pIsG671EuFbsGFzbfOLDPTwW3vX6E9BdNPxXNnGaPHjZ9MD9_iT4TGQzgvPv2VaHE33fH77FUFf2Ce_civYls-u3pyuinPKkAGnCxvKVpvBs0EKKw5Fj8stZcbQNJldTjc8zyXRPVReB93ChnZ5YzXcxe3XcPWF4IDshRY-K9hYGDj8ds7z3pqLgm64rU3bUA1b0BRLjVqNdQl8HWJmQMYlF4HRqDHl0QrDBIohWtXo_wdA">
+</div>
+<div class="aspect-square rounded-DEFAULT overflow-hidden bg-slate-100">
+<img alt="Nature close-up" class="w-full h-full object-cover" data-alt="An artistic macro photograph of a single blue butterfly resting on a wildflower petal, with a soft bokeh background of a meadow. The image uses a calming color palette of blues and greens, reinforcing the meditative serenity and detail-oriented focus of the app's brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT7TprBDfZTLTa0m1cS3JHFw6vJ6d5ycf20zpC9fCUFfJkgv-zZAQ8BD70SsEhEQFi21JyMwe1iNo8tab0QXvYCb5paKrQ_C5MbFdipC7XqScYwlZEBudY-ghHoK01DZT9rdZn-hbNQ54lwsyEl-NohaTsvfK9Ys3u2HiK_3vwIZir9KPek-vn5UzV9M5x3V0gt1yjZiOAcULpjYJOBEOkPlQWvSMFJEu94XVZ8vDDuhztfIKeT-9Mr3_9cR2RFyyGRpr2y0O-TUY">
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 h-24 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-t-[32px] border-t border-slate-200 dark:border-slate-800 shadow-[0_-10px_40px_rgba(0,45,98,0.1)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-700 active:scale-90 transition-all duration-300 ease-out" href="home_dashboard.html">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-manrope font-semibold text-[11px] tracking-wide uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-700 active:scale-90 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-manrope font-semibold text-[11px] tracking-wide uppercase">Vitals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-700 active:scale-90 transition-all duration-300 ease-out" href="emergency_sos.html">
+<span class="material-symbols-outlined" data-icon="emergency_share">emergency_share</span>
+<span class="font-manrope font-semibold text-[11px] tracking-wide uppercase">Safety</span>
+</a>
+<a class="flex flex-col items-center justify-center text-blue-900 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20 rounded-full px-5 py-2 active:scale-90 transition-all duration-300 ease-out" href="user_profile.html">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-manrope font-semibold text-[11px] tracking-wide uppercase">Profile</span>
+</a>
+</nav>
+</body></html>

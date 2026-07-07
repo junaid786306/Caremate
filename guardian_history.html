@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>History - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { primary: "#001b3f", secondary: "#4f55ae" }, fontFamily: { manrope: ["Manrope","sans-serif"] } } } }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[100px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Activity History</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto px-6 py-6 space-y-6">
+
+        <!-- Tabs -->
+        <div class="bg-slate-100/80 p-1.5 rounded-2xl grid grid-cols-3 relative">
+            <div id="tab-indicator" class="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(33.3%-4px)] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-300"></div>
+            <button onclick="switchTab(0)" class="tab-btn py-3 text-xs font-extrabold text-slate-800 relative z-10">Diet</button>
+            <button onclick="switchTab(1)" class="tab-btn py-3 text-xs font-bold text-slate-400 relative z-10">Exercise</button>
+            <button onclick="switchTab(2)" class="tab-btn py-3 text-xs font-bold text-slate-400 relative z-10">Calendar</button>
+        </div>
+
+        <!-- Diet History Tab -->
+        <div id="tab-diet" class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-extrabold">Diet Log</h2>
+                <span class="text-xs font-bold text-secondary bg-blue-50 px-3 py-1 rounded-full">This Week</span>
+            </div>
+
+            <!-- Day -->
+            <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-sm text-slate-600">Today, Jun 10</h3>
+                    <span class="text-[10px] font-black text-green-600 bg-green-50 px-2.5 py-1 rounded-full uppercase tracking-widest">Good</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-400">
+                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">breakfast_dining</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Breakfast · 8:00 AM</p>
+                            <p class="text-xs text-slate-400">Oatmeal, Banana, Warm milk</p>
+                        </div>
+                        <span class="text-xs font-bold text-green-600">✓</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-green-500">
+                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">lunch_dining</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Lunch · 12:30 PM</p>
+                            <p class="text-xs text-slate-400">Dal rice, Sabzi, Curd</p>
+                        </div>
+                        <span class="text-xs font-bold text-green-600">✓</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400">
+                            <span class="material-symbols-outlined text-lg">dinner_dining</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-slate-400">Dinner · Expected 7:00 PM</p>
+                            <p class="text-xs text-slate-300">Pending</p>
+                        </div>
+                        <span class="text-xs font-bold text-slate-300">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-sm text-slate-600">Yesterday, Jun 9</h3>
+                    <span class="text-[10px] font-black text-green-600 bg-green-50 px-2.5 py-1 rounded-full uppercase tracking-widest">Excellent</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-400">
+                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">breakfast_dining</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Breakfast · 7:45 AM</p>
+                            <p class="text-xs text-slate-400">Idli, Sambar, Tea</p>
+                        </div>
+                        <span class="text-xs font-bold text-green-600">✓</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-green-500">
+                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">lunch_dining</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Lunch · 1:00 PM</p>
+                            <p class="text-xs text-slate-400">Chapati, Paneer curry</p>
+                        </div>
+                        <span class="text-xs font-bold text-green-600">✓</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-purple-400">
+                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">dinner_dining</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Dinner · 7:30 PM</p>
+                            <p class="text-xs text-slate-400">Khichdi, Pickle, Buttermilk</p>
+                        </div>
+                        <span class="text-xs font-bold text-green-600">✓</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise History Tab (hidden) -->
+        <div id="tab-exercise" class="hidden space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-extrabold">Exercise Log</h2>
+                <span class="text-xs font-bold text-secondary bg-blue-50 px-3 py-1 rounded-full">This Week</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 text-center">
+                    <div class="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-400 mx-auto mb-3">
+                        <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">directions_walk</span>
+                    </div>
+                    <p class="text-2xl font-black text-slate-800">4,500</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Steps Today</p>
+                </div>
+                <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 text-center">
+                    <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-secondary mx-auto mb-3">
+                        <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+                    </div>
+                    <p class="text-2xl font-black text-slate-800">22 <span class="text-base font-bold text-slate-400">min</span></p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Active Time</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 space-y-3">
+                <h3 class="font-bold text-sm text-slate-600">This Week's Sessions</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3 p-3 bg-green-50 rounded-xl">
+                        <span class="material-symbols-outlined text-green-500" style="font-variation-settings: 'FILL' 1;">self_improvement</span>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold">Morning Yoga · 20 min</p>
+                            <p class="text-[10px] text-slate-400">Today, 7:00 AM</p>
+                        </div>
+                        <span class="text-[10px] font-black text-green-600">Done</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                        <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">directions_walk</span>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold">Evening Walk · 30 min</p>
+                            <p class="text-[10px] text-slate-400">Yesterday, 6:30 PM</p>
+                        </div>
+                        <span class="text-[10px] font-black text-secondary">Done</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-purple-50 rounded-xl">
+                        <span class="material-symbols-outlined text-purple-500" style="font-variation-settings: 'FILL' 1;">accessibility_new</span>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold">Chair Stretching · 15 min</p>
+                            <p class="text-[10px] text-slate-400">Jun 8, 10:00 AM</p>
+                        </div>
+                        <span class="text-[10px] font-black text-purple-600">Done</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab (hidden) -->
+        <div id="tab-calendar" class="hidden space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-extrabold">June 2025</h2>
+                <div class="flex gap-2">
+                    <button class="w-9 h-9 bg-white rounded-xl border border-slate-200 flex items-center justify-center shadow-sm">
+                        <span class="material-symbols-outlined text-slate-500 text-lg">chevron_left</span>
+                    </button>
+                    <button class="w-9 h-9 bg-white rounded-xl border border-slate-200 flex items-center justify-center shadow-sm">
+                        <span class="material-symbols-outlined text-slate-500 text-lg">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div class="bg-white rounded-[28px] p-6 shadow-sm border border-slate-100">
+                <div class="grid grid-cols-7 gap-1 mb-4">
+                    <div class="text-center text-[10px] font-bold text-slate-400">S</div>
+                    <div class="text-center text-[10px] font-bold text-slate-400">M</div>
+                    <div class="text-center text-[10px] font-bold text-slate-400">T</div>
+                    <div class="text-center text-[10px] font-bold text-slate-400">W</div>
+                    <div class="text-center text-[10px] font-bold text-slate-400">T</div>
+                    <div class="text-center text-[10px] font-bold text-slate-400">F</div>
+                    <div class="text-center text-[10px] font-bold text-slate-400">S</div>
+                </div>
+                <div class="grid grid-cols-7 gap-1 text-center text-sm">
+                    <div class="py-2"></div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">2</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">3</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">4</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">5</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">6</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">7</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">8</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-800 rounded-full bg-green-50 mx-auto">9</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-bold text-white rounded-full bg-primary mx-auto">10</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">11</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">12</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">13</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">14</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">15</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">16</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">17</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">18</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">19</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">20</div>
+                    <div class="py-2 w-9 h-9 flex items-center justify-center text-xs font-medium text-slate-400 mx-auto">21</div>
+                </div>
+                <div class="flex gap-4 mt-4 pt-4 border-t border-slate-100">
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-green-100 border border-green-400 inline-block"></span><span class="text-[10px] font-bold text-slate-500">All done</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-primary inline-block"></span><span class="text-[10px] font-bold text-slate-500">Today</span></div>
+                </div>
+            </div>
+
+            <!-- Events -->
+            <div class="bg-white rounded-[28px] p-5 shadow-sm border border-slate-100 space-y-3">
+                <h3 class="font-bold text-sm text-slate-600">Upcoming Reminders</h3>
+                <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                    <span class="material-symbols-outlined text-secondary">medical_services</span>
+                    <div>
+                        <p class="text-xs font-bold">Doctor Appointment</p>
+                        <p class="text-[10px] text-slate-400">Jun 14 · 10:30 AM</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-purple-50 rounded-xl">
+                    <span class="material-symbols-outlined text-purple-500">pill</span>
+                    <div>
+                        <p class="text-xs font-bold">Monthly Medication Review</p>
+                        <p class="text-[10px] text-slate-400">Jun 20 · 9:00 AM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const tabs = ['diet', 'exercise', 'calendar'];
+        const indicator = document.getElementById('tab-indicator');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        function switchTab(idx) {
+            tabs.forEach(t => document.getElementById('tab-' + t).classList.add('hidden'));
+            document.getElementById('tab-' + tabs[idx]).classList.remove('hidden');
+            tabBtns.forEach((b, i) => {
+                b.classList.toggle('font-extrabold', i === idx);
+                b.classList.toggle('text-slate-800', i === idx);
+                b.classList.toggle('font-bold', i !== idx);
+                b.classList.toggle('text-slate-400', i !== idx);
+            });
+            const pct = (idx / 3) * 100;
+            indicator.style.left = `calc(${pct}% + 6px)`;
+        }
+    </script>
+</body>
+</html>

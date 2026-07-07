@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Scam Check History - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Flatpickr Date Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[120px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Scam History</h1>
+        <button onclick="toggleFilter()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors text-primary z-10">
+            <span class="material-symbols-outlined">calendar_month</span>
+        </button>
+    </header>
+
+    <!-- Calendar Filter -->
+    <div id="filter-panel" class="hidden bg-white border-b border-slate-100 px-6 py-4 shadow-sm relative z-40">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Filter by Date Range</p>
+        <div class="flex gap-3">
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">Start Date</label><input type="text" id="startDate" placeholder="Select Date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-800 focus:border-primary outline-none"></div>
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">End Date</label><input type="text" id="endDate" placeholder="Select Date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-800 focus:border-primary outline-none"></div>
+            <div class="flex items-end"><button onclick="toggleFilter()" class="h-10 px-4 bg-primary text-white rounded-xl text-sm font-bold active:scale-95 transition-all">Apply</button></div>
+        </div>
+    </div>
+
+    <!-- Summary Badges -->
+    <div class="bg-white border-b border-slate-100 px-6 py-3 flex gap-3 overflow-x-auto no-scrollbar">
+        <div class="flex-shrink-0 flex items-center gap-2 bg-red-50 border border-red-100 px-3 py-2 rounded-full"><div class="w-2 h-2 bg-red-500 rounded-full"></div><span class="text-[11px] font-bold text-red-600">Fraud: 3</span></div>
+        <div class="flex-shrink-0 flex items-center gap-2 bg-orange-50 border border-orange-100 px-3 py-2 rounded-full"><div class="w-2 h-2 bg-orange-400 rounded-full"></div><span class="text-[11px] font-bold text-orange-700">High Risk: 5</span></div>
+        <div class="flex-shrink-0 flex items-center gap-2 bg-green-50 border border-green-100 px-3 py-2 rounded-full"><div class="w-2 h-2 bg-green-500 rounded-full"></div><span class="text-[11px] font-bold text-green-700">Safe: 12</span></div>
+    </div>
+
+    <main class="max-w-md mx-auto p-6 space-y-0 relative">
+        <!-- Timeline vertical line -->
+        <div class="absolute left-12 top-10 bottom-10 w-0.5 bg-slate-200 z-0"></div>
+
+        <div id="scam-list" class="space-y-6 relative z-10">
+            <!-- Item 1: SMS Fraud -->
+            <div class="flex gap-4">
+                <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0 border-4 border-[#f8faff] z-10">
+                    <span class="material-symbols-outlined text-red-500" style="font-variation-settings: 'FILL' 1;">sms_failed</span>
+                </div>
+                <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-base">Unknown SMS</h3>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Today, 10:30 AM</p>
+                        </div>
+                        <span class="px-2.5 py-1 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase tracking-wider border border-red-100">Fraud</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-3 border border-slate-100 mb-3">
+                        <p class="text-xs text-slate-600 font-medium">"Urgent: Your account is locked. Click here to verify: http://bit.ly/scam-link"</p>
+                    </div>
+                    <p class="text-[11px] text-red-500 font-bold flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">warning</span>
+                        Malicious link blocked.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Item 2: Email Safe -->
+            <div class="flex gap-4">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0 border-4 border-[#f8faff] z-10">
+                    <span class="material-symbols-outlined text-green-600" style="font-variation-settings: 'FILL' 1;">mail</span>
+                </div>
+                <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-base">Bank Statement</h3>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Yesterday, 09:15 AM</p>
+                        </div>
+                        <span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-full text-[10px] font-black uppercase tracking-wider border border-green-100">Safe</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-3 border border-slate-100 mb-3">
+                        <p class="text-xs text-slate-600 font-medium">"Your monthly statement is ready for viewing in your secure portal."</p>
+                    </div>
+                    <p class="text-[11px] text-green-600 font-bold flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                        Verified official sender.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Item 3: Call High Risk -->
+            <div class="flex gap-4">
+                <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0 border-4 border-[#f8faff] z-10">
+                    <span class="material-symbols-outlined text-orange-500" style="font-variation-settings: 'FILL' 1;">call</span>
+                </div>
+                <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-base">Unknown Caller</h3>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Yesterday, 04:45 PM</p>
+                        </div>
+                        <span class="px-2.5 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-wider border border-orange-100">High Risk</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-3 border border-slate-100 mb-3">
+                        <p class="text-xs text-slate-600 font-medium">Caller claimed to be from Social Security Administration.</p>
+                    </div>
+                    <p class="text-[11px] text-orange-600 font-bold flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">info</span>
+                        Caller ID spoofing detected.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="load-more-btn" class="flex justify-center mt-8 relative z-10 pl-16">
+            <button onclick="loadMoreScam()" class="px-8 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-600 shadow-sm hover:bg-slate-50 active:scale-95 transition-all">Load Older</button>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 h-[100px] bg-white rounded-t-[40px] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_dashboard.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">HOME</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_reports.html">
+            <span class="material-symbols-outlined">bar_chart</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">REPORT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="payment_plans.html">
+            <span class="material-symbols-outlined">payments</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PAYMENT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_subscription.html">
+            <span class="material-symbols-outlined">card_membership</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">SUBSCRIBE</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_profile.html">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PROFILE</span>
+        </a>
+    </nav>
+
+    <script>
+        // Initialize Flatpickr
+        flatpickr("#startDate", {
+            dateFormat: "Y-m-d",
+            defaultDate: new Date(new Date().setDate(new Date().getDate() - 7))
+        });
+        flatpickr("#endDate", {
+            dateFormat: "Y-m-d",
+            defaultDate: new Date()
+        });
+
+        function toggleFilter() { document.getElementById('filter-panel').classList.toggle('hidden'); }
+        const extraScams = [
+            {icon:'sms_failed',color:'bg-red-100',tcolor:'text-red-500',title:'Lottery SMS',date:'4 May, 11:20 AM',badge:'Fraud',badgeCls:'bg-red-50 text-red-600 border-red-100',msg:'"You have won ₹1,00,000! Send ₹500 fee."',note:'Classic advance-fee fraud.',noteCls:'text-red-500'},
+        ];
+        let scamIdx = 0;
+        function loadMoreScam() {
+            if (scamIdx >= extraScams.length) { document.getElementById('load-more-btn').innerHTML='<p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">All records loaded</p>'; return; }
+            const s = extraScams[scamIdx++];
+            const html = `
+            <div class="flex gap-4">
+                <div class="w-12 h-12 rounded-full ${s.color} flex items-center justify-center shrink-0 border-4 border-[#f8faff] z-10">
+                    <span class="material-symbols-outlined ${s.tcolor}" style="font-variation-settings: 'FILL' 1;">${s.icon}</span>
+                </div>
+                <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-base">${s.title}</h3>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">${s.date}</p>
+                        </div>
+                        <span class="px-2.5 py-1 ${s.badgeCls} rounded-full text-[10px] font-black uppercase tracking-wider border">${s.badge}</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-3 border border-slate-100 mb-3">
+                        <p class="text-xs text-slate-600 font-medium">${s.msg}</p>
+                    </div>
+                    <p class="text-[11px] ${s.noteCls} font-bold flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">info</span>
+                        ${s.note}
+                    </p>
+                </div>
+            </div>`;
+            document.getElementById('scam-list').insertAdjacentHTML('beforeend', html);
+        }
+    </script>
+</body>
+</html>

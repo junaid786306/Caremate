@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested People - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: "#001b3f", secondary: "#4f55ae", "primary-fixed": "#d7e2ff", "on-surface-variant": "#43474f" },
+                    fontFamily: { manrope: ["Manrope", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-slate-50 text-primary font-manrope antialiased min-h-screen pb-[120px]">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1 text-center">Suggested for You</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-4 space-y-3">
+
+        <p class="text-sm text-slate-500 font-medium px-2 pb-2">People you may know from the Caremate community</p>
+
+        <!-- Profile Card Template (15 cards) -->
+        <div id="suggestions-list" class="space-y-3"></div>
+
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="home_dashboard.html">
+            <span class="material-symbols-outlined text-[26px]">home</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="wellness_exercises.html">
+            <span class="material-symbols-outlined text-[26px]">directions_run</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="health_summary.html">
+            <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] bg-primary-fixed/50 text-primary rounded-[22px] transition-all duration-300" href="community_hub.html">
+            <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">group</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="user_profile.html">
+            <span class="material-symbols-outlined text-[26px]">person</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+        </a>
+    </nav>
+
+<script>
+const people = [
+    { seed: 'Elena', name: 'Elena Vasquez', username: '@elena_active', mutual: 3, badge: 'Wellness', mutualSeeds: ['Felix','Aneka','Marcus'] },
+    { seed: 'Arthur', name: 'Arthur Bennett', username: '@arthur_fit', mutual: 5, badge: 'Fitness', mutualSeeds: ['John','Sarah','Priya'] },
+    { seed: 'Margaret', name: 'Margaret Clarke', username: '@margaret_joy', mutual: 2, badge: 'Creative', mutualSeeds: ['George','Dorothy'] },
+    { seed: 'George', name: 'George Thompson', username: '@george_wellness', mutual: 4, badge: 'Health', mutualSeeds: ['Ruth','Harold','Frank'] },
+    { seed: 'Dorothy', name: 'Dorothy Mills', username: '@dorothy_m', mutual: 1, badge: 'Nutrition', mutualSeeds: ['BettyAnn'] },
+    { seed: 'Frank', name: 'Frank Rivera', username: '@frank_active', mutual: 6, badge: 'Sports', mutualSeeds: ['Charles','Patricia','Robert'] },
+    { seed: 'Ruth', name: 'Ruth Nakamura', username: '@ruth_zen', mutual: 3, badge: 'Wellness', mutualSeeds: ['Helen','Walter','Barbara'] },
+    { seed: 'Harold', name: 'Harold Foster', username: '@harold_steps', mutual: 2, badge: 'Fitness', mutualSeeds: ['Elena','Arthur'] },
+    { seed: 'BettyAnn', name: 'Betty Ann Wilson', username: '@bettyann_cooks', mutual: 7, badge: 'Nutrition', mutualSeeds: ['Margaret','George','Dorothy'] },
+    { seed: 'Charles', name: 'Charles Young', username: '@charles_hike', mutual: 1, badge: 'Outdoor', mutualSeeds: ['Frank'] },
+    { seed: 'Patricia', name: 'Patricia Adams', username: '@pat_dance', mutual: 4, badge: 'Arts', mutualSeeds: ['Ruth','Harold','BettyAnn'] },
+    { seed: 'Robert', name: 'Robert Lee', username: '@robert_reads', mutual: 2, badge: 'Lifestyle', mutualSeeds: ['Charles','Patricia'] },
+    { seed: 'Helen', name: 'Helen Carter', username: '@helen_garden', mutual: 5, badge: 'Creative', mutualSeeds: ['Walter','Barbara','Elena'] },
+    { seed: 'Walter', name: 'Walter Hughes', username: '@walter_swim', mutual: 3, badge: 'Sports', mutualSeeds: ['Helen','Frank','Arthur'] },
+    { seed: 'Barbara', name: 'Barbara Scott', username: '@barbara_wellbeing', mutual: 8, badge: 'Health', mutualSeeds: ['Ruth','Helen','Walter'] },
+];
+
+const list = document.getElementById('suggestions-list');
+const followState = {};
+
+function getMutualAvatars(seeds) {
+    const top = seeds.slice(0, 3);
+    return top.map(s => `<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${s}" class="w-5 h-5 rounded-full border-2 border-white -ml-1 first:ml-0 inline-block">`).join('');
+}
+
+people.forEach((p, i) => {
+    followState[i] = false;
+    const card = document.createElement('div');
+    card.className = 'bg-white rounded-3xl p-4 shadow-sm border border-slate-100 flex items-center gap-4 active:scale-[0.99] transition-transform';
+    const mutualText = p.mutual === 1 ? '1 mutual friend' : `${p.mutual} mutual friends`;
+    card.innerHTML = `
+        <a href="public_user_profile.html" class="flex-shrink-0">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${p.seed}" class="w-14 h-14 rounded-full border-2 border-slate-100">
+        </a>
+        <div class="flex-1 min-w-0">
+            <a href="public_user_profile.html">
+                <div class="flex items-center gap-2 mb-0.5">
+                    <p class="font-bold text-sm text-primary truncate">${p.username}</p>
+                    <span class="flex-shrink-0 text-[9px] font-black text-secondary bg-secondary/10 px-2 py-0.5 rounded-full uppercase tracking-wide">${p.badge}</span>
+                </div>
+                <div class="flex items-center gap-1 mt-1">
+                    <div class="flex">${getMutualAvatars(p.mutualSeeds)}</div>
+                    <p class="text-[10px] text-slate-400 ml-1">${mutualText}</p>
+                </div>
+            </a>
+        </div>
+        <button onclick="toggleSuggestFollow(this, ${i})" class="flex-shrink-0 w-20 py-2 rounded-full text-xs font-bold bg-primary text-white active:scale-95 transition-all text-center">Follow</button>
+    `;
+    list.appendChild(card);
+});
+
+function toggleSuggestFollow(btn, i) {
+    followState[i] = !followState[i];
+    if (followState[i]) {
+        btn.textContent = 'Following';
+        btn.className = 'flex-shrink-0 w-20 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 active:scale-95 transition-all text-center';
+    } else {
+        btn.textContent = 'Follow';
+        btn.className = 'flex-shrink-0 w-20 py-2 rounded-full text-xs font-bold bg-primary text-white active:scale-95 transition-all text-center';
+    }
+}
+</script>
+</body>
+</html>

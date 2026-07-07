@@ -1,0 +1,276 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f4f3f8",
+                        "surface-container": "#eeedf2",
+                        "inverse-surface": "#2f3034",
+                        "surface": "#faf9fe",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#151a1d",
+                        "on-tertiary-fixed": "#171c1f",
+                        "surface-variant": "#e3e2e7",
+                        "background": "#faf9fe",
+                        "surface-container-high": "#e8e7ed",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#92969a",
+                        "tertiary-container": "#2a2f32",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-secondary-container": "#2d328b",
+                        "outline-variant": "#c4c6d1",
+                        "secondary-container": "#9aa0ff",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-surface": "#1a1b1f",
+                        "error": "#ba1a1a",
+                        "on-background": "#1a1b1f",
+                        "outline": "#747781",
+                        "primary-fixed": "#d7e2ff",
+                        "inverse-primary": "#abc7ff",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#faf9fe",
+                        "inverse-on-surface": "#f1f0f5",
+                        "error-container": "#ffdad6",
+                        "secondary": "#4f55ae",
+                        "primary": "#00193c",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-primary-container": "#7796d1",
+                        "on-secondary-fixed": "#02026b",
+                        "primary-container": "#002d62",
+                        "tertiary-fixed": "#dfe3e7",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "surface-tint": "#3e5e95",
+                        "surface-dim": "#dad9df",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-primary-fixed": "#001b3f",
+                        "on-surface-variant": "#43474f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "60px",
+                        "stack-sm": "12px",
+                        "stack-lg": "40px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "unit": "8px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full h-[60px] flex items-center justify-between px-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-200/50 dark:border-slate-700/50 shadow-[0_10px_30px_-15px_rgba(0,45,98,0.08)]">
+<div class="flex items-center gap-4">
+<a href="javascript:history.back()" class="active:scale-95 duration-200 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-blue-900 dark:text-blue-50" data-icon="arrow_back">arrow_back</span>
+</a>
+</div>
+<h1 class="font-manrope font-bold text-lg tracking-tight text-blue-900 dark:text-blue-50">Profile</h1>
+<div class="flex items-center">
+<a href="settings_information.html" class="active:scale-95 duration-200 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-blue-900 dark:text-blue-50" data-icon="settings">settings</span>
+</a>
+</div>
+</header>
+<main class="px-margin-page space-y-stack-lg max-w-2xl mx-auto pt-24">
+<!-- Profile Hero Section -->
+<section class="flex flex-col items-center text-center space-y-4">
+<div class="relative">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl">
+<img alt="Eleanor Vance" class="w-full h-full object-cover" data-alt="A portrait of a sophisticated senior woman with kind eyes and silver hair, smiling warmly in a bright, sun-drenched garden setting. The lighting is soft and flattering, creating a premium lifestyle aesthetic. The background is a gentle bokeh of lush greenery and soft white flowers, maintaining the brand's peaceful and dignified healthcare atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvWBcfuY-V2LySPGFFSG3ry06sK6U5ggd3SU1IyMwqHPMkLyB3eGx9-W67NQXjPPnH7u2EYW1NcnJg6REcVtoH7AwTO0B8e8yNhOIgt9YIqrM-0dR6L8cA4ripoSXOTLIZMI4y0kiOUqwHQjNaDCKR9ZOuk7a7-cXzO1YCBbabzxuryZ8pMhGRbwjmxmX0yg5zBH0-10qA_In3eMpZ60Bwwq81gqdjqZtcQznFfKB9PwpTKjV68Z2eTYUrLL-LNNYE3uFIjYFH1Ho">
+</div>
+<div class="absolute bottom-0 right-0 bg-secondary px-3 py-1 rounded-full shadow-lg">
+<span class="text-[12px] font-bold text-on-secondary uppercase tracking-wider">Premium</span>
+</div>
+</div>
+<div>
+</div>
+</section>
+<!-- Basic Info Section: Bento Grid Style -->
+<section class="space-y-stack-sm">
+<h3 class="font-label-caps text-label-caps text-primary/60 uppercase px-2">Vitals &amp; Info</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white p-6 rounded-lg border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,45,98,0.08)] flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Age</span>
+<span class="font-display text-display text-primary">74</span>
+</div>
+<div class="bg-white p-6 rounded-lg border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,45,98,0.08)] flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Blood Type</span>
+<span class="font-display text-display text-error">O-</span>
+</div>
+
+</div>
+</section>
+<!-- Guardian Details Section -->
+<section class="space-y-stack-sm">
+<h3 class="font-label-caps text-label-caps text-primary/60 uppercase px-2">Primary Guardian</h3>
+<div class="bg-white rounded-lg p-6 border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,45,98,0.08)] flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-primary-fixed flex items-center justify-center">
+<img alt="Michael Vance" class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged man with a reassuring and trustworthy expression, wearing a clean business-casual shirt. The studio lighting is bright and modern, creating a safe and reliable feel. The background is a soft, neutral grey-blue gradient that complements the medical app's color scheme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAacxxc_DU7AGsLV29rMgT-rcO7Y5bcf4pSgF-xCsIxzKN61MemWSqK43UTPAI4dsjqMHY9GWu7DFzwVHVx-fFRlv_4Xs3h2LLuoLrPNMzLmte-VkoLSlOFEYO1g6uIck4Kb34VNmpaoRSQn8wkzs1AN5u9Gjk01TYYXjMEvOoVwsXdA7iwc-DQPYtfmyi0xE2jVwCJ0di2s5b6S8b0H7EQoFGx6EDKccZ6zL9h3p0lmvIqK53v43RGw08vzPHuHzCvQ4FCrHz5qXA">
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-primary">Michael Vance</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Son • Emergency Contact</p>
+</div>
+</div>
+<div class="flex gap-2">
+<a href="guardian_edit_details.html" class="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-xl">edit</span>
+</a>
+<button class="w-[60px] h-[60px] rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="call" data-weight="fill">call</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Settings Section -->
+<section class="space-y-stack-sm">
+<h3 class="font-label-caps text-label-caps text-primary/60 uppercase px-2">Account Settings</h3>
+<div class="bg-white rounded-lg border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,45,98,0.08)] overflow-hidden">
+<!-- Notifications -->
+<a href="settings_notifications.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="notifications">notifications</span>
+<span class="font-body-lg text-body-lg text-primary">Notifications</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Your Activity -->
+<a href="your_activity.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="history">history</span>
+<span class="font-body-lg text-body-lg text-primary">Your Activity</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Privacy -->
+<a href="settings_privacy.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="lock">lock</span>
+<span class="font-body-lg text-body-lg text-primary">Privacy</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Archive -->
+<a href="settings_archive.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="archive">archive</span>
+<span class="font-body-lg text-body-lg text-primary">Archive</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Change Password -->
+<a href="settings_change_password.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="password">password</span>
+<span class="font-body-lg text-body-lg text-primary">Change Password</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Two Factor -->
+<a href="settings_two_factor.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="security">security</span>
+<span class="font-body-lg text-body-lg text-primary">Two-Factor Auth</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- FAQ -->
+<a href="settings_faq.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="quiz">quiz</span>
+<span class="font-body-lg text-body-lg text-primary">FAQ</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Help -->
+<a href="settings_contact.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="support_agent">support_agent</span>
+<span class="font-body-lg text-body-lg text-primary">Contact Us</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Report Problem -->
+<a href="settings_report_problem.html" class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="bug_report">bug_report</span>
+<span class="font-body-lg text-body-lg text-primary">Report a Problem</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Logout Button -->
+<button class="w-full h-touch-target-min px-6 flex items-center justify-between hover:bg-red-50 transition-colors border-t border-slate-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-error" data-icon="logout">logout</span>
+<span class="font-body-lg text-body-lg text-error font-semibold">Logout</span>
+</div>
+<span class="material-symbols-outlined text-error/30" data-icon="chevron_right">chevron_right</span>
+</button></div>
+</section>
+<!-- SOS Component -->
+<div class="pt-stack-md">
+<a href="emergency_sos.html" class="w-full bg-error h-[80px] rounded-lg shadow-[0_15px_40px_-5px_rgba(186,26,26,0.4)] flex items-center justify-center gap-4 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-on-error text-4xl animate-pulse" data-icon="emergency" data-weight="fill">emergency</span>
+<span class="font-headline-lg text-headline-lg text-on-error tracking-widest uppercase">SOS EMERGENCY</span>
+</a>
+<p class="text-center font-label-caps text-label-caps text-on-surface-variant mt-4">Long press to trigger alarm</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 bg-white/80 dark:bg-slate-950/80 backdrop-blur-2xl rounded-t-[32px] border-t border-slate-100 dark:border-slate-800 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 py-2 hover:text-blue-700 dark:hover:text-blue-300 active:scale-90 transition-transform duration-200" href="health_summary.html">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-manrope text-[12px] font-semibold tracking-wide">Health</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 py-2 hover:text-blue-700 dark:hover:text-blue-300 active:scale-90 transition-transform duration-200" href="home_dashboard.html">
+<span class="material-symbols-outlined" data-icon="emergency_home">emergency_home</span>
+<span class="font-manrope text-[12px] font-semibold tracking-wide">Safety</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 py-2 hover:text-blue-700 dark:hover:text-blue-300 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-manrope text-[12px] font-semibold tracking-wide">Social</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-200 rounded-full px-5 py-2 active:scale-90 transition-transform duration-200" href="settings_information.html">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-manrope text-[12px] font-semibold tracking-wide">Settings</span>
+</a>
+</nav>
+</body></html>

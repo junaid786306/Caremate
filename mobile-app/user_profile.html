@@ -1,0 +1,402 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Profile - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "on-surface-variant": "#43474f",
+                        "outline-variant": "#c4c6d1",
+                        "primary-container": "#002d62",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .profile-ring {
+            background: linear-gradient(135deg, #4f55ae 0%, #abc7ff 100%);
+            padding: 4px;
+        }
+        .tab-active {
+            border-bottom: 4px solid #00193c;
+            color: #00193c;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-on-surface font-manrope antialiased min-h-screen pb-[120px]">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <div class="w-10 h-10"></div>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1 text-center">Profile</h1>
+        <a href="settings.html" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-secondary hover:bg-slate-100 hover:text-primary active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[22px]">settings</span>
+        </a>
+    </header>
+
+    <main class="max-w-2xl mx-auto pt-8 pb-[120px] px-margin-page">
+<!-- Profile Header Section -->
+<section class="flex flex-col items-center px-6">
+        <div class="relative mb-6">
+            <div class="w-32 h-32 rounded-full profile-ring shadow-xl overflow-hidden">
+                <img src="shreya_senior_profile_1777714702221.png" alt="Shreya" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center mb-1">
+            <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-bold text-primary">Shreya</h2>
+                <a href="senior_edit_profile.html" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-primary active:scale-95 transition-all ml-1 shadow-sm border border-slate-200/50">
+                    <span class="material-symbols-outlined text-[18px]">edit_square</span>
+                </a>
+            </div>
+            <p class="text-on-surface-variant font-medium text-sm">@shreya_wellness</p>
+        </div>
+
+        <p class="text-slate-500 text-sm font-medium mt-2 text-center max-w-[280px]">Active grandmother, watercolor enthusiast, and daily walker.</p>
+
+
+<!-- Stats -->
+<div class="flex w-full justify-center gap-12 mt-8 mb-10">
+<a href="followers_list.html" class="text-center group">
+<div class="text-xl font-bold text-primary group-active:scale-95 transition-transform">124</div>
+<div class="text-sm font-medium text-on-surface-variant">Followers</div>
+</a>
+<div class="w-[1px] bg-slate-200 h-10"></div>
+<a href="following_list.html" class="text-center group">
+<div class="text-xl font-bold text-primary group-active:scale-95 transition-transform">89</div>
+<div class="text-sm font-medium text-on-surface-variant">Following</div>
+</a>
+</div>
+</section>
+
+
+
+<!-- Today's Vitals Section -->
+<section class="px-6 mb-6">
+    <div class="bg-white rounded-[32px] border border-slate-100 p-6 shadow-sm">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest px-1">Today's Vitals</h3>
+            <a href="health_summary.html" class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-full hover:bg-amber-100 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+                <span class="text-[10px] font-bold uppercase tracking-tight">See Streak</span>
+            </a>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+            <!-- Steps -->
+            <div class="bg-slate-50/50 rounded-2xl p-4 flex flex-col items-center gap-2 border border-slate-100/50">
+                <span class="material-symbols-outlined text-blue-600" style="font-variation-settings: 'FILL' 1;">footprint</span>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-primary">8.2k</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase">Steps</div>
+                </div>
+            </div>
+            <!-- Meds -->
+            <div class="bg-slate-50/50 rounded-2xl p-4 flex flex-col items-center gap-2 border border-slate-100/50">
+                <span class="material-symbols-outlined text-red-500" style="font-variation-settings: 'FILL' 1;">pill</span>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-primary">3/4</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase">Meds</div>
+                </div>
+            </div>
+            <!-- Diet -->
+            <div class="bg-slate-50/50 rounded-2xl p-4 flex flex-col items-center gap-2 border border-slate-100/50">
+                <span class="material-symbols-outlined text-emerald-600" style="font-variation-settings: 'FILL' 1;">nutrition</span>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-primary">92%</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase">Diet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── STORY HIGHLIGHTS ─────────────────────────────────────────────── -->
+<section class="mb-10">
+    <div class="px-6 flex items-center justify-between mb-3">
+        <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Highlights</h3>
+    </div>
+    <div class="flex gap-5 overflow-x-auto hide-scrollbar pb-2 px-6">
+        <!-- Highlight: Wellness -->
+        <a href="story_highlight_viewer.html?cat=wellness" class="flex flex-col items-center gap-1.5 flex-shrink-0 group">
+            <div class="w-[68px] h-[68px] rounded-full border-[3px] border-primary p-0.5 shadow-md group-active:scale-95 transition-transform overflow-hidden">
+                <img class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop" alt="Wellness">
+            </div>
+            <span class="text-[11px] font-bold text-slate-700">Wellness</span>
+        </a>
+        <!-- Highlight: Morning Walk -->
+        <a href="story_highlight_viewer.html?cat=walk" class="flex flex-col items-center gap-1.5 flex-shrink-0 group">
+            <div class="w-[68px] h-[68px] rounded-full border-[3px] border-primary p-0.5 shadow-md group-active:scale-95 transition-transform overflow-hidden">
+                <img class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=200&h=200&fit=crop" alt="Morning Walk">
+            </div>
+            <span class="text-[11px] font-bold text-slate-700">Morning Walk</span>
+        </a>
+        <!-- Highlight: Family -->
+        <a href="story_highlight_viewer.html?cat=family" class="flex flex-col items-center gap-1.5 flex-shrink-0 group">
+            <div class="w-[68px] h-[68px] rounded-full border-[3px] border-primary p-0.5 shadow-md group-active:scale-95 transition-transform overflow-hidden">
+                <img class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=200&h=200&fit=crop" alt="Family">
+            </div>
+            <span class="text-[11px] font-bold text-slate-700">Family</span>
+        </a>
+        <!-- Highlight: Diet -->
+        <a href="story_highlight_viewer.html?cat=diet" class="flex flex-col items-center gap-1.5 flex-shrink-0 group">
+            <div class="w-[68px] h-[68px] rounded-full border-[3px] border-primary p-0.5 shadow-md group-active:scale-95 transition-transform overflow-hidden">
+                <img class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&h=200&fit=crop" alt="Diet">
+            </div>
+            <span class="text-[11px] font-bold text-slate-700">Diet</span>
+        </a>
+        <!-- Highlight: Memories -->
+        <a href="story_highlight_viewer.html?cat=memories" class="flex flex-col items-center gap-1.5 flex-shrink-0 group">
+            <div class="w-[68px] h-[68px] rounded-full border-[3px] border-primary p-0.5 shadow-md group-active:scale-95 transition-transform overflow-hidden">
+                <img class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop" alt="Memories">
+            </div>
+            <span class="text-[11px] font-bold text-slate-700">Memories</span>
+        </a>
+        <!-- Add New -->
+        <a href="create_highlight.html" class="flex flex-col items-center gap-1.5 flex-shrink-0 group">
+            <div class="w-[68px] h-[68px] rounded-full border-[3px] border-dashed border-slate-300 flex items-center justify-center bg-slate-50 group-active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-slate-400 text-3xl">add</span>
+            </div>
+            <span class="text-[11px] font-bold text-slate-400">New</span>
+        </a>
+        <!-- End Spacer -->
+        <div class="w-6 flex-shrink-0"></div>
+    </div>
+    </div>
+</section>
+
+<!-- Tabs -->
+<section>
+<div class="flex border-b border-slate-200 mb-4 px-4">
+    <button class="flex-1 py-4 text-center font-bold tab-btn tab-active" onclick="switchTab(this, 'images')">Images</button>
+    <button class="flex-1 py-4 text-center font-bold tab-btn text-on-surface-variant" onclick="switchTab(this, 'videos')">Videos</button>
+    <button class="flex-1 py-4 text-center font-bold tab-btn text-on-surface-variant" onclick="switchTab(this, 'blogs')">Blogs</button>
+</div>
+
+<!-- Dynamic Grid Container -->
+<div id="grid-container" class="grid grid-cols-3 gap-1 px-1">
+    <!-- Initial Images Grid -->
+    <a href="profile_feed.html" class="aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity">
+        <img alt="Gallery image" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070&auto=format&fit=crop">
+    </a>
+    <a href="profile_feed.html" class="aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity">
+        <img alt="Gallery image" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop">
+    </a>
+    <a href="profile_feed.html" class="aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity">
+        <img alt="Gallery image" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964&auto=format&fit=crop">
+    </a>
+    <a href="profile_feed.html" class="aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity relative">
+        <img alt="Gallery image" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop">
+    </a>
+    <a href="profile_feed.html" class="aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity">
+        <img alt="Gallery image" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2020&auto=format&fit=crop">
+    </a>
+    <a href="profile_feed.html" class="aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity">
+        <img alt="Gallery image" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2070&auto=format&fit=crop">
+    </a>
+</div>
+</section>
+
+<script>
+    const content = {
+        images: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070', link: 'community_post_detail.html' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070', link: 'blog_post_detail.html' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964', link: 'community_post_detail.html' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070', link: 'blog_post_detail.html' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2020', link: 'community_post_detail.html' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2070', link: 'blog_post_detail.html' }
+        ],
+        videos: [
+            { type: 'video', url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070', link: 'exercise_session.html' },
+            { type: 'video', url: 'https://images.unsplash.com/photo-1518611012118-29a83679f223?q=80&w=2070', link: 'exercise_session.html' },
+            { type: 'video', url: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?q=80&w=2070', link: 'exercise_session.html' }
+        ],
+        blogs: [
+            { type: 'blog', url: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=2070', link: 'blog_post_detail.html', title: 'Morning Walk Benefits', date: 'Oct 12' },
+            { type: 'blog', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1930', link: 'blog_post_detail.html', title: 'Healthy Breakfast Ideas', date: 'Oct 10' },
+            { type: 'blog', url: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=2070', link: 'blog_post_detail.html', title: 'Staying Hydrated', date: 'Oct 08' }
+        ]
+    };
+
+    function switchTab(btn, type) {
+        // Update Buttons
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('tab-active', 'text-primary');
+            b.classList.add('text-on-surface-variant');
+        });
+        btn.classList.add('tab-active');
+        btn.classList.remove('text-on-surface-variant');
+
+        // Update Grid
+        const grid = document.getElementById('grid-container');
+        grid.innerHTML = '';
+        
+        if (type === 'blogs') {
+            grid.className = 'space-y-4 px-6'; // Vertical list for blogs
+            content.blogs.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-[32px] p-6 border border-slate-100 shadow-sm';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-[9px] font-black text-secondary uppercase tracking-[0.15em] bg-secondary/5 px-2 py-1 rounded-full">${item.tag || 'Lifestyle'}</span>
+                        <span class="text-[10px] font-bold text-slate-400">${item.date}</span>
+                    </div>
+                    <h3 class="font-bold text-primary text-lg mb-2">${item.title}</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">Sharing some insights on how to stay active and healthy while enjoying retirement. Focus on consistency and small wins every day...</p>
+                    <div class="flex items-center gap-4 border-t border-slate-50 pt-4">
+                        <button class="flex items-center gap-1.5 text-slate-400 hover:text-rose-500 transition-colors">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                            <span class="text-xs font-bold">24</span>
+                        </button>
+                        <button class="flex items-center gap-1.5 text-slate-400 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-lg">chat_bubble</span>
+                            <span class="text-xs font-bold">8</span>
+                        </button>
+                        <button class="flex items-center gap-1.5 text-slate-400 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-lg">share</span>
+                        </button>
+                        <button class="flex items-center gap-1.5 text-slate-400 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-lg">bookmark</span>
+                        </button>
+                        <a href="${item.link}" class="ml-auto text-xs font-bold text-secondary">Read More</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        } else {
+            grid.className = 'grid grid-cols-3 gap-1 px-1'; // Grid for images/videos
+            content[type].forEach(item => {
+                const a = document.createElement('a');
+                a.href = type === 'videos' ? 'reels.html?single=true' : 'profile_feed.html';
+                a.className = 'aspect-square bg-slate-200 overflow-hidden rounded-sm hover:opacity-80 transition-opacity relative';
+                
+                const img = document.createElement('img');
+                img.src = item.url;
+                img.className = 'w-full h-full object-cover';
+                
+                a.appendChild(img);
+                
+                if (type === 'videos') {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'absolute top-2 right-2';
+                    overlay.innerHTML = `<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">play_circle</span>`;
+                    a.appendChild(overlay);
+                }
+                
+                grid.appendChild(a);
+            });
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const storedImg = localStorage.getItem('user_profile_img');
+        if (storedImg) {
+            document.querySelectorAll('img[src*="shreya_senior_profile"]').forEach(img => {
+                img.src = storedImg;
+            });
+        }
+        const storedUsername = localStorage.getItem('user_username');
+        if (storedUsername) {
+            document.querySelectorAll('p').forEach(p => {
+                if (p.textContent.trim() === '@shreya_wellness') {
+                    p.textContent = storedUsername;
+                }
+            });
+        }
+        const storedBio = localStorage.getItem('user_bio');
+        if (storedBio) {
+            const bioEl = document.querySelector('p.text-slate-500.text-sm.font-medium.mt-2');
+            if (bioEl) bioEl.textContent = storedBio;
+        }
+    });
+</script>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="home_dashboard.html">
+        <span class="material-symbols-outlined text-[26px]">home</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="wellness_exercises.html">
+        <span class="material-symbols-outlined text-[26px]">directions_run</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="health_summary.html">
+        <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="community_hub.html">
+        <span class="material-symbols-outlined text-[26px]">group</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] bg-primary-fixed/50 text-primary rounded-[22px] hover:scale-105 active:scale-95 transition-all duration-300" href="user_profile.html">
+        <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">person</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+    </a>
+</nav>
+</body></html>

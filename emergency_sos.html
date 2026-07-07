@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SOS Emergency Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "primary": "#00193c",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "primary-container": "#002d62",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary": "#4f55ae",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "outline-variant": "#c4c6d1",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff",
+                        "tertiary-fixed-dim": "#c3c7cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "60px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "stack-sm": "12px",
+                        "stack-lg": "40px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-caps": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "500" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700" }],
+                        "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .material-symbols-outlined {
+                font-family: 'Material Symbols Outlined';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 24px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                white-space: nowrap;
+                word-wrap: normal;
+                direction: ltr;
+                -webkit-font-feature-settings: 'liga';
+                -webkit-font-smoothing: antialiased;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen text-on-surface antialiased font-body-md pb-[120px]">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+    <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+        <span class="material-symbols-outlined text-primary">arrow_back</span>
+    </button>
+    <h1 class="font-bold text-xl text-primary">Emergency SOS</h1>
+    <div class="w-10"></div> <!-- Spacer -->
+</header>
+<main class="pt-6 pb-stack-lg px-margin-page flex flex-col gap-stack-lg max-w-3xl mx-auto">
+<section class="flex flex-col items-center justify-center text-center mt-stack-md">
+<h2 class="font-display text-display text-on-surface mb-stack-sm">Emergency SOS</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px]">Instant connection to your safety network when you need it most.</p>
+</section>
+
+<!-- Safety Trigger (Specialty Component) -->
+<section class="flex flex-col items-center justify-center w-full relative z-10 mt-8">
+<button class="w-full max-w-[340px] h-[160px] rounded-[48px] bg-gradient-to-br from-[#ff5449] to-[#ba1a1a] flex flex-col items-center justify-center gap-stack-sm shadow-[0_30px_60px_-15px_rgba(186,26,26,0.6)] relative overflow-hidden group active:scale-[0.98] transition-transform duration-300">
+<div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+<div class="absolute -inset-4 border-[6px] border-white/20 rounded-[52px] animate-[pulse_3s_ease-in-out_infinite]"></div>
+<span class="material-symbols-outlined text-[48px] text-on-error relative z-10" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<span class="font-headline-lg text-headline-lg text-on-error relative z-10 tracking-wide">Send Alert</span>
+</button>
+<div class="mt-stack-md flex items-center gap-2 text-on-surface-variant bg-surface-container-high px-6 py-3 rounded-full shadow-sm border border-surface-variant">
+<span class="material-symbols-outlined text-[20px]">touch_long</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface">Hold for 3 seconds</span>
+</div>
+</section>
+
+<!-- Location + Geofencing Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_30px_60px_-15px_rgba(0,45,98,0.06)] border border-surface-variant p-margin-page flex flex-col gap-stack-md relative overflow-hidden z-0">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),_0_4px_10px_rgba(0,0,0,0.2)] flex text-white items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Safe Zone</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Active monitoring enabled</p>
+</div>
+</div>
+<!-- Custom Premium Toggle -->
+<button class="w-[60px] h-[32px] bg-primary rounded-full relative shadow-inner flex items-center px-1 transition-colors duration-300">
+<div class="w-[24px] h-[24px] bg-white rounded-full shadow-md transform translate-x-[28px] transition-transform duration-300 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+</button>
+</div>
+<!-- Map Preview Area -->
+<div class="w-full h-[220px] rounded-lg overflow-hidden relative border border-outline-variant/30 bg-surface-container-high">
+<img class="w-full h-full object-cover opacity-90 mix-blend-multiply" data-alt="clean minimal aerial map view of suburban neighborhood streets with soft lighting and muted blue and green tones" data-location="Suburban Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFBjdQBQMbNAXgcd956epv7Fkn1hIabKdeqzppls_FzgMDpgux5VnNNXqAbwwcp2S9vVByh9Iax5aeNlKJc_6QnEzNYhg8mJYkL8o8GduYjLZ2FeLIo3wTFa1R1cjzqxHHC9BdFwOnM9eEDhdwKoe_7yuuq67o-cIWYeKAZz8YJzG6r-Z-vW0ehTbCOQWHphBPnjFEPqrPnWNA8-BP8JyHIYuoB2wcfeuSFrWGAK2RhSwRYoegT2ngnnJkiNfHjV2-odr-AAS8Wvw"/>
+<!-- Safe Zone Overlay -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="w-[160px] h-[160px] rounded-full bg-primary-fixed/20 border-2 border-primary border-dashed flex items-center justify-center relative">
+<div class="absolute w-full h-full rounded-full bg-primary-fixed/10 animate-[ping_4s_ease-out_infinite]"></div>
+<div class="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person_pin_circle</span>
+</div>
+</div>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Guardians will be notified immediately if you exit the designated 2-mile radius around your home.
+            </p>
+</section>
+
+<!-- CCTV Camera Card -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-surface-variant flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),_0_4px_10px_rgba(0,0,0,0.2)] rounded-full flex text-white border-0 items-center justify-center text-white">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">videocam</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface">CCTV Camera</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant text-xs">Home surveillance</p>
+            </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+        </label>
+    </div>
+    <div class="bg-slate-900 rounded-lg overflow-hidden h-36 relative flex items-center justify-center">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" alt="Camera Feed" class="w-full h-full object-cover opacity-60">
+        <div class="absolute top-2 left-2 flex items-center gap-1.5 bg-red-500/90 px-2 py-1 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            <span class="text-[9px] font-black text-white uppercase">Live</span>
+        </div>
+        <div class="absolute bottom-2 right-2 text-[10px] font-bold text-white/80">CAM 1 · Living Room</div>
+    </div>
+    <div class="grid grid-cols-3 gap-2">
+        <button class="py-2 bg-blue-50 border border-blue-200 rounded-lg text-[10px] font-bold text-primary flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-sm">living</span>Living Rm
+        </button>
+        <button class="py-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 flex flex-col items-center gap-1 active:bg-slate-100">
+            <span class="material-symbols-outlined text-sm">bed</span>Bedroom
+        </button>
+        <button class="py-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 flex flex-col items-center gap-1 active:bg-slate-100">
+            <span class="material-symbols-outlined text-sm">door_front</span>Entrance
+        </button>
+    </div>
+</section>
+
+<!-- Fire & Smoke Detection Card -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-surface-variant flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),_0_4px_10px_rgba(0,0,0,0.2)] rounded-full flex text-white border-0 items-center justify-center text-white">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface">Fire &amp; Smoke</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant text-xs">Smart sensor network</p>
+            </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+        </label>
+    </div>
+    <div class="bg-green-50 rounded-lg p-3 flex items-center gap-3 border border-green-100">
+        <span class="material-symbols-outlined text-green-600 text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
+        <div>
+            <p class="text-xs font-bold text-green-700">No smoke or fire detected</p>
+            <p class="text-[10px] text-green-600 font-medium mt-0.5">Sensors in kitchen &amp; hallway</p>
+        </div>
+    </div>
+</section>
+
+<!-- Fall Detection Card -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-surface-variant flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),_0_4px_10px_rgba(0,0,0,0.2)] rounded-full flex text-white border-0 items-center justify-center text-white">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">personal_injury</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface">Fall Detection</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant text-xs">Motion sensor monitoring</p>
+            </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+        </label>
+    </div>
+    <div class="bg-green-50 rounded-lg p-3 flex items-center gap-3 border border-green-100">
+        <span class="material-symbols-outlined text-green-600 text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        <div>
+            <p class="text-xs font-bold text-green-700">Active · No falls detected</p>
+            <p class="text-[10px] text-green-600 font-medium mt-0.5">Monitoring bedroom &amp; living room</p>
+        </div>
+    </div>
+</section>
+
+<!-- Comprehensive Guardians Section -->
+<section class="flex flex-col gap-stack-md">
+<div class="flex justify-between items-end px-1">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Emergency Guardians</h3>
+<span class="text-sm font-bold text-primary">3 Active</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Contact Card 1 -->
+<div id="guardian-card-1" class="glass-card rounded-xl p-5 flex items-center justify-between shadow-sm border border-surface-variant transition-all hover:shadow-md bg-white/70 backdrop-blur-[20px]">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm bg-surface-variant">
+<img id="guardian-img-1" alt="Sarah Johnson" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQHje8Yc6A-G3MioexBf8VhYxS4YFBkQaDz7lXtTupkFJw8v-GLX08UxoU2OZJQ0B1LVvclPvr9V2j078mApKbcetLK6COE1NHc1JYsrPG-CvGr4SkVdfi6CvzeY0KNWOeL7UKDyRyfnc_BooyVXES2PSSwyn19-SEk4LwRgnX27BZQwF-HE23-wfmkP4ymBmKeMUmkH7X7Jr0jiGW-z9_Hg_7PwMWN1_2PhTghA_fihcqZSyPIU237vwW_0qYRzvPiJhGSSqKa8k">
+</div>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="font-headline-md text-on-surface text-lg">Sarah Johnson</p>
+<div class="flex items-center gap-2">
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-tighter">Primary</span>
+<p class="font-body-md text-sm text-on-surface-variant">Daughter</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="editGuardian(1, 'Sarah Johnson')" class="w-9 h-9 rounded-full bg-primary-fixed/60 flex items-center justify-center hover:bg-primary-fixed transition-colors active:scale-90" title="Edit">
+<span class="material-symbols-outlined text-primary text-[18px]">edit</span>
+</button>
+<button onclick="deleteGuardian(1)" class="w-9 h-9 rounded-full bg-error-container/60 flex items-center justify-center hover:bg-error-container transition-colors active:scale-90" title="Remove">
+<span class="material-symbols-outlined text-error text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Contact Card 2 -->
+<div id="guardian-card-2" class="glass-card rounded-xl p-5 flex items-center justify-between shadow-sm border border-surface-variant transition-all hover:shadow-md bg-white/70 backdrop-blur-[20px]">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm bg-surface-variant">
+<img id="guardian-img-2" alt="Michael Chen" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANtV9IyG_GwIk8UeKWsGKl1zjqXd9ib4wBjc_4aOWAH7CqY3Z_LwCulEBC87rBfhi9tN7YPVa8GURbrhw5vpYRWGfb2oblqPTdS0bh9ieHpy1RdYq0j-hSCCZhowibGda-oWfquHjdrTpp0Aun3fToBP9gpZBL_ITHo6Gykx6-_n7X9nUIH7R5BX5_Xbk65xZQe5fOnJEOxvKQPIwQmDXM5eNIaw-G89Dhi7bcoEeN2cZf6RZ_F_iQ9p5hmX_vTLv0y4tIA_kYIHI">
+</div>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="font-headline-md text-on-surface text-lg">Michael Chen</p>
+<div class="flex items-center gap-2">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-tighter">Backup</span>
+<p class="font-body-md text-sm text-on-surface-variant">Son</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="editGuardian(2, 'Michael Chen')" class="w-9 h-9 rounded-full bg-primary-fixed/60 flex items-center justify-center hover:bg-primary-fixed transition-colors active:scale-90" title="Edit">
+<span class="material-symbols-outlined text-primary text-[18px]">edit</span>
+</button>
+<button onclick="deleteGuardian(2)" class="w-9 h-9 rounded-full bg-error-container/60 flex items-center justify-center hover:bg-error-container transition-colors active:scale-90" title="Remove">
+<span class="material-symbols-outlined text-error text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Contact Card 3 -->
+<div id="guardian-card-3" class="glass-card rounded-xl p-5 flex items-center justify-between shadow-sm border border-surface-variant transition-all hover:shadow-md bg-white/70 backdrop-blur-[20px]">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm bg-surface-variant">
+<img id="guardian-img-3" alt="Dr. Robert Smith" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_7Eiq_vEt5fx3Gep5pkys1IoanT-R6XQdCzooLbB5jkHIM-G-PAfZ5MzqoTBtLmwuhVTnlFKwYQI5EBiEbLIZe08KxEmTaETtyDXEx1UwSa5QAA6eNToi9YIjUMt40fqRPfj3pPM28qVxEv2TrfVZRWBfxvEBUXUN9KOU7nf5trTOHvAoamMMPVUPUsXPylCv30unG_WGUcTUQ6XxYZP3775_AWGI2s1pmVDKGX9PsrRAaiLLeqNYCwGUxM8pTfLwE99VPrJ-lB0">
+</div>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 bg-amber-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="font-headline-md text-on-surface text-lg">Dr. Robert Smith</p>
+<div class="flex items-center gap-2">
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-tighter">Medical</span>
+<p class="font-body-md text-sm text-on-surface-variant">Caregiver</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="editGuardian(3, 'Dr. Robert Smith')" class="w-9 h-9 rounded-full bg-primary-fixed/60 flex items-center justify-center hover:bg-primary-fixed transition-colors active:scale-90" title="Edit">
+<span class="material-symbols-outlined text-primary text-[18px]">edit</span>
+</button>
+<button onclick="deleteGuardian(3)" class="w-9 h-9 rounded-full bg-error-container/60 flex items-center justify-center hover:bg-error-container transition-colors active:scale-90" title="Remove">
+<span class="material-symbols-outlined text-error text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Add Guardian Button -->
+<button onclick="openOTPModal()" class="h-touch-target-min w-full flex items-center justify-center gap-3 rounded-2xl border-2 border-primary text-primary font-headline-md text-headline-md hover:bg-primary-fixed transition-all active:scale-[0.98] mt-4 shadow-sm">
+<span class="material-symbols-outlined text-[28px]">group_add</span>
+    Add New Guardian</button>
+</section>
+
+<!-- Secondary Support Actions -->
+<section class="grid grid-cols-2 gap-4 mt-stack-md">
+<button class="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-[#ff5449] to-[#ba1a1a] shadow-[inset_0_2px_8px_rgba(255,255,255,0.4),_0_10px_20px_rgba(186,26,26,0.3)] border-0 text-white active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[32px] text-white">phone_in_talk</span>
+<span class="font-bold text-white text-sm">Call 911</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-[#ff5449] to-[#ba1a1a] shadow-[inset_0_2px_8px_rgba(255,255,255,0.4),_0_10px_20px_rgba(186,26,26,0.3)] border-0 text-white active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[32px] text-white">medical_services</span>
+<span class="font-bold text-white text-sm">Medical ID</span>
+</button>
+</section>
+</main>
+
+<!-- Audio Feedback for Alerts (using standard Web Audio API synthetics) -->
+<script>
+let audioCtx = null;
+function playBeep(freq, type, duration) {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = freq;
+        osc.type = type || 'sine';
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {
+        console.warn("Audio Context blocked or not supported", e);
+    }
+}
+</script>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pt-3 pb-8 h-[100px] bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl rounded-t-[32px] border-t border-white/30 dark:border-slate-800/30 shadow-[0_-10px_40px_rgba(0,45,98,0.08)] md:hidden">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center text-primary bg-primary-fixed/50 rounded-2xl px-4 py-2 hover:scale-105 transition-all duration-300 flex-1" href="home_dashboard.html">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Home</span>
+</a>
+<!-- Exercise -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-2 hover:text-primary hover:scale-105 transition-all duration-300 flex-1" href="wellness_exercises.html">
+<span class="material-symbols-outlined mb-1">fitness_center</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Exercise</span>
+</a>
+<!-- Report -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-2 hover:text-primary hover:scale-105 transition-all duration-300 flex-1" href="health_summary.html">
+<span class="material-symbols-outlined mb-1">bar_chart</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Report</span>
+</a>
+<!-- Community -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-2 hover:text-primary hover:scale-105 transition-all duration-300 flex-1" href="community_hub.html">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Community</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-2 hover:text-primary hover:scale-105 transition-all duration-300 flex-1" href="user_profile.html">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Profile</span>
+</a>
+</nav>
+
+<script>
+        function openOTPModal() {
+        const modal = document.getElementById('otp-modal');
+        const backdrop = document.getElementById('otp-backdrop');
+        const sheet = document.getElementById('otp-sheet');
+        
+        modal.classList.remove('pointer-events-none');
+        backdrop.classList.remove('pointer-events-none', 'opacity-0');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+        sheet.classList.remove('translate-y-full', 'pointer-events-none');
+        sheet.classList.add('translate-y-0', 'pointer-events-auto');
+        
+        document.querySelector('.otp-input').focus();
+    }
+
+    function closeOTPModal() {
+        const modal = document.getElementById('otp-modal');
+        const backdrop = document.getElementById('otp-backdrop');
+        const sheet = document.getElementById('otp-sheet');
+        
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        backdrop.classList.add('opacity-0');
+        sheet.classList.remove('translate-y-0', 'pointer-events-auto');
+        sheet.classList.add('translate-y-full');
+        
+        setTimeout(() => {
+            modal.classList.add('pointer-events-none');
+            backdrop.classList.add('pointer-events-none');
+            sheet.classList.add('pointer-events-none');
+        }, 300);
+    }
+
+    function editGuardian(id, name) { openOTPModal(); return;
+        const newName = prompt(`Edit guardian name for ${name}:`, name);
+        if (newName && newName.trim()) {
+            const card = document.getElementById(`guardian-card-${id}`);
+            if (card) {
+                const nameEl = card.querySelector('p.font-headline-md');
+                if (nameEl) nameEl.textContent = newName.trim();
+            }
+        }
+    }
+
+    function deleteGuardian(id) { openOTPModal(); return;
+        const card = document.getElementById(`guardian-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('p.font-headline-md')?.textContent || 'this guardian';
+        if (confirm(`Remove ${name} from your emergency contacts?`)) {
+            card.style.transition = 'opacity 0.3s, transform 0.3s';
+            card.style.opacity = '0';
+            card.style.transform = 'translateX(40px)';
+            setTimeout(() => card.remove(), 350);
+        }
+    }
+
+    // Real-time Profile Picture Upload
+    let currentUploadId = null;
+    function triggerImageUpload(id) {
+        currentUploadId = id;
+        document.getElementById('pic-upload').click();
+    }
+
+    document.getElementById('pic-upload').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file && currentUploadId !== null) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById(`guardian-img-${currentUploadId}`);
+                if (img) {
+                    img.src = e.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+<!-- Hidden File Input -->
+<input type="file" id="pic-upload" accept="image/*" class="hidden" style="display: none;">
+
+    <!-- OTP Modal -->
+    <div id="otp-modal" class="fixed inset-0 z-[100] flex items-end justify-center pointer-events-none">
+        <div id="otp-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeOTPModal()"></div>
+        <div id="otp-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-8 translate-y-full transition-transform duration-500 shadow-[0_-20px_60px_rgba(0,25,60,0.2)] pointer-events-none">
+            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-8"></div>
+            <!-- Icon -->
+            <div class="w-16 h-16 bg-primary-fixed rounded-[20px] flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+            </div>
+            <h2 class="text-center font-bold text-xl text-primary mb-1">Guardian Verification</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">An OTP has been sent to your guardian's registered mobile &amp; email.</p>
+
+            <!-- OTP Inputs -->
+            <div class="flex justify-center gap-3 mb-6" id="otp-boxes">
+                <input type="tel" maxlength="1" class="w-13 h-14 text-center text-2xl font-black border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 outline-none transition-colors otp-input" style="width:3.25rem">
+                <input type="tel" maxlength="1" class="w-13 h-14 text-center text-2xl font-black border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 outline-none transition-colors otp-input" style="width:3.25rem">
+                <input type="tel" maxlength="1" class="w-13 h-14 text-center text-2xl font-black border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 outline-none transition-colors otp-input" style="width:3.25rem">
+                <input type="tel" maxlength="1" class="w-13 h-14 text-center text-2xl font-black border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 outline-none transition-colors otp-input" style="width:3.25rem">
+                <input type="tel" maxlength="1" class="w-13 h-14 text-center text-2xl font-black border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 outline-none transition-colors otp-input" style="width:3.25rem">
+                <input type="tel" maxlength="1" class="w-13 h-14 text-center text-2xl font-black border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 outline-none transition-colors otp-input" style="width:3.25rem">
+            </div>
+
+            <p class="text-center text-xs text-slate-400 mb-6">Didn't receive? <button class="text-primary font-bold">Resend OTP</button></p>
+
+            <button onclick="window.location.href='add_guardian.html'" class="w-full h-14 bg-primary text-white rounded-2xl font-bold text-base shadow-lg active:scale-95 transition-transform">Verify &amp; Continue</button>
+            <button onclick="closeOTPModal()" class="w-full h-12 text-slate-400 font-medium text-sm mt-2">Cancel</button>
+        </div>
+    </div>
+</body></html>
+
+

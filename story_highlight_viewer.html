@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Story Highlights - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>tailwind.config={darkMode:"class",theme:{extend:{fontFamily:{manrope:["Manrope","sans-serif"]}}}}</script>
+    <style>
+        * { -webkit-tap-highlight-color: transparent; user-select: none; }
+        body { background: #000; overflow: hidden; }
+        .progress-bar { height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden; flex: 1; }
+        .progress-fill { height: 100%; background: #fff; border-radius: 2px; transition: width linear; }
+        .story-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: opacity 0.3s; }
+        .story-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.7) 100%); }
+        .reply-bar { backdrop-filter: blur(20px); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .reaction { animation: float 2s infinite; }
+        .nav-zone { position: absolute; top: 0; bottom: 0; width: 40%; }
+    </style>
+</head>
+<body class="font-manrope text-white h-screen flex flex-col select-none">
+
+    <!-- Full-screen Story Container -->
+    <div id="story-container" class="relative w-full h-full overflow-hidden">
+
+        <!-- Story Background -->
+        <div id="story-bg" class="story-bg"></div>
+
+        <!-- Dark overlay gradient -->
+        <div class="story-overlay absolute inset-0 z-10"></div>
+
+        <!-- ── TOP UI ── -->
+        <div class="absolute top-0 left-0 right-0 z-30 px-4 pt-12 pb-4">
+            <!-- Progress Bars -->
+            <div id="progress-bars" class="flex gap-1.5 mb-4"></div>
+
+            <!-- Header: Avatar + Name + Close -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full border-2 border-white overflow-hidden shadow-md">
+                        <img id="avatar" class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya" alt="">
+                    </div>
+                    <div>
+                        <p id="story-name" class="font-bold text-sm leading-none">Shreya</p>
+                        <p id="story-time" class="text-white/60 text-[10px] font-medium mt-0.5">2h ago</p>
+                    </div>
+                    <div id="highlight-badge" class="px-2 py-0.5 bg-white/20 rounded-full text-[10px] font-bold backdrop-blur-sm ml-1"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="pause-btn" onclick="togglePause()" class="w-9 h-9 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">pause</span>
+                    </button>
+                    <button onclick="history.back()" class="w-9 h-9 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── STORY CAPTION / TEXT ── -->
+        <div class="absolute bottom-[130px] left-0 right-0 z-20 px-6 flex justify-between items-end pointer-events-none">
+            <p id="story-caption" class="text-white font-semibold text-base leading-relaxed text-shadow drop-shadow-lg max-w-[70%]"></p>
+            <button id="viewers-btn" onclick="openViewers()" class="flex flex-col items-center gap-1 pointer-events-auto active:scale-95 transition-transform">
+                <div class="flex -space-x-2">
+                    <img class="w-6 h-6 rounded-full border border-white" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="">
+                    <img class="w-6 h-6 rounded-full border border-white" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" alt="">
+                </div>
+                <span class="text-[10px] font-bold text-white drop-shadow flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">visibility</span> 42 Seen</span>
+            </button>
+        </div>
+
+        <!-- ── BOTTOM REPLY BAR ── -->
+        <div class="absolute bottom-0 left-0 right-0 z-30 px-4 pb-10 pt-3">
+            <div class="flex items-center gap-3">
+                <div class="reply-bar flex-1 h-11 rounded-full flex items-center px-4 gap-2">
+                    <input id="reply-input" type="text" placeholder="Reply to Shreya..." class="bg-transparent border-none text-white placeholder-white/50 text-sm flex-1 outline-none focus:ring-0 font-medium">
+                    <button onclick="sendReply()" class="text-white/70 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">send</span>
+                    </button>
+                </div>
+                <!-- Quick Reactions -->
+                <div class="flex gap-2">
+                    <button onclick="react('❤️')" class="text-2xl active:scale-125 transition-transform">❤️</button>
+                    <button onclick="react('🔥')" class="text-2xl active:scale-125 transition-transform">🔥</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── VIEWERS MODAL ── -->
+        <div id="viewers-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
+            <div id="viewers-backdrop" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeViewers()"></div>
+            <div id="viewers-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-6 pb-10 translate-y-full transition-transform duration-500 pointer-events-none text-primary max-h-[70vh] flex flex-col">
+                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4 flex-shrink-0"></div>
+                <div class="flex items-center justify-between mb-4 flex-shrink-0">
+                    <h2 class="font-bold text-lg flex items-center gap-2"><span class="material-symbols-outlined">visibility</span> 42 Viewers</h2>
+                    <button onclick="closeViewers()" class="w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full"><span class="material-symbols-outlined text-sm">close</span></button>
+                </div>
+                <div class="overflow-y-auto hide-scrollbar flex-1 space-y-4 pr-2">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img class="w-10 h-10 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="">
+                            <div><p class="font-bold text-sm">Felix</p><p class="text-[10px] text-slate-400">Liked this story ❤️</p></div>
+                        </div>
+                        <span class="material-symbols-outlined text-red-500 text-lg">favorite</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img class="w-10 h-10 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" alt="">
+                            <div><p class="font-bold text-sm">Aneka</p><p class="text-[10px] text-slate-400">Replied: "Looking great!"</p></div>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 text-lg">chat_bubble</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img class="w-10 h-10 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus" alt="">
+                            <div><p class="font-bold text-sm">Marcus</p><p class="text-[10px] text-slate-400">Viewed</p></div>
+                        </div>
+                    </div>
+                     <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img class="w-10 h-10 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="">
+                            <div><p class="font-bold text-sm">Dr. John</p><p class="text-[10px] text-slate-400">Viewed</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── VISIBLE PREV / NEXT ARROWS ── -->
+        <button onclick="prevStory()" id="prev-arrow" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-sm text-white active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-xl">arrow_back_ios</span>
+        </button>
+        <button onclick="nextStory()" id="next-arrow" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-sm text-white active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-xl">arrow_forward_ios</span>
+        </button>
+
+        <!-- ── FLOATING REACTIONS ── -->
+        <div id="reactions-container" class="absolute inset-0 pointer-events-none z-40"></div>
+    </div>
+
+    <script>
+        // ── Story Data per Category ──
+        const stories = {
+            wellness: [
+                { img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=1400&fit=crop', caption:'Morning yoga keeps me young! 🧘‍♀️ 20 mins every day.', time:'2h ago' },
+                { img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=1400&fit=crop', caption:'Deep breathing exercises before breakfast 🌬️', time:'1h ago' },
+                { img:'https://images.unsplash.com/photo-1540206395-68808572332f?w=800&h=1400&fit=crop', caption:'Feeling strong after my walk! 💪', time:'30m ago' },
+            ],
+            walk: [
+                { img:'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&h=1400&fit=crop', caption:'Beautiful morning walk in the park 🌳', time:'3h ago' },
+                { img:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=1400&fit=crop', caption:'5,000 steps done before 8 AM! 🎉', time:'2h ago' },
+            ],
+            family: [
+                { img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=1400&fit=crop', caption:'Sunday lunch with my grandchildren 💛', time:'Yesterday' },
+                { img:'https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=800&h=1400&fit=crop', caption:'My daughter visited today ❤️ So grateful.', time:'2 days ago' },
+            ],
+            diet: [
+                { img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=1400&fit=crop', caption:'Eating fresh & healthy today 🥗 Feeling amazing!', time:'4h ago' },
+                { img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&h=1400&fit=crop', caption:'Dr. approved meal plan Day 7 ✅', time:'3h ago' },
+                { img:'https://images.unsplash.com/photo-1543353071-873f17a7a088?w=800&h=1400&fit=crop', caption:'Fresh fruit bowl — full of antioxidants! 🍓', time:'1h ago' },
+            ],
+            memories: [
+                { img:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&h=1400&fit=crop', caption:'A beautiful memory from last summer ☀️', time:'1 week ago' },
+                { img:'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=800&h=1400&fit=crop', caption:'My 70th birthday celebration 🎂🎉', time:'2 weeks ago' },
+            ],
+        };
+
+        // ── State ──
+        const params = new URLSearchParams(location.search);
+        const cat = params.get('cat') || 'wellness';
+        const catStories = stories[cat] || stories.wellness;
+        const catLabels = { wellness:'Wellness', walk:'Morning Walk', family:'Family', diet:'Diet', memories:'Memories' };
+
+        let currentIdx = 0;
+        let isPaused = false;
+        let timer = null;
+        const DURATION = 5000; // ms per story
+        let startTime = null;
+        let elapsed = 0;
+
+        // ── DOM ──
+        const bg = document.getElementById('story-bg');
+        const caption = document.getElementById('story-caption');
+        const storyTime = document.getElementById('story-time');
+        const badge = document.getElementById('highlight-badge');
+        const pauseBtn = document.getElementById('pause-btn').querySelector('span');
+        const barsContainer = document.getElementById('progress-bars');
+
+        // ── Init ──
+        badge.innerText = catLabels[cat] || cat;
+
+        // ── Dynamic Author & Privacy Setup ──
+        const catAuthors = {
+            wellness: { name: 'Shreya', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya' },
+            walk: { name: 'Shreya', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya' },
+            memories: { name: 'Shreya', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Shreya' },
+            family: { name: 'Rohan', avatar: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop' },
+            diet: { name: 'Dr. Aris', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya' }
+        };
+
+        const currentAuthor = catAuthors[cat] || catAuthors.wellness;
+        const nameEl = document.getElementById('story-name');
+        const avatarEl = document.getElementById('avatar');
+        const viewersBtn = document.getElementById('viewers-btn');
+        const replyInput = document.getElementById('reply-input');
+
+        if (currentAuthor.name === 'Shreya') {
+            const rawUser = localStorage.getItem('user_username') || '@shreya_wellness';
+            nameEl.innerText = rawUser.startsWith('@') ? rawUser.substring(1) : rawUser;
+            const storedImg = localStorage.getItem('user_profile_img');
+            if (storedImg) {
+                avatarEl.src = storedImg;
+            } else {
+                avatarEl.src = currentAuthor.avatar;
+            }
+            viewersBtn.style.display = 'flex';
+        } else {
+            nameEl.innerText = currentAuthor.name;
+            avatarEl.src = currentAuthor.avatar;
+            viewersBtn.style.display = 'none';
+        }
+        replyInput.placeholder = `Reply to ${nameEl.innerText}...`;
+
+        buildBars();
+        goTo(0);
+
+        function buildBars() {
+            barsContainer.innerHTML = '';
+            catStories.forEach((_, i) => {
+                const bar = document.createElement('div');
+                bar.className = 'progress-bar';
+                const fill = document.createElement('div');
+                fill.className = 'progress-fill';
+                fill.style.width = '0%';
+                bar.appendChild(fill);
+                barsContainer.appendChild(bar);
+            });
+        }
+
+        function goTo(idx) {
+            if (idx < 0) { history.back(); return; }
+            if (idx >= catStories.length) { history.back(); return; }
+            currentIdx = idx;
+            const s = catStories[idx];
+            bg.style.backgroundImage = `url('${s.img}')`;
+            caption.innerText = s.caption;
+            storyTime.innerText = s.time;
+            // Mark bars
+            const bars = barsContainer.querySelectorAll('.progress-fill');
+            bars.forEach((f, i) => { f.style.transition='none'; f.style.width = i < idx ? '100%' : '0%'; });
+            // Animate current bar
+            clearInterval(timer);
+            elapsed = 0;
+            startTime = Date.now();
+            animateBar(bars[idx]);
+        }
+
+        function animateBar(fill) {
+            if (isPaused) return;
+            const now = Date.now();
+            elapsed += now - startTime;
+            startTime = now;
+            const pct = Math.min((elapsed / DURATION) * 100, 100);
+            fill.style.transition = 'none';
+            fill.style.width = pct + '%';
+            if (pct >= 100) { nextStory(); return; }
+            timer = requestAnimationFrame(() => animateBar(fill));
+        }
+
+        function nextStory() {
+            cancelAnimationFrame(timer);
+            const fills = barsContainer.querySelectorAll('.progress-fill');
+            if (fills[currentIdx]) fills[currentIdx].style.width = '100%';
+            goTo(currentIdx + 1);
+        }
+
+        function prevStory() {
+            cancelAnimationFrame(timer);
+            const fills = barsContainer.querySelectorAll('.progress-fill');
+            if (fills[currentIdx]) fills[currentIdx].style.width = '0%';
+            goTo(currentIdx - 1);
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            pauseBtn.innerText = isPaused ? 'play_arrow' : 'pause';
+            if (!isPaused) {
+                startTime = Date.now();
+                const fills = barsContainer.querySelectorAll('.progress-fill');
+                animateBar(fills[currentIdx]);
+            } else {
+                cancelAnimationFrame(timer);
+            }
+        }
+
+        function react(emoji) {
+            const container = document.getElementById('reactions-container');
+            const el = document.createElement('div');
+            el.className = 'reaction absolute text-4xl';
+            el.innerText = emoji;
+            el.style.left = (20 + Math.random() * 60) + '%';
+            el.style.bottom = '120px';
+            container.appendChild(el);
+            setTimeout(() => {
+                el.style.transition = 'transform 1s ease, opacity 1s';
+                el.style.transform = 'translateY(-80px)';
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 1000);
+            }, 50);
+        }
+
+        function sendReply() {
+            const input = document.getElementById('reply-input');
+            if (input.value.trim()) {
+                react('💬');
+                input.value = '';
+                input.blur();
+            }
+        }
+
+        // Viewers Modal
+        function openViewers() {
+            if (!isPaused) togglePause();
+            const backdrop = document.getElementById('viewers-backdrop');
+            const sheet = document.getElementById('viewers-sheet');
+            const modal = document.getElementById('viewers-modal');
+            modal.classList.remove('pointer-events-none');
+            backdrop.classList.remove('pointer-events-none','opacity-0'); backdrop.classList.add('opacity-100','pointer-events-auto');
+            sheet.classList.remove('translate-y-full','pointer-events-none'); sheet.classList.add('translate-y-0','pointer-events-auto');
+        }
+
+        function closeViewers() {
+            const backdrop = document.getElementById('viewers-backdrop');
+            const sheet = document.getElementById('viewers-sheet');
+            const modal = document.getElementById('viewers-modal');
+            backdrop.classList.add('opacity-0'); sheet.classList.add('translate-y-full');
+            setTimeout(() => { modal.classList.add('pointer-events-none'); backdrop.classList.add('pointer-events-none'); sheet.classList.add('pointer-events-none'); }, 400);
+            if (isPaused) togglePause();
+        }
+
+        // Long-press to pause
+        let pressTimer;
+        document.getElementById('story-container').addEventListener('touchstart', (e) => {
+            if (e.target.closest('#viewers-modal')) return;
+            pressTimer = setTimeout(() => { if(!isPaused) togglePause(); }, 250);
+        });
+        document.getElementById('story-container').addEventListener('touchend', (e) => {
+            if (e.target.closest('#viewers-modal')) return;
+            clearTimeout(pressTimer);
+            if (isPaused && document.getElementById('viewers-modal').classList.contains('pointer-events-none')) togglePause();
+        });
+    </script>
+</body>
+</html>

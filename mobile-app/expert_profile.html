@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Expert Profile - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[120px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10 relative">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Expert Profile</h1>
+        <div class="w-10"></div> <!-- Placeholder -->
+    </header>
+
+    <!-- Cover Image Area -->
+    <div class="h-56 bg-slate-800 relative overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Expert Clinic" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-md mx-auto px-6 pb-6 space-y-6 -mt-16 relative z-10">
+        
+        <!-- Profile Header Card -->
+        <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 relative">
+            <div class="absolute top-0 right-0 bg-green-50 text-green-700 text-[10px] font-extrabold px-4 py-1.5 rounded-bl-[24px] rounded-tr-[32px] uppercase tracking-widest flex items-center gap-1.5 border-b border-l border-green-100/50">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Online
+            </div>
+
+            <div class="flex flex-col items-center mt-[-48px]">
+                <div class="w-24 h-24 rounded-full border-4 border-white shadow-lg overflow-hidden bg-slate-200">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dr. Sarah Jenkins" class="w-full h-full object-cover">
+                </div>
+                <h2 class="text-2xl font-black mt-4 text-slate-800">Dr. Sarah Jenkins</h2>
+                <p class="text-xs font-bold text-secondary uppercase tracking-widest mt-1">RD, Clinical Nutrition</p>
+                
+                <div class="flex items-center gap-1.5 mt-3 bg-orange-50 px-3 py-1 rounded-full border border-orange-100/50">
+                    <span class="material-symbols-outlined text-orange-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-xs font-extrabold text-orange-600">4.9 <span class="text-orange-400/80 font-bold">(128 Reviews)</span></span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-6 pt-6 border-t border-slate-100">
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Consultation</p>
+                    <div class="flex items-baseline gap-0.5">
+                        <span class="text-xl font-black text-slate-800">₹999</span>
+                        <span class="text-xs font-bold text-slate-400">/session</span>
+                    </div>
+                </div>
+                <a href="expert_booking.html" class="bg-primary text-white font-extrabold px-8 py-3.5 rounded-2xl shadow-[0_8px_20px_rgba(0,27,63,0.15)] hover:shadow-[0_4px_10px_rgba(0,27,63,0.1)] hover:translate-y-0.5 active:scale-95 transition-all w-32 text-center block">
+                    Book
+                </a>
+            </div>
+        </div>
+
+        <!-- Specializations -->
+        <div class="space-y-3">
+            <h3 class="font-extrabold text-sm text-slate-800 px-2 uppercase tracking-wide">Expertise</h3>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-4 py-2 bg-blue-50 text-secondary text-xs font-bold rounded-xl border border-blue-100/50">Senior Diet</span>
+                <span class="px-4 py-2 bg-blue-50 text-secondary text-xs font-bold rounded-xl border border-blue-100/50">Heart Health</span>
+                <span class="px-4 py-2 bg-blue-50 text-secondary text-xs font-bold rounded-xl border border-blue-100/50">Diabetes Mgt</span>
+            </div>
+        </div>
+
+        <!-- Bio / About -->
+        <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100 space-y-4">
+            <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide">About Dr. Jenkins</h3>
+            <p class="text-sm font-medium text-slate-600 leading-relaxed">
+                With over 12 years of clinical experience, Dr. Jenkins specializes in geriatric nutrition and holistic wellness. She creates easy-to-follow, culturally tailored diet plans that focus on improving immunity, managing blood pressure, and ensuring Mom's daily nutritional needs are met without stress.
+            </p>
+            <button class="text-secondary text-xs font-extrabold uppercase tracking-widest flex items-center gap-1">
+                Read Full Bio <span class="material-symbols-outlined text-sm">expand_more</span>
+            </button>
+        </div>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Share a Story</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .capture-ring { border: 4px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body class="bg-black text-white font-manrope antialiased min-h-screen flex flex-col overflow-hidden">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[#c4c9cc] px-6 py-4 flex justify-between items-center text-primary">
+        <button onclick="history.back()" class="p-2">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        <h1 class="text-xl font-bold">Share a Story</h1>
+        <button class="p-2">
+            <span class="material-symbols-outlined text-3xl">help</span>
+        </button>
+    </header>
+
+    <main class="flex-1 relative flex flex-col">
+        <!-- Camera View Area -->
+        <div class="flex-1 bg-[#4a544c] relative overflow-hidden flex items-center justify-center">
+            <!-- Background Image -->
+            <img class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYNqMj1n2wee8wlQi5gQMiYJ5b6yWZJHsSy91tT22mncbHZhp4gDoxF1g2oavGxN-mrGiDnf5GlK5belfT7RmpsidSQGfrSlyHRrbJkk0iy1bBhh5AOW2z9WA-66c73LGdOwmydY4hVJmJbnnHAB-Qwk6OO8QS7comD4RvsWnwruDfZ5NpouOpUafbrgbbBgCAVMFWHJjBD8wQse6kP8IZ9eoWnsC7rW3jcdbA_0xr2XrgUNSv0yp8jhn8DvLP1D209UEvTeScXcQ">
+            
+            <!-- Side Tools Panel -->
+            <div class="absolute left-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-6 bg-white/20 backdrop-blur-xl rounded-full py-8 px-3 border border-white/30">
+                <div class="flex flex-col items-center gap-1 group active:scale-95 duration-200">
+                    <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">edit</span>
+                    <span class="text-[10px] font-bold uppercase tracking-tighter">Draw</span>
+                </div>
+                <div class="w-8 h-[1px] bg-white/30"></div>
+                <div class="flex flex-col items-center gap-1 group active:scale-95 duration-200">
+                    <span class="material-symbols-outlined text-2xl font-black">title</span>
+                    <span class="text-[10px] font-bold uppercase tracking-tighter">Text</span>
+                </div>
+                <div class="w-8 h-[1px] bg-white/30"></div>
+                <div class="flex flex-col items-center gap-1 group active:scale-95 duration-200">
+                    <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">location_on</span>
+                    <span class="text-[10px] font-bold uppercase tracking-tighter">Pin</span>
+                </div>
+            </div>
+
+            <!-- Focus Ring UI -->
+            <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                <div class="w-64 h-64 rounded-full border border-white/20"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="h-[220px] bg-[#4a544c] px-6 py-4 flex flex-col items-center justify-center gap-6 border-t border-white/10">
+            <div class="w-full flex items-center justify-between gap-4">
+                <!-- Gallery Preview -->
+                <div class="w-28 h-36 rounded-[24px] overflow-hidden border-2 border-white/80 shadow-2xl rotate-[-2deg] active:scale-95 transition-all flex-shrink-0">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYNqMj1n2wee8wlQi5gQMiYJ5b6yWZJHsSy91tT22mncbHZhp4gDoxF1g2oavGxN-mrGiDnf5GlK5belfT7RmpsidSQGfrSlyHRrbJkk0iy1bBhh5AOW2z9WA-66c73LGdOwmydY4hVJmJbnnHAB-Qwk6OO8QS7comD4RvsWnwruDfZ5NpouOpUafbrgbbBgCAVMFWHJjBD8wQse6kP8IZ9eoWnsC7rW3jcdbA_0xr2XrgUNSv0yp8jhn8DvLP1D209UEvTeScXcQ">
+                </div>
+
+                <!-- Capture Button -->
+                <div class="flex flex-col items-center gap-2">
+                    <button class="w-20 h-20 rounded-full capture-ring bg-white/10 backdrop-blur-md flex items-center justify-center group active:scale-90 duration-300">
+                        <div class="w-16 h-16 rounded-full bg-white group-active:bg-white/90"></div>
+                    </button>
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-70">Capture</span>
+                </div>
+                
+                <!-- Spacer for layout -->
+                <div class="w-28 h-36"></div>
+            </div>
+        </div>
+
+        <!-- Camera Switch Footer -->
+        <div class="h-[60px] bg-black flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl opacity-80 text-white">cached</span>
+        </div>
+    </main>
+</body>
+</html>

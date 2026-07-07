@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Caremate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-[120px]">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors mr-4">
+            <span class="material-symbols-outlined text-[#00193c]">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-[#00193c]">Notifications</h1>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-4">
+
+        <!-- Follow Notification 1 -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+            <a href="public_user_profile.html" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 block">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=James" class="w-full h-full object-cover">
+            </a>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm"><a href="public_user_profile.html" class="font-bold hover:underline">James</a> started following you.</p>
+                <p class="text-xs text-slate-400 mt-0.5">2 hours ago</p>
+            </div>
+            <button onclick="toggleFollow(this)" class="follow-btn flex-shrink-0 bg-[#00193c] text-white px-4 py-1.5 rounded-full text-xs font-bold transition-all active:scale-95">Follow Back</button>
+        </div>
+
+        <!-- Follow Notification 2 -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+            <a href="public_user_profile.html" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 block">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Margaret" class="w-full h-full object-cover">
+            </a>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm"><a href="public_user_profile.html" class="font-bold hover:underline">Margaret</a> started following you.</p>
+                <p class="text-xs text-slate-400 mt-0.5">5 hours ago</p>
+            </div>
+            <button onclick="toggleFollow(this)" class="follow-btn flex-shrink-0 bg-[#00193c] text-white px-4 py-1.5 rounded-full text-xs font-bold transition-all active:scale-95">Follow Back</button>
+        </div>
+
+        <!-- Like Notification -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
+            <a href="public_user_profile.html" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 block">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-full h-full object-cover">
+            </a>
+            <div class="flex-1">
+                <p class="text-sm"><a href="public_user_profile.html" class="font-bold hover:underline">Elena</a> liked your post.</p>
+                <p class="text-xs text-slate-400 mt-0.5">Yesterday</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=200" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <!-- Comment Notification -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
+            <a href="public_user_profile.html" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 block">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-full h-full object-cover">
+            </a>
+            <div class="flex-1">
+                <p class="text-sm"><a href="public_user_profile.html" class="font-bold hover:underline">Arthur</a> commented: "Such great energy! Keep going!"</p>
+                <p class="text-xs text-slate-400 mt-0.5">Yesterday</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=200" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <!-- System Notification - Caremate Assistant -->
+        <div class="bg-blue-50 p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center text-blue-600">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+            </div>
+            <div class="flex-1">
+                <p class="text-sm font-bold text-blue-900">Weekly Scam Report</p>
+                <p class="text-sm text-blue-800 mt-0.5">Caremate Assistant has blocked 2 suspicious messages this week.</p>
+                <p class="text-xs text-blue-400 mt-1">1 day ago</p>
+            </div>
+        </div>
+
+        <!-- Streak Notification -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center text-emerald-600">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">celebration</span>
+            </div>
+            <div class="flex-1">
+                <p class="text-sm"><span class="font-bold">Amazing!</span> You completed your 5K steps goal today.</p>
+                <p class="text-xs text-slate-400 mt-1">Yesterday</p>
+            </div>
+        </div>
+
+        <!-- Medicine Notification -->
+        <div class="bg-amber-50 p-4 rounded-2xl shadow-sm border border-amber-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-amber-100 flex-shrink-0 flex items-center justify-center text-amber-600">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medication</span>
+            </div>
+            <div class="flex-1">
+                <p class="text-sm font-bold text-amber-800">Medicine Reminder</p>
+                <p class="text-sm text-amber-700 mt-0.5">Time to take your afternoon Vitamin D3.</p>
+                <p class="text-xs text-amber-400 mt-1">2 days ago</p>
+            </div>
+        </div>
+
+    </main>
+
+<script>
+    function toggleFollow(btn) {
+        if (btn.textContent.trim() === 'Follow Back') {
+            btn.textContent = 'Following';
+            btn.classList.remove('bg-[#00193c]', 'text-white');
+            btn.classList.add('bg-slate-100', 'text-slate-600');
+            btn.disabled = true;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Following - Senior Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "on-surface-variant": "#43474f",
+                        "outline-variant": "#c4c6d1",
+                        "primary-container": "#002d62",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl text-primary">Following</h1>
+        <div class="w-10"></div> <!-- Spacer -->
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        <!-- Search Bar -->
+        <div class="relative group">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input type="text" placeholder="Search following..." class="w-full h-14 pl-12 pr-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-medium">
+        </div>
+
+        <!-- Following List -->
+        <div class="space-y-4">
+            <!-- Following 1 -->
+            <div class="bg-white rounded-3xl p-4 flex items-center gap-4 border border-slate-50 shadow-sm">
+                <a href="public_user_profile.html" class="flex-1 flex items-center gap-4 active:opacity-70 transition-opacity">
+                    <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-[#4f55ae]/10 flex-shrink-0">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIg_eeayxQnb-CUuc8BGHEW72ccntd3mjlw8I11wtxuHNsmnU3XbVC5R-9Px9ZgdQUA_gus30-TvHI2e0d0IW_ZoQsXqGPZRYF1InW5ThyLuW6dMpRielFPxZbAPbWEb1u95ShFJfWg-PKkNQsw_KwuuAppimcUiVe9Ug25pn4Qr-I2ERzR8qAmIrAa6JTQ3yVgEE0OszgZPSbgj0L7NGkBe0djq4q8v0zOFRWfDBBgadlYQY5hbrQVlQPUbC0VKQEXSFKLdLXmsI" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Dr. Aris Thompson</h4>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">@dr_aris_t</p>
+                    </div>
+                </a>
+                <button onclick="toggleFollow(this)" class="w-24 py-2 border-2 border-primary text-primary rounded-xl font-bold text-xs hover:bg-primary hover:text-white transition-all text-center">Following</button>
+            </div>
+
+            <!-- Following 2 -->
+            <div class="bg-white rounded-3xl p-4 flex items-center gap-4 border border-slate-50 shadow-sm">
+                <a href="public_user_profile.html" class="flex-1 flex items-center gap-4 active:opacity-70 transition-opacity">
+                    <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-[#4f55ae]/10 flex-shrink-0">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Sarah Jenkins</h4>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">@sarah_j</p>
+                    </div>
+                </a>
+                <button onclick="toggleFollow(this)" class="w-24 py-2 border-2 border-primary text-primary rounded-xl font-bold text-xs hover:bg-primary hover:text-white transition-all text-center">Following</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleFollow(btn) {
+            if (btn.textContent === 'Following') {
+                btn.textContent = 'Follow';
+                btn.className = 'w-24 py-2 bg-primary text-white rounded-xl font-bold text-xs hover:bg-primary/90 transition-all text-center';
+            } else {
+                btn.textContent = 'Following';
+                btn.className = 'w-24 py-2 border-2 border-primary text-primary rounded-xl font-bold text-xs hover:bg-primary hover:text-white transition-all text-center';
+            }
+        }
+    </script>
+</body>
+</html>

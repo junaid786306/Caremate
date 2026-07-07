@@ -1,0 +1,292 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Health Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-dim": "#dad9df",
+                        "outline-variant": "#c4c6d1",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "inverse-on-surface": "#f1f0f5",
+                        "surface-tint": "#3e5e95",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary-container": "#002d62",
+                        "outline": "#747781",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#7796d1",
+                        "primary-fixed-dim": "#abc7ff",
+                        "background": "#faf9fe",
+                        "primary": "#00193c",
+                        "surface-container": "#eeedf2",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-surface-variant": "#43474f",
+                        "surface-variant": "#e3e2e7",
+                        "secondary": "#4f55ae",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#9aa0ff",
+                        "on-primary-fixed-variant": "#24467c",
+                        "tertiary": "#151a1d",
+                        "on-tertiary-container": "#92969a",
+                        "tertiary-container": "#2a2f32",
+                        "on-primary-fixed": "#001b3f",
+                        "primary-fixed": "#d7e2ff",
+                        "on-secondary-container": "#2d328b",
+                        "inverse-primary": "#abc7ff",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "on-background": "#1a1b1f",
+                        "on-secondary-fixed": "#02026b",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "surface": "#faf9fe",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "60px",
+                        "stack-lg": "40px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "stack-sm": "12px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}],
+                        "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                        "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}],
+                        "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-[120px]">
+<!-- TopAppBar -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <div class="w-10"></div>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Activity Report</h1>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">calendar_month</span>
+        </button>
+    </header>
+
+    <main class="p-margin-page max-w-2xl mx-auto space-y-gutter mt-stack-md pb-[120px]">
+        <!-- 4 Boxes Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+            <!-- Medical Box -->
+            <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-[0_8px_30px_rgba(0,45,98,0.06)] overflow-hidden flex flex-col h-[320px]">
+                <div class="p-4 bg-primary text-white flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-xl">medical_services</span>
+                        <h3 class="font-bold text-sm uppercase tracking-wider">Medical</h3>
+                    </div>
+                    <span class="text-[10px] font-bold opacity-80 uppercase">History</span>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar">
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 08, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">3/4 Meds Taken</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">85%</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 07, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">4/4 Meds Taken</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">100%</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 06, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">2/4 Meds Taken</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-error">50%</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 05, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">4/4 Meds Taken</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">100%</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 04, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">4/4 Meds Taken</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diet Box -->
+            <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-[0_8px_30px_rgba(0,45,98,0.06)] overflow-hidden flex flex-col h-[320px]">
+                <div class="p-4 bg-secondary text-white flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-xl">restaurant</span>
+                        <h3 class="font-bold text-sm uppercase tracking-wider">Diet</h3>
+                    </div>
+                    <span class="text-[10px] font-bold opacity-80 uppercase">History</span>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar">
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 08, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">High Protein Lunch</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">GOOD</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 07, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">Balanced Diet</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">GOOD</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 06, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">Skipped Breakfast</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-error">WARN</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 05, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">Balanced Diet</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">GOOD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise Box -->
+            <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-[0_8px_30px_rgba(0,45,98,0.06)] overflow-hidden flex flex-col h-[320px]">
+                <div class="p-4 bg-[#137333] text-white flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-xl">directions_walk</span>
+                        <h3 class="font-bold text-sm uppercase tracking-wider">Exercise</h3>
+                    </div>
+                    <span class="text-[10px] font-bold opacity-80 uppercase">History</span>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar">
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 08, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">45 mins Morning Walk</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">COMPLETED</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 07, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">30 mins Yoga</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-[#137333]">COMPLETED</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-surface-variant pb-2">
+                        <div>
+                            <p class="font-bold text-sm text-primary">May 06, 2026</p>
+                            <p class="text-[11px] text-on-surface-variant">10 mins Stretch</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-error">INCOMPLETE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointment Box -->
+            <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-[0_8px_30px_rgba(0,45,98,0.06)] overflow-hidden flex flex-col h-[320px]">
+                <div class="p-4 bg-[#747781] text-white flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-xl">event_available</span>
+                        <h3 class="font-bold text-sm uppercase tracking-wider">Appointment</h3>
+                    </div>
+                    <span class="text-[10px] font-bold opacity-80 uppercase">Upcoming</span>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar">
+                    <div class="flex flex-col gap-1 border-b border-surface-variant pb-2">
+                        <p class="font-bold text-sm text-primary">May 12, 2026 • 10:00 AM</p>
+                        <p class="text-[11px] text-on-surface-variant font-bold">Dr. Sarah Jenkins (Cardiology)</p>
+                        <p class="text-[10px] text-primary">Remind me 1h before</p>
+                    </div>
+                    <div class="flex flex-col gap-1 border-b border-surface-variant pb-2">
+                        <p class="font-bold text-sm text-primary">May 20, 2026 • 04:30 PM</p>
+                        <p class="text-[11px] text-on-surface-variant font-bold">General Checkup</p>
+                        <p class="text-[10px] text-primary">Remind me 1h before</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</main>
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-t-[32px] border-t border-white/20 h-[85px] shadow-[0_-10px_30px_rgba(0,45,98,0.08)]">
+        <!-- Home -->
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="guardian_home_dashboard.html">
+            <span class="material-symbols-outlined mb-1">home</span>
+            <span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Home</span>
+        </a>
+        <!-- Report (Active) -->
+        <a class="flex flex-col items-center justify-center bg-blue-900/10 dark:bg-blue-400/20 text-blue-900 dark:text-blue-100 rounded-[22px] px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="health_report.html">
+            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">assessment</span>
+            <span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Report</span>
+        </a>
+        <!-- Community -->
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="community_hub.html">
+            <span class="material-symbols-outlined mb-1">group</span>
+            <span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Circle</span>
+        </a>
+        <!-- Profile -->
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="guardian_profile.html">
+            <span class="material-symbols-outlined mb-1">account_circle</span>
+            <span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Profile</span>
+        </a>
+    </nav>
+</body></html>

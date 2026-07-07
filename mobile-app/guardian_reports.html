@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Report - Caremate</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Flatpickr Date Picker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e3e2e7",
+                    "tertiary-fixed": "#dfe3e7",
+                    "on-secondary-fixed": "#02026b",
+                    "on-primary-container": "#7796d1",
+                    "primary": "#00193c",
+                    "on-secondary-fixed-variant": "#373c95",
+                    "inverse-surface": "#2f3034",
+                    "on-surface-variant": "#43474f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001b3f",
+                    "surface-bright": "#faf9fe",
+                    "surface-container-low": "#f4f3f8",
+                    "primary-container": "#002d62",
+                    "on-secondary": "#ffffff",
+                    "outline": "#747781",
+                    "inverse-primary": "#abc7ff",
+                    "background": "#faf9fe",
+                    "surface-tint": "#3e5e95",
+                    "on-surface": "#1a1b1f",
+                    "tertiary-container": "#2a2f32",
+                    "primary-fixed": "#d7e2ff",
+                    "secondary": "#4f55ae",
+                    "on-secondary-container": "#2d328b",
+                    "surface-container": "#eeedf2",
+                    "on-primary-fixed-variant": "#24467c",
+                    "on-background": "#1a1b1f",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "on-tertiary-container": "#92969a",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e8e7ed",
+                    "secondary-fixed": "#e0e0ff",
+                    "on-tertiary-fixed": "#171c1f",
+                    "outline-variant": "#c4c6d1",
+                    "secondary-fixed-dim": "#bfc2ff",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e3e2e7",
+                    "surface": "#faf9fe",
+                    "tertiary": "#151a1d",
+                    "surface-dim": "#dad9df",
+                    "inverse-on-surface": "#f1f0f5",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#9aa0ff",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#abc7ff",
+                    "tertiary-fixed-dim": "#c3c7cb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "touch-target-min": "60px",
+                    "margin-page": "24px",
+                    "gutter": "16px",
+                    "stack-md": "24px",
+                    "stack-sm": "12px",
+                    "stack-lg": "40px",
+                    "unit": "8px"
+            },
+            "fontFamily": {
+                    "manrope": ["Manrope", "sans-serif"],
+                    "body-md": ["Manrope"],
+                    "display": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "label-caps": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "500"}],
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700"}],
+                    "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .ambient-shadow {
+            box-shadow: 0 12px 30px rgba(0, 25, 60, 0.06);
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen flex flex-col pb-[120px]">
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <div class="w-8"></div> <!-- Placeholder for left alignment -->
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Health Reports</h1>
+        <a href="guardian_notifications.html" class="relative">
+            <span class="material-symbols-outlined text-primary text-[28px]">notifications</span>
+            <div class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></div>
+        </a>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow pt-8 pb-[130px] px-margin-page max-w-2xl mx-auto">
+<!-- STREAKS & CONSISTENCY SECTION -->
+<section class="mb-stack-lg space-y-4">
+    <h2 class="font-bold text-[12px] uppercase tracking-[2px] text-slate-400">Streaks & Consistency</h2>
+    <div class="grid grid-cols-2 gap-4">
+        <!-- Current Streak -->
+        <div class="bg-white rounded-[28px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between aspect-square">
+            <div class="flex justify-between items-start">
+                <h3 class="font-bold text-[11px] text-slate-400 uppercase tracking-widest leading-tight">Current<br>Streak</h3>
+                <span class="material-symbols-outlined text-orange-500" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            </div>
+            <div id="current-streak" class="text-[56px] font-manrope font-extrabold text-primary leading-none mt-2">0</div>
+            <div class="mt-auto">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Best Streak</p>
+                <p id="best-streak" class="text-sm font-bold text-primary">0 Days</p>
+            </div>
+        </div>
+        <!-- Perfect Days -->
+        <div class="bg-white rounded-[28px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between aspect-square">
+            <div class="flex justify-between items-start">
+                <h3 class="font-bold text-[11px] text-slate-400 uppercase tracking-widest leading-tight">Perfect<br>Days</h3>
+                <div class="w-6 h-6 rounded-full bg-secondary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-sm font-bold">check</span>
+                </div>
+            </div>
+            <div id="perfect-days" class="text-[56px] font-manrope font-extrabold text-primary leading-none mt-2">0</div>
+            <div class="mt-auto">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Active Days</p>
+                <p id="active-days" class="text-sm font-bold text-primary">0 Days</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MONTHLY OVERVIEW SECTION -->
+<section class="mb-stack-lg space-y-4">
+    <h2 class="font-bold text-[12px] uppercase tracking-[2px] text-slate-400">Monthly Overview</h2>
+    <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col items-center">
+        <!-- Calendar Header -->
+        <div class="w-full flex justify-between items-center mb-4">
+            <button id="cal-prev" class="text-slate-400 text-sm flex items-center font-bold active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-sm mr-1">chevron_left</span>
+                <span id="cal-prev-label"></span>
+            </button>
+            <div class="text-center">
+                <h3 id="cal-month-name" class="font-manrope text-2xl font-extrabold text-primary tracking-tight"></h3>
+                <p id="cal-year" class="text-[11px] font-bold text-secondary tracking-[3px]"></p>
+            </div>
+            <button id="cal-next" class="text-slate-400 text-sm flex items-center font-bold active:scale-95 transition-transform">
+                <span id="cal-next-label"></span>
+                <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+            </button>
+        </div>
+
+        <div class="border border-slate-100 rounded-full px-5 py-2 mb-6">
+            <span class="text-slate-500 text-[11px] font-bold">Completion Rate: <strong id="completion-rate" class="text-secondary">0%</strong></span>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="grid grid-cols-7 gap-y-4 gap-x-3 w-full text-center mb-8">
+            <div class="text-[10px] font-bold text-slate-300 uppercase">S</div>
+            <div class="text-[10px] font-bold text-slate-300 uppercase">M</div>
+            <div class="text-[10px] font-bold text-slate-300 uppercase">T</div>
+            <div class="text-[10px] font-bold text-slate-300 uppercase">W</div>
+            <div class="text-[10px] font-bold text-slate-300 uppercase">T</div>
+            <div class="text-[10px] font-bold text-slate-300 uppercase">F</div>
+            <div class="text-[10px] font-bold text-slate-300 uppercase">S</div>
+            <div id="cal-grid" class="contents"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="flex justify-center gap-3 text-[9px] font-bold text-slate-400 uppercase tracking-wider w-full pt-6 border-t border-slate-100">
+            <div class="flex items-center gap-1.5"><div class="w-3.5 h-3.5 rounded-full border-2 border-slate-100"></div> EMPTY</div>
+            <div class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 -rotate-90 overflow-visible" viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="14" fill="none" stroke="#f1f5f9" stroke-width="6"/>
+                    <circle cx="16" cy="16" r="14" fill="none" stroke="#4f55ae" stroke-width="6" stroke-dasharray="87.9" stroke-dashoffset="60" stroke-linecap="round"/>
+                </svg> PARTIAL
+            </div>
+            <div class="flex items-center gap-1.5"><div class="w-3.5 h-3.5 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-[10px] text-white font-bold">check</span></div> FULL</div>
+            <div class="flex items-center gap-1.5"><div class="w-3.5 h-3.5 rounded-full border border-dashed border-slate-300"></div> TODAY</div>
+        </div>
+    </div>
+</section>
+<!-- Summary Cards Grid (Bento Style) -->
+<div class="grid grid-cols-2 gap-gutter">
+<!-- Medicines Card (Full Width) -->
+<div class="col-span-2 bg-gradient-to-br from-primary-container to-secondary rounded-lg p-stack-md ambient-shadow min-h-touch-target-min text-on-primary relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+<div class="flex items-center gap-4 mb-stack-sm relative z-10">
+<div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-white">medication</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white">Medicines Taken</h3>
+</div>
+<div class="flex items-end justify-between relative z-10 mt-stack-sm">
+<span class="font-display text-[42px] leading-none font-extrabold tracking-tight text-white">100%</span>
+<a href="medication_history.html" class="flex items-center gap-1 text-white/70 text-[11px] font-bold uppercase tracking-wider hover:text-white transition-colors">
+    View History <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Diet Adherence Card -->
+<div class="col-span-1 bg-surface-container-low rounded-lg p-stack-sm ambient-shadow min-h-touch-target-min border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed">restaurant</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant">Diet</h3>
+</div>
+<div class="mt-auto">
+<span class="font-headline-lg text-headline-lg text-primary block">85%</span>
+<span class="font-label-caps text-label-caps text-outline">On track</span>
+</div>
+<a href="diet_history.html" class="mt-3 flex items-center gap-0.5 text-[10px] font-bold text-secondary uppercase tracking-wider">
+    History <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+<!-- Exercise Card -->
+<div class="col-span-1 bg-secondary-fixed rounded-lg p-stack-sm ambient-shadow min-h-touch-target-min border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-white/60 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">fitness_center</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-secondary-fixed">Move</h3>
+</div>
+<div class="mt-auto">
+<span class="font-headline-lg text-headline-lg text-on-secondary-fixed-variant block">3/4</span>
+<span class="font-label-caps text-label-caps text-secondary">Days active</span>
+</div>
+<a href="exercise_history.html" class="mt-3 flex items-center gap-0.5 text-[10px] font-bold text-secondary uppercase tracking-wider">
+    History <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+<!-- Scam History Card (Full Width) -->
+<a href="scam_history.html" class="col-span-2 bg-surface-container-low rounded-lg p-stack-md ambient-shadow min-h-touch-target-min border border-outline-variant/20 flex items-center justify-between mt-unit active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: &quot;FILL&quot; 1;">shield_person</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] text-primary">Scam History</h3>
+<p class="font-label-caps text-label-caps text-outline uppercase">Latest AI protection</p>
+</div>
+</div>
+<div class="text-right flex items-center gap-2">
+    <span class="material-symbols-outlined text-green-600 text-3xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+</a>
+</div>
+<!-- Download Button -->
+<button class="w-full h-touch-target-min bg-white border border-outline-variant text-primary rounded-full font-headline-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:bg-surface-container-low active:scale-95 transition-all flex items-center justify-center gap-2 mt-4 mb-8">
+    <span class="material-symbols-outlined">download</span>
+    Download Report
+</button>
+</main>
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 h-[100px] bg-white rounded-t-[40px] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_dashboard.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">HOME</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 bg-blue-50 text-primary rounded-2xl py-2" href="guardian_reports.html">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">REPORT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="payment_plans.html">
+            <span class="material-symbols-outlined">payments</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PAYMENT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_subscription.html">
+            <span class="material-symbols-outlined">card_membership</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">SUBSCRIBE</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_profile.html">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PROFILE</span>
+        </a>
+    </nav>
+
+<script>
+// ─── Health Data Engine ───────────────────────────────────────────────────────
+// Reads from localStorage key: "healthData"
+// Format: { "YYYY-MM-DD": { med: 0-1, diet: 0-1, exercise: 0-1 } }
+// A score = average of the 3 tracked items (0=none, 0.5=partial, 1=full)
+
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function getKey(y, m, d) {
+    return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function getDayScore(dateKey) {
+    const data = JSON.parse(localStorage.getItem('healthData') || '{}');
+    const day = data[dateKey];
+    if (!day) return null;
+    const vals = [day.med ?? 0, day.diet ?? 0, day.exercise ?? 0];
+    return vals.reduce((a,b) => a+b, 0) / vals.length;
+}
+
+function computeStreaks() {
+    const today = new Date();
+    const data = JSON.parse(localStorage.getItem('healthData') || '{}');
+    const allDates = Object.keys(data).sort();
+
+    // Current streak: count backwards from today
+    let current = 0;
+    let cursor = new Date(today);
+    while (true) {
+        const key = getKey(cursor.getFullYear(), cursor.getMonth(), cursor.getDate());
+        const score = getDayScore(key);
+        if (score !== null && score > 0) {
+            current++;
+            cursor.setDate(cursor.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+
+    // Best streak: find longest consecutive sequence
+    let best = 0, run = 0;
+    let prev = null;
+    for (const key of allDates) {
+        const score = getDayScore(key);
+        if (score !== null && score > 0) {
+            const d = new Date(key);
+            if (prev) {
+                const diff = (d - prev) / 86400000;
+                run = diff === 1 ? run + 1 : 1;
+            } else {
+                run = 1;
+            }
+            best = Math.max(best, run);
+            prev = d;
+        } else {
+            prev = null;
+            run = 0;
+        }
+    }
+
+    // Perfect days this month
+    const y = today.getFullYear(), mo = today.getMonth();
+    const daysInMonth = new Date(y, mo + 1, 0).getDate();
+    let perfect = 0, active = 0;
+    for (let d = 1; d <= daysInMonth; d++) {
+        const key = getKey(y, mo, d);
+        const score = getDayScore(key);
+        if (score !== null) {
+            if (score > 0) active++;
+            if (score === 1) perfect++;
+        }
+    }
+
+    return { current, best, perfect, active };
+}
+
+// ─── Calendar Renderer ────────────────────────────────────────────────────────
+let calYear, calMonth;
+
+function buildCalendar(year, month) {
+    calYear = year; calMonth = month;
+    const today = new Date();
+    const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+    // Header labels
+    document.getElementById('cal-month-name').textContent = MONTHS[month];
+    document.getElementById('cal-year').textContent = year;
+
+    const prevDate = new Date(year, month - 1, 1);
+    document.getElementById('cal-prev-label').textContent = MONTHS[prevDate.getMonth()].slice(0,3);
+
+    const nextDate = new Date(year, month + 1, 1);
+    document.getElementById('cal-next-label').textContent = MONTHS[nextDate.getMonth()].slice(0,3);
+
+    // Completion rate for this month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const maxDay = isCurrentMonth ? today.getDate() : daysInMonth;
+    let completedCount = 0;
+    for (let d = 1; d <= maxDay; d++) {
+        const key = getKey(year, month, d);
+        const score = getDayScore(key);
+        if (score !== null && score > 0) completedCount++;
+    }
+    const rate = maxDay > 0 ? Math.round((completedCount / maxDay) * 100) : 0;
+    document.getElementById('completion-rate').textContent = rate + '%';
+
+    // Grid
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+    // Empty leading cells
+    for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        grid.appendChild(empty);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const key = getKey(year, month, d);
+        const score = getDayScore(key);
+        const isToday = isCurrentMonth && d === today.getDate();
+        const isFuture = isCurrentMonth && d > today.getDate();
+
+        let cell;
+
+        if (isToday) {
+            // Today — dashed ring highlight
+            cell = document.createElement('div');
+            cell.className = 'w-8 h-8 mx-auto rounded-full border-2 border-dashed border-[#4f55ae] flex items-center justify-center text-[#4f55ae] font-bold text-xs';
+            cell.textContent = d;
+        } else if (isFuture || score === null) {
+            // Future or no data — faint empty
+            cell = document.createElement('div');
+            cell.className = 'w-8 h-8 mx-auto rounded-full border border-slate-100 flex items-center justify-center text-slate-300 text-xs font-semibold';
+            cell.textContent = d;
+        } else if (score === 1) {
+            // Full completion — filled circle with number in white
+            cell = document.createElement('div');
+            cell.className = 'w-8 h-8 mx-auto rounded-full bg-[#4f55ae] flex items-center justify-center text-white font-bold text-xs';
+            cell.textContent = d;
+        } else if (score > 0) {
+            // Partial — progress ring with date number
+            const offset = 100 - Math.round(score * 100);
+            cell = document.createElement('div');
+            cell.style.cssText = 'width:2rem;height:2rem;margin:0 auto;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#00193c;font-weight:700;font-size:0.75rem;position:relative;';
+            cell.innerHTML = `<span style="position:relative;z-index:1;">${d}</span><svg style="position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);overflow:visible;" viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="15" fill="none" stroke="#f1f5f9" stroke-width="2"/>
+                <circle cx="16" cy="16" r="15" fill="none" stroke="#4f55ae" stroke-width="2" stroke-dasharray="94.2" stroke-dashoffset="${Math.round((1 - score) * 94.2)}" stroke-linecap="round"/>
+            </svg>`;
+        } else {
+            // Score = 0, day logged but nothing done
+            cell = document.createElement('div');
+            cell.className = 'w-8 h-8 mx-auto rounded-full border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs font-semibold';
+            cell.textContent = d;
+        }
+
+        grid.appendChild(cell);
+    }
+}
+
+// ─── Update Streak Cards ──────────────────────────────────────────────────────
+function updateStreaks() {
+    const { current, best, perfect, active } = computeStreaks();
+    document.getElementById('current-streak').textContent = current;
+    document.getElementById('best-streak').textContent = best + ' Day' + (best !== 1 ? 's' : '');
+    document.getElementById('perfect-days').textContent = perfect;
+    document.getElementById('active-days').textContent = active + ' Day' + (active !== 1 ? 's' : '');
+}
+
+// ─── Seed Demo Data (so it looks populated on first load) ─────────────────────
+function seedDemoData() {
+    if (localStorage.getItem('healthDataSeeded')) return;
+    const data = {};
+    const today = new Date();
+    // Seed last 10 days with varied completion
+    const patterns = [
+        {med:1,diet:1,exercise:1},
+        {med:1,diet:0.5,exercise:1},
+        {med:1,diet:1,exercise:0},
+        {med:0.5,diet:1,exercise:1},
+        {med:1,diet:1,exercise:1},
+        {med:1,diet:0,exercise:0.5},
+        {med:1,diet:1,exercise:1},
+        {med:0,diet:1,exercise:1},
+        {med:1,diet:1,exercise:0.5},
+        {med:1,diet:1,exercise:1},
+    ];
+    for (let i = 0; i < 10; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const key = getKey(d.getFullYear(), d.getMonth(), d.getDate());
+        data[key] = patterns[i];
+    }
+    localStorage.setItem('healthData', JSON.stringify(data));
+    localStorage.setItem('healthDataSeeded', '1');
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    seedDemoData();
+
+    const now = new Date();
+    buildCalendar(now.getFullYear(), now.getMonth());
+    updateStreaks();
+
+    document.getElementById('cal-prev').addEventListener('click', () => {
+        const d = new Date(calYear, calMonth - 1, 1);
+        buildCalendar(d.getFullYear(), d.getMonth());
+    });
+
+    document.getElementById('cal-next').addEventListener('click', () => {
+        const d = new Date(calYear, calMonth + 1, 1);
+        buildCalendar(d.getFullYear(), d.getMonth());
+    });
+});
+</script>
+</body></html>

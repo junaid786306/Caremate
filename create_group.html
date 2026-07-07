@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Create New Group</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "surface": "#faf9fe"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-primary font-manrope antialiased h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white px-6 py-4 flex justify-between items-center h-[72px] shadow-sm z-50">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h1 class="font-bold text-xl">New Group</h1>
+        <button id="create-btn" class="text-secondary font-bold text-sm uppercase tracking-widest disabled:opacity-30" disabled>Create</button>
+    </header>
+
+    <main class="flex-1 overflow-y-auto px-6 py-8">
+        <!-- Group Info -->
+        <div class="flex items-center gap-6 mb-10">
+            <div class="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center border-2 border-dashed border-slate-200 relative group cursor-pointer overflow-hidden">
+                <span class="material-symbols-outlined text-3xl text-slate-300">add_a_photo</span>
+                <input type="file" id="group-photo" class="absolute inset-0 opacity-0 cursor-pointer">
+                <img id="photo-preview" class="absolute inset-0 w-full h-full object-cover hidden">
+            </div>
+            <div class="flex-1">
+                <input type="text" id="group-name" placeholder="Group Name" class="w-full border-b-2 border-slate-100 focus:border-secondary transition-colors text-lg font-bold placeholder:text-slate-200 focus:ring-0 px-0 py-2">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Optional description</p>
+            </div>
+        </div>
+
+        <!-- Selected Members -->
+        <div id="selected-list" class="flex gap-4 overflow-x-auto pb-6 mb-8 hide-scrollbar">
+            <!-- Selected chips go here -->
+        </div>
+
+        <!-- Contacts List -->
+        <div class="space-y-6">
+            <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Contacts</h3>
+            
+            <div class="space-y-2">
+                <!-- Contact 1 -->
+                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-id="1" data-name="Dr. Aris Thompson">
+                    <div class="flex items-center gap-4">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIg_eeayxQnb-CUuc8BGHEW72ccntd3mjlw8I11wtxuHNsmnU3XbVC5R-9Px9ZgdQUA_gus30-TvHI2e0d0IW_ZoQsXqGPZRYF1InW5ThyLuW6dMpRielFPxZbAPbWEb1u95ShFJfWg-PKkNQsw_KwuuAppimcUiVe9Ug25pn4Qr-I2ERzR8qAmIrAa6JTQ3yVgEE0OszgZPSbgj0L7NGkBe0djq4q8v0zOFRWfDBBgadlYQY5hbrQVlQPUbC0VKQEXSFKLdLXmsI" class="w-12 h-12 rounded-full">
+                        <div>
+                            <p class="font-bold">Dr. Aris Thompson</p>
+                            <p class="text-xs text-slate-400">Cardiologist</p>
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center transition-colors checkbox-indicator">
+                        <span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+                    </div>
+                </div>
+
+                <!-- Contact 2 -->
+                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-id="2" data-name="Nurse Betty">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold">NB</div>
+                        <div>
+                            <p class="font-bold">Nurse Betty</p>
+                            <p class="text-xs text-slate-400">Primary Care</p>
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center transition-colors checkbox-indicator">
+                        <span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+                    </div>
+                </div>
+
+                <!-- Contact 3 -->
+                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-id="3" data-name="John Doe">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">JD</div>
+                        <div>
+                            <p class="font-bold">John Doe</p>
+                            <p class="text-xs text-slate-400">Family Friend</p>
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center transition-colors checkbox-indicator">
+                        <span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const selectedMembers = new Set();
+        const contactItems = document.querySelectorAll('.contact-item');
+        const selectedList = document.getElementById('selected-list');
+        const createBtn = document.getElementById('create-btn');
+        const groupNameInput = document.getElementById('group-name');
+
+        function updateUI() {
+            selectedList.innerHTML = '';
+            selectedMembers.forEach(id => {
+                const contact = Array.from(contactItems).find(c => c.dataset.id === id);
+                const chip = document.createElement('div');
+                chip.className = 'flex-shrink-0 flex flex-col items-center gap-1';
+                chip.innerHTML = `
+                    <div class="relative">
+                        <div class="w-14 h-14 rounded-full border-2 border-secondary p-0.5">
+                            <div class="w-full h-full rounded-full bg-slate-100 flex items-center justify-center overflow-hidden">
+                                ${contact.querySelector('img') ? `<img src="${contact.querySelector('img').src}" class="w-full h-full object-cover">` : `<span class="font-bold text-secondary">${contact.dataset.name.split(' ').map(n => n[0]).join('')}</span>`}
+                            </div>
+                        </div>
+                        <button onclick="toggleMember('${id}')" class="absolute -top-1 -right-1 w-5 h-5 bg-secondary text-white rounded-full flex items-center justify-center shadow-md">
+                            <span class="material-symbols-outlined text-[12px]">close</span>
+                        </button>
+                    </div>
+                    <span class="text-[10px] font-bold text-slate-500">${contact.dataset.name.split(' ')[0]}</span>
+                `;
+                selectedList.appendChild(chip);
+            });
+
+            createBtn.disabled = selectedMembers.size === 0 || !groupNameInput.value.trim();
+        }
+
+        function toggleMember(id) {
+            if (selectedMembers.has(id)) {
+                selectedMembers.delete(id);
+            } else {
+                selectedMembers.add(id);
+            }
+            
+            const contact = Array.from(contactItems).find(c => c.dataset.id === id);
+            const indicator = contact.querySelector('.checkbox-indicator');
+            const check = indicator.querySelector('span');
+            
+            if (selectedMembers.has(id)) {
+                indicator.classList.add('bg-secondary', 'border-secondary');
+                check.classList.remove('hidden');
+            } else {
+                indicator.classList.remove('bg-secondary', 'border-secondary');
+                check.classList.add('hidden');
+            }
+            
+            updateUI();
+        }
+
+        contactItems.forEach(item => {
+            item.addEventListener('click', () => toggleMember(item.dataset.id));
+        });
+
+        groupNameInput.addEventListener('input', updateUI);
+
+        document.getElementById('group-photo').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const preview = document.getElementById('photo-preview');
+                    preview.src = event.target.result;
+                    preview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        createBtn.addEventListener('click', () => {
+            alert('Group "' + groupNameInput.value + '" created with ' + selectedMembers.size + ' members!');
+            history.back();
+        });
+    </script>
+</body>
+</html>

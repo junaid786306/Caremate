@@ -1,0 +1,71 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Privacy Policy - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Privacy Policy</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6">
+        <div class="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm space-y-8">
+            <section>
+                <h2 class="text-xl font-bold text-primary mb-4">1. Information We Collect</h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Caremate collects health data (steps, medication schedules, vitals) and personal information (name, email, age) to provide tailored wellness support for senior users.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-primary mb-4">2. How We Use Your Data</h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Your data is used to generate health summaries, send reminders, and facilitate community interactions. We never sell your data to third parties.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-primary mb-4">3. Data Security</h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    We implement military-grade encryption to ensure your medical records and personal details are always protected.
+                </p>
+            </section>
+
+            <div class="pt-8 border-t border-slate-100 flex flex-col items-center gap-4">
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Last updated: May 6, 2026</p>
+                <button onclick="history.back()" class="px-8 py-3 bg-slate-100 text-slate-600 rounded-full font-bold text-sm">Close Policy</button>
+            </div>
+        </div>
+    </main>
+</body></html>

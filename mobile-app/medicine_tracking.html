@@ -1,0 +1,130 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Medicine Tracking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-fixed": "#d6e3ff", "tertiary-container": "#bd5700", "on-error-container": "#93000a", tertiary: "#964400", "inverse-primary": "#aac7ff", "on-primary-container": "#fefcff", "on-primary-fixed-variant": "#00458d", "on-tertiary-fixed": "#321200", "primary-fixed-dim": "#aac7ff", "on-error": "#ffffff", "on-secondary-container": "#3f5881", "error-container": "#ffdad6", "inverse-surface": "#2d3037", "primary-container": "#0a73e0", "tertiary-fixed-dim": "#ffb68c", "primary-fixed": "#d6e3ff", surface: "#f9f9ff", "tertiary-fixed": "#ffdbc9", "on-tertiary-container": "#fffbff", "on-tertiary": "#ffffff", background: "#f9f9ff", "surface-container-highest": "#e0e2eb", "surface-bright": "#f9f9ff", "outline-variant": "#c1c6d5", "surface-container-high": "#e6e8f1", "on-background": "#181c22", "on-secondary-fixed-variant": "#2d476f", "secondary-container": "#b6d0ff", "on-secondary": "#ffffff", error: "#ba1a1a", "surface-variant": "#e0e2eb", secondary: "#465f88", "surface-dim": "#d7dae3", "on-secondary-fixed": "#001b3d", "inverse-on-surface": "#eef0fa", "on-tertiary-fixed-variant": "#763400", primary: "#005ab4", "secondary-fixed-dim": "#aec7f7", "surface-tint": "#005db8", "surface-container": "#ebedf7", "surface-container-low": "#f1f3fc", outline: "#717785", "on-surface-variant": "#414753", "on-primary-fixed": "#001b3e", "surface-container-lowest": "#ffffff", "on-surface": "#181c22", "on-primary": "#ffffff"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {xs: "4px", gutter: "16px", unit: "8px", xl: "32px", "container-margin": "16px", lg: "24px", md: "16px", sm: "8px", base: "8px", margin: "24px"}, fontFamily: {"body-base": ["Inter"], "label-caps": ["Inter"], "body-sm": ["Inter"], "display-lg": ["Manrope"], "headline-md": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "label-md": ["Inter"]}, fontSize: {"body-base": ["17px", {lineHeight: "22px", letterSpacing: "-0.4px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.5px", fontWeight: "600"}], "body-sm": ["15px", {lineHeight: "20px", letterSpacing: "-0.2px", fontWeight: "400"}], "display-lg": ["34px", {lineHeight: "41px", letterSpacing: "-0.4px", fontWeight: "700"}], "headline-md": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", fontWeight: "700"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.5px", fontWeight: "500"}]}}}};</script>
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base antialiased min-h-screen flex flex-col pb-24 md:pb-0">
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 sticky z-50 border-b border-white/20 dark:border-slate-800 shadow-sm hidden md:flex">
+<div class="flex justify-between items-center px-4 py-3 w-full max-w-full">
+<div class="flex items-center gap-3">
+<img alt="Senior Profile" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional, brightly lit headshot of a senior woman with warm, empathetic features, smiling gently. The lighting is soft and natural, emphasizing a trustworthy and calm aesthetic fitting for a modern healthcare application. The background is a clean, neutral tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQ2f6PF8ZW1D8kEzomyB3cl_3_LXRMl10uL_XhoQ-dwykmEwhtCvZ-Eav7nsiCA8EsFcaUhYULKWD2IgKv2afliTuT3DkzytwRH5AHgJ7khZ2LJArpNHR9_qFfblHiDqeAzuIpEdtWbLgPYISGSfM6-I_oHW848tuhsVMUYxoh8lKKWhA6OTyJvwkRASAphXcOwm3l7-I5UMQzL8qhwLTXPFHOzDoGRme4Z7Nd4F2egAZG_De2XM_YiYD2Qv4OuMRE1XhNZluJ5s">
+<span class="font-['Manrope'] font-black text-[#0A1F44] dark:text-white text-xl tracking-tighter">Guardian Overview</span>
+</div>
+<a href="emergency_sos.html" class="text-[#0A1F44] dark:text-blue-400 hover:opacity-80 transition-opacity active:scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">emergency_share</span>
+</a>
+</div>
+</header>
+<main class="flex-grow px-container-margin py-lg max-w-2xl mx-auto w-full">
+<div class="mb-xl">
+<h1 class="font-display-lg text-display-lg text-on-surface">Shreya's Daily Meds</h1>
+<p class="font-body-base text-body-base text-on-surface-variant mt-sm">Track medication adherence and schedule.</p>
+</div>
+<div class="relative ml-unit border-l-2 border-surface-container-high space-y-lg pb-xl">
+<div class="relative pl-lg">
+<div class="absolute -left-[17px] top-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary ring-4 ring-background z-10 shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-[0_2px_8px_rgba(0,8,30,0.04)] hover:shadow-[0_4px_12px_rgba(0,8,30,0.08)] transition-shadow">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-outline uppercase mb-xs">8:00 AM • Morning</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Lisinopril</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">10mg • Blood Pressure</p>
+</div>
+<div class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1.5 rounded-full font-label-caps text-label-caps flex items-center gap-1">
+              Taken
+            </div>
+</div>
+</div>
+</div>
+<div class="relative pl-lg">
+<div class="absolute -left-[17px] top-4 w-8 h-8 rounded-full bg-error flex items-center justify-center text-on-error ring-4 ring-background z-10 shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+</div>
+<div class="bg-error-container border border-error/20 rounded-xl p-md shadow-[0_2px_8px_rgba(186,26,26,0.1)] relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-error/5 rounded-full blur-xl -mr-10 -mt-10"></div>
+<div class="flex justify-between items-start relative z-10">
+<div>
+<p class="font-label-caps text-label-caps text-on-error-container uppercase mb-xs">1:00 PM • Afternoon</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Vitamin D</h3>
+<p class="font-body-sm text-body-sm text-on-error-container/80 mt-1">2000 IU • Supplement</p>
+</div>
+<div class="bg-error text-on-error px-3 py-1.5 rounded-full font-label-caps text-label-caps flex items-center gap-1 shadow-sm">
+              Missed
+            </div>
+</div>
+</div>
+</div>
+<div class="relative pl-lg">
+<div class="absolute -left-[17px] top-4 w-8 h-8 rounded-full bg-surface-container-high border-2 border-outline flex items-center justify-center text-outline ring-4 ring-background z-10">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-md opacity-80 border-dashed">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-outline uppercase mb-xs">8:00 PM • Night</p>
+<h3 class="font-headline-md text-headline-md text-on-surface-variant">Metformin</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1">500mg • Blood Sugar</p>
+</div>
+<div class="bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-full font-label-caps text-label-caps">
+              Upcoming
+            </div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-gutter mt-lg">
+<button class="flex-1 bg-surface-container-lowest border border-outline text-on-surface font-label-caps text-label-caps rounded-full py-4 px-4 text-center justify-center flex items-center gap-2 hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications_active</span>
+        Remind Now
+      </button>
+<button class="flex-1 bg-primary text-on-primary font-label-caps text-label-caps rounded-full py-4 px-4 text-center justify-center flex items-center gap-2 shadow-[0_4px_12px_rgba(0,8,30,0.2)] hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+        Call Senior
+      </button>
+</div>
+</main>
+<nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl fixed bottom-0 w-full z-50 border-t border-slate-200 dark:border-slate-800 shadow-[0_-4px_12px_rgba(10,31,68,0.05)] md:hidden block">
+<div class="fixed bottom-0 left-0 w-full flex justify-around items-center px-6 pb-8 pt-3">
+<a href="home_dashboard.html" class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-[#0A1F44] dark:hover:text-blue-300 transition-colors">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-['Manrope'] font-semibold text-[10px] uppercase tracking-widest">Home</span>
+</a>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-[#0A1F44] dark:hover:text-blue-300 transition-colors">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="font-['Manrope'] font-semibold text-[10px] uppercase tracking-widest">Alerts</span>
+</button>
+<a href="live_tracking.html" class="flex flex-col items-center justify-center text-[#0A1F44] dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20 rounded-xl px-3 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="font-['Manrope'] font-semibold text-[10px] uppercase tracking-widest">Tracking</span>
+</a>
+<a href="user_profile.html" class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-[#0A1F44] dark:hover:text-blue-300 transition-colors">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-['Manrope'] font-semibold text-[10px] uppercase tracking-widest">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

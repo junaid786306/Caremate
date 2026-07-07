@@ -1,0 +1,86 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Privacy Settings - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    .toggle-checkbox:checked {
+        right: 0;
+        border-color: #00193c;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+        background-color: #00193c;
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Privacy</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-8">
+        <!-- Privacy Mode -->
+        <div class="bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm flex items-center justify-between">
+            <div class="flex-1 pr-8">
+                <h3 class="font-bold text-primary text-lg mb-1">Privacy Mode</h3>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium">When enabled, only people you approve can see your photos, videos, and exercise streaks.</p>
+            </div>
+            <div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+                <input type="checkbox" name="toggle" id="privacy-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer right-6 checked:right-0 transition-all duration-300"/>
+                <label for="privacy-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300"></label>
+            </div>
+        </div>
+
+        <!-- Other Privacy Options -->
+        <section class="space-y-4">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Manage Privacy</h2>
+            <div class="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm">
+                <a href="blocked_accounts.html" class="w-full p-5 flex items-center gap-4 hover:bg-slate-50 transition-colors border-b border-slate-50">
+                    <span class="material-symbols-outlined text-slate-400">group</span>
+                    <span class="flex-1 text-left font-bold text-slate-700">Blocked Accounts</span>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </a>
+                <a href="active_status.html" class="w-full p-5 flex items-center gap-4 hover:bg-slate-50 transition-colors border-b border-slate-50">
+                    <span class="material-symbols-outlined text-slate-400">visibility</span>
+                    <span class="flex-1 text-left font-bold text-slate-700">Activity Status</span>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </a>
+                <a href="settings_message_controls.html" class="w-full p-5 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+                    <span class="material-symbols-outlined text-slate-400">mail</span>
+                    <span class="flex-1 text-left font-bold text-slate-700">Message Controls</span>
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </a>
+            </div>
+        </section>
+    </main>
+</body></html>

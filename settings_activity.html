@@ -1,0 +1,117 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Your Activity - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    .tab-active {
+        border-bottom: 4px solid #00193c;
+        color: #00193c;
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Your Activity</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto pt-6">
+        <!-- Activity Tabs -->
+        <div class="flex border-b border-slate-200 mb-6 px-6">
+            <button class="flex-1 py-4 text-center font-bold tab-btn tab-active" onclick="switchTab(this, 'likes')">Likes</button>
+            <button class="flex-1 py-4 text-center font-bold tab-btn text-slate-400" onclick="switchTab(this, 'comments')">Comments</button>
+            <button class="flex-1 py-4 text-center font-bold tab-btn text-slate-400" onclick="switchTab(this, 'saved')">Saved</button>
+        </div>
+
+        <div id="activity-list" class="px-6 space-y-4">
+            <!-- Likes (Default) -->
+            <div class="flex items-center gap-4 bg-white p-4 rounded-3xl border border-slate-100 shadow-sm">
+                <img class="w-12 h-12 rounded-lg object-cover" src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070">
+                <div class="flex-1">
+                    <p class="text-sm text-slate-600">You liked <b>Dr. Arthur Pen</b>'s post</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">2 hours ago</p>
+                </div>
+                <span class="material-symbols-outlined text-red-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            </div>
+            <div class="flex items-center gap-4 bg-white p-4 rounded-3xl border border-slate-100 shadow-sm">
+                <img class="w-12 h-12 rounded-lg object-cover" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070">
+                <div class="flex-1">
+                    <p class="text-sm text-slate-600">You liked <b>Sarah Jenkins</b>'s blog</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">5 hours ago</p>
+                </div>
+                <span class="material-symbols-outlined text-red-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const content = {
+            likes: [
+                { text: 'You liked <b>Dr. Arthur Pen</b>\'s post', time: '2 hours ago', icon: 'favorite', iconColor: 'text-red-500', img: 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070' },
+                { text: 'You liked <b>Sarah Jenkins</b>\'s blog', time: '5 hours ago', icon: 'favorite', iconColor: 'text-red-500', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070' }
+            ],
+            comments: [
+                { text: 'You commented: "Amazing garden!" on <b>Arthur</b>\'s post', time: '1 day ago', icon: 'chat_bubble', iconColor: 'text-primary', img: 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070' }
+            ],
+            saved: [
+                { text: 'You saved <b>Morning Mobility</b> workout', time: '3 days ago', icon: 'bookmark', iconColor: 'text-blue-500', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070' }
+            ]
+        };
+
+        function switchTab(btn, type) {
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('tab-active', 'text-primary');
+                b.classList.add('text-slate-400');
+            });
+            btn.classList.add('tab-active', 'text-primary');
+            btn.classList.remove('text-slate-400');
+
+            const list = document.getElementById('activity-list');
+            list.innerHTML = '';
+            
+            content[type].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-4 bg-white p-4 rounded-3xl border border-slate-100 shadow-sm transition-all hover:scale-[1.02]';
+                div.innerHTML = `
+                    <img class="w-12 h-12 rounded-lg object-cover" src="${item.img}">
+                    <div class="flex-1">
+                        <p class="text-sm text-slate-600">${item.text}</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">${item.time}</p>
+                    </div>
+                    <span class="material-symbols-outlined ${item.iconColor}" style="font-variation-settings: 'FILL' 1;">${item.icon}</span>
+                `;
+                list.appendChild(div);
+            });
+        }
+    </script>
+</body></html>

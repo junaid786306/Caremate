@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Select Your Role</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .role-card { box-shadow: 0 10px 40px rgba(0,45,98,0.06); }
+    </style>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen flex flex-col items-center px-8 pt-24">
+    <!-- Header Text -->
+    <div class="text-center space-y-6 mb-16">
+        <h1 class="text-[32px] font-extrabold text-primary leading-tight">Select your role</h1>
+        <p class="text-slate-500 text-lg leading-relaxed max-w-[280px] mx-auto">
+            To personalize your experience, please tell us how you'll be using the app.
+        </p>
+    </div>
+
+    <!-- Role Options -->
+    <div class="w-full space-y-6">
+        <!-- Senior Citizen -->
+        <a href="senior_citizen_signup.html" class="flex items-center gap-6 p-8 bg-white rounded-[32px] role-card border border-slate-100 group active:scale-95 transition-all duration-300">
+            <div class="w-16 h-16 bg-[#eff4ff] rounded-2xl flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">elderly</span>
+            </div>
+            <div class="flex-1">
+                <h3 class="text-xl font-bold text-primary mb-1">Senior Citizen</h3>
+                <p class="text-slate-400 text-sm">I want to manage my wellness and...</p>
+            </div>
+            <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+        </a>
+
+        <!-- Guardian -->
+        <a href="guardian_login.html" class="flex items-center gap-6 p-8 bg-white rounded-[32px] role-card border border-slate-100 group active:scale-95 transition-all duration-300">
+            <div class="w-16 h-16 bg-[#eff4ff] rounded-2xl flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+            </div>
+            <div class="flex-1">
+                <h3 class="text-xl font-bold text-primary mb-1">Guardian</h3>
+                <p class="text-slate-400 text-sm">I am caring for a family member or...</p>
+            </div>
+            <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+        </a>
+    </div>
+</body>
+</html>

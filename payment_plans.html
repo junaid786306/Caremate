@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Payment Plans</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[120px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <div class="w-8"></div> <!-- Placeholder for left alignment -->
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Payment Plans</h1>
+        <a href="guardian_notifications.html" class="relative">
+            <span class="material-symbols-outlined text-primary text-[28px]">notifications</span>
+            <div class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></div>
+        </a>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-8">
+
+        <!-- Plans List -->
+        <div class="space-y-6">
+            <!-- Basic Plan -->
+            <div class="bg-white rounded-[40px] p-8 shadow-sm border border-slate-100 space-y-6">
+                <div class="space-y-1">
+                    <h3 class="text-xl font-bold">Basic Plan</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black">₹299</span>
+                        <span class="text-slate-400 font-bold">/mo</span>
+                    </div>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        24/7 Emergency Response
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Fall Detection
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Activity Monitoring
+                    </li>
+                </ul>
+                <button onclick="window.location.href='plan_basic.html'" class="w-full py-4 rounded-2xl border-2 border-slate-100 text-primary font-bold text-sm hover:bg-slate-50 transition-colors">
+                    View Details
+                </button>
+            </div>
+
+            <!-- Plus Plan (Current) -->
+            <div class="bg-white rounded-[40px] p-8 shadow-xl border-2 border-primary/10 relative overflow-hidden space-y-6">
+                <div class="absolute top-0 right-0">
+                    <div class="bg-primary text-white text-[10px] font-bold px-6 py-2 rounded-bl-3xl uppercase tracking-widest">
+                        Current Plan
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-xl font-bold">Plus Plan</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black">₹599</span>
+                        <span class="text-slate-400 font-bold">/mo</span>
+                    </div>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        All Basic Features
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        GPS Location Tracking
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Medication Reminders
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Caregiver App Access
+                    </li>
+                </ul>
+                <button onclick="window.location.href='plan_plus.html'" class="w-full py-5 rounded-2xl bg-[#8ba0bd] text-white font-bold text-sm shadow-inner hover:bg-slate-500 transition-colors">
+                    View Details
+                </button>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="bg-white rounded-[40px] p-8 shadow-sm border border-slate-100 space-y-6">
+                <div class="space-y-1">
+                    <h3 class="text-xl font-bold">Premium Plan</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black">₹999</span>
+                        <span class="text-slate-400 font-bold">/mo</span>
+                    </div>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        All Plus Features
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Daily Wellness Check-ins
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Telehealth Consultations
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+                        <span class="material-symbols-outlined text-secondary text-xl">check_circle</span>
+                        Priority Support Line
+                    </li>
+                </ul>
+                <button onclick="window.location.href='plan_premium.html'" class="w-full py-5 rounded-2xl bg-primary text-white font-bold text-sm shadow-xl active:scale-95 transition-all">
+                    View Details
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 h-[100px] bg-white rounded-t-[40px] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_dashboard.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">HOME</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_reports.html">
+            <span class="material-symbols-outlined">bar_chart</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">REPORT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 bg-blue-50 text-primary rounded-2xl py-2" href="payment_plans.html">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PAYMENT</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_subscription.html">
+            <span class="material-symbols-outlined">card_membership</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">SUBSCRIBE</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1 flex-1 text-slate-400" href="guardian_profile.html">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">PROFILE</span>
+        </a>
+    </nav>
+</body>
+</html>

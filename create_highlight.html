@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Create Highlight - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+        .story-thumb { transition: transform 0.2s, box-shadow 0.2s; }
+        .story-thumb.selected { outline: 3px solid #00193c; outline-offset: 2px; }
+        .story-thumb.selected .check-badge { display: flex !important; }
+    </style>
+</head>
+<body class="bg-slate-50 font-manrope antialiased min-h-screen pb-10">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors flex-shrink-0">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-lg tracking-tight text-primary text-center flex-1">New Highlight</h1>
+        <button onclick="createHighlight()" id="create-btn" class="px-5 py-2 bg-primary text-white rounded-full text-sm font-bold disabled:opacity-40 active:scale-95 transition-transform flex-shrink-0" disabled>Create</button>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+
+        <!-- Highlight Cover Preview -->
+        <div class="flex flex-col items-center gap-4 py-4">
+            <div class="relative">
+                <div id="cover-preview" class="w-28 h-28 rounded-full border-[4px] border-primary overflow-hidden shadow-xl bg-slate-100 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-slate-300 text-5xl">image</span>
+                </div>
+                <label for="cover-upload" class="absolute -bottom-1 -right-1 w-9 h-9 bg-primary text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:opacity-80 transition-opacity">
+                    <span class="material-symbols-outlined text-sm">camera_alt</span>
+                </label>
+                <input type="file" id="cover-upload" accept="image/*" class="hidden" onchange="previewCover(this)">
+            </div>
+            <div class="w-full">
+                <label class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-1 block text-center">Highlight Name</label>
+                <input type="text" id="highlight-name" placeholder="e.g. Wellness, Family, Travel..." maxlength="20"
+                    class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-center text-base font-bold text-primary focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none transition-all"
+                    oninput="checkReady()">
+            </div>
+        </div>
+
+        <!-- Category Quick Picks -->
+        <div>
+            <p class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Quick Categories</p>
+            <div id="cat-picker" class="flex gap-2 flex-wrap">
+                <button onclick="quickCat(this,'Wellness')" class="cat-btn px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:border-primary hover:text-primary transition-all active:scale-95">🧘 Wellness</button>
+                <button onclick="quickCat(this,'Morning Walk')" class="cat-btn px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:border-primary hover:text-primary transition-all active:scale-95">🚶 Morning Walk</button>
+                <button onclick="quickCat(this,'Family')" class="cat-btn px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:border-primary hover:text-primary transition-all active:scale-95">💛 Family</button>
+                <button onclick="quickCat(this,'Diet')" class="cat-btn px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:border-primary hover:text-primary transition-all active:scale-95">🥗 Diet</button>
+                <button onclick="quickCat(this,'Memories')" class="cat-btn px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:border-primary hover:text-primary transition-all active:scale-95">📸 Memories</button>
+                <button onclick="openNewCatModal()" class="px-4 py-2 bg-slate-50 border border-dashed border-slate-300 rounded-full text-sm font-bold text-primary hover:border-primary hover:bg-white transition-all active:scale-95 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">add</span> Add New
+                </button>
+            </div>
+        </div>
+
+        <!-- Pick Stories -->
+        <div>
+            <div class="flex justify-between items-center mb-3">
+                <p class="text-[11px] font-black uppercase tracking-widest text-slate-400">Pick Stories</p>
+                <span id="selected-count" class="text-[11px] font-bold text-primary">0 selected</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2" id="stories-grid">
+                <!-- Stories will be rendered here -->
+            </div>
+        </div>
+
+
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl z-[300] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- Add New Category Modal -->
+    <div id="new-cat-modal" class="fixed inset-0 z-[400] flex items-center justify-center p-6 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white rounded-[28px] p-6 max-w-sm w-full space-y-4 shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300" id="new-cat-modal-card">
+            <div class="flex items-center gap-3 mb-1">
+                <div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-[18px]">category</span>
+                </div>
+                <h3 class="font-bold text-lg text-primary">New Category</h3>
+            </div>
+            <input type="text" id="new-cat-input" placeholder="e.g. Travel, Cooking, Garden..." maxlength="20"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none font-semibold text-primary transition-all text-sm"
+                onkeydown="if(event.key==='Enter') submitNewCategory()">
+            <div class="flex gap-3">
+                <button onclick="closeNewCatModal()" class="flex-1 py-3 bg-slate-100 rounded-2xl font-bold text-slate-600 active:scale-95 transition-transform text-sm hover:bg-slate-200">Cancel</button>
+                <button onclick="submitNewCategory()" class="flex-1 py-3 bg-primary text-white rounded-2xl font-bold active:scale-95 transition-transform text-sm hover:opacity-90">Add Category</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mockStories = [
+            { img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=500&fit=crop', time:'Today 8 AM' },
+            { img:'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=300&h=500&fit=crop', time:'Today 7 AM' },
+            { img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=500&fit=crop', time:'Yesterday' },
+            { img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=500&fit=crop', time:'Yesterday' },
+            { img:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=500&fit=crop', time:'2 days ago' },
+            { img:'https://images.unsplash.com/photo-1540206395-68808572332f?w=300&h=500&fit=crop', time:'3 days ago' },
+            { img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&h=500&fit=crop', time:'4 days ago' },
+            { img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=300&h=500&fit=crop', time:'5 days ago' },
+            { img:'https://images.unsplash.com/photo-1543353071-873f17a7a088?w=300&h=500&fit=crop', time:'6 days ago' },
+        ];
+
+        let selected = new Set();
+
+        function renderGrid() {
+            const grid = document.getElementById('stories-grid');
+            grid.innerHTML = mockStories.map((s, i) => `
+                <div class="story-thumb relative aspect-[9/16] rounded-xl overflow-hidden cursor-pointer ${selected.has(i)?'selected':''}" onclick="toggleStory(${i})">
+                    <img src="${s.img}" class="w-full h-full object-cover" alt="">
+                    <div class="absolute inset-0 bg-black/10"></div>
+                    <p class="absolute bottom-1 left-1 text-white text-[9px] font-bold drop-shadow">${s.time}</p>
+                    <!-- Check badge -->
+                    <div class="check-badge ${selected.has(i)?'flex':'hidden'} absolute top-1.5 right-1.5 w-6 h-6 bg-primary rounded-full items-center justify-center shadow-md">
+                        <span class="material-symbols-outlined text-white text-sm">check</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleStory(idx) {
+            if (selected.has(idx)) selected.delete(idx);
+            else selected.add(idx);
+            document.getElementById('selected-count').innerText = selected.size + ' selected';
+            renderGrid();
+            checkReady();
+        }
+
+        function checkReady() {
+            const name = document.getElementById('highlight-name').value.trim();
+            document.getElementById('create-btn').disabled = !(name && selected.size > 0);
+        }
+
+        function quickCat(btn, name) {
+            // Clear active state from all category buttons
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-primary-fixed', 'text-primary', 'border-primary');
+                b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+            });
+            document.getElementById('highlight-name').value = name;
+            checkReady();
+            // Set active state on clicked button
+            btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+            btn.classList.add('bg-primary-fixed', 'text-primary', 'border-primary');
+        }
+
+        function openNewCatModal() {
+            const modal = document.getElementById('new-cat-modal');
+            const card = document.getElementById('new-cat-modal-card');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+            card.classList.remove('scale-95');
+            card.classList.add('scale-100');
+            setTimeout(() => document.getElementById('new-cat-input').focus(), 100);
+        }
+
+        function closeNewCatModal() {
+            const modal = document.getElementById('new-cat-modal');
+            const card = document.getElementById('new-cat-modal-card');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+            card.classList.add('scale-95');
+            card.classList.remove('scale-100');
+        }
+
+        function submitNewCategory() {
+            const input = document.getElementById('new-cat-input');
+            const name = input.value.trim();
+            if (!name) return;
+            // Create new category button
+            const btn = document.createElement('button');
+            btn.className = 'cat-btn px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:border-primary hover:text-primary transition-all active:scale-95';
+            btn.textContent = '✨ ' + name;
+            btn.onclick = function() { quickCat(btn, name); };
+            // Insert before the Add New button (last child)
+            const container = document.getElementById('cat-picker');
+            container.insertBefore(btn, container.lastElementChild);
+            // Auto-select the new category
+            quickCat(btn, name);
+            closeNewCatModal();
+            input.value = '';
+        }
+
+        function previewCover(input) {
+            if (input.files && input.files[0]) {
+                const r = new FileReader();
+                r.onload = e => {
+                    const preview = document.getElementById('cover-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                };
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.classList.remove('opacity-0'); t.classList.add('opacity-100');
+            setTimeout(() => { t.classList.add('opacity-0'); t.classList.remove('opacity-100'); }, 2500);
+        }
+
+        function createHighlight() {
+            const name = document.getElementById('highlight-name').value.trim();
+            showToast(`✨ "${name}" highlight created!`);
+            setTimeout(() => history.back(), 1500);
+        }
+
+        renderGrid();
+    </script>
+</body>
+</html>

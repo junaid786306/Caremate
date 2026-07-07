@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Security & Privacy</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 flex justify-between items-center border-b border-slate-100">
+        <a href="guardian_profile.html"
+            class="material-symbols-outlined text-primary hover:text-secondary transition-colors">arrow_back</a>
+        <h1 class="font-bold text-lg">Security & Privacy</h1>
+        <div class="w-6"></div> <!-- Spacer for centering -->
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        <!-- Page Title -->
+        <div class="space-y-2">
+            <h2 class="text-[28px] font-extrabold tracking-tight">Security Settings</h2>
+            <p class="text-slate-500 font-medium text-sm">Manage your account security and preferences.</p>
+        </div>
+
+        <div class="bg-white rounded-[32px] shadow-sm border border-slate-100 overflow-hidden">
+            <a href="guardian_password_change.html"
+                class="flex items-center justify-between p-5 border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-800 rounded-xl flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">key</span>
+                    </div>
+                    <span class="font-bold text-slate-700">Password Change</span>
+                </div>
+                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+            </a>
+
+            <!-- Account Setting -->
+            <a href="guardian_account_settings.html"
+                class="flex items-center justify-between p-5 border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-800 rounded-xl flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">manage_accounts</span>
+                    </div>
+                    <span class="font-bold text-slate-700">Account Settings</span>
+                </div>
+                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+            </a>
+
+        </div>
+    </main>
+</body>
+
+</html>

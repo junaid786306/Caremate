@@ -1,0 +1,92 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FAQ - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">FAQ</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-4">
+        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
+            <details class="group">
+                <summary class="flex justify-between items-center font-bold text-slate-700 cursor-pointer list-none">
+                    How do I link a senior's account?
+                    <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Go to Settings > Link Account and enter the unique pairing code generated on the senior's device.</p>
+            </details>
+            <div class="h-[1px] bg-slate-50"></div>
+            <details class="group">
+                <summary class="flex justify-between items-center font-bold text-slate-700 cursor-pointer list-none">
+                    How does Scam Shield work?
+                    <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Our AI analyzes incoming calls and messages in real-time to detect common scam patterns and warns the user or guardian immediately.</p>
+            </details>
+            <div class="h-[1px] bg-slate-50"></div>
+            <details class="group">
+                <summary class="flex justify-between items-center font-bold text-slate-700 cursor-pointer list-none">
+                    Can I set multiple geofences?
+                    <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Yes, you can create multiple "Safe Zones" around locations like home, the park, or a doctor's office.</p>
+            </details>
+            <div class="h-[1px] bg-slate-50"></div>
+            <details class="group">
+                <summary class="flex justify-between items-center font-bold text-slate-700 cursor-pointer list-none">
+                    How accurate is the SOS fall detection?
+                    <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Our system uses advanced motion sensors and machine learning to detect hard falls with up to 95% accuracy, instantly notifying guardians.</p>
+            </details>
+            <div class="h-[1px] bg-slate-50"></div>
+            <details class="group">
+                <summary class="flex justify-between items-center font-bold text-slate-700 cursor-pointer list-none">
+                    Can I export the health reports for a doctor?
+                    <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">Absolutely. Navigate to the Health section and tap the "Export" button at the top right to download a secure PDF to share with medical professionals.</p>
+            </details>
+            <div class="h-[1px] bg-slate-50"></div>
+            <details class="group">
+                <summary class="flex justify-between items-center font-bold text-slate-700 cursor-pointer list-none">
+                    What if the senior's phone dies?
+                    <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <p class="text-sm text-slate-500 mt-4 leading-relaxed">You will receive a low battery alert when their device hits 15%, and a final location ping right before the device powers off.</p>
+            </details>
+        </div>
+    </main>
+</body></html>

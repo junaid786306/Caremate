@@ -1,0 +1,174 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Link Account Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#2a2f32",
+                        "inverse-surface": "#2f3034",
+                        "outline": "#747781",
+                        "tertiary": "#151a1d",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "on-primary-fixed-variant": "#24467c",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-surface": "#1a1b1f",
+                        "outline-variant": "#c4c6d1",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "surface-container-low": "#f4f3f8",
+                        "on-secondary-container": "#2d328b",
+                        "surface-tint": "#3e5e95",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "secondary-container": "#9aa0ff",
+                        "surface-dim": "#dad9df",
+                        "primary-container": "#002d62",
+                        "on-secondary-fixed": "#02026b",
+                        "background": "#faf9fe",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#4f55ae",
+                        "on-background": "#1a1b1f",
+                        "on-surface-variant": "#43474f",
+                        "surface-bright": "#faf9fe",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e3e2e7",
+                        "primary-fixed": "#d7e2ff",
+                        "on-tertiary-container": "#92969a",
+                        "inverse-primary": "#abc7ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "primary": "#00193c",
+                        "on-tertiary-fixed": "#171c1f",
+                        "surface-container-highest": "#e3e2e7",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eeedf2",
+                        "secondary-fixed": "#e0e0ff",
+                        "surface-container-high": "#e8e7ed",
+                        "surface": "#faf9fe",
+                        "on-primary-container": "#7796d1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "touch-target-min": "60px",
+                        "stack-sm": "12px",
+                        "stack-lg": "40px",
+                        "margin-page": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700" }],
+                        "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700" }],
+                        "display": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Minimal custom CSS to handle input appearance without complex JS */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Minimal Header for Transactional Flow -->
+<header class="flex items-center px-margin-page pt-margin-page pb-stack-sm w-full z-50">
+<a href="javascript:history.back()" class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</a>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col px-margin-page pb-stack-lg max-w-md w-full mx-auto justify-center">
+<div class="flex flex-col items-center flex-1 justify-center mt-[-10vh]">
+<!-- Graphic / Icon -->
+<div class="relative w-32 h-32 mb-stack-lg flex items-center justify-center">
+<!-- Soft Glow Background -->
+<div class="absolute inset-0 bg-primary-fixed rounded-full blur-2xl opacity-70 scale-125"></div>
+<!-- Elevated Container -->
+<div class="relative w-24 h-24 bg-surface-container-lowest rounded-[2rem] shadow-[0_8px_30px_rgba(0,25,60,0.06)] flex items-center justify-center border border-surface-container">
+<span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">phonelink_ring</span>
+</div>
+</div>
+<!-- Typography Header -->
+<div class="text-center mb-stack-lg w-full">
+<h1 class="font-display text-display text-on-surface mb-stack-sm">Verify Account</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px] mx-auto">
+                    Enter the code sent to Shreya's device to link accounts.
+                </p>
+</div>
+<!-- OTP Input Field Area -->
+<div class="w-full mb-stack-lg">
+<form class="flex flex-col w-full gap-stack-md">
+<!-- High-Affordance Minimalist Inputs -->
+<div class="flex justify-between gap-2 sm:gap-3 w-full">
+<input aria-label="Digit 1" autofocus="" class="w-[50px] sm:w-[60px] h-[72px] bg-surface-container-lowest border-2 border-surface-container-highest rounded-DEFAULT text-center font-display text-display text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-fixed/50 transition-all shadow-sm" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text">
+<input aria-label="Digit 2" class="w-[50px] sm:w-[60px] h-[72px] bg-surface-container-lowest border-2 border-surface-container-highest rounded-DEFAULT text-center font-display text-display text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-fixed/50 transition-all shadow-sm" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text">
+<input aria-label="Digit 3" class="w-[50px] sm:w-[60px] h-[72px] bg-surface-container-lowest border-2 border-surface-container-highest rounded-DEFAULT text-center font-display text-display text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-fixed/50 transition-all shadow-sm" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text">
+<div class="w-2 flex items-center justify-center shrink-0">
+<div class="w-2 h-[2px] bg-outline-variant rounded-full"></div>
+</div>
+<input aria-label="Digit 4" class="w-[50px] sm:w-[60px] h-[72px] bg-surface-container-lowest border-2 border-surface-container-highest rounded-DEFAULT text-center font-display text-display text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-fixed/50 transition-all shadow-sm" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text">
+<input aria-label="Digit 5" class="w-[50px] sm:w-[60px] h-[72px] bg-surface-container-lowest border-2 border-surface-container-highest rounded-DEFAULT text-center font-display text-display text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-fixed/50 transition-all shadow-sm" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text">
+<input aria-label="Digit 6" class="w-[50px] sm:w-[60px] h-[72px] bg-surface-container-lowest border-2 border-surface-container-highest rounded-DEFAULT text-center font-display text-display text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-fixed/50 transition-all shadow-sm" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text">
+</div>
+</form>
+</div>
+<!-- Resend Action -->
+<div class="text-center w-full">
+<button class="inline-flex items-center justify-center h-12 px-4 rounded-full bg-surface-container-low hover:bg-surface-container transition-colors" type="button">
+<span class="font-label-caps text-label-caps text-primary tracking-wide">Resend Code in 0:59</span>
+</button>
+</div>
+</div>
+<!-- Pinned Bottom Action -->
+<div class="w-full pt-stack-md mt-auto">
+<button class="w-full h-touch-target-min bg-primary text-on-primary rounded-DEFAULT font-label-caps text-label-caps shadow-[0_12px_32px_rgba(0,25,60,0.15)] active:scale-[0.98] transition-transform duration-200 flex items-center justify-center gap-3" type="button">
+<span>Verify &amp; Link</span>
+<span class="material-symbols-outlined text-xl">security</span>
+</button>
+</div>
+</main>
+</body></html>

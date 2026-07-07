@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Edit Safe Zone</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen pb-[60px]">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10 relative">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Edit Safe Zone</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        
+        <!-- Interactive Map Visual -->
+        <div class="bg-white rounded-[40px] p-2 shadow-sm border border-slate-100 relative overflow-hidden">
+            <div class="h-64 bg-slate-100 rounded-[32px] relative overflow-hidden flex items-center justify-center">
+                <!-- Interactive Leaflet Map -->
+                <div id="map" class="w-full h-full z-0"></div>
+            </div>
+            
+            <button class="absolute top-6 right-6 w-10 h-10 bg-white rounded-xl shadow-md text-primary flex items-center justify-center hover:bg-slate-50 active:scale-95 transition-all">
+                <span class="material-symbols-outlined">my_location</span>
+            </button>
+        </div>
+
+        <!-- Controls -->
+        <div class="space-y-6">
+            <!-- Address Input -->
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-1">Center Location</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                    <input type="text" value="123 Elm Street, Maplewood" class="w-full pl-12 pr-6 py-4 rounded-2xl bg-white border border-slate-100 shadow-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-bold text-slate-700 transition-all">
+                </div>
+            </div>
+
+            <!-- Radius Slider -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-4">
+                <div class="flex justify-between items-center">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Safe Zone Radius</label>
+                    <span id="radius-display" class="font-extrabold text-primary bg-blue-50 px-3 py-1 rounded-lg text-sm">500 m</span>
+                </div>
+                
+                <div class="pt-2 pb-4">
+                    <input type="range" id="radius-slider" min="100" max="5000" step="100" value="500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                </div>
+                
+                <div class="flex justify-between text-xs font-bold text-slate-400">
+                    <span>100m</span>
+                    <span>1km</span>
+                    <span>5km</span>
+                </div>
+            </div>
+
+            <button onclick="saveLocation()" class="w-full py-5 rounded-[24px] bg-primary text-white font-bold text-sm shadow-xl active:scale-95 transition-all mt-4">
+                Save Safe Zone
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        let map, radiusCircle;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const slider = document.getElementById("radius-slider");
+            const display = document.getElementById("radius-display");
+
+            // Initialize Leaflet Map (Using OpenStreetMap for real map without API key)
+            // Coordinates set roughly to a suburban area for demo
+            const centerLat = 40.7128;
+            const centerLng = -74.0060;
+
+            map = L.map('map', { 
+                zoomControl: false,
+                dragging: true,
+                scrollWheelZoom: true
+            }).setView([centerLat, centerLng], 14);
+
+            // Add sleek, minimal map tiles
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap contributors © CARTO',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Add center marker
+            const customIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div style="background-color: #001b3f; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"><span class="material-symbols-outlined" style="font-size: 20px;">location_on</span></div>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 20]
+            });
+            L.marker([centerLat, centerLng], { icon: customIcon }).addTo(map);
+
+            // Draw Real Geofence Circle
+            radiusCircle = L.circle([centerLat, centerLng], {
+                color: '#3b82f6',
+                fillColor: '#3b82f6',
+                fillOpacity: 0.15,
+                weight: 2,
+                radius: 500 // Initial radius
+            }).addTo(map);
+
+            slider.addEventListener("input", (e) => {
+                const val = parseInt(e.target.value);
+                
+                // Update text display
+                if (val >= 1000) {
+                    display.innerText = (val / 1000).toFixed(1) + " km";
+                } else {
+                    display.innerText = val + " m";
+                }
+
+                // Update real Leaflet circle radius
+                if(radiusCircle) {
+                    radiusCircle.setRadius(val);
+                    
+                    // Slightly adjust zoom to fit if circle gets too large
+                    if (val > 2500) {
+                        map.setZoom(12);
+                    } else if (val > 1000) {
+                        map.setZoom(13);
+                    } else {
+                        map.setZoom(14);
+                    }
+                }
+            });
+            
+            // Trigger initial state
+            slider.dispatchEvent(new Event('input'));
+        });
+
+        function saveLocation() {
+            alert("Safe zone location and radius updated successfully!");
+            window.location.href = "guardian_dashboard.html";
+        }
+    </script>
+</body>
+</html>

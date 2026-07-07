@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Medication History - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff","primary-container":"#002d62"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+        .day-block { border-left: 3px solid #e2e8f0; padding-left: 20px; position: relative; }
+        .day-block::before { content:''; position:absolute; left:-7px; top:4px; width:11px; height:11px; border-radius:50%; background:#00193c; border:2px solid #fff; box-shadow:0 0 0 2px #e2e8f0; }
+        .taken { background: #f0fdf4; border-color: #86efac; }
+        .missed { background: #fef2f2; border-color: #fca5a5; }
+        .pending { background: #fffbeb; border-color: #fcd34d; }
+        .status-pill { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+        .status-pill:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .status-pill:active { transform: scale(0.97); }
+    </style>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-10">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1">Medication History</h1>
+        <button onclick="toggleFilter()" id="filter-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors relative" title="Filter by date">
+            <span class="material-symbols-outlined text-primary">calendar_month</span>
+        </button>
+    </header>
+
+    <!-- Calendar Filter Panel -->
+    <div id="filter-panel" class="hidden bg-white border-b border-slate-100 px-6 py-4 shadow-sm">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Filter by Date Range</p>
+        <div class="flex gap-3">
+            <div class="flex-1">
+                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">From</label>
+                <input type="date" id="from-date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none transition-all">
+            </div>
+            <div class="flex-1">
+                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">To</label>
+                <input type="date" id="to-date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none transition-all">
+            </div>
+            <div class="flex items-end">
+                <button onclick="applyFilter()" class="h-10 px-4 bg-primary text-white rounded-xl text-sm font-bold active:scale-95 transition-transform">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Toast -->
+    <div id="status-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[400] opacity-0 pointer-events-none" style="transition: opacity 0.3s, transform 0.3s; transform: translateX(-50%) translateY(-10px);">
+        <div id="status-toast-inner" class="bg-[#0d1b2e] text-white rounded-2xl px-5 py-4 shadow-2xl min-w-[280px] max-w-[340px] text-sm font-semibold leading-relaxed"></div>
+    </div>
+    <!-- Summary Strip -->
+    <div class="bg-white border-b border-slate-100 px-6 py-3 flex gap-3 overflow-x-auto hide-scrollbar">
+        <div id="filter-all" onclick="filterStatus('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary">
+            <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
+        </div>
+        <div id="filter-taken" onclick="filterStatus('taken')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-green-50 border border-green-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50">
+            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span class="text-[11px] font-extrabold text-green-700 uppercase tracking-widest">Taken</span>
+        </div>
+        <div id="filter-missed" onclick="filterStatus('missed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-red-50 border border-red-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50">
+            <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+            <span class="text-[11px] font-extrabold text-red-600 uppercase tracking-widest">Missed</span>
+        </div>
+        <div id="filter-pending" onclick="filterStatus('pending')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-amber-50 border border-amber-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50">
+            <div class="w-2 h-2 bg-amber-400 rounded-full"></div>
+            <span class="text-[11px] font-extrabold text-amber-700 uppercase tracking-widest">Pending</span>
+        </div>
+    </div>
+
+    <main class="max-w-md mx-auto p-6">
+        <div id="timeline" class="space-y-8">
+            <!-- Days will be injected here -->
+        </div>
+        <div id="load-more" class="mt-8 flex justify-center">
+            <button onclick="loadMore()" class="px-8 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-primary shadow-sm hover:bg-slate-50 transition-colors active:scale-95">Load More</button>
+        </div>
+    </main>
+
+    <script>
+        const medData = [
+            { date:"Today, 8 May", entries:[
+                {name:"Metformin 500mg",time:"8:00 AM",status:"taken",note:"After breakfast"},
+                {name:"Amlodipine 5mg",time:"8:00 AM",status:"taken",note:""},
+                {name:"Vitamin D3",time:"12:00 PM",status:"taken",note:"With lunch"},
+                {name:"Atorvastatin 10mg",time:"9:00 PM",status:"pending",note:"Before sleep"},
+            ]},
+            { date:"Yesterday, 7 May", entries:[
+                {name:"Metformin 500mg",time:"8:05 AM",status:"taken",note:"After breakfast"},
+                {name:"Amlodipine 5mg",time:"8:05 AM",status:"taken",note:""},
+                {name:"Vitamin D3",time:"12:30 PM",status:"missed",note:"Forgot at lunch"},
+                {name:"Atorvastatin 10mg",time:"9:00 PM",status:"taken",note:""},
+            ]},
+            { date:"6 May", entries:[
+                {name:"Metformin 500mg",time:"7:55 AM",status:"taken",note:""},
+                {name:"Amlodipine 5mg",time:"7:55 AM",status:"taken",note:""},
+                {name:"Vitamin D3",time:"1:00 PM",status:"taken",note:""},
+                {name:"Atorvastatin 10mg",time:"9:15 PM",status:"taken",note:""},
+            ]},
+            { date:"5 May", entries:[
+                {name:"Metformin 500mg",time:"8:10 AM",status:"taken",note:""},
+                {name:"Amlodipine 5mg",time:"8:10 AM",status:"missed",note:"Skipped morning dose"},
+                {name:"Vitamin D3",time:"12:00 PM",status:"taken",note:""},
+                {name:"Atorvastatin 10mg",time:"9:00 PM",status:"taken",note:""},
+            ]},
+            { date:"4 May", entries:[
+                {name:"Metformin 500mg",time:"8:00 AM",status:"taken",note:""},
+                {name:"Amlodipine 5mg",time:"8:00 AM",status:"taken",note:""},
+                {name:"Vitamin D3",time:"11:45 AM",status:"taken",note:""},
+                {name:"Atorvastatin 10mg",time:"9:00 PM",status:"taken",note:""},
+            ]},
+        ];
+        const moreDays = ["3 May","2 May","1 May","30 Apr","29 Apr"];
+        let loadedExtra = 0;
+        let currentFilter = 'all';
+
+        const statusIcon = {taken:"check_circle", missed:"cancel", pending:"schedule"};
+        const statusColor = {taken:"text-green-600", missed:"text-red-500", pending:"text-amber-500"};
+        const statusBg = {taken:"taken", missed:"missed", pending:"pending"};
+        const statusFill = {taken:1, missed:1, pending:0};
+
+        function renderDay(day) {
+            let filteredEntries = day.entries;
+            if (currentFilter !== 'all') {
+                filteredEntries = day.entries.filter(e => e.status === currentFilter);
+            }
+            if (filteredEntries.length === 0) return '';
+            
+            const entriesHtml = filteredEntries.map(e => `
+                <div class="flex items-center gap-4 p-4 rounded-2xl border ${statusBg[e.status]} mb-2 last:mb-0">
+                    <span class="material-symbols-outlined ${statusColor[e.status]} text-2xl flex-shrink-0" style="font-variation-settings:'FILL' ${statusFill[e.status]}">${statusIcon[e.status]}</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-sm text-slate-800 truncate">${e.name}</p>
+                        <p class="text-[11px] text-slate-400">${e.time}${e.note ? ' · ' + e.note : ''}</p>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-wide ${statusColor[e.status]}">${e.status}</span>
+                </div>
+            `).join('');
+            return `<div class="day-block">
+                <h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">${day.date}</h3>
+                ${entriesHtml}
+            </div>`;
+        }
+
+        function loadTimeline() {
+            const html = medData.map(renderDay).join('');
+            document.getElementById('timeline').innerHTML = html || '<p class="text-center text-sm font-bold text-slate-400 mt-10">No records found for this filter.</p>';
+        }
+
+        function loadMore() {
+            if (loadedExtra >= moreDays.length) {
+                document.getElementById('load-more').innerHTML = '<p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">All records loaded</p>';
+                return;
+            }
+            const day = moreDays[loadedExtra++];
+            const mockDay = { date: day, entries:[
+                {name:"Metformin 500mg",time:"8:00 AM",status:"taken",note:""},
+                {name:"Amlodipine 5mg",time:"8:00 AM",status:"taken",note:""},
+                {name:"Vitamin D3",time:"12:00 PM",status:Math.random()>0.2?"taken":"missed",note:""},
+                {name:"Atorvastatin 10mg",time:"9:00 PM",status:"taken",note:""},
+            ]};
+            medData.push(mockDay);
+            loadTimeline();
+        }
+
+        function toggleFilter() {
+            document.getElementById('filter-panel').classList.toggle('hidden');
+        }
+
+        function applyFilter() {
+            const from = document.getElementById('from-date').value;
+            const to = document.getElementById('to-date').value;
+            if (from && to) {
+                document.getElementById('filter-panel').classList.add('hidden');
+            }
+        }
+
+        loadTimeline();
+
+        function filterStatus(status) {
+            currentFilter = status;
+            document.querySelectorAll('.status-pill').forEach(el => el.style.opacity = '0.5');
+            document.querySelectorAll('.status-pill').forEach(el => el.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
+            const activeEl = document.getElementById(`filter-${status}`);
+            if (activeEl) {
+                activeEl.style.opacity = '1';
+                activeEl.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
+            }
+            loadTimeline();
+        }
+    </script>
+</body>
+</html>

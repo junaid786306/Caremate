@@ -1,0 +1,401 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Doctor Appointments - Vitality Care</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#00193c","primary-container":"#002d62","primary-fixed":"#d7e2ff","on-primary":"#ffffff","on-primary-fixed":"#001b3f","on-primary-fixed-variant":"#24467c","secondary":"#4f55ae","secondary-container":"#9aa0ff","surface":"#faf9fe","background":"#faf9fe","on-background":"#1a1b1f","on-surface":"#1a1b1f","on-surface-variant":"#43474f","outline-variant":"#c4c6d1","surface-container":"#eeedf2","surface-container-lowest":"#ffffff"},borderRadius:{DEFAULT:"1rem",full:"9999px"},fontFamily:{manrope:["Manrope","sans-serif"]}}}}</script>
+<style>
+body{min-height:max(884px,100dvh);}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:9999px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#00193c;cursor:pointer;box-shadow:0 2px 8px rgba(0,25,60,0.3);}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#00193c;cursor:pointer;border:none;box-shadow:0 2px 8px rgba(0,25,60,0.3);}
+</style>
+</head>
+<body class="bg-background text-on-background font-manrope antialiased pb-32">
+<!-- Header -->
+<header class="relative flex justify-between items-center px-6 h-20 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
+    <button onclick="window.location.href='home_dashboard.html'" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors z-10">
+        <span class="material-symbols-outlined text-primary">arrow_back</span>
+    </button>
+    <h1 class="absolute left-1/2 -translate-x-1/2 text-xl font-bold text-primary">Appointments</h1>
+    <div class="flex items-center gap-2 z-10">
+        <a href="doctor_notes.html" class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 transition-colors" title="Notes">
+            <span class="material-symbols-outlined text-xl">description</span>
+        </a>
+        <a href="doctor_appointments_history.html" class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 transition-colors" title="History">
+            <span class="material-symbols-outlined text-xl">history</span>
+        </a>
+    </div>
+</header>
+<main class="max-w-2xl mx-auto pt-6">
+<!-- Search + Filter -->
+<div class="px-6 mb-6">
+    <div class="flex gap-3">
+        <div class="flex-1 flex items-center h-14 bg-white rounded-[20px] pl-4 pr-2 border border-slate-200 shadow-sm focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10 transition-all">
+            <input class="flex-1 bg-transparent border-none text-base text-slate-800 focus:ring-0 placeholder-slate-400 outline-none" placeholder="Find doctors..." type="text">
+            <button class="w-10 h-10 bg-primary rounded-[14px] flex items-center justify-center text-white ml-2 active:scale-95 flex-shrink-0">
+                <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">search</span>
+            </button>
+        </div>
+        <button onclick="openFilter()" class="w-14 h-14 bg-white border border-slate-200 rounded-[20px] flex items-center justify-center text-primary shadow-sm active:scale-95">
+            <span class="material-symbols-outlined text-xl">tune</span>
+        </button>
+    </div>
+</div>
+<!-- Book New Card -->
+<div class="px-6 mb-6">
+    <a href="add_appointment.html" class="flex items-center justify-between bg-gradient-to-br from-primary to-[#000c24] rounded-[24px] p-6 shadow-[0_12px_40px_rgba(0,45,98,0.2)] active:scale-[0.98] transition-transform border border-white/10">
+        <div>
+            <p class="font-bold text-xl text-white mb-1">Book New Appointment</p>
+            <p class="text-sm text-blue-200">Schedule a visit with a specialist</p>
+        </div>
+        <div class="w-16 h-16 rounded-full bg-white/20 border border-white/30 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings:'FILL' 1;">medical_services</span>
+        </div>
+    </a>
+</div>
+<!-- Toggle -->
+<div class="px-6 mb-6">
+    <div class="relative bg-slate-200/70 p-1.5 rounded-full flex shadow-[inset_0_2px_4px_rgba(0,0,0,0.08)] items-center">
+        <div id="toggle-bg" class="absolute left-[6px] w-[calc(50%-6px)] h-[calc(100%-12px)] bg-white rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-transform duration-300 ease-out"></div>
+        <button onclick="switchTab('doctors')" id="tab-doctors" class="relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-primary transition-colors">All Doctors</button>
+        <button onclick="switchTab('upcoming')" id="tab-upcoming" class="relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-slate-500 transition-colors">Upcoming</button>
+    </div>
+</div>
+<!-- ALL DOCTORS VIEW -->
+<div id="view-doctors" class="px-6 pb-8">
+    <!-- Visited Doctors Section -->
+    <div class="flex items-center gap-3 mb-4">
+        <h2 class="font-bold text-base text-slate-800">Visited Doctors</h2>
+        <span class="text-[10px] font-black bg-primary/10 text-primary px-3 py-1 rounded-full uppercase tracking-widest">Recent</span>
+    </div>
+    <!-- Doctor Card 1 (Visited) -->
+    <div onclick="openDoctorPopup('Dr. Aris Thorne','Cardiologist','Vitality Heart Center, 24 MG Road, New Delhi','4.9','800','400','30 min','https://lh3.googleusercontent.com/aida-public/AB6AXuAy2-Rj3mcSvdPQMZ6mwXd0nHWmsR9ef5FI8c0EF0ee4BcuiImHZoZnKIVXBx6iSAU1Qu6Gr4yuvSkuIZ9kA2xtAnTR128WFqn3lZRkcyk4_Xm4rfEUyvsGuMs6X2u-MXY5uH0t9eT0Cmrx8d6i-jHzkqNSVp9CtQaUA0h4E-yqjIklTNFXb89FUB918v3HgiAIJNnn2HqchBAygDQOA8aU4in8cVPYVvQthvmNlmLCGfoQQIdwy6Am6SN9RTeVthOlJABcY7OZgVQ')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy2-Rj3mcSvdPQMZ6mwXd0nHWmsR9ef5FI8c0EF0ee4BcuiImHZoZnKIVXBx6iSAU1Qu6Gr4yuvSkuIZ9kA2xtAnTR128WFqn3lZRkcyk4_Xm4rfEUyvsGuMs6X2u-MXY5uH0t9eT0Cmrx8d6i-jHzkqNSVp9CtQaUA0h4E-yqjIklTNFXb89FUB918v3HgiAIJNnn2HqchBAygDQOA8aU4in8cVPYVvQthvmNlmLCGfoQQIdwy6Am6SN9RTeVthOlJABcY7OZgVQ" alt="Dr. Aris" class="w-[62px] h-[62px] rounded-[16px] object-cover border border-slate-100 flex-shrink-0">
+        <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-slate-800">Dr. Aris Thorne</h3>
+            <p class="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Cardiologist</p>
+            <div class="flex items-center gap-1 text-xs text-slate-500">
+                <span class="material-symbols-outlined text-amber-400 text-[14px]" style="font-variation-settings:'FILL' 1;">star</span>
+                <span class="font-bold text-slate-700">4.9</span><span class="text-slate-400">(120)</span>
+            </div>
+        </div>
+        <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+    <!-- Doctor Card 2 (Visited) -->
+    <div onclick="openDoctorPopup('Dr. Elena Rostova','General Physician','Apollo Clinic, 12 Park Street, Mumbai','4.7','500','250','20 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-6 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+        <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-slate-100 to-slate-200 border border-slate-100 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-3xl text-slate-400">person</span>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-slate-800">Dr. Elena Rostova</h3>
+            <p class="text-[10px] font-black text-secondary uppercase tracking-widest mb-1">General Physician</p>
+            <div class="flex items-center gap-1 text-xs text-slate-500">
+                <span class="material-symbols-outlined text-amber-400 text-[14px]" style="font-variation-settings:'FILL' 1;">star</span>
+                <span class="font-bold text-slate-700">4.7</span><span class="text-slate-400">(98)</span>
+            </div>
+        </div>
+        <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+    <!-- All Doctors label -->
+    <div class="flex items-center gap-3 mb-4">
+        <h2 class="font-bold text-base text-slate-800">All Doctors</h2>
+        <span class="text-[10px] font-black bg-slate-100 text-slate-500 px-3 py-1 rounded-full uppercase tracking-widest">Browse</span>
+    </div>
+    <!-- Doctor Card 3 -->
+    <div onclick="openDoctorPopup('Dr. Sarah Jenkins','Neurologist','Neuro Care Hospital, 7 DLF Avenue, Gurgaon','4.8','900','450','45 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+        <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-100 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-3xl text-purple-400">person</span>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-slate-800">Dr. Sarah Jenkins</h3>
+            <p class="text-[10px] font-black text-secondary uppercase tracking-widest mb-1">Neurologist</p>
+            <div class="flex items-center gap-1 text-xs text-slate-500">
+                <span class="material-symbols-outlined text-amber-400 text-[14px]" style="font-variation-settings:'FILL' 1;">star</span>
+                <span class="font-bold text-slate-700">4.8</span><span class="text-slate-400">(85)</span>
+            </div>
+        </div>
+        <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+    <!-- Doctor Card 4 -->
+    <div onclick="openDoctorPopup('Dr. Samuel Lee','Optometrist','Eye Care Centre, 3 MG Road, Bangalore','4.6','600','300','25 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+        <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-100 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-3xl text-blue-400">person</span>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-slate-800">Dr. Samuel Lee</h3>
+            <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Optometrist</p>
+            <div class="flex items-center gap-1 text-xs text-slate-500">
+                <span class="material-symbols-outlined text-amber-400 text-[14px]" style="font-variation-settings:'FILL' 1;">star</span>
+                <span class="font-bold text-slate-700">4.6</span><span class="text-slate-400">(60)</span>
+            </div>
+        </div>
+        <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+</div>
+<!-- UPCOMING VIEW -->
+<div id="view-upcoming" class="px-6 pb-8 hidden space-y-4">
+    <!-- Upcoming Card 1 -->
+    <div class="bg-white/80 backdrop-blur-xl border border-white/60 rounded-[24px] shadow-[0_8px_30px_rgba(0,45,98,0.08)] p-6 flex flex-col gap-5">
+        <div class="flex items-center gap-4">
+            <div class="w-[68px] h-[68px] rounded-2xl border-2 border-white bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-md flex-shrink-0">
+                <span class="material-symbols-outlined text-3xl text-blue-600" style="font-variation-settings:'FILL' 1;">local_hospital</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800">Dr. Aris Thorne</h3>
+                <p class="text-xs font-bold text-primary uppercase tracking-wider">Cardiologist</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 py-2 px-4 bg-primary/5 w-fit rounded-full">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1;">calendar_today</span>
+            <span class="font-bold text-primary text-sm">Today at 10:30 AM</span>
+        </div>
+        <div class="flex gap-2">
+            <button class="flex-1 h-[56px] bg-gradient-to-br from-primary to-[#000c24] text-white rounded-[18px] flex items-center justify-center gap-2 font-bold shadow-lg active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">videocam</span><span class="text-sm">Video</span>
+            </button>
+            <a href="direct_message_chat.html" class="h-[56px] px-4 bg-primary/10 text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">chat</span><span class="text-sm">Chat</span>
+            </a>
+            <a href="doctor_notes.html" class="h-[56px] px-4 border-2 border-primary text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">description</span><span class="text-sm">Notes</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Upcoming Card 2 -->
+    <div class="bg-white/80 backdrop-blur-xl border border-white/60 rounded-[24px] shadow-[0_4px_20px_rgba(0,45,98,0.04)] p-6 flex flex-col gap-5">
+        <div class="flex items-center gap-4">
+            <div class="w-[68px] h-[68px] rounded-2xl border-2 border-white bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center shadow-md flex-shrink-0">
+                <span class="material-symbols-outlined text-3xl text-purple-600" style="font-variation-settings:'FILL' 1;">local_hospital</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800">Dr. Sarah Jenkins</h3>
+                <p class="text-xs font-bold text-primary uppercase tracking-wider">Neurologist</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 py-2 px-4 bg-primary/5 w-fit rounded-full">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1;">calendar_today</span>
+            <span class="font-bold text-primary text-sm">Tomorrow at 2:00 PM</span>
+        </div>
+        <div class="flex gap-2">
+            <button class="flex-1 h-[56px] bg-gradient-to-br from-primary to-[#000c24] text-white rounded-[18px] flex items-center justify-center gap-2 font-bold shadow-lg active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">location_on</span><span class="text-sm">Directions</span>
+            </button>
+            <a href="direct_message_chat.html" class="h-[56px] px-4 bg-primary/10 text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">chat</span><span class="text-sm">Chat</span>
+            </a>
+            <a href="doctor_notes.html" class="h-[56px] px-4 border-2 border-primary text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">description</span><span class="text-sm">Notes</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Upcoming Card 3 -->
+    <div class="bg-white/80 backdrop-blur-xl border border-white/60 rounded-[24px] shadow-[0_4px_20px_rgba(0,45,98,0.04)] p-6 flex flex-col gap-5">
+        <div class="flex items-center gap-4">
+            <div class="w-[68px] h-[68px] rounded-2xl border-2 border-white bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center shadow-md flex-shrink-0">
+                <span class="material-symbols-outlined text-3xl text-emerald-600" style="font-variation-settings:'FILL' 1;">local_hospital</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800">Dr. Samuel Lee</h3>
+                <p class="text-xs font-bold text-primary uppercase tracking-wider">Optometrist</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 py-2 px-4 bg-primary/5 w-fit rounded-full">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1;">calendar_today</span>
+            <span class="font-bold text-primary text-sm">June 20 at 11:15 AM</span>
+        </div>
+        <div class="flex gap-2">
+            <button class="flex-1 h-[56px] bg-gradient-to-br from-primary to-[#000c24] text-white rounded-[18px] flex items-center justify-center gap-2 font-bold shadow-lg active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">location_on</span><span class="text-sm">Directions</span>
+            </button>
+            <a href="direct_message_chat.html" class="h-[56px] px-4 bg-primary/10 text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">chat</span><span class="text-sm">Chat</span>
+            </a>
+            <a href="doctor_notes.html" class="h-[56px] px-4 border-2 border-primary text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-xl">description</span><span class="text-sm">Notes</span>
+            </a>
+        </div>
+    </div>
+</div>
+</main>
+
+<!-- Doctor Profile Popup -->
+<div id="doc-popup" class="fixed inset-0 z-[200] flex items-center justify-center p-6 pointer-events-none">
+    <div id="doc-popup-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeDoctorPopup()"></div>
+    <div id="doc-popup-card" class="relative w-full max-w-sm bg-white/80 backdrop-blur-[24px] border border-white/70 rounded-[32px] shadow-[0_20px_60px_rgba(0,45,98,0.2)] scale-90 opacity-0 transition-all duration-300 ease-out pointer-events-none overflow-hidden z-10">
+        <div class="bg-gradient-to-br from-primary to-[#000c24] px-6 pt-8 pb-10 relative">
+            <button onclick="closeDoctorPopup()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined text-white text-[18px]">close</span></button>
+            <div id="doc-popup-img-wrap" class="w-[80px] h-[80px] rounded-2xl border-2 border-white/40 overflow-hidden bg-white/20 mb-4 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-4xl">person</span>
+            </div>
+            <h2 id="doc-popup-name" class="text-white font-bold text-xl mb-0.5"></h2>
+            <p id="doc-popup-type" class="text-blue-200 text-xs font-black uppercase tracking-widest"></p>
+        </div>
+        <div class="-mt-4 bg-white/80 backdrop-blur-xl rounded-t-[24px] px-6 pt-6 pb-6 space-y-4">
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-[20px] mt-0.5" style="font-variation-settings:'FILL' 1;">location_on</span>
+                <p id="doc-popup-addr" class="text-sm text-slate-600 leading-relaxed"></p>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Clinic Fee</p>
+                    <p id="doc-popup-fee" class="font-bold text-primary text-sm"></p>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Online Fee</p>
+                    <p id="doc-popup-online" class="font-bold text-primary text-sm"></p>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Duration</p>
+                    <p id="doc-popup-dur" class="font-bold text-primary text-sm"></p>
+                </div>
+            </div>
+            <a href="add_appointment.html" class="w-full h-12 bg-primary text-white rounded-[16px] flex items-center justify-center font-bold text-sm shadow-md active:scale-95 transition-transform">Book Appointment</a>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Modal -->
+<div id="doctor-filter-modal" class="fixed inset-x-0 bottom-0 z-[200] bg-white rounded-t-[40px] p-8 translate-y-full transition-transform duration-500 shadow-[0_-20px_60px_rgba(0,25,60,0.15)]">
+    <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="font-bold text-xl text-primary">Filter Doctors</h2>
+        <button onclick="closeFilter()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><span class="material-symbols-outlined text-sm">close</span></button>
+    </div>
+    <div class="space-y-6">
+        <div>
+            <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">City</label>
+            <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold text-primary outline-none focus:border-primary">
+                <option>All Cities</option><option>New Delhi</option><option>Mumbai</option><option>Bangalore</option>
+            </select>
+        </div>
+        <div>
+            <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Specialty</label>
+            <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold text-primary outline-none focus:border-primary">
+                <option>All Specialties</option><option>Cardiology</option><option>Neurology</option><option>General Physician</option><option>Optometrist</option>
+            </select>
+        </div>
+        <div>
+            <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-3">Max Fees</label>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-slate-400 font-semibold">?100</span>
+                <span class="text-sm font-black text-primary">Up to <span id="fee-val">?500</span></span>
+                <span class="text-xs text-slate-400 font-semibold">?1000</span>
+            </div>
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center pointer-events-none">
+                    <div id="fee-track-fill" class="h-[6px] bg-primary rounded-full transition-all" style="width:40%"></div>
+                </div>
+                <input type="range" min="100" max="1000" step="100" value="500" id="fee-range"
+                    oninput="updateFee(this.value)"
+                    class="w-full relative z-10 bg-slate-200 cursor-pointer"
+                    style="background:linear-gradient(to right,#00193c 40%,#e2e8f0 40%)">
+            </div>
+            <div class="flex justify-between mt-2">
+                <span class="text-[10px] text-slate-400 font-bold">?100</span>
+                <span class="text-[10px] text-slate-400 font-bold">?300</span>
+                <span class="text-[10px] text-slate-400 font-bold">?500</span>
+                <span class="text-[10px] text-slate-400 font-bold">?700</span>
+                <span class="text-[10px] text-slate-400 font-bold">?1000</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function switchTab(tab) {
+        const bg = document.getElementById('toggle-bg');
+        const tabDoc = document.getElementById('tab-doctors');
+        const tabUpc = document.getElementById('tab-upcoming');
+        const viewDoc = document.getElementById('view-doctors');
+        const viewUpc = document.getElementById('view-upcoming');
+        if (tab === 'doctors') {
+            bg.style.transform = 'translateX(0)';
+            tabDoc.className = 'relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-primary transition-colors';
+            tabUpc.className = 'relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-slate-500 transition-colors';
+            viewDoc.classList.remove('hidden');
+            viewUpc.classList.add('hidden');
+        } else {
+            bg.style.transform = 'translateX(100%)';
+            tabDoc.className = 'relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-slate-500 transition-colors';
+            tabUpc.className = 'relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-primary transition-colors';
+            viewDoc.classList.add('hidden');
+            viewUpc.classList.remove('hidden');
+        }
+    }
+
+    function openFilter() {
+        document.getElementById('doctor-filter-modal').classList.remove('translate-y-full');
+    }
+    function closeFilter() {
+        document.getElementById('doctor-filter-modal').classList.add('translate-y-full');
+    }
+
+    function updateFee(val) {
+        document.getElementById('fee-val').innerText = '?' + val;
+        let percent = ((val - 100) / 900) * 100;
+        document.getElementById('fee-range').style.background = `linear-gradient(to right, #00193c ${percent}%, #e2e8f0 ${percent}%)`;
+    }
+
+    function openDoctorPopup(name, type, addr, rate, fee, online, dur, img) {
+        document.getElementById('doc-popup-name').innerText = name;
+        document.getElementById('doc-popup-type').innerText = type;
+        document.getElementById('doc-popup-addr').innerText = addr;
+        document.getElementById('doc-popup-fee').innerText = '?' + fee;
+        document.getElementById('doc-popup-online').innerText = '?' + online;
+        document.getElementById('doc-popup-dur').innerText = dur;
+        
+        let wrap = document.getElementById('doc-popup-img-wrap');
+        if (img) {
+            wrap.innerHTML = `<img src="${img}" class="w-full h-full object-cover">`;
+        } else {
+            wrap.innerHTML = `<span class="material-symbols-outlined text-white text-4xl">person</span>`;
+        }
+
+        const p = document.getElementById('doc-popup');
+        const b = document.getElementById('doc-popup-backdrop');
+        const c = document.getElementById('doc-popup-card');
+        p.classList.remove('pointer-events-none');
+        b.classList.remove('pointer-events-none', 'opacity-0');
+        c.classList.remove('pointer-events-none', 'scale-90', 'opacity-0');
+    }
+
+    function closeDoctorPopup() {
+        const p = document.getElementById('doc-popup');
+        const b = document.getElementById('doc-popup-backdrop');
+        const c = document.getElementById('doc-popup-card');
+        b.classList.add('pointer-events-none', 'opacity-0');
+        c.classList.add('pointer-events-none', 'scale-90', 'opacity-0');
+        setTimeout(() => { p.classList.add('pointer-events-none'); }, 300);
+    }
+</script>
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="home_dashboard.html">
+            <span class="material-symbols-outlined text-[26px]">home</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="wellness_exercises.html">
+            <span class="material-symbols-outlined text-[26px]">directions_run</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="health_summary.html">
+            <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="community_hub.html">
+            <span class="material-symbols-outlined text-[26px]">group</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:scale-105 active:scale-95 transition-all duration-300" href="user_profile.html">
+            <span class="material-symbols-outlined text-[26px]">person</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+        </a>
+    </nav>
+</body></html>
+
+
+

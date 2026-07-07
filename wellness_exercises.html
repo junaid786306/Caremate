@@ -1,0 +1,386 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Exercise - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e3e2e7",
+                        "tertiary-fixed": "#dfe3e7",
+                        "on-secondary-fixed": "#02026b",
+                        "on-primary-container": "#7796d1",
+                        "primary": "#00193c",
+                        "on-secondary-fixed-variant": "#373c95",
+                        "inverse-surface": "#2f3034",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3f",
+                        "surface-bright": "#faf9fe",
+                        "surface-container-low": "#f4f3f8",
+                        "primary-container": "#002d62",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747781",
+                        "inverse-primary": "#abc7ff",
+                        "background": "#faf9fe",
+                        "surface-tint": "#3e5e95",
+                        "on-surface": "#1a1b1f",
+                        "tertiary-container": "#2a2f32",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary": "#4f55ae",
+                        "on-secondary-container": "#2d328b",
+                        "surface-container": "#eeedf2",
+                        "on-primary-fixed-variant": "#24467c",
+                        "on-background": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary-container": "#92969a",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7ed",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "outline-variant": "#c4c6d1",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "surface": "#faf9fe",
+                        "tertiary": "#151a1d",
+                        "surface-dim": "#dad9df",
+                        "inverse-on-surface": "#f1f0f5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#9aa0ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#abc7ff",
+                        "tertiary-fixed-dim": "#c3c7cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "60px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "stack-md": "24px",
+                        "stack-sm": "12px",
+                        "stack-lg": "40px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"],
+                        "body-md": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-caps": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.5px", "fontWeight": "800" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "500" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.3px", "fontWeight": "700" }],
+                        "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "1px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    @keyframes orb-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.7; }
+        50% { transform: scale(1.15); opacity: 1; }
+    }
+    .orb-glow { animation: orb-pulse 3s ease-in-out infinite; }
+    .voice-listening-orb {
+        box-shadow: 0 0 0 0 rgba(79, 85, 174, 0.6);
+        animation: voice-ring 1.4s infinite;
+    }
+    @keyframes voice-ring {
+        0% { box-shadow: 0 0 0 0 rgba(79,85,174,0.6); }
+        70% { box-shadow: 0 0 0 22px rgba(79,85,174,0); }
+        100% { box-shadow: 0 0 0 0 rgba(79,85,174,0); }
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-manrope antialiased min-h-screen pb-[120px]">
+<!-- TopAppBar -->
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-center items-center h-[72px]">
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center">Exercise</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 w-full max-w-2xl mx-auto p-margin-page md:pb-margin-page flex flex-col gap-stack-lg pt-8">
+
+
+
+<!-- Exercises Section -->
+<section class="flex flex-col gap-stack-lg">
+    <!-- Beginner Section -->
+    <div class="flex flex-col gap-6">
+        <div class="flex flex-col">
+            <h2 class="font-display text-[28px] text-primary">Beginner</h2>
+            <p class="font-body-md text-on-surface-variant">Best for gentle movement and daily mobility.</p>
+        </div>
+        <div class="flex flex-col gap-6">
+            <!-- Card 1 -->
+            <a href="exercise_session.html" class="bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,45,98,0.06)] border border-slate-100 overflow-hidden flex flex-col group hover:shadow-xl transition-all duration-300">
+                <div class="relative w-full h-[200px] bg-slate-100 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop">
+                    <div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+                        <div class="w-14 h-14 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-3xl ml-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-xl text-primary">Morning Mobility</h3>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-4">Gentle full-body stretching to improve circulation and reduce stiffness.</p>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-400 bg-slate-50 px-3 py-1.5 rounded-full">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 20 Min
+                        </div>
+                        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-400 bg-slate-50 px-3 py-1.5 rounded-full">
+                            <span class="material-symbols-outlined text-sm">energy_savings_leaf</span> Low Impact
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+        </div>
+    </div>
+
+    <!-- Intermediate Section -->
+    <div class="flex flex-col gap-6 mt-4">
+        <div class="flex flex-col">
+            <h2 class="font-display text-[28px] text-primary">Intermediate</h2>
+            <p class="font-body-md text-on-surface-variant">Best for building strength and endurance.</p>
+        </div>
+        <div class="bg-slate-100/50 border-2 border-dashed border-slate-200 rounded-3xl p-10 flex flex-col items-center justify-center text-center">
+            <span class="material-symbols-outlined text-4xl text-slate-300 mb-2">lock</span>
+            <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Available next week</p>
+            <p class="text-xs text-slate-400 mt-1">Complete 5 beginner sessions to unlock.</p>
+        </div>
+    </div>
+
+    <!-- Advanced Section -->
+    <div class="flex flex-col gap-6 mt-4">
+        <div class="flex flex-col">
+            <h2 class="font-display text-[28px] text-primary">Advanced</h2>
+            <p class="font-body-md text-on-surface-variant">Best for active seniors seeking a challenge.</p>
+        </div>
+        <div class="bg-slate-100/50 border-2 border-dashed border-slate-200 rounded-3xl p-10 flex flex-col items-center justify-center text-center">
+            <span class="material-symbols-outlined text-4xl text-slate-300 mb-2">lock</span>
+            <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Locked</p>
+            <p class="text-xs text-slate-400 mt-1">Focus on Intermediate goals first.</p>
+        </div>
+    </div>
+</section>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 h-[100px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="home_dashboard.html">
+        <span class="material-symbols-outlined text-[26px]">home</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] bg-primary-fixed/50 text-primary rounded-[22px] hover:scale-105 active:scale-95 transition-all duration-300" href="wellness_exercises.html">
+        <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">directions_run</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="health_summary.html">
+        <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="community_hub.html">
+        <span class="material-symbols-outlined text-[26px]">group</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary hover:scale-105 active:scale-95 transition-all duration-300" href="user_profile.html">
+        <span class="material-symbols-outlined text-[26px]">person</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+    </a>
+</nav>
+</nav>
+<!-- AI Chat Popup -->
+<div id="ai-chat-popup" class="fixed inset-0 z-[300] flex items-end justify-center pointer-events-none">
+    <div id="ai-chat-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeAIChat()"></div>
+    <div id="ai-chat-sheet" class="relative w-full max-w-lg bg-[#0d1b2e] rounded-t-[32px] flex flex-col translate-y-full transition-transform duration-400 ease-out pointer-events-none shadow-[0_-20px_60px_rgba(0,0,0,0.4)] z-10" style="height:78vh;">
+        <!-- Handle -->
+        <div class="w-10 h-1 bg-white/20 rounded-full mx-auto mt-4 mb-2 flex-shrink-0"></div>
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 pb-3 border-b border-white/10 flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-base leading-tight">Caremate AI</p>
+                    <p id="chat-status-label" class="text-emerald-400 text-[11px] font-semibold tracking-wide">● Listening...</p>
+                </div>
+            </div>
+            <button onclick="closeAIChat()" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                <span class="material-symbols-outlined text-white text-[18px]">close</span>
+            </button>
+        </div>
+        <!-- Messages -->
+        <div id="ai-chat-messages" class="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 min-h-0">
+            <div class="flex gap-3 items-end">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mb-1">
+                    <span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+                </div>
+                <div class="bg-white/10 text-white rounded-[18px] rounded-bl-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">
+                    Hello! I'm your Caremate AI Exercise Coach. 🏃‍♂️<br>I'm listening — tell me what exercise help you need or ask me anything about your wellness routine!
+                </div>
+            </div>
+        </div>
+        <!-- Input -->
+        <div class="flex items-center gap-3 px-4 py-4 border-t border-white/10 flex-shrink-0 bg-[#0d1b2e]">
+            <div class="flex-1 bg-white/10 rounded-full flex items-center px-4 py-2.5 gap-2 border border-white/10">
+                <input id="ai-chat-input" type="text" placeholder="Type a message..." class="flex-1 bg-transparent text-white placeholder-white/40 text-sm outline-none font-manrope" onkeydown="if(event.key==='Enter') sendAIMessage()">
+            </div>
+            <button onclick="sendAIMessage()" class="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform flex-shrink-0">
+                <span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings:'FILL' 1;">send</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let micActive = false;
+
+    function toggleCoachMic(btn) {
+        const icon = document.getElementById('coach-mic-icon');
+        const statusText = document.getElementById('caremate-coach-status');
+        const glow = document.getElementById('coach-orb-glow');
+
+        if (!micActive) {
+            micActive = true;
+            // Switch to listening state: purple/indigo tones
+            btn.style.background = 'radial-gradient(ellipse at 35% 25%, #a78bfa 0%, #4c1d95 55%, #1e0050 100%)';
+            btn.classList.add('voice-listening-orb');
+            glow.classList.remove('from-secondary/50', 'to-primary/40');
+            glow.classList.add('from-violet-500/60', 'to-purple-700/50');
+            icon.innerText = 'graphic_eq';
+            statusText.innerText = 'Listening...';
+            openAIChat();
+        } else {
+            micActive = false;
+            btn.style.background = 'radial-gradient(ellipse at 35% 25%, #6b8cff 0%, #00193c 55%, #000a14 100%)';
+            btn.classList.remove('voice-listening-orb');
+            glow.classList.remove('from-violet-500/60', 'to-purple-700/50');
+            glow.classList.add('from-secondary/50', 'to-primary/40');
+            icon.innerText = 'mic';
+            statusText.innerText = 'Caremate Coach';
+            const lbl = document.getElementById('chat-status-label');
+            if (lbl) { lbl.textContent = '● Online'; lbl.style.color = '#6ee7b7'; }
+        }
+    }
+
+    // Keep backward compat
+    function startListening(el) { toggleCoachMic(document.getElementById('coach-mic-btn')); }
+
+    function openAIChat() {
+        const popup = document.getElementById('ai-chat-popup');
+        const backdrop = document.getElementById('ai-chat-backdrop');
+        const sheet = document.getElementById('ai-chat-sheet');
+        popup.classList.remove('pointer-events-none');
+        backdrop.classList.remove('pointer-events-none', 'opacity-0');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+        sheet.classList.remove('translate-y-full', 'pointer-events-none');
+        sheet.classList.add('translate-y-0', 'pointer-events-auto');
+    }
+
+    function closeAIChat() {
+        const popup = document.getElementById('ai-chat-popup');
+        const backdrop = document.getElementById('ai-chat-backdrop');
+        const sheet = document.getElementById('ai-chat-sheet');
+        // Also stop mic if active
+        if (micActive) {
+            micActive = false;
+            const micBtn = document.querySelector('[onclick*="startListening"]');
+            if (micBtn) {
+                const icon = micBtn.querySelector('.mic-icon');
+                const statusText = document.getElementById('caremate-coach-status');
+                micBtn.classList.remove('bg-error', 'animate-pulse');
+                micBtn.classList.add('bg-white/10', 'border-white/20', 'hover:bg-white/20');
+                if (icon) icon.innerText = 'mic';
+                if (statusText) statusText.innerText = 'Caremate Coach';
+            }
+        }
+        backdrop.classList.add('opacity-0');
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        sheet.classList.add('translate-y-full');
+        sheet.classList.remove('translate-y-0', 'pointer-events-auto');
+        setTimeout(() => {
+            popup.classList.add('pointer-events-none');
+            backdrop.classList.add('pointer-events-none');
+            sheet.classList.add('pointer-events-none');
+        }, 400);
+    }
+
+    const aiReplies = [
+        "Great question! For morning mobility, try starting with gentle neck rolls — 5 each direction. 🌅",
+        "Remember to breathe deeply during each stretch. Inhale for 4 counts, hold 2, exhale 6. 🧘",
+        "You're doing amazing! Consistency is more important than intensity for seniors. Keep it up! 💪",
+        "For knee health, chair squats are excellent — hold the back of a sturdy chair and lower slowly. 🪑",
+        "Stay hydrated! Drink water before, during and after your exercise session. 💧",
+        "Rest days are just as important as active days. Your muscles need time to recover. ✨"
+    ];
+    let replyIndex = 0;
+
+    function sendAIMessage() {
+        const input = document.getElementById('ai-chat-input');
+        const msg = input.value.trim();
+        if (!msg) return;
+        const messages = document.getElementById('ai-chat-messages');
+
+        // User bubble
+        const userBubble = document.createElement('div');
+        userBubble.className = 'flex justify-end';
+        userBubble.innerHTML = `<div class="bg-blue-600 text-white rounded-[18px] rounded-br-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${msg}</div>`;
+        messages.appendChild(userBubble);
+        input.value = '';
+
+        // AI reply after short delay
+        setTimeout(() => {
+            const reply = aiReplies[replyIndex % aiReplies.length];
+            replyIndex++;
+            const aiBubble = document.createElement('div');
+            aiBubble.className = 'flex gap-3 items-end';
+            aiBubble.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mb-1">
+                    <span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+                </div>
+                <div class="bg-white/10 text-white rounded-[18px] rounded-bl-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${reply}</div>`;
+            messages.appendChild(aiBubble);
+            messages.scrollTop = messages.scrollHeight;
+        }, 700);
+
+        messages.scrollTop = messages.scrollHeight;
+    }
+</script>
+</body></html>

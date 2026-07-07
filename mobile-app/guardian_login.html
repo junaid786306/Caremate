@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Guardian Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#002d62",
+                        "secondary": "#4f55ae",
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f2f4f8] text-primary font-manrope antialiased min-h-screen flex flex-col items-center py-16 px-6">
+    <!-- Icon & Title -->
+    <div class="flex flex-col items-center gap-6 mb-12 text-center">
+        <div class="w-20 h-20 bg-[#002d62] rounded-full flex items-center justify-center shadow-2xl">
+            <span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">lock</span>
+        </div>
+        <div>
+            <h1 class="text-[32px] font-extrabold tracking-tight mb-2">Guardian Login</h1>
+            <p class="text-slate-500 font-medium max-w-[280px] mx-auto leading-relaxed">
+                Secure access to your senior's health and safety dashboard.
+            </p>
+        </div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="w-full bg-white rounded-[48px] p-8 shadow-2xl space-y-8 max-w-md">
+        <!-- Form Fields -->
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-[11px] font-extrabold uppercase tracking-widest text-slate-700 ml-1">Email Address</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">mail</span>
+                    <input type="email" placeholder="guardian@example.com" class="w-full h-16 pl-14 pr-5 bg-[#f0f2f5] border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-400">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex justify-between items-center px-1">
+                    <label class="text-[11px] font-extrabold uppercase tracking-widest text-slate-700">Password</label>
+                    <a href="#" class="text-xs font-bold text-secondary">Forgot?</a>
+                </div>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+                    <input type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" class="w-full h-16 pl-14 pr-5 bg-[#f0f2f5] border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-slate-400">
+                </div>
+            </div>
+
+            <a href="guardian_dashboard.html" class="w-full h-16 bg-[#002d62] text-white rounded-[32px] flex items-center justify-center gap-3 shadow-xl active:scale-95 transition-all">
+                <span class="text-lg font-bold">Login</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-4">
+            <div class="h-[1px] flex-1 bg-slate-100"></div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Alternative</span>
+            <div class="h-[1px] flex-1 bg-slate-100"></div>
+        </div>
+
+        <!-- Face ID Button -->
+        <button class="w-full h-16 bg-[#e9ebf0] rounded-[32px] flex items-center justify-center gap-3 active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-secondary text-2xl">face</span>
+            <span class="font-bold text-slate-700">Sign in with Face ID</span>
+        </button>
+    </div>
+    <div class="mt-auto pt-12 flex flex-col items-center gap-6">
+        <div class="bg-white px-6 py-3 rounded-full border border-slate-100 shadow-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-sm">verified_user</span>
+        </div>
+        <p class="text-[10px] text-slate-400">Â© 2024 Guardian Portal. All rights reserved.</p>
+    </div>
+</body>
+</html>

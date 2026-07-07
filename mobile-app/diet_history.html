@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Diet History - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+        .day-block{border-left:3px solid #e2e8f0;padding-left:20px;position:relative;}
+        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#4f55ae;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
+        .status-pill { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+        .status-pill:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .status-pill:active { transform: scale(0.97); }
+    </style>
+</head>
+<body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-10">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1">Diet History</h1>
+        <button onclick="toggleFilter()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors text-primary">
+            <span class="material-symbols-outlined">calendar_month</span>
+        </button>
+    </header>
+
+    <div id="filter-panel" class="hidden bg-white border-b border-slate-100 px-6 py-4">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Filter by Date Range</p>
+        <div class="flex gap-3">
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">From</label><input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:border-primary outline-none"></div>
+            <div class="flex-1"><label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">To</label><input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-primary focus:border-primary outline-none"></div>
+            <div class="flex items-end"><button onclick="toggleFilter()" class="h-10 px-4 bg-primary text-white rounded-xl text-sm font-bold active:scale-95 transition-transform">Apply</button></div>
+        </div>
+    </div>
+
+    <!-- Status Toast -->
+    <div id="status-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[400] opacity-0 pointer-events-none" style="transition: opacity 0.3s, transform 0.3s; transform: translateX(-50%) translateY(-10px);">
+        <div id="status-toast-inner" class="bg-[#0d1b2e] text-white rounded-2xl px-5 py-4 shadow-2xl min-w-[280px] max-w-[340px] text-sm font-semibold leading-relaxed"></div>
+    </div>
+    <div class="bg-white border-b border-slate-100 px-6 py-3 flex gap-3 overflow-x-auto hide-scrollbar">
+        <div id="filter-all" onclick="filterStatus('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary">
+            <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
+        </div>
+        <div id="filter-taken" onclick="filterStatus('taken')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-green-50 border border-green-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-green-500 rounded-full"></div><span class="text-[11px] font-extrabold text-green-700 uppercase tracking-widest">Taken</span></div>
+        <div id="filter-missed" onclick="filterStatus('missed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-red-50 border border-red-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-red-400 rounded-full"></div><span class="text-[11px] font-extrabold text-red-700 uppercase tracking-widest">Missed</span></div>
+    </div>
+
+    <main class="max-w-md mx-auto p-6">
+        <div id="timeline" class="space-y-8"></div>
+        <div id="load-more" class="mt-8 flex justify-center">
+            <button onclick="loadMore()" class="px-8 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-primary shadow-sm hover:bg-slate-50 transition-colors active:scale-95">Load More</button>
+        </div>
+    </main>
+
+    <script>
+        const dietData = [
+            { date:"Today, 8 May", entries:[
+                {meal:"Breakfast",items:"Oatmeal, banana, green tea",time:"8:30 AM",status:"taken",cal:"320 kcal"},
+                {meal:"Lunch",items:"Brown rice, dal, sabzi, curd",time:"1:00 PM",status:"taken",cal:"580 kcal"},
+                {meal:"Evening Snack",items:"Fruits & nuts",time:"4:30 PM",status:"taken",cal:"150 kcal"},
+                {meal:"Dinner",items:"Roti, paneer curry, salad",time:"8:00 PM",status:"pending",cal:"450 kcal"},
+            ]},
+            { date:"Yesterday, 7 May", entries:[
+                {meal:"Breakfast",items:"Upma, coconut chutney",time:"8:15 AM",status:"taken",cal:"280 kcal"},
+                {meal:"Lunch",items:"Dal khichdi, pickle, ghee",time:"12:45 PM",status:"taken",cal:"520 kcal"},
+                {meal:"Evening Snack",items:"Missed",time:"—",status:"missed",cal:"0 kcal"},
+                {meal:"Dinner",items:"Chapati, palak paneer",time:"8:30 PM",status:"taken",cal:"490 kcal"},
+            ]},
+            { date:"6 May", entries:[
+                {meal:"Breakfast",items:"Poha, lemon water",time:"8:00 AM",status:"taken",cal:"250 kcal"},
+                {meal:"Lunch",items:"Rice, sambar, papad",time:"1:00 PM",status:"taken",cal:"540 kcal"},
+                {meal:"Evening Snack",items:"Roasted chana",time:"4:00 PM",status:"taken",cal:"120 kcal"},
+                {meal:"Dinner",items:"Chapati, mixed veg curry",time:"8:00 PM",status:"taken",cal:"470 kcal"},
+            ]},
+        ];
+        const moreDates = ["5 May","4 May","3 May","2 May","1 May"];
+        let loadedExtra = 0;
+        let currentFilter = 'all';
+
+        const mealIcon = {Breakfast:"coffee",Lunch:"lunch_dining","Evening Snack":"local_cafe",Dinner:"dinner_dining"};
+        const stBg = {taken:"bg-green-50 border-green-100",missed:"bg-red-50 border-red-100",pending:"bg-amber-50 border-amber-100"};
+        const stText = {taken:"text-green-600",missed:"text-red-500",pending:"text-amber-500"};
+
+        function renderDay(day) {
+            let filteredEntries = day.entries;
+            if (currentFilter !== 'all') {
+                filteredEntries = day.entries.filter(e => e.status === currentFilter);
+            }
+            if (filteredEntries.length === 0) return '';
+
+            const entries = filteredEntries.map(e => `
+                <div class="flex items-start gap-4 p-4 rounded-2xl border ${stBg[e.status]} mb-2 last:mb-0">
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                        <span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings:'FILL' 1">${mealIcon[e.meal]||'restaurant'}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-0.5">
+                            <p class="font-black text-sm text-slate-800">${e.meal}</p>
+                            <span class="text-[10px] font-bold ${stText[e.status]} uppercase">${e.status}</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 truncate">${e.items}</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">${e.time} · ${e.cal}</p>
+                    </div>
+                </div>
+            `).join('');
+            return `<div class="day-block"><h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">${day.date}</h3>${entries}</div>`;
+        }
+
+        function loadTimeline() { 
+            const html = dietData.map(renderDay).join('');
+            document.getElementById('timeline').innerHTML = html || '<p class="text-center text-sm font-bold text-slate-400 mt-10">No records found for this filter.</p>';
+        }
+
+        function loadMore() {
+            if (loadedExtra >= moreDates.length) { document.getElementById('load-more').innerHTML='<p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">All records loaded</p>'; return; }
+            const day = moreDates[loadedExtra++];
+            const mock = { date: day, entries:[
+                {meal:"Breakfast",items:"Idli, sambar",time:"8:00 AM",status:"taken",cal:"260 kcal"},
+                {meal:"Lunch",items:"Rice, rajma, sabzi",time:"1:00 PM",status:"taken",cal:"560 kcal"},
+                {meal:"Evening Snack",items:Math.random()>0.3?"Fruits":"Missed",time:"4:30 PM",status:Math.random()>0.3?"taken":"missed",cal:Math.random()>0.3?"130 kcal":"0 kcal"},
+                {meal:"Dinner",items:"Chapati, mixed dal",time:"8:00 PM",status:"taken",cal:"480 kcal"},
+            ]};
+            dietData.push(mock);
+            loadTimeline();
+        }
+        function toggleFilter() { document.getElementById('filter-panel').classList.toggle('hidden'); }
+        loadTimeline();
+
+        function filterStatus(status) {
+            currentFilter = status;
+            document.querySelectorAll('.status-pill').forEach(el => el.style.opacity = '0.5');
+            document.querySelectorAll('.status-pill').forEach(el => el.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
+            const activeEl = document.getElementById(`filter-${status}`);
+            if (activeEl) {
+                activeEl.style.opacity = '1';
+                activeEl.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
+            }
+            loadTimeline();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Group Info - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    </style>
+</head>
+<body class="bg-slate-50 font-manrope antialiased min-h-screen pb-10">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1">Group Info</h1>
+        <a href="group_settings.html" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">more_vert</span>
+        </a>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+
+        <!-- Group Header -->
+        <div class="flex flex-col items-center pt-2">
+            <div class="w-28 h-28 rounded-full border-4 border-white shadow-xl overflow-hidden mb-4">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop" class="w-full h-full object-cover" alt="Family Group">
+            </div>
+            <h2 class="text-2xl font-bold text-primary text-center">The Sharma Family</h2>
+            <p class="text-sm font-medium text-slate-500 mt-1">Group · 12 participants</p>
+        </div>
+
+        <!-- Action Buttons Row -->
+        <div class="flex justify-center gap-6 py-4 border-y border-slate-200">
+            <button class="flex flex-col items-center gap-2 group active:scale-95 transition-transform">
+                <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                    <span class="material-symbols-outlined">call</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-600">Audio</span>
+            </button>
+            <button class="flex flex-col items-center gap-2 group active:scale-95 transition-transform">
+                <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                    <span class="material-symbols-outlined">videocam</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-600">Video</span>
+            </button>
+            <button class="flex flex-col items-center gap-2 group active:scale-95 transition-transform">
+                <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">search</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-600">Search</span>
+            </button>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            <p class="text-sm font-medium text-slate-700 leading-relaxed">Family updates, pictures, and weekend planning. Keep notifications on! 🏡❤️</p>
+            <p class="text-xs text-slate-400 mt-3 font-semibold">Created by Rohan Sharma, 12 Oct 2023</p>
+        </div>
+
+        <!-- Media, Links, and Docs -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-sm font-bold text-primary">Media, Links, and Docs</h3>
+                <button class="text-xs font-bold text-secondary flex items-center">45 <span class="material-symbols-outlined text-sm ml-1">chevron_right</span></button>
+            </div>
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=100&h=100&fit=crop" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=100&h=100&fit=crop" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=100&h=100&fit=crop" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+            </div>
+        </div>
+
+        <!-- Participants -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex justify-between items-center">
+                <h3 class="text-sm font-bold text-primary">12 Participants</h3>
+                <button onclick="this.nextElementSibling.nextElementSibling.classList.toggle('hidden')" class="text-xs font-bold text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-sm">search</span></button>
+            </div>
+            <!-- Participant Search -->
+            <div class="hidden px-5 py-2 border-b border-slate-100">
+                <input id="participant-search" oninput="filterParticipants(this.value)" type="text" placeholder="Search participants..." class="w-full h-10 bg-slate-50 rounded-full px-4 text-sm border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/10">
+            </div>
+
+            <!-- Scrollable List -->
+            <div id="participant-list" class="divide-y divide-slate-50 max-h-[300px] overflow-y-auto">
+                <!-- Add Member -->
+                <button class="w-full px-5 py-3 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center border border-slate-200">
+                        <span class="material-symbols-outlined">person_add</span>
+                    </div>
+                    <span class="font-bold text-sm text-primary">Add members</span>
+                </button>
+
+                <!-- Admin (You) - no remove button -->
+                <div class="px-5 py-3 flex items-center gap-4" data-name="Rohan Sharma">
+                    <a href="public_user_profile.html" class="flex items-center gap-4 flex-1 min-w-0">
+                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rohan">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-sm text-primary">Rohan Sharma</h4>
+                                <span class="text-[9px] font-black px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 uppercase tracking-wider flex-shrink-0">Admin</span>
+                            </div>
+                            <p class="text-xs font-medium text-slate-500">Available</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- You -->
+                <div class="px-5 py-3 flex items-center gap-4 bg-blue-50/30" data-name="You">
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="shreya_senior_profile_1777714702221.png">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-primary">You</h4>
+                            <p class="text-xs font-medium text-slate-500">At home</p>
+                        </div>
+                    </div>
+                    <!-- Admin sees remove for all others, not themselves -->
+                </div>
+
+                <!-- Priya -->
+                <div class="px-5 py-3 flex items-center gap-4" data-name="Priya">
+                    <a href="public_user_profile.html" class="flex items-center gap-4 flex-1 min-w-0">
+                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priya">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-primary">Priya</h4>
+                            <p class="text-xs font-medium text-slate-500">Busy</p>
+                        </div>
+                    </a>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button onclick="toggleParticipantFollow(this)" class="w-20 py-1.5 border border-primary text-primary rounded-full font-bold text-[10px] text-center hover:bg-primary hover:text-white transition-all">Follow</button>
+                        <button onclick="this.closest('[data-name]').remove()" class="w-16 py-1.5 bg-red-50 text-red-500 rounded-full font-bold text-[10px] text-center hover:bg-red-100 transition-all">Remove</button>
+                    </div>
+                </div>
+
+                <!-- Sarah -->
+                <div class="px-5 py-3 flex items-center gap-4" data-name="Sarah">
+                    <a href="public_user_profile.html" class="flex items-center gap-4 flex-1 min-w-0">
+                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-primary">Sarah</h4>
+                            <p class="text-xs font-medium text-slate-500">Online</p>
+                        </div>
+                    </a>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button onclick="toggleParticipantFollow(this)" class="w-20 py-1.5 border border-primary text-primary rounded-full font-bold text-[10px] text-center hover:bg-primary hover:text-white transition-all">Follow</button>
+                        <button onclick="this.closest('[data-name]').remove()" class="w-16 py-1.5 bg-red-50 text-red-500 rounded-full font-bold text-[10px] text-center hover:bg-red-100 transition-all">Remove</button>
+                    </div>
+                </div>
+
+                <!-- Arjun -->
+                <div class="px-5 py-3 flex items-center gap-4" data-name="Arjun">
+                    <a href="public_user_profile.html" class="flex items-center gap-4 flex-1 min-w-0">
+                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-primary">Arjun</h4>
+                            <p class="text-xs font-medium text-slate-500">Away</p>
+                        </div>
+                    </a>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button onclick="toggleParticipantFollow(this)" class="w-20 py-1.5 border border-primary text-primary rounded-full font-bold text-[10px] text-center hover:bg-primary hover:text-white transition-all">Follow</button>
+                        <button onclick="this.closest('[data-name]').remove()" class="w-16 py-1.5 bg-red-50 text-red-500 rounded-full font-bold text-[10px] text-center hover:bg-red-100 transition-all">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Settings -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="px-5 py-3.5 bg-slate-50/50 border-b border-slate-100">
+                <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Chat Settings</h3>
+            </div>
+            <div class="divide-y divide-slate-50">
+                <!-- Mute -->
+                <div class="px-5 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined">notifications_off</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-primary">Mute Notifications</p>
+                            <p class="text-[10px] font-medium text-slate-400 mt-0.5">Silence alerts for this group</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+                    </label>
+                </div>
+
+                <!-- Block -->
+                <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined">block</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-sm font-bold text-primary">Block Members</p>
+                            <p class="text-[10px] font-medium text-slate-400 mt-0.5">Prevent specific members from messaging</p>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                </button>
+
+                <!-- Clear Chat -->
+                <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined">delete_sweep</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-sm font-bold text-primary">Clear Chat</p>
+                            <p class="text-[10px] font-medium text-slate-400 mt-0.5">Delete all messages in this group</p>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="px-5 py-3.5 bg-red-50/30 border-b border-red-50">
+                <h3 class="text-[11px] font-black text-red-400 uppercase tracking-widest">Danger Zone</h3>
+            </div>
+            <button class="w-full px-5 py-4 flex items-center gap-4 hover:bg-red-50 transition-colors text-red-600 border-b border-slate-50">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">logout</span>
+                <span class="font-bold text-sm">Exit Group</span>
+            </button>
+            <button class="w-full px-5 py-4 flex items-center gap-4 hover:bg-red-50 transition-colors text-red-600">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">thumb_down</span>
+                <span class="font-bold text-sm">Report Group</span>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        function toggleParticipantFollow(btn) {
+            if (btn.textContent.trim() === 'Follow') {
+                btn.textContent = 'Following';
+                btn.className = 'w-20 py-1.5 bg-primary text-white rounded-full font-bold text-[10px] text-center transition-all';
+            } else {
+                btn.textContent = 'Follow';
+                btn.className = 'w-20 py-1.5 border border-primary text-primary rounded-full font-bold text-[10px] text-center hover:bg-primary hover:text-white transition-all';
+            }
+        }
+        function filterParticipants(query) {
+            document.querySelectorAll('#participant-list [data-name]').forEach(row => {
+                const name = row.dataset.name.toLowerCase();
+                row.style.display = name.includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

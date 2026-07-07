@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Geofencing Settings - Caremate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode:"class",
+            theme:{ extend:{ colors:{"primary":"#00193c","secondary":"#4f55ae","primary-fixed":"#d7e2ff","primary-container":"#002d62","on-surface":"#1a1b1f","safe-green":"#4caf50"}, fontFamily:{"manrope":["Manrope","sans-serif"]} } }
+        }
+    </script>
+    <style>
+        .map-grid { background-image: radial-gradient(#c5d5f0 1px, transparent 0); background-size: 22px 22px; }
+        .zone-ring { animation: pulse-ring 2.5s infinite; }
+        @keyframes pulse-ring {
+            0%,100% { box-shadow: 0 0 0 0 rgba(0,45,98,0.15); }
+            50% { box-shadow: 0 0 0 20px rgba(0,45,98,0); }
+        }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:#00193c; cursor:pointer; box-shadow:0 2px 8px rgba(0,25,60,0.3); }
+        input[type=range]::-webkit-slider-runnable-track { height:6px; border-radius:3px; background:linear-gradient(to right,#00193c var(--val,50%),#e2e8f0 var(--val,50%)); }
+    </style>
+</head>
+<body class="bg-slate-50 text-on-surface font-manrope antialiased min-h-screen pb-10">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary flex-1">Safe Zone Settings</h1>
+        <span id="status-badge" class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-black uppercase tracking-wider">Active</span>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+
+        <!-- Live Status Card -->
+        <div class="bg-gradient-to-br from-[#00193c] to-[#002d62] rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -mr-10 -mt-10"></div>
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <p class="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Current Status</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <h2 class="text-xl font-black">Inside Safe Zone</h2>
+                    </div>
+                </div>
+                <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-2xl" style="font-variation-settings:'FILL' 1">home_pin</span>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <div class="bg-white/10 rounded-2xl px-4 py-3 flex-1">
+                    <p class="text-white/50 text-[10px] font-bold uppercase">Location</p>
+                    <p class="text-white font-bold text-sm mt-0.5">123 Elm Street</p>
+                </div>
+                <div class="bg-white/10 rounded-2xl px-4 py-3 flex-1">
+                    <p class="text-white/50 text-[10px] font-bold uppercase">Updated</p>
+                    <p class="text-white font-bold text-sm mt-0.5">2 min ago</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Visualization -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div class="h-56 bg-blue-50 map-grid relative flex items-center justify-center">
+                <!-- Roads mock -->
+                <div class="absolute inset-0 opacity-20">
+                    <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-slate-400"></div>
+                    <div class="absolute left-1/3 top-0 bottom-0 w-0.5 bg-slate-400"></div>
+                    <div class="absolute left-2/3 top-0 bottom-0 w-0.5 bg-slate-400"></div>
+                    <div class="absolute top-1/3 left-0 right-0 h-0.5 bg-slate-400"></div>
+                    <div class="absolute top-2/3 left-0 right-0 h-0.5 bg-slate-400"></div>
+                </div>
+                <!-- Safe zone radius -->
+                <div id="zone-circle" class="zone-ring w-36 h-36 rounded-full border-4 border-primary/40 bg-primary/5 flex items-center justify-center relative transition-all duration-700">
+                    <div class="w-10 h-10 rounded-full border-2 border-primary/60 bg-primary/10 flex items-center justify-center absolute">
+                        <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings:'FILL' 1">location_on</span>
+                    </div>
+                </div>
+                <!-- Map labels -->
+                <div class="absolute top-3 left-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500">Maplewood District</div>
+                <div class="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-[10px] font-bold text-green-600 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[12px]" style="font-variation-settings:'FILL' 1">check_circle</span> Safe Zone
+                </div>
+            </div>
+            <div class="p-5">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Pinned Address</p>
+                <p class="font-bold text-primary">123 Elm Street, Maplewood</p>
+                <button onclick="document.getElementById('addr-edit').classList.toggle('hidden')" class="mt-2 text-secondary text-xs font-bold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">edit</span> Change Address
+                </button>
+                <div id="addr-edit" class="hidden mt-3">
+                    <input type="text" placeholder="Enter new address..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none transition-all">
+                    <button onclick="saveAddress()" class="mt-2 w-full h-10 bg-primary text-white rounded-xl text-sm font-bold active:scale-95 transition-transform">Set Address</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Radius Control -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="font-bold text-primary">Safe Zone Radius</h2>
+                <span id="radius-label" class="text-lg font-black text-primary">500 m</span>
+            </div>
+            <input type="range" id="radius-slider" min="100" max="2000" step="50" value="500" class="w-full h-1.5 rounded-full outline-none" oninput="updateRadius(this.value)" style="accent-color:#00193c">
+            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <span>100m</span><span>500m</span><span>1km</span><span>2km</span>
+            </div>
+        </div>
+
+        <!-- Alert Settings -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div class="p-5 border-b border-slate-50"><h2 class="font-bold text-primary">Alert Settings</h2></div>
+            <div class="p-5 space-y-5">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-sm text-slate-800">Exit Zone Alert</p>
+                        <p class="text-[11px] text-slate-400">Notify when senior leaves zone</p>
+                    </div>
+                    <button onclick="toggleSwitch(this)" class="w-12 h-6 bg-primary rounded-full relative transition-colors duration-300 flex-shrink-0" data-on="true">
+                        <span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 translate-x-6"></span>
+                    </button>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-sm text-slate-800">Entry Zone Alert</p>
+                        <p class="text-[11px] text-slate-400">Notify when senior returns</p>
+                    </div>
+                    <button onclick="toggleSwitch(this)" class="w-12 h-6 bg-primary rounded-full relative transition-colors duration-300 flex-shrink-0" data-on="true">
+                        <span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 translate-x-6"></span>
+                    </button>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-sm text-slate-800">Night Mode (10 PM – 6 AM)</p>
+                        <p class="text-[11px] text-slate-400">Enhanced monitoring at night</p>
+                    </div>
+                    <button onclick="toggleSwitch(this)" class="w-12 h-6 bg-slate-200 rounded-full relative transition-colors duration-300 flex-shrink-0" data-on="false">
+                        <span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multiple Safe Zones -->
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+            <div class="p-5 border-b border-slate-50 flex justify-between items-center">
+                <h2 class="font-bold text-primary">Saved Zones</h2>
+                <button class="text-primary text-[11px] font-bold uppercase tracking-wider">+ Add Zone</button>
+            </div>
+            <div class="divide-y divide-slate-50">
+                <div class="p-4 flex items-center gap-4">
+                    <div class="w-10 h-10 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 flex-shrink-0"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">home</span></div>
+                    <div class="flex-1"><p class="font-bold text-sm text-slate-800">Home</p><p class="text-[10px] text-slate-400">123 Elm Street • 500m radius</p></div>
+                    <div class="flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full"></div><span class="text-[10px] font-bold text-green-600">Active</span></div>
+                </div>
+                <div class="p-4 flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 flex-shrink-0"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">local_hospital</span></div>
+                    <div class="flex-1"><p class="font-bold text-sm text-slate-800">Dr. Sharma's Clinic</p><p class="text-[10px] text-slate-400">45 Oak Ave • 200m radius</p></div>
+                    <span class="text-[10px] font-bold text-slate-400">Secondary</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <button onclick="saveZone()" class="w-full h-14 bg-primary text-white rounded-2xl font-bold text-base shadow-xl shadow-primary/30 active:scale-95 transition-transform flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">save</span> Save Safe Zone
+        </button>
+    </main>
+
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl z-[300] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <script>
+        function updateRadius(val) {
+            const label = document.getElementById('radius-label');
+            label.innerText = val >= 1000 ? (val/1000).toFixed(1)+'km' : val+'m';
+            const pct = ((val - 100) / (2000 - 100)) * 100;
+            const circle = document.getElementById('zone-circle');
+            const minW = 96, maxW = 192;
+            const w = Math.round(minW + (maxW - minW) * pct / 100);
+            circle.style.width = w+'px'; circle.style.height = w+'px';
+        }
+        function toggleSwitch(btn) {
+            const isOn = btn.getAttribute('data-on') === 'true';
+            const knob = btn.querySelector('span');
+            if (isOn) { btn.setAttribute('data-on','false'); btn.classList.remove('bg-primary'); btn.classList.add('bg-slate-200'); knob.classList.remove('translate-x-6'); }
+            else { btn.setAttribute('data-on','true'); btn.classList.add('bg-primary'); btn.classList.remove('bg-slate-200'); knob.classList.add('translate-x-6'); }
+        }
+        function showToast(msg) {
+            const t = document.getElementById('toast'); t.innerText = msg;
+            t.classList.remove('opacity-0'); t.classList.add('opacity-100');
+            setTimeout(() => { t.classList.add('opacity-0'); t.classList.remove('opacity-100'); }, 2500);
+        }
+        function saveZone() { showToast('✓ Safe zone saved & active!'); }
+        function saveAddress() { showToast('📍 Address updated!'); document.getElementById('addr-edit').classList.add('hidden'); }
+    </script>
+</body>
+</html>

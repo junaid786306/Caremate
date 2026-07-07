@@ -1,0 +1,116 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Account Settings - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Account</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-8">
+        <!-- Personal Info -->
+        <section class="space-y-4">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Personal Information</h2>
+            <div class="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm">
+                <div class="p-5 flex items-center gap-4 border-b border-slate-50 cursor-pointer hover:bg-slate-50 transition-colors" onclick="openOtpModal('Email')">
+                    <div class="flex-1">
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Email</p>
+                        <p class="font-bold text-slate-700">shreya.health@caremate.com</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300">edit</span>
+                </div>
+                <div class="p-5 flex items-center gap-4 border-b border-slate-50 cursor-pointer hover:bg-slate-50 transition-colors" onclick="openOtpModal('Phone')">
+                    <div class="flex-1">
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Phone</p>
+                        <p class="font-bold text-slate-700">+1 (555) 012-3456</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300">edit</span>
+                </div>
+                <div class="p-5 flex items-center gap-4 bg-slate-50/50">
+                    <div class="flex-1 opacity-70">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Date of Birth</p>
+                        <p class="font-bold text-slate-500">May 12, 1952</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-200">lock</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- OTP Modal -->
+    <div id="otp-modal" class="fixed inset-0 z-[100] bg-primary/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-[32px] p-6 shadow-2xl scale-95 transition-transform duration-300" id="otp-modal-content">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-10 h-10 bg-secondary/10 text-secondary rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined">shield_lock</span>
+                </div>
+                <button onclick="closeOtpModal()" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                </button>
+            </div>
+            
+            <h3 class="text-xl font-bold text-slate-800 mb-2">Security Verification</h3>
+            <p class="text-sm text-slate-500 mb-6">To edit your <span id="otp-field-name" class="font-bold text-primary">details</span>, please enter the code sent to your <span class="font-bold text-secondary">Guardian</span>.</p>
+            
+            <div class="flex gap-2 justify-between mb-6">
+                <input type="text" maxlength="1" class="w-12 h-14 bg-slate-50 border border-slate-200 rounded-xl text-center text-xl font-bold focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all">
+                <input type="text" maxlength="1" class="w-12 h-14 bg-slate-50 border border-slate-200 rounded-xl text-center text-xl font-bold focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all">
+                <input type="text" maxlength="1" class="w-12 h-14 bg-slate-50 border border-slate-200 rounded-xl text-center text-xl font-bold focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all">
+                <input type="text" maxlength="1" class="w-12 h-14 bg-slate-50 border border-slate-200 rounded-xl text-center text-xl font-bold focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all">
+            </div>
+            
+            <button class="w-full h-14 bg-primary text-white font-bold rounded-2xl shadow-lg active:scale-95 transition-transform" onclick="closeOtpModal()">Verify & Edit</button>
+            <p class="text-xs text-center text-slate-400 mt-4 font-bold uppercase tracking-wider cursor-pointer hover:text-secondary transition-colors">Resend Code</p>
+        </div>
+    </div>
+
+    <script>
+        const otpModal = document.getElementById('otp-modal');
+        const otpModalContent = document.getElementById('otp-modal-content');
+        const otpFieldName = document.getElementById('otp-field-name');
+
+        function openOtpModal(field) {
+            otpFieldName.innerText = field;
+            otpModal.classList.remove('opacity-0', 'pointer-events-none');
+            otpModalContent.classList.remove('scale-95');
+        }
+
+        function closeOtpModal() {
+            otpModal.classList.add('opacity-0', 'pointer-events-none');
+            otpModalContent.classList.add('scale-95');
+        }
+    </script>
+</body></html>

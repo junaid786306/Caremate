@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Switch Senior - Guardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001b3f",
+                        "secondary": "#4f55ae"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8faff] text-primary font-manrope antialiased min-h-screen">
+    <header class="sticky top-0 z-50 bg-white px-6 py-4 border-b border-slate-100 shadow-sm flex items-center justify-between relative">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors z-10">
+            <span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+        </button>
+        <h1 class="font-extrabold text-xl tracking-tight text-slate-800 absolute left-1/2 -translate-x-1/2">Switch Senior</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6 space-y-6">
+        <div class="text-center space-y-1 mb-8">
+            <h2 class="text-xl font-extrabold text-slate-800">Select Profile</h2>
+            <p class="text-sm text-slate-400 font-medium">Choose a senior to view their dashboard</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Active Senior -->
+            <div class="bg-white rounded-[32px] p-2 shadow-sm border-2 border-primary relative overflow-hidden cursor-pointer" onclick="switchSenior('Mom (Shreya)', this)">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-blue-50 rounded-bl-full -z-10 opacity-50"></div>
+                <div class="flex items-center gap-4 p-4">
+                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-slate-100 shrink-0">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA" alt="Mom" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-extrabold text-lg text-slate-800">Mom (Shreya)</h3>
+                            <span class="bg-primary text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">Active</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-0.5">72 yrs · Current Context</p>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center shrink-0">
+                        <div class="w-2 h-2 rounded-full bg-white"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Senior -->
+            <div class="bg-white rounded-[32px] p-2 shadow-sm border border-slate-100 hover:border-slate-300 transition-colors cursor-pointer" onclick="switchSenior('Father (Raj)', this)">
+                <div class="flex items-center gap-4 p-4">
+                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-slate-100 shrink-0 bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1544168190-79c15427015f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Father" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg text-slate-800">Father (Raj)</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">75 yrs · Needs check-in</p>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 shrink-0"></div>
+                </div>
+            </div>
+            
+            <a href="guardian_need_guardian.html" class="block w-full py-5 border-2 border-dashed border-slate-200 rounded-[32px] text-center hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-slate-400 block mx-auto text-2xl mb-1">add_circle</span>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Add Another Senior</span>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        function switchSenior(name, el) {
+            // Uncheck all
+            document.querySelectorAll('.bg-white.rounded-\\[32px\\]').forEach(card => {
+                if(card.classList.contains('border-primary')) {
+                    card.classList.remove('border-2', 'border-primary');
+                    card.classList.add('border', 'border-slate-100');
+                    const indicator = card.querySelector('.w-6.h-6');
+                    if(indicator) {
+                        indicator.className = 'w-6 h-6 rounded-full border-2 border-slate-200 shrink-0';
+                        indicator.innerHTML = '';
+                    }
+                    const badge = card.querySelector('.bg-primary.text-white');
+                    if(badge) badge.remove();
+                }
+            });
+
+            // Check selected
+            el.classList.remove('border', 'border-slate-100');
+            el.classList.add('border-2', 'border-primary');
+            const indicator = el.querySelector('.w-6.h-6');
+            if(indicator) {
+                indicator.className = 'w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center shrink-0';
+                indicator.innerHTML = '<div class="w-2 h-2 rounded-full bg-white"></div>';
+            }
+
+            // Mock updating context
+            setTimeout(() => {
+                alert(`Successfully switched context to ${name}. The dashboard will now reflect their data.`);
+                window.location.href = 'guardian_dashboard.html';
+            }, 600);
+        }
+    </script>
+</body>
+</html>

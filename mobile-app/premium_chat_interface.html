@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chat Interface</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "apple-blue": "#0A1F44",
+                        "apple-bg": "#F8F9FF",
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+        .apple-shadow { box-shadow: 0 4px 14px rgba(10, 31, 68, 0.05), 0 1px 4px rgba(10, 31, 68, 0.04); }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .glass-input { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 1px solid rgba(0, 0, 0, 0.05); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-apple-bg text-[#0A1F44] h-screen flex flex-col overflow-hidden font-sans">
+<!-- TopAppBar -->
+<header class="glass-nav sticky top-0 w-full z-50 grid grid-cols-[1fr_auto_1fr] items-center px-4 h-[64px]">
+<button class="flex items-center justify-start w-10 h-10 text-apple-blue hover:opacity-70 active:scale-95 transition-all duration-150 rounded-full">
+<span class="material-symbols-outlined text-[24px]" data-icon="arrow_back_ios_new">arrow_back_ios_new</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="text-[17px] font-bold text-apple-blue tracking-tight leading-tight">Messages</h1>
+<span class="text-[11px] font-medium text-on-surface-variant/70">Online</span>
+</div>
+<div class="flex items-center justify-end gap-2"><button class="flex items-center justify-center w-10 h-10 text-apple-blue hover:opacity-70 active:scale-95 transition-all duration-150 rounded-full">
+<span class="material-symbols-outlined text-[24px]" data-icon="videocam">videocam</span>
+</button>
+<button class="flex items-center justify-center w-10 h-10 text-apple-blue hover:opacity-70 active:scale-95 transition-all duration-150 rounded-full">
+<span class="material-symbols-outlined text-[24px]" data-icon="call">call</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-gray-200 ml-1">
+<img alt="Profile Picture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3GDeHrmdAoW9RyWOOvgHRP34A7tAkWomth7A44C0CVQ_75CBMLOqyKNgzNeBDGc5DK_R0mGA-tajbTfYQl71G9Aa4f3ySbihS64nVHbQX19lFqBMSfQdhf1dC7c4Ny7jgOvQanp2-FdTf_I5zg3ScggW3s3Bnn7oPMxWU5Rhp8oclbFfTrOquaqkyJFJm9L-heiQZ1olPJs5hy3meRZ-HgFIJ0mcUBHPJ1TfSLbzcXLfrB2hRZfLNeLdGyHZQP8xy1oKl_ZJlRLI"/>
+</div></div>
+</header>
+<!-- Chat Canvas -->
+<main class="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-6">
+<!-- Date Divider -->
+<div class="flex justify-center my-2">
+<span class="text-[12px] font-semibold text-gray-400 tracking-wide uppercase">Today</span>
+</div>
+<!-- Message from Contact -->
+<div class="flex flex-col items-start max-w-[80%]">
+<div class="bg-white text-apple-blue p-4 rounded-[20px] rounded-tl-sm apple-shadow border border-gray-100">
+<p class="text-[16px] leading-[24px]">Good morning! I received your latest blood pressure readings. They look much better today.</p>
+</div>
+<span class="text-[11px] font-medium text-gray-400 mt-1 ml-2">09:41 AM</span>
+</div>
+<!-- Message from User -->
+<div class="flex flex-col items-end max-w-[80%] self-end">
+<div class="bg-apple-blue text-white p-4 rounded-[20px] rounded-tr-sm apple-shadow">
+<p class="text-[16px] leading-[24px]">That's a relief, thank you Dr. Pen. I've been making sure to take the new medication exactly as prescribed.</p>
+</div>
+<span class="text-[11px] font-medium text-gray-400 mt-1 mr-2">09:45 AM</span>
+</div>
+<!-- Message from Contact (Follow up) -->
+<div class="flex flex-col items-start max-w-[80%]">
+<div class="bg-white text-apple-blue p-4 rounded-[20px] rounded-tl-sm apple-shadow border border-gray-100">
+<p class="text-[16px] leading-[24px]">Excellent. Keep up the good work. Have you experienced any dizziness when standing up?</p>
+</div>
+<span class="text-[11px] font-medium text-gray-400 mt-1 ml-2">09:48 AM</span>
+</div>
+<!-- Message from User -->
+<div class="flex flex-col items-end max-w-[80%] self-end">
+<div class="bg-apple-blue text-white p-4 rounded-[20px] rounded-tr-sm apple-shadow">
+<p class="text-[16px] leading-[24px]">Just a little bit yesterday morning, but nothing since then.</p>
+</div>
+<span class="text-[11px] font-medium text-gray-400 mt-1 mr-2">10:02 AM</span>
+</div>
+</main>
+<!-- Input Area -->
+<footer class="glass-input p-4 pb-8 z-40">
+<div class="flex items-center gap-3 max-w-4xl mx-auto">
+<button class="flex-shrink-0 flex items-center justify-center w-10 h-10 text-gray-500 hover:text-apple-blue transition-colors">
+<span class="material-symbols-outlined text-[26px]" data-icon="add">add</span>
+</button>
+<div class="flex-1 bg-white border border-gray-200 rounded-full px-4 py-2 flex items-center focus-within:border-apple-blue transition-colors apple-shadow">
+<input class="w-full bg-transparent border-none focus:ring-0 text-[16px] text-apple-blue placeholder:text-gray-400 h-full py-1 outline-none" placeholder="Type a message..." type="text"/>
+<button class="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-apple-blue text-white rounded-full hover:bg-opacity-90 transition-colors ml-2 active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</div>
+</div>
+</footer>
+</body></html>

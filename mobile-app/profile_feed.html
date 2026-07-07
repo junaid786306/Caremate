@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreya's Posts</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: "#001b3f", secondary: "#4f55ae", "primary-fixed": "#d7e2ff", "on-surface-variant": "#43474f" },
+                    fontFamily: { manrope: ["Manrope", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .feed-card { border-radius: 0; }
+        .sheet { transform: translateY(100%); transition: transform 0.38s cubic-bezier(0.4,0,0.2,1); }
+        .sheet.open { transform: translateY(0); }
+        .backdrop { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .backdrop.open { opacity: 1; pointer-events: all; }
+    </style>
+</head>
+<body class="bg-white text-primary font-manrope antialiased min-h-screen pb-[120px]">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between h-[64px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-lg text-primary">Posts</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-md mx-auto py-2 space-y-3">
+
+        <!-- Post 1 -->
+        <article class="bg-white border-y border-slate-100 overflow-hidden" data-post-id="post1">
+            <div class="px-4 py-3 flex items-center gap-3">
+                <img id="pfp-post1" src="shreya_senior_profile_1777714702221.png" class="w-9 h-9 rounded-full border border-slate-200 object-cover">
+                <div class="flex-1">
+                    <h4 class="text-sm font-bold text-primary">Shreya</h4>
+                    <p class="text-[10px] text-slate-400 font-medium">2 hours ago</p>
+                </div>
+                <button onclick="openMoreSheet()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50">
+                    <span class="material-symbols-outlined text-slate-400">more_horiz</span>
+                </button>
+            </div>
+            <div class="aspect-square bg-slate-100">
+                <img src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=2070" class="w-full h-full object-cover">
+            </div>
+            <div class="p-4 space-y-2">
+                <div class="flex items-center gap-5">
+                    <button onclick="toggleLike('post1', this)" class="flex items-center gap-1.5 group" data-liked="false">
+                        <span class="material-symbols-outlined text-2xl text-slate-400 group-active:scale-125 transition-transform">favorite</span>
+                        <span class="text-xs font-bold text-slate-500 like-count">42</span>
+                    </button>
+                    <button onclick="openComments('post1')" class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">chat_bubble</span>
+                        <span class="text-xs font-bold text-slate-500">8</span>
+                    </button>
+                    <button onclick="openShare('post1')" class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">send</span>
+                    </button>
+                    <button class="ml-auto">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">bookmark_border</span>
+                    </button>
+                </div>
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    <span class="font-bold text-primary mr-1">Shreya</span>
+                    <span class="caption-text">Beautiful morning walk at the park today...</span><button onclick="toggleCaption(this, 'Beautiful morning walk at the park today. The fresh air is so rejuvenating! #Wellness #MorningWalk')" class="text-slate-400 font-bold text-xs ml-1">more</button>
+                </p>
+            </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="bg-white border-y border-slate-100 overflow-hidden" data-post-id="post2">
+            <div class="px-4 py-3 flex items-center gap-3">
+                <img id="pfp-post2" src="shreya_senior_profile_1777714702221.png" class="w-9 h-9 rounded-full border border-slate-200 object-cover">
+                <div class="flex-1">
+                    <h4 class="text-sm font-bold text-primary">Shreya</h4>
+                    <p class="text-[10px] text-slate-400 font-medium">Yesterday</p>
+                </div>
+                <button onclick="openMoreSheet()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50">
+                    <span class="material-symbols-outlined text-slate-400">more_horiz</span>
+                </button>
+            </div>
+            <div class="aspect-square bg-slate-100 relative">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center justify-center bg-black/5">
+                    <a href="reels.html?single=true"><span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span></a>
+                </div>
+            </div>
+            <div class="p-4 space-y-2">
+                <div class="flex items-center gap-5">
+                    <button onclick="toggleLike('post2', this)" class="flex items-center gap-1.5 group" data-liked="true">
+                        <span class="material-symbols-outlined text-2xl text-red-500 group-active:scale-125 transition-transform" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                        <span class="text-xs font-bold text-slate-500 like-count">78</span>
+                    </button>
+                    <button onclick="openComments('post2')" class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">chat_bubble</span>
+                        <span class="text-xs font-bold text-slate-500">14</span>
+                    </button>
+                    <button onclick="openShare('post2')" class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">send</span>
+                    </button>
+                    <button class="ml-auto">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">bookmark_border</span>
+                    </button>
+                </div>
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    <span class="font-bold text-primary mr-1">Shreya</span>
+                    <span class="caption-text">Just finished my 10-minute...</span><button onclick="toggleCaption(this, 'Just finished my 10-minute stretch routine. Feeling great! #Health #Stretch')" class="text-slate-400 font-bold text-xs ml-1">more</button>
+                </p>
+            </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="bg-white border-y border-slate-100 overflow-hidden" data-post-id="post3">
+            <div class="px-4 py-3 flex items-center gap-3">
+                <img id="pfp-post3" src="shreya_senior_profile_1777714702221.png" class="w-9 h-9 rounded-full border border-slate-200 object-cover">
+                <div class="flex-1">
+                    <h4 class="text-sm font-bold text-primary">Shreya</h4>
+                    <p class="text-[10px] text-slate-400 font-medium">2 days ago</p>
+                </div>
+            </div>
+            <div class="aspect-square bg-slate-100">
+                <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964" class="w-full h-full object-cover">
+            </div>
+            <div class="p-4 space-y-2">
+                <div class="flex items-center gap-5">
+                    <button onclick="toggleLike('post3', this)" class="flex items-center gap-1.5 group" data-liked="false">
+                        <span class="material-symbols-outlined text-2xl text-slate-400 group-active:scale-125 transition-transform">favorite</span>
+                        <span class="text-xs font-bold text-slate-500 like-count">31</span>
+                    </button>
+                    <button onclick="openComments('post3')" class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">chat_bubble</span>
+                        <span class="text-xs font-bold text-slate-500">5</span>
+                    </button>
+                    <button onclick="openShare('post3')" class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">send</span>
+                    </button>
+                    <button class="ml-auto">
+                        <span class="material-symbols-outlined text-2xl text-slate-400">bookmark_border</span>
+                    </button>
+                </div>
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    <span class="font-bold text-primary mr-1">Shreya</span>
+                    <span class="caption-text">A healthy snack to keep...</span><button onclick="toggleCaption(this, 'A healthy snack to keep me going. #HealthyEating #SnackTime')" class="text-slate-400 font-bold text-xs ml-1">more</button>
+                </p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Shared Overlay -->
+    <div id="sheet-overlay" class="fixed inset-0 bg-slate-900/40 z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- More Options Sheet -->
+    <div id="more-sheet" class="fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[32px] transition-transform duration-300 translate-y-full shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pb-8 max-w-md mx-auto">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+            <h3 class="font-bold text-primary text-base">Post Options</h3>
+            <button onclick="closeMoreSheet()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+        <div class="px-4 py-2 flex flex-col">
+            <button onclick="doPostAction('Edit Post')" class="flex items-center gap-4 px-4 py-4 text-slate-700 font-bold active:bg-slate-50 rounded-xl">
+                <span class="material-symbols-outlined">edit</span> Edit Post
+            </button>
+            <button onclick="doPostAction('Archive Post')" class="flex items-center gap-4 px-4 py-4 text-slate-700 font-bold active:bg-slate-50 rounded-xl">
+                <span class="material-symbols-outlined">archive</span> Archive Post
+            </button>
+            <button onclick="doPostAction('Delete Post')" class="flex items-center gap-4 px-4 py-4 text-red-500 font-bold active:bg-red-50 rounded-xl">
+                <span class="material-symbols-outlined">delete</span> Delete Post
+            </button>
+        </div>
+    </div>
+
+    <!-- ===================== COMMENT SHEET ===================== -->
+    <div id="comment-backdrop" class="backdrop fixed inset-0 bg-black/40 z-40" onclick="closeComments()"></div>
+    <div id="comment-sheet" class="sheet fixed bottom-0 left-0 w-full max-w-md mx-auto right-0 bg-white z-50 rounded-t-[32px] shadow-2xl flex flex-col" style="max-height:80vh;">
+        <div class="flex items-center justify-between px-6 pt-5 pb-3 border-b border-slate-100 flex-shrink-0">
+            <span class="w-10 h-1 bg-slate-200 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3"></span>
+            <h3 class="font-bold text-base text-primary">Comments</h3>
+            <button onclick="closeComments()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100">
+                <span class="material-symbols-outlined text-slate-400 text-lg">close</span>
+            </button>
+        </div>
+
+
+        <!-- Comments List -->
+        <div id="comments-list" class="flex-1 overflow-y-auto px-6 py-4 space-y-5"></div>
+        <!-- Write Comment -->
+        <div class="border-t border-slate-100 px-4 py-3 flex items-center gap-3 flex-shrink-0 pb-8">
+            <img id="comment-pfp" src="shreya_senior_profile_1777714702221.png" class="w-8 h-8 rounded-full object-cover flex-shrink-0">
+            <div class="flex-1 bg-slate-50 rounded-full px-4 py-2.5 flex items-center gap-2">
+                <input id="comment-input" type="text" placeholder="Add a comment..." class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder:text-slate-400">
+                <button onclick="submitComment()" class="text-secondary font-bold text-sm flex-shrink-0">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== SHARE SHEET ===================== -->
+    <div id="share-backdrop" class="backdrop fixed inset-0 bg-black/40 z-40" onclick="closeShare()"></div>
+    <div id="share-sheet" class="sheet fixed bottom-0 left-0 w-full max-w-md mx-auto right-0 bg-white z-50 rounded-t-[32px] shadow-2xl p-6 pb-10">
+        <span class="w-10 h-1 bg-slate-200 rounded-full mx-auto block mb-5"></span>
+        <h3 class="font-bold text-base text-primary mb-4">Share Post</h3>
+        <div class="flex items-center gap-2 bg-slate-50 rounded-full px-4 py-2 mb-5">
+            <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
+            <input type="text" placeholder="Search friends..." class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder:text-slate-400">
+        </div>
+        <div class="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1 hide-scrollbar">
+            <div class="flex flex-col items-center gap-1.5 flex-shrink-0 w-16">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-14 h-14 rounded-full border-2 border-slate-200">
+                <span class="text-[10px] font-bold text-slate-600 text-center">Elena</span>
+                <button onclick="sendToUser(this)" class="send-btn text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 py-1 rounded-full mt-0.5">Send</button>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 flex-shrink-0 w-16">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-14 h-14 rounded-full border-2 border-slate-200">
+                <span class="text-[10px] font-bold text-slate-600 text-center">Arthur</span>
+                <button onclick="sendToUser(this)" class="send-btn text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 py-1 rounded-full mt-0.5">Send</button>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 flex-shrink-0 w-16">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" class="w-14 h-14 rounded-full border-2 border-slate-200">
+                <span class="text-[10px] font-bold text-slate-600 text-center">Sarah</span>
+                <button onclick="sendToUser(this)" class="send-btn text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 py-1 rounded-full mt-0.5">Send</button>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 flex-shrink-0 w-16">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Michael" class="w-14 h-14 rounded-full border-2 border-slate-200">
+                <span class="text-[10px] font-bold text-slate-600 text-center">Michael</span>
+                <button onclick="sendToUser(this)" class="send-btn text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 py-1 rounded-full mt-0.5">Send</button>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 flex-shrink-0 w-16">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rose" class="w-14 h-14 rounded-full border-2 border-slate-200">
+                <span class="text-[10px] font-bold text-slate-600 text-center">Rose</span>
+                <button onclick="sendToUser(this)" class="send-btn text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 py-1 rounded-full mt-0.5">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#001b3f] text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl z-[100] opacity-0 pointer-events-none transition-all duration-300">Sent!</div>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-30 flex justify-around items-center px-6 h-[100px] bg-white/80 backdrop-blur-2xl rounded-t-[40px] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-6">
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="home_dashboard.html">
+            <span class="material-symbols-outlined text-[26px]">home</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="wellness_exercises.html">
+            <span class="material-symbols-outlined text-[26px]">directions_run</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Exercise</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="health_summary.html">
+            <span class="material-symbols-outlined text-[26px]">bar_chart</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Report</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] text-on-surface-variant hover:text-primary transition-all duration-300" href="community_hub.html">
+            <span class="material-symbols-outlined text-[26px]">group</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Community</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-1.5 flex-1 h-[68px] bg-primary-fixed/50 text-primary rounded-[22px] transition-all duration-300" href="user_profile.html">
+            <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">person</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
+        </a>
+    </nav>
+
+<script>
+// Persist likes in localStorage
+const defaultLikes = { post1: 42, post2: 78, post3: 31 };
+const defaultLiked = { post1: false, post2: true, post3: false };
+
+function getLikeData(postId) {
+    const saved = JSON.parse(localStorage.getItem('likesData') || '{}');
+    return {
+        count: saved[postId]?.count ?? defaultLikes[postId],
+        liked: saved[postId]?.liked ?? defaultLiked[postId]
+    };
+}
+
+function saveLikeData(postId, count, liked) {
+    const saved = JSON.parse(localStorage.getItem('likesData') || '{}');
+    saved[postId] = { count, liked };
+    localStorage.setItem('likesData', JSON.stringify(saved));
+}
+
+function toggleLike(postId, btn) {
+    let { count, liked } = getLikeData(postId);
+    liked = !liked;
+    count = liked ? count + 1 : count - 1;
+    saveLikeData(postId, count, liked);
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const countEl = btn.querySelector('.like-count');
+    if (liked) {
+        icon.style.color = '#ef4444';
+        icon.style.fontVariationSettings = "'FILL' 1";
+        icon.classList.remove('text-slate-400');
+    } else {
+        icon.style.color = '';
+        icon.style.fontVariationSettings = "'FILL' 0";
+        icon.classList.add('text-slate-400');
+    }
+    countEl.textContent = count;
+}
+
+// Initialize like states on load
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-post-id]').forEach(article => {
+        const postId = article.dataset.postId;
+        const btn = article.querySelector('[data-liked]');
+        if (!btn) return;
+        const { count, liked } = getLikeData(postId);
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const countEl = btn.querySelector('.like-count');
+        btn.dataset.liked = liked;
+        countEl.textContent = count;
+        if (liked) {
+            icon.style.color = '#ef4444';
+            icon.style.fontVariationSettings = "'FILL' 1";
+        }
+    });
+
+    // Update profile pic
+    const storedImg = localStorage.getItem('user_profile_img');
+    if (storedImg) {
+        document.querySelectorAll('img[src*="shreya_senior_profile"]').forEach(img => img.src = storedImg);
+        document.getElementById('comment-pfp').src = storedImg;
+    }
+});
+
+// Caption toggle
+function toggleCaption(btn, full) {
+    const captionEl = btn.previousElementSibling;
+    captionEl.textContent = full;
+    btn.remove();
+}
+
+// Comments
+let currentPost = null;
+const commentsData = {};
+
+function openComments(postId) {
+    currentPost = postId;
+    if (!commentsData[postId]) commentsData[postId] = [
+        { user: 'Elena', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Elena', text: 'You look amazing! 🌸', likes: 5, liked: false },
+        { user: 'Arthur', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur', text: 'Such great energy! Keep going!', likes: 3, liked: false }
+    ];
+    renderComments(postId);
+    document.getElementById('comment-sheet').classList.add('open');
+    document.getElementById('comment-backdrop').classList.add('open');
+}
+
+function closeComments() {
+    document.getElementById('comment-sheet').classList.remove('open');
+    document.getElementById('comment-backdrop').classList.remove('open');
+}
+
+function toggleComments(postId) {
+    const sheet = document.getElementById('comments-sheet');
+    const overlay = document.getElementById('sheet-overlay');
+    if (sheet.classList.contains('open')) {
+        sheet.classList.remove('open');
+        overlay.classList.remove('opacity-100', 'pointer-events-auto');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+    } else {
+        sheet.classList.add('open');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100', 'pointer-events-auto');
+    }
+}
+
+function renderComments(postId) {
+    const list = document.getElementById('comments-list');
+    list.innerHTML = '';
+    (commentsData[postId] || []).forEach((c, i) => {
+        const el = document.createElement('div');
+        el.className = 'flex gap-3 items-start';
+        el.innerHTML = `
+            <img src="${c.avatar}" class="w-8 h-8 rounded-full flex-shrink-0 border border-slate-100">
+            <div class="flex-1">
+                <p class="text-sm"><span class="font-bold text-primary mr-1">${c.user}</span>${c.text}</p>
+                <div class="flex items-center gap-4 mt-1.5">
+                    <span class="text-[10px] text-slate-400">Just now</span>
+                    <button onclick="likeComment('${postId}', ${i}, this)" class="flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors">
+                        <span class="material-symbols-outlined text-sm ${c.liked ? 'text-red-500' : ''}" style="font-variation-settings: 'FILL' ${c.liked ? 1 : 0}">favorite</span>
+                        <span class="text-[10px] font-bold comment-like-count">${c.likes}</span>
+                    </button>
+                </div>
+            </div>`;
+        list.appendChild(el);
+    });
+}
+
+function likeComment(postId, idx, btn) {
+    const c = commentsData[postId][idx];
+    c.liked = !c.liked;
+    c.likes += c.liked ? 1 : -1;
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const countEl = btn.querySelector('.comment-like-count');
+    icon.style.fontVariationSettings = `'FILL' ${c.liked ? 1 : 0}`;
+    icon.style.color = c.liked ? '#ef4444' : '';
+    countEl.textContent = c.likes;
+}
+
+function submitComment() {
+    const input = document.getElementById('comment-input');
+    const text = input.value.trim();
+    if (!text || !currentPost) return;
+    if (!commentsData[currentPost]) commentsData[currentPost] = [];
+    const pfpSrc = localStorage.getItem('user_profile_img') || 'shreya_senior_profile_1777714702221.png';
+    commentsData[currentPost].unshift({ user: 'You', avatar: pfpSrc, text, likes: 0, liked: false });
+    renderComments(currentPost);
+    input.value = '';
+}
+
+// Share
+function openShare(postId) {
+    document.getElementById('share-sheet').classList.add('open');
+    document.getElementById('share-backdrop').classList.add('open');
+}
+function closeShare() {
+    document.getElementById('share-sheet').classList.remove('open');
+    document.getElementById('share-backdrop').classList.remove('open');
+}
+function closeShareSheet() {
+    document.getElementById('share-sheet').classList.remove('translate-y-0');
+    document.getElementById('share-sheet').classList.add('translate-y-full');
+    document.getElementById('sheet-overlay').classList.remove('opacity-100');
+    document.getElementById('sheet-overlay').classList.add('opacity-0', 'pointer-events-none');
+}
+
+function openMoreSheet() {
+    document.getElementById('more-sheet').classList.remove('translate-y-full');
+    document.getElementById('more-sheet').classList.add('translate-y-0');
+    document.getElementById('sheet-overlay').classList.remove('opacity-0', 'pointer-events-none');
+    document.getElementById('sheet-overlay').classList.add('opacity-100', 'pointer-events-auto');
+}
+
+function closeMoreSheet() {
+    document.getElementById('more-sheet').classList.remove('translate-y-0');
+    document.getElementById('more-sheet').classList.add('translate-y-full');
+    document.getElementById('sheet-overlay').classList.remove('opacity-100', 'pointer-events-auto');
+    document.getElementById('sheet-overlay').classList.add('opacity-0', 'pointer-events-none');
+}
+
+function doPostAction(action) {
+    closeMoreSheet();
+    showToast(`${action} successful!`);
+}
+
+document.getElementById('sheet-overlay').addEventListener('click', () => {
+    closeShareSheet();
+    closeMoreSheet();
+    const commentsSheet = document.getElementById('comments-sheet');
+    if (commentsSheet && commentsSheet.classList.contains('open')) {
+        toggleComments();
+    }
+});
+
+function sendToUser(btn) {
+    btn.textContent = 'Sent ✓';
+    btn.classList.remove('bg-primary');
+    btn.classList.add('bg-emerald-500');
+    showToast('Message sent!');
+    setTimeout(closeShare, 800);
+}
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    setTimeout(() => t.style.opacity = '0', 2000);
+}
+</script>
+</body>
+</html>

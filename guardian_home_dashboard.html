@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guardian Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#e8e7ed",
+                      "on-background": "#1a1b1f",
+                      "surface-variant": "#e3e2e7",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#373c95",
+                      "secondary-container": "#9aa0ff",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#43474b",
+                      "inverse-on-surface": "#f1f0f5",
+                      "secondary": "#4f55ae",
+                      "surface-dim": "#dad9df",
+                      "on-secondary-fixed": "#02026b",
+                      "secondary-fixed-dim": "#bfc2ff",
+                      "primary": "#00193c",
+                      "surface-tint": "#3e5e95",
+                      "surface-container": "#eeedf2",
+                      "outline": "#747781",
+                      "on-surface-variant": "#43474f",
+                      "on-primary-fixed": "#001b3f",
+                      "surface-container-low": "#f4f3f8",
+                      "on-surface": "#1a1b1f",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#2a2f32",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#e0e0ff",
+                      "inverse-primary": "#abc7ff",
+                      "tertiary": "#151a1d",
+                      "on-tertiary-fixed": "#171c1f",
+                      "on-primary-container": "#7796d1",
+                      "on-primary-fixed-variant": "#24467c",
+                      "primary-fixed-dim": "#abc7ff",
+                      "on-secondary-container": "#2d328b",
+                      "primary-container": "#002d62",
+                      "inverse-surface": "#2f3034",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed-dim": "#c3c7cb",
+                      "on-tertiary-container": "#92969a",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#faf9fe",
+                      "primary-fixed": "#d7e2ff",
+                      "tertiary-fixed": "#dfe3e7",
+                      "surface-bright": "#faf9fe",
+                      "outline-variant": "#c4c6d1",
+                      "background": "#faf9fe",
+                      "surface-container-highest": "#e3e2e7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "stack-lg": "40px",
+                      "margin-page": "24px",
+                      "unit": "8px",
+                      "stack-sm": "12px",
+                      "stack-md": "24px",
+                      "touch-target-min": "60px"
+              },
+              "fontFamily": {
+                      "display": [
+                              "Manrope"
+                      ],
+                      "label-caps": [
+                              "Manrope"
+                      ],
+                      "headline-md": [
+                              "Manrope"
+                      ],
+                      "headline-lg": [
+                              "Manrope"
+                      ],
+                      "body-lg": [
+                              "Manrope"
+                      ],
+                      "body-md": [
+                              "Manrope"
+                      ]
+              },
+              "fontSize": {
+                      "display": [
+                              "34px",
+                              {
+                                      "lineHeight": "42px",
+                                      "letterSpacing": "-0.5px",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "label-caps": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "1px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.3px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "30px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-[60px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,45,98,0.08)] border-b border-white/20">
+<button onclick="window.location.href='scam_shield_ai_assistant_utility_view.html'" class="text-blue-900 dark:text-blue-300 hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center w-10 h-10">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">security</span>
+</button>
+<div class="flex-1"></div>
+<button onclick="window.location.href='notifications_hub.html'" class="text-blue-900 dark:text-blue-300 hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center w-10 h-10">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</header>
+<main class="pt-24 px-margin-page max-w-2xl mx-auto flex flex-col gap-stack-lg">
+<!-- Senior Safety Status Card -->
+<section class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col gap-stack-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-bl-full -z-10 blur-xl"></div>
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-background">Mom's Status</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Last updated: Just now</p>
+</div>
+<div class="flex items-center gap-2 bg-[#e6f4ea] text-[#137333] px-4 py-2 rounded-full shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-caps text-label-caps">SAFE</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface p-4 rounded-lg flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary-container">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-body-md text-body-md font-bold">Heart Rate</span>
+</div>
+<span class="font-headline-md text-headline-md">72 BPM</span>
+<span class="text-sm text-on-surface-variant">Resting normal</span>
+</div>
+<div class="bg-surface p-4 rounded-lg flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary-container">
+<span class="material-symbols-outlined">directions_walk</span>
+<span class="font-body-md text-body-md font-bold">Activity</span>
+</div>
+<span class="font-headline-md text-headline-md">Active</span>
+<span class="text-sm text-on-surface-variant">In living room</span>
+</div>
+</div>
+<a href="health_report.html" class="flex items-center justify-center gap-2 w-full py-3 border border-surface-variant rounded-lg text-sm font-bold text-primary-container hover:bg-surface transition-colors active:scale-95">
+    <span class="material-symbols-outlined text-sm">calendar_month</span> View Full History
+</a>
+</section>
+
+<!-- Quick Actions Row -->
+<section class="grid grid-cols-3 gap-4">
+<button onclick="handleReward()" class="bg-surface-container-lowest rounded-lg p-4 shadow-[0_10px_30_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col items-center justify-center gap-2 min-h-touch-target-min active:scale-95 transition-transform">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-body-md text-body-md font-medium text-on-background">Reward</span>
+</button>
+<button onclick="handleMessage()" class="bg-surface-container-lowest rounded-lg p-4 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col items-center justify-center gap-2 min-h-touch-target-min active:scale-95 transition-transform">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+</div>
+<span class="font-body-md text-body-md font-medium text-on-background">Message</span>
+</button>
+<button onclick="handleCall()" class="bg-primary-container rounded-lg p-4 shadow-[0_10px_30px_rgba(0,45,98,0.2)] border border-transparent flex flex-col items-center justify-center gap-2 min-h-touch-target-min active:scale-95 transition-transform">
+<div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+</div>
+<span class="font-body-md text-body-md font-medium text-on-primary">Call</span>
+</button>
+</section>
+
+<!-- Guardian Quick Actions: Health Management -->
+<section class="grid grid-cols-2 gap-4">
+    <div class="bg-surface-container-lowest rounded-lg p-5 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col items-center justify-center gap-3 min-h-[120px]">
+        <a href="add_medicine.html" class="w-12 h-12 rounded-full bg-error-container/40 flex items-center justify-center text-error active:scale-90 transition-transform">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pill</span>
+        </a>
+        <span class="font-body-md text-body-md font-bold text-on-background text-center text-sm">Medication</span>
+        <a href="medication_history.html" class="text-[10px] font-bold text-primary flex items-center gap-1 uppercase tracking-wider">History <span class="material-symbols-outlined text-xs">arrow_forward</span></a>
+    </div>
+    <div class="bg-surface-container-lowest rounded-lg p-5 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col items-center justify-center gap-3 min-h-[120px]">
+        <a href="add_diet.html" class="w-12 h-12 rounded-full bg-[#e6f4ea] flex items-center justify-center text-[#137333] active:scale-90 transition-transform">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+        </a>
+        <span class="font-body-md text-body-md font-bold text-on-background text-center text-sm">Diet Reminder</span>
+        <a href="diet_history.html" class="text-[10px] font-bold text-primary flex items-center gap-1 uppercase tracking-wider">History <span class="material-symbols-outlined text-xs">arrow_forward</span></a>
+    </div>
+</section>
+<!-- Fall Detection Card -->
+<section class="bg-surface-container-lowest rounded-lg p-5 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-orange-500">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">personal_injury</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-background">Fall Detection</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant text-xs">Motion sensor monitoring</p>
+            </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+        </label>
+    </div>
+    <div class="bg-green-50 rounded-lg p-3 flex items-center gap-3 border border-green-100">
+        <span class="material-symbols-outlined text-green-600 text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        <div>
+            <p class="text-xs font-bold text-green-700">Active · No falls detected</p>
+            <p class="text-[10px] text-green-600 font-medium mt-0.5">Monitoring bedroom & living room</p>
+        </div>
+    </div>
+</section>
+
+<!-- CCTV / Camera Card -->
+<section class="bg-surface-container-lowest rounded-lg p-5 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col gap-4 mt-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">videocam</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-background">CCTV Camera</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant text-xs">Home surveillance</p>
+            </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+        </label>
+    </div>
+    <!-- Camera Feed Placeholder -->
+    <div class="bg-slate-900 rounded-lg overflow-hidden h-40 relative flex items-center justify-center">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" alt="Camera Feed" class="w-full h-full object-cover opacity-60">
+        <div class="absolute top-2 left-2 flex items-center gap-1.5 bg-red-500/90 px-2 py-1 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            <span class="text-[9px] font-black text-white uppercase">Live</span>
+        </div>
+        <div class="absolute bottom-2 right-2 text-[10px] font-bold text-white/80">CAM 1 · Living Room</div>
+    </div>
+    <div class="grid grid-cols-3 gap-2">
+        <button class="py-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 flex flex-col items-center gap-1 active:bg-slate-100">
+            <span class="material-symbols-outlined text-sm">living</span>Living Rm
+        </button>
+        <button class="py-2 bg-blue-50 border border-blue-200 rounded-lg text-[10px] font-bold text-primary flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-sm">bed</span>Bedroom
+        </button>
+        <button class="py-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 flex flex-col items-center gap-1 active:bg-slate-100">
+            <span class="material-symbols-outlined text-sm">door_front</span>Entrance
+        </button>
+    </div>
+</section>
+
+<!-- Fire / Smoke Detection Card -->
+<section class="bg-surface-container-lowest rounded-lg p-5 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant flex flex-col gap-4 mt-4 mb-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-background">Fire & Smoke</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant text-xs">Smart sensor network</p>
+            </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+        </label>
+    </div>
+    <div class="bg-green-50 rounded-lg p-3 flex items-center gap-3 border border-green-100">
+        <span class="material-symbols-outlined text-green-600 text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
+        <div>
+            <p class="text-xs font-bold text-green-700">No smoke or fire detected</p>
+            <p class="text-[10px] text-green-600 font-medium mt-0.5">Sensors in kitchen & hallway</p>
+        </div>
+    </div>
+</section>
+
+<!-- Safe Zone / Geo-fencing Card -->
+<section class="bg-surface-container-lowest rounded-lg p-0 shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant overflow-hidden flex flex-col">
+<div class="h-40 bg-surface-variant relative" id="map-container">
+<img id="map-image" alt="Map View" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdF0zs6KSThd1eWY5JkWaOkwTTn91ZeeRL-x2QeEKt1BHLXzyl9hPN4i8KHgX4P82r3hdsb9ui1sDtcK31JzKkSEC4JhiT_-xwPWJug-W4zOYV6FbOl7H_BatsRQksJ4oxDrOLpy7YsnoZt4X-XKwn63vkWYp3ajFES9ZYXxANsMimnvNa65EbJ0Uky_UjMDq3C1-c7tzElrrSFjPkkMvISI0XkkrTmjXewUFWl02Df4hkDkNwE0xrSWOFmGOcbQ_ZxUZlzEfcZpc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent pointer-events-none"></div>
+<button onclick="editMap()" class="absolute top-4 right-4 bg-white/90 backdrop-blur shadow-lg rounded-full p-2 text-primary hover:scale-110 active:scale-95 transition-all">
+    <span class="material-symbols-outlined text-xl">edit_location</span>
+</button>
+</div>
+<div class="p-6 pt-2 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background">Location</h3>
+<p class="font-body-md text-body-md text-on-surface-variant" id="location-text">123 Elm Street, Maplewood</p>
+</div>
+</div>
+        <div class="bg-surface p-4 rounded-lg border border-surface-variant flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[#137333]">home_work</span>
+                <span class="font-body-md text-body-md font-bold text-on-background">Inside Safe Zone</span>
+            </div>
+            <span class="text-sm text-on-surface-variant">Updated 2m ago</span>
+        </div>
+        <button onclick="editMap()" class="flex items-center justify-center gap-2 w-full py-3 border border-surface-variant rounded-lg text-sm font-bold text-primary-container hover:bg-surface transition-colors active:scale-95">
+            <span class="material-symbols-outlined text-sm">edit_location_alt</span> Edit Safe Zone
+        </button>
+    </div>
+</section>
+
+<!-- Scam Check History -->
+<section class="flex flex-col gap-stack-sm">
+<h2 class="font-headline-md text-headline-md text-on-background px-2">Scam Check History</h2>
+<div class="bg-surface-container-lowest rounded-lg shadow-[0_10px_30px_rgba(0,45,98,0.08)] border border-surface-variant divide-y divide-surface-variant">
+<div onclick="window.location.href='scam_history.html'" class="p-4 flex items-center gap-4 hover:bg-surface transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-[#e6f4ea] flex items-center justify-center text-[#137333] shrink-0">
+<span class="material-symbols-outlined">gpp_good</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg text-body-lg font-bold text-on-background">No scam detected</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">Incoming SMS from Unknown</p>
+</div>
+<div class="text-right shrink-0">
+<p class="font-body-md text-body-md font-medium text-on-background">10:42 AM</p>
+<p class="text-sm text-on-surface-variant">Today</p>
+</div>
+</div>
+<div onclick="window.location.href='scam_history.html'" class="p-4 flex items-center gap-4 hover:bg-surface transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-on-error-container shrink-0">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg text-body-lg font-bold text-error">Suspicious call blocked</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">Known telemarketer number</p>
+</div>
+<div class="text-right shrink-0">
+<p class="font-body-md text-body-md font-medium text-on-background">Yesterday</p>
+<p class="text-sm text-on-surface-variant">4:15 PM</p>
+</div>
+</div>
+</div>
+<a href="scam_history.html" class="mt-2 text-primary-container font-label-caps text-label-caps flex items-center justify-center gap-1 py-3 w-full hover:bg-surface rounded-lg transition-colors min-h-[48px]">
+                View Full History
+                <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</section>
+</main>
+
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-t-[32px] border-t border-white/20 h-[85px] shadow-[0_-10px_30px_rgba(0,45,98,0.08)]">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-blue-900/10 dark:bg-blue-400/20 text-blue-900 dark:text-blue-100 rounded-[22px] px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="guardian_home_dashboard.html">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Home</span>
+</a>
+<!-- Report -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="health_report.html">
+<span class="material-symbols-outlined mb-1">assessment</span>
+<span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Report</span>
+</a>
+<!-- Medicine -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="medication_history.html">
+<span class="material-symbols-outlined mb-1">pill</span>
+<span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Meds</span>
+</a>
+<!-- Diet -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="diet_history.html">
+<span class="material-symbols-outlined mb-1">restaurant</span>
+<span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Diet</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[22px] transition-colors" href="guardian_profile.html">
+<span class="material-symbols-outlined mb-1">account_circle</span>
+<span class="font-manrope text-[10px] font-extrabold uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+
+<script>
+    function handleReward() {
+        const hasReward = Math.random() > 0.5;
+        if(hasReward) {
+            alert("🎉 Reward Found! Mom completed her 7-day streak. Check your notifications for the voucher.");
+        } else {
+            alert("No rewards currently available. Keep encouraging Mom to stay active!");
+        }
+    }
+
+    function handleMessage() {
+        // Automatically link to Senior's chat or WhatsApp
+        const message = encodeURIComponent("Hi Mom, just checking in! How are you feeling today?");
+        window.location.href = `chat.html?text=${message}`;
+    }
+
+    function handleCall() {
+        // Automatically dial senior's number
+        window.location.href = "tel:+1234567890";
+    }
+
+    function editMap() {
+        window.location.href = "guardian_edit_location.html";
+    }
+</script>
+<!-- Desktop Sidebar Fallback (Hidden on Mobile, required for layout compliance) -->
+<nav class="hidden md:flex fixed left-0 top-[60px] h-[calc(100vh-60px)] w-64 bg-surface-container-lowest border-r border-surface-variant flex-col py-6 px-4 gap-2 z-40 shadow-sm">
+<a class="flex items-center gap-3 bg-primary-container/10 text-primary-container px-4 py-3 rounded-lg font-body-md text-body-md font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+            Home
+        </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 rounded-lg font-body-md text-body-md hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined">assessment</span>
+            Report
+        </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 rounded-lg font-body-md text-body-md hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+            Payment
+        </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 rounded-lg font-body-md text-body-md hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+            Profile
+        </a>
+</nav>
+</body></html>

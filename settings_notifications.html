@@ -1,0 +1,97 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Notification Settings - Caremate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00193c",
+                        "secondary": "#4f55ae",
+                        "background": "#faf9fe",
+                        "on-surface": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-manrope antialiased min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+        <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Notifications</h1>
+        <div class="w-10"></div>
+    </header>
+
+    <main class="max-w-2xl mx-auto p-6 space-y-8">
+        <!-- Push Notifications -->
+        <section class="space-y-4">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Push Notifications</h2>
+            <div class="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm">
+                <div class="p-5 flex items-center justify-between border-b border-slate-50 bg-slate-50/50">
+                    <div class="opacity-70">
+                        <p class="font-bold text-slate-700 flex items-center gap-2">Medicine Reminders <span class="material-symbols-outlined text-[14px] text-slate-400">lock</span></p>
+                        <p class="text-[10px] text-slate-400 font-medium">Mandatory alerts for daily schedule</p>
+                    </div>
+                    <label class="relative inline-flex items-center opacity-50 cursor-not-allowed">
+                        <input type="checkbox" checked disabled class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <div class="p-5 flex items-center justify-between border-b border-slate-50">
+                    <div>
+                        <p class="font-bold text-slate-700">Health Reports</p>
+                        <p class="text-[10px] text-slate-400 font-medium">Weekly summary available</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <div class="p-5 flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-slate-700">Community Activity</p>
+                        <p class="text-[10px] text-slate-400 font-medium">Likes, comments, and mentions</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Email Notifications -->
+        <section class="space-y-4">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Email Notifications</h2>
+            <div class="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm">
+                <div class="p-5 flex items-center justify-between border-b border-slate-50">
+                    <div>
+                        <p class="font-bold text-slate-700">Marketing & Updates</p>
+                        <p class="text-[10px] text-slate-400 font-medium">New features and tips</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </section>
+    </main>
+</body></html>
