@@ -16,7 +16,7 @@
     <style>
         .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
         .day-block{border-left:3px solid #e2e8f0;padding-left:20px;position:relative;}
-        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#8b5cf6;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
+        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#3b82f6;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
         .status-pill { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
         .status-pill:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .status-pill:active { transform: scale(0.97); }
@@ -50,8 +50,8 @@
         <div id="filter-all" onclick="filterStatus('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary">
             <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
         </div>
-        <div id="filter-optimal" onclick="filterStatus('optimal')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-purple-50 border border-purple-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-purple-500 rounded-full"></div><span class="text-[11px] font-extrabold text-purple-700 uppercase tracking-widest">Optimal</span></div>
-        <div id="filter-poor" onclick="filterStatus('poor')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-orange-50 border border-orange-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-orange-400 rounded-full"></div><span class="text-[11px] font-extrabold text-orange-600 uppercase tracking-widest">Poor</span></div>
+        <div id="filter-optimal" onclick="filterStatus('optimal')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-blue-50 border border-blue-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-[11px] font-extrabold text-blue-700 uppercase tracking-widest">Optimal</span></div>
+        <div id="filter-poor" onclick="filterStatus('poor')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-slate-50 border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-slate-400 rounded-full"></div><span class="text-[11px] font-extrabold text-slate-600 uppercase tracking-widest">Poor</span></div>
     </div>
 
     <main class="max-w-md mx-auto p-6">
@@ -81,18 +81,18 @@
             if (filteredEntries.length === 0) return '';
 
             const entries = filteredEntries.map(e=>`
-                <div class="flex flex-col gap-3 p-4 rounded-2xl border ${e.status==='optimal'?'bg-purple-50 border-purple-100':'bg-orange-50 border-orange-100'} mb-2 last:mb-0 shadow-sm">
-                    <div class="flex items-center justify-between border-b ${e.status==='optimal'?'border-purple-200/50':'border-orange-200/50'} pb-3">
+                <div class="flex flex-col gap-3 p-4 rounded-2xl border ${e.status==='optimal'?'bg-blue-50 border-blue-100':'bg-slate-50 border-slate-200'} mb-2 last:mb-0 shadow-sm">
+                    <div class="flex items-center justify-between border-b ${e.status==='optimal'?'border-blue-200/50':'border-slate-200'} pb-3">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] border border-slate-100">
-                                <span class="material-symbols-outlined ${e.status==='optimal'?'text-purple-500':'text-orange-500'} text-[22px]" style="font-variation-settings:'FILL' 1">bedtime</span>
+                                <span class="material-symbols-outlined ${e.status==='optimal'?'text-blue-500':'text-slate-400'} text-[22px]" style="font-variation-settings:'FILL' 1">bedtime</span>
                             </div>
                             <div>
-                                <p class="font-display text-2xl font-black ${e.status==='optimal'?'text-purple-700':'text-orange-700'} leading-none">${e.dur}</p>
-                                <span class="text-[10px] font-bold uppercase tracking-wider ${e.status==='optimal'?'text-purple-500':'text-orange-500'}">Total Sleep</span>
+                                <p class="font-display text-2xl font-black ${e.status==='optimal'?'text-blue-700':'text-slate-700'} leading-none">${e.dur}</p>
+                                <span class="text-[10px] font-bold uppercase tracking-wider ${e.status==='optimal'?'text-blue-500':'text-slate-500'}">Total Sleep</span>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider ${e.status==='optimal'?'bg-purple-100 text-purple-600':'bg-orange-100 text-orange-600'}">${e.status}</span>
+                        <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider ${e.status==='optimal'?'bg-blue-100 text-blue-600':'bg-slate-100 text-slate-600'}">${e.status}</span>
                     </div>
                     
                     <div class="flex justify-between items-center px-1">
@@ -101,7 +101,7 @@
                             <span class="font-bold text-sm text-slate-700">${e.sleep}</span>
                         </div>
                         <div class="h-px bg-slate-300 flex-1 mx-4 relative flex items-center justify-center">
-                            <span class="bg-${e.status==='optimal'?'purple':'orange'}-50 px-2 text-[10px] font-bold text-slate-400">${e.awake} times awake</span>
+                            <span class="${e.status==='optimal'?'bg-blue-50':'bg-slate-50'} px-2 text-[10px] font-bold text-slate-400">${e.awake} times awake</span>
                         </div>
                         <div class="flex flex-col items-end">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Wake Time</span>

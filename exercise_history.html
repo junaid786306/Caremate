@@ -16,18 +16,18 @@
     <style>
         .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
         .day-block{border-left:3px solid #e2e8f0;padding-left:20px;position:relative;}
-        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#10b981;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
+        .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#3b82f6;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
         .status-pill { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
         .status-pill:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .status-pill:active { transform: scale(0.97); }
     </style>
 </head>
 <body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-10">
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center gap-4 h-[72px]">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between h-[72px] relative">
         <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
             <span class="material-symbols-outlined text-primary">arrow_back</span>
         </button>
-        <h1 class="font-bold text-xl tracking-tight text-primary flex-1">Exercise History</h1>
+        <h1 class="font-bold text-xl tracking-tight text-primary absolute left-1/2 -translate-x-1/2 whitespace-nowrap">Exercise History</h1>
         <button onclick="toggleFilter()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors text-primary">
             <span class="material-symbols-outlined">calendar_month</span>
         </button>
@@ -50,8 +50,8 @@
         <div id="filter-all" onclick="filterStatus('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary">
             <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
         </div>
-        <div id="filter-completed" onclick="filterStatus('completed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-emerald-50 border border-emerald-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-emerald-500 rounded-full"></div><span class="text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest">Completed</span></div>
-        <div id="filter-skipped" onclick="filterStatus('skipped')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-red-50 border border-red-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-red-400 rounded-full"></div><span class="text-[11px] font-extrabold text-red-600 uppercase tracking-widest">Skipped</span></div>
+        <div id="filter-completed" onclick="filterStatus('completed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-blue-50 border border-blue-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-[11px] font-extrabold text-blue-700 uppercase tracking-widest">Completed</span></div>
+        <div id="filter-skipped" onclick="filterStatus('skipped')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-slate-50 border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50"><div class="w-2 h-2 bg-slate-400 rounded-full"></div><span class="text-[11px] font-extrabold text-slate-600 uppercase tracking-widest">Skipped</span></div>
     </div>
 
     <main class="max-w-md mx-auto p-6">
@@ -82,9 +82,9 @@
             if (filteredEntries.length === 0) return '';
 
             const entries = filteredEntries.map(e=>`
-                <div class="flex items-start gap-4 p-4 rounded-2xl border ${e.status==='completed'?'bg-emerald-50 border-emerald-100':'bg-red-50 border-red-100'} mb-2 last:mb-0">
+                <div class="flex items-start gap-4 p-4 rounded-2xl border ${e.status==='completed'?'bg-blue-50 border-blue-100':'bg-slate-50 border-slate-200'} mb-2 last:mb-0">
                     <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
-                        <span class="material-symbols-outlined ${e.status==='completed'?'text-emerald-600':'text-red-400'} text-[20px]" style="font-variation-settings:'FILL' 1">${e.status==='completed'?'fitness_center':'cancel'}</span>
+                        <span class="material-symbols-outlined ${e.status==='completed'?'text-blue-600':'text-slate-400'} text-[20px]" style="font-variation-settings:'FILL' 1">${e.status==='completed'?'fitness_center':'cancel'}</span>
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2 mb-0.5 flex-wrap">
@@ -93,7 +93,7 @@
                         </div>
                         <p class="text-[11px] text-slate-500">${e.dur} · ${e.cals} kcal burned${e.note?' · '+e.note:''}</p>
                     </div>
-                    <span class="text-[10px] font-black uppercase ${e.status==='completed'?'text-emerald-600':'text-red-500'}">${e.status}</span>
+                    <span class="text-[10px] font-black uppercase ${e.status==='completed'?'text-blue-600':'text-slate-500'}">${e.status}</span>
                 </div>
             `).join('');
             return `<div class="day-block"><h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">${day.date}</h3>${entries}</div>`;

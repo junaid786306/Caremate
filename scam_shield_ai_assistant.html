@@ -286,7 +286,7 @@
         <!-- Bottom bar (Input) -->
         <div class="px-4 py-3 flex-shrink-0 bg-white/40 backdrop-blur-md border-t border-white/50">
             <div class="w-full bg-white/90 rounded-full flex items-center pl-5 pr-2 py-2 shadow-sm border border-slate-200 focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-                <input type="text" id="scam-protect-input" placeholder="Type a message..." class="flex-1 bg-transparent border-none focus:ring-0 text-slate-700 placeholder-slate-400 text-[15px] font-medium p-0">
+                <input type="text" id="scam-protect-input" placeholder="Type a message..." class="flex-1 bg-transparent border-none focus:ring-0 text-slate-700 placeholder-slate-400 text-[15px] font-medium p-0" onkeydown="if(event.key==='Enter') sendScamProtectMessage()">
                 <input type="file" id="scam-protect-file-upload" class="hidden" accept="image/*,.pdf,.doc,.docx" onchange="handleScamProtectFileUpload(event)">
                 <button onclick="document.getElementById('scam-protect-file-upload').click()" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-primary transition-colors active:scale-95 mx-1">
                     <span class="material-symbols-outlined text-[26px]" style="transform: rotate(45deg);">attach_file</span>
@@ -418,40 +418,115 @@
         }, 400);
     }
 
-    const scamReplies = [
-        "🚨 That sounds suspicious! Real banks never ask for your OTP or PIN over the phone. Hang up immediately!",
-        "✅ Based on your description, this appears to be a common phishing attempt. Do NOT click any links.",
-        "⚠️ Urgency is a classic scam tactic. Take your time, don't panic, and verify through official channels.",
-        "🛡️ Good instinct reporting this! I'd recommend blocking this number and reporting it to your carrier.",
-        "📞 Legitimate companies will never demand gift card payments. This is almost certainly a scam.",
-        "✨ You're being very smart by checking! When in doubt, always verify by calling the official number directly."
-    ];
-    let scamReplyIdx = 0;
+    function escapeScamHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
 
-    function sendScamMessage() {
-        const input = document.getElementById('scam-ai-input');
-        const msg = input.value.trim();
-        if (!msg) return;
+    function getLocalScamAssessment(text) {
+        const scamKeywords = ['urgent','account locked','verify','prize','won','click here','otp','pin','bank alert','suspended','wire transfer','gift card','limited time','act now','password','upi','aadhaar','kyc','refund','delivery failed'];
+        const lower = text.toLowerCase();
+        const hits = scamKeywords.filter(k => lower.includes(k));
+        if (hits.length >= 2) {
+            return `High risk. I found scam warning signs: ${hits.join(', ')}. Do not click links, do not share OTP/PIN/passwords, and verify only through the official app, website, or phone number.`;
+        }
+        if (hits.length === 1) {
+            return `Suspicious. I found one warning sign: ${hits[0]}. Do not act quickly. Verify the sender through an official source before replying or paying.`;
+        }
+        return 'No obvious scam keywords found, but still be careful. If this message asks for money, OTP, PIN, passwords, links, remote access, or urgent action, treat it as suspicious and verify officially.';
+    }
+
+    async function askScamAssistant(message) {
+        const response = await fetch('/api/assistant', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                assistant: 'scam',
+                message: `Analyze this suspicious activity like a scam safety assistant. Give a clear verdict, reason, and what the user should do next. Suspicious content: ${message}`
+            })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+            throw new Error(data.error || 'Scam assistant is unavailable.');
+        }
+        return data.reply || getLocalScamAssessment(message);
+    }
+
+    function addScamChatBubble(message, fromUser = false) {
         const messages = document.getElementById('scam-chat-messages');
-        const userBubble = document.createElement('div');
-        userBubble.className = 'flex justify-end';
-        userBubble.innerHTML = `<div class="bg-red-700/80 text-white rounded-[18px] rounded-br-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${msg}</div>`;
-        messages.appendChild(userBubble);
-        input.value = '';
-        setTimeout(() => {
-            const reply = scamReplies[scamReplyIdx % scamReplies.length];
-            scamReplyIdx++;
-            const aiBubble = document.createElement('div');
-            aiBubble.className = 'flex gap-3 items-end';
-            aiBubble.innerHTML = `
+        const bubble = document.createElement('div');
+        bubble.className = fromUser ? 'flex justify-end' : 'flex gap-3 items-end';
+        if (fromUser) {
+            bubble.innerHTML = `<div class="bg-red-700/80 text-white rounded-[18px] rounded-br-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${escapeScamHtml(message)}</div>`;
+        } else {
+            bubble.innerHTML = `
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center flex-shrink-0 mb-1">
                     <span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings:'FILL' 1;">security</span>
                 </div>
-                <div class="bg-white/10 text-white rounded-[18px] rounded-bl-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${reply}</div>`;
-            messages.appendChild(aiBubble);
-            messages.scrollTop = messages.scrollHeight;
-        }, 700);
+                <div class="bg-white/10 text-white rounded-[18px] rounded-bl-[6px] px-4 py-3 max-w-[78%] text-sm leading-relaxed">${escapeScamHtml(message)}</div>`;
+        }
+        messages.appendChild(bubble);
         messages.scrollTop = messages.scrollHeight;
+        return bubble;
+    }
+
+    async function sendScamMessage() {
+        const input = document.getElementById('scam-ai-input');
+        const msg = input.value.trim();
+        if (!msg) return;
+        addScamChatBubble(msg, true);
+        input.value = '';
+        const typingBubble = addScamChatBubble('Analyzing with Scam Shield...', false);
+        try {
+            const reply = await askScamAssistant(msg);
+            typingBubble.remove();
+            addScamChatBubble(reply, false);
+        } catch (error) {
+            typingBubble.remove();
+            addScamChatBubble(getLocalScamAssessment(msg), false);
+        }
+    }
+
+    function addScamProtectBubble(message, fromUser = false) {
+        const content = document.getElementById('scam-protect-content');
+        const row = document.createElement('div');
+        row.className = fromUser ? 'flex justify-end' : 'flex justify-start';
+        row.innerHTML = `<div class="${fromUser ? 'bg-primary text-white rounded-br-[6px]' : 'bg-white text-primary rounded-bl-[6px] border border-slate-100'} rounded-[18px] px-4 py-3 max-w-[82%] text-sm leading-relaxed shadow-sm">${escapeScamHtml(message)}</div>`;
+        content.appendChild(row);
+        content.scrollTop = content.scrollHeight;
+        return row;
+    }
+
+    async function sendScamProtectMessage() {
+        const input = document.getElementById('scam-protect-input');
+        const msg = input.value.trim();
+        if (!msg) return;
+        addScamProtectBubble(msg, true);
+        input.value = '';
+        const status = document.getElementById('scam-protect-status');
+        const typing = addScamProtectBubble('Analyzing with Scam Shield...', false);
+        if (status) status.textContent = 'Scanning...';
+        try {
+            const reply = await askScamAssistant(msg);
+            typing.remove();
+            addScamProtectBubble(reply, false);
+            if (status) status.textContent = 'Answer ready';
+        } catch (error) {
+            typing.remove();
+            addScamProtectBubble(getLocalScamAssessment(msg), false);
+            if (status) status.textContent = 'Offline check complete';
+        }
+    }
+
+    function handleScamProtectFileUpload(event) {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        addScamProtectBubble(`Uploaded: ${file.name}. For now, type the message text or key details from the screenshot so Scam Shield can analyze it accurately.`, true);
+        event.target.value = '';
     }
 
         function openScamProtector(imgSrc) {
@@ -551,7 +626,7 @@
         reader.readAsDataURL(file);
     }
 
-    function analyzeScamText() {
+    async function analyzeScamText() {
         const text = document.getElementById('scam-text-input').value.trim();
         const result = document.getElementById('analyze-result');
         if (!text) {
@@ -563,21 +638,15 @@
         result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-slate-100 border border-slate-200 text-slate-600';
         result.textContent = '🔍 Analyzing...';
         result.classList.remove('hidden');
-        const scamKeywords = ['urgent','account locked','verify','prize','won','click here','otp','pin','bank alert','suspended','wire transfer','gift card','limited time','act now'];
-        const lower = text.toLowerCase();
-        const hits = scamKeywords.filter(k => lower.includes(k));
-        setTimeout(() => {
-            if (hits.length >= 2) {
-                result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-red-50 border border-red-200 text-red-800';
-                result.innerHTML = `🚨 <strong>HIGH RISK — Likely Scam!</strong><br><span class="font-normal mt-1 block">Detected suspicious keywords: <em>${hits.join(', ')}</em>. Do NOT respond, click links, or share personal information. Block this sender immediately.</span>`;
-            } else if (hits.length === 1) {
-                result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-amber-50 border border-amber-200 text-amber-800';
-                result.innerHTML = `⚠️ <strong>SUSPICIOUS — Proceed with Caution</strong><br><span class="font-normal mt-1 block">Found a potentially suspicious pattern. Verify with the official source before taking any action.</span>`;
-            } else {
-                result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-green-50 border border-green-200 text-green-800';
-                result.innerHTML = `✅ <strong>Appears Safe</strong><br><span class="font-normal mt-1 block">No obvious scam patterns detected. However, always be cautious with unsolicited messages.</span>`;
-            }
-        }, 1000);
+        try {
+            const reply = await askScamAssistant(text);
+            result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-red-50 border border-red-200 text-red-800';
+            result.innerHTML = `<strong>Scam Shield Result</strong><br><span class="font-normal mt-1 block whitespace-pre-line">${escapeScamHtml(reply)}</span>`;
+        } catch (error) {
+            const fallback = getLocalScamAssessment(text);
+            result.className = 'mt-3 p-4 rounded-2xl text-sm font-bold bg-amber-50 border border-amber-200 text-amber-800';
+            result.innerHTML = `<strong>Scam Shield Result</strong><br><span class="font-normal mt-1 block whitespace-pre-line">${escapeScamHtml(fallback)}</span>`;
+        }
     }
 </script>
 
