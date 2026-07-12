@@ -700,20 +700,21 @@
         </div>
 
 <!-- Caremate Assistant Wave Orb -->
-<section class="flex flex-col items-center justify-center py-2 text-center">
-  <button id="caremate-assist-btn" onclick="openCarematePopup()"
-    class="caremate-wave-orb relative w-36 h-36 flex items-center justify-center transition-transform duration-300 hover:scale-105 active:scale-95"
-    aria-label="Open Caremate Assistant">
-    <span class="caremate-wave-sphere"></span>
-    <span class="caremate-wave-highlight"></span>
-    <svg class="caremate-wave-svg" viewBox="0 0 240 120" aria-hidden="true">
-      <path class="caremate-wave-line secondary" d="M0 62 C28 15 48 105 78 58 S126 20 154 62 204 110 240 54"></path>
-      <path class="caremate-wave-line primary" d="M0 58 C26 30 46 92 76 62 S126 36 156 58 205 88 240 48"></path>
-    </svg>
-    <span id="caremate-assist-icon" class="material-symbols-outlined absolute">auto_awesome</span>
-  </button>
-  <h2 class="font-display text-[26px] text-on-surface mt-1 leading-tight" id="ai-status-text">Caremate Assistant</h2>
-  <p class="text-on-surface-variant text-sm mt-1 opacity-75">Tap to talk</p>
+<section class="flex flex-col items-center justify-center py-4 text-center cursor-pointer" onclick="window.location.href='caremate_voice_assistant.html'">
+  <a id="caremate-new-chat-btn" href="caremate_voice_assistant.html" onclick="event.stopPropagation()" class="relative w-full min-h-[112px] px-5 rounded-[24px] border border-white/90 backdrop-blur-[28px] overflow-hidden shadow-[0_16px_40px_rgba(85,91,170,0.14),0_5px_18px_rgba(92,213,255,0.09),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(115,108,219,0.08)] flex items-center justify-between gap-4 text-primary active:scale-[0.98] transition-all duration-200" style="background:linear-gradient(135deg,rgba(255,255,255,0.88) 0%,rgba(231,244,255,0.72) 34%,rgba(239,232,255,0.68) 68%,rgba(255,237,248,0.64) 100%);" aria-label="Start a new Caremate AI chat">
+    <span class="absolute inset-x-0 top-0 h-[46%] bg-gradient-to-b from-white/55 to-transparent pointer-events-none"></span>
+    <span class="relative z-10 w-[58px] h-[58px] rounded-full border border-white/90 flex items-center justify-center flex-none overflow-hidden shadow-[inset_6px_7px_13px_rgba(255,255,255,0.42),inset_-6px_-8px_14px_rgba(77,57,188,0.24),0_10px_23px_rgba(104,88,218,0.25)]" style="background:linear-gradient(145deg,#76ecff 0%,#7285ff 42%,#ac63f4 72%,#ff82bd 100%);">
+      <span class="absolute top-1.5 left-2.5 w-7 h-3 rounded-full bg-white/55 blur-[1px]"></span>
+      <span class="material-symbols-outlined relative z-10 text-[30px] text-white drop-shadow-[0_2px_4px_rgba(52,35,133,0.35)]" style="font-variation-settings: 'FILL' 1, 'wght' 450;">neurology</span>
+    </span>
+    <span class="relative z-10 flex-1 text-left leading-tight">
+      <span class="block text-[19px] font-semibold text-on-surface">Caremate AI</span>
+      <span class="block text-[12px] font-normal text-on-surface-variant mt-1.5">Start a new chat</span>
+    </span>
+    <span class="relative z-10 w-12 h-12 rounded-full border border-white/90 text-white flex items-center justify-center flex-none shadow-[inset_3px_4px_8px_rgba(255,255,255,0.35),inset_-3px_-4px_9px_rgba(54,42,154,0.22),0_9px_20px_rgba(96,79,214,0.22)]" style="background:linear-gradient(145deg,#69dfff 0%,#7580f2 52%,#ae62e8 100%);">
+      <span class="material-symbols-outlined text-[22px]">arrow_forward</span>
+    </span>
+  </a>
 </section>
 <!-- 2x2 Action Grid -->
 <section class="grid grid-cols-2 gap-gutter">
@@ -777,19 +778,20 @@
 </div>
 </article>
 <!-- Sleep Widget -->
-<article onclick="window.location.href='sleep_history.html'" class="cursor-pointer bg-surface-container rounded-lg p-margin-page flex flex-col justify-between min-h-[160px] border border-outline-variant/30 shadow-sm active:scale-[0.98] transition-transform">
-<div class="flex items-center gap-1.5 text-on-surface-variant">
-<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1; background: linear-gradient(145deg, #818cf8, #4338ca); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">bedtime</span>
-<span class="font-label-caps text-label-caps uppercase tracking-widest">Sleep Last Night</span>
+<article onclick="window.location.href='sleep_history.html'" class="cursor-pointer bg-primary-container rounded-lg p-margin-page relative overflow-hidden flex flex-col justify-between min-h-[160px] shadow-[0_8px_30px_rgba(0,45,98,0.08)] active:scale-[0.98] transition-transform">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="flex items-center gap-1.5 z-10 text-secondary-fixed">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1; background: linear-gradient(145deg, #93c5fd, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">bedtime</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-blue-100">Sleep Last Night</span>
 </div>
-<div class="mt-auto">
-<div class="flex items-baseline gap-2 text-primary">
-<span class="font-display text-display text-[48px] leading-[48px]">7<span class="font-headline-md text-headline-md text-on-surface-variant">h</span></span>
-<span class="font-display text-display text-[48px] leading-[48px]">45<span class="font-headline-md text-headline-md text-on-surface-variant">m</span></span>
+<div class="z-10 mt-auto">
+<div class="flex items-baseline gap-2">
+<span class="font-display text-display text-on-primary text-[48px] leading-[48px]">7<span class="font-headline-md text-headline-md text-secondary-fixed-dim">h</span></span>
+<span class="font-display text-display text-on-primary text-[48px] leading-[48px]">45<span class="font-headline-md text-headline-md text-secondary-fixed-dim">m</span></span>
 </div>
 <div class="flex items-center gap-2 mt-2">
 <div class="w-2 h-2 rounded-full bg-[#10b981]"></div>
-<p class="font-body-md text-body-md text-on-surface-variant">Quality: Optimal</p>
+<p class="font-body-md text-body-md text-secondary-fixed-dim">Quality: Optimal</p>
 </div>
 </div>
 </article>
@@ -1067,6 +1069,10 @@
             status.classList.add('text-on-surface-variant');
             btn.classList.remove('listening-waves');
         }
+        const orbState = active ? 'listening' : (statusText || '').toLowerCase().includes('speaking') ? 'speaking' : 'idle';
+        const subtitle = document.getElementById('caremate-assistant-subtitle');
+        if (subtitle) subtitle.textContent = orbState === 'listening' ? 'Listening...' : orbState === 'speaking' ? 'Speaking...' : 'Tap to talk';
+        window.dispatchEvent(new CustomEvent('caremate-orb-state', { detail: { state: orbState } }));
     }
 
     async function getCaremateAssistantReply(message) {
