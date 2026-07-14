@@ -183,9 +183,13 @@ function CaremateVoiceAssistant() {
   };
 
   const enterVoiceMode = () => {
+    recognitionRef.current?.abort();
+    recognitionRef.current = null;
+    window.speechSynthesis?.cancel();
     setTypingOpen(false);
     setVoiceMode(true);
-    startListening();
+    setState('idle');
+    setAssistantText('Tap the orb to start listening.');
   };
 
   const closeVoiceMode = () => {
@@ -283,7 +287,7 @@ function CaremateVoiceAssistant() {
       <footer className="voice-assistant__footer">
         {typingOpen ? (
           <form className="voice-assistant__composer" onSubmit={submitTypedMessage}>
-            <AnimatedAssistantOrb state="idle" onClick={enterVoiceMode} size={42} tone="soft" />
+            <AnimatedAssistantOrb state="idle" onClick={enterVoiceMode} size={38} tone="soft" />
             <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask CareMate Assistant" aria-label="Message CareMate Assistant" />
             <button type="submit" aria-label="Send message" disabled={!input.trim()}>
               <span className="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
