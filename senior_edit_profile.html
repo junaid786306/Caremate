@@ -27,11 +27,11 @@
 <body class="bg-white text-primary font-manrope antialiased min-h-screen">
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-slate-100">
-        <a href="user_profile.html" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+        <button type="button" onclick="handleBack()" aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
             <span class="material-symbols-outlined text-primary">arrow_back</span>
-        </a>
+        </button>
         <h1 class="font-bold text-lg text-center flex-1">Edit Profile</h1>
-        <button onclick="saveProfile()" class="font-bold text-secondary hover:opacity-80 active:scale-95 transition-all">Save</button>
+        <button id="header-save-btn" onclick="saveProfile()" class="font-bold text-secondary hover:opacity-80 active:scale-95 transition-all">Save</button>
     </header>
 
     <main class="max-w-md mx-auto p-8 space-y-10">
@@ -65,6 +65,24 @@
             </div>
 
             <div class="space-y-2">
+                <label for="profile-type-select" class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-1">Profession / Specialty</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">badge</span>
+                    <select id="profile-type-select" class="w-full px-6 py-4 pl-14 pr-12 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-primary outline-none font-semibold transition-all appearance-none">
+                        <option value="Personal">Personal</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Sportsperson">Sportsperson</option>
+                        <option value="Fitness Coach">Fitness Coach</option>
+                        <option value="Dietitian">Dietitian</option>
+                        <option value="Caregiver">Caregiver</option>
+                        <option value="Healthcare Professional">Healthcare Professional</option>
+                        <option value="Other Professional">Other Professional</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
                 <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-1">Bio (max 13 characters)</label>
                 <textarea id="bio-input" rows="3" maxlength="13" class="w-full px-6 py-4 rounded-[28px] bg-slate-50 border-none focus:ring-2 focus:ring-primary outline-none font-semibold transition-all resize-none leading-relaxed"></textarea>
                 <p id="bio-char-count" class="text-xs text-slate-400 px-1 text-right mt-1">0 / 13 characters</p>
@@ -76,11 +94,24 @@
             <button id="save-btn" onclick="saveProfile()" class="block w-full bg-primary text-white py-5 rounded-3xl font-bold text-center shadow-xl shadow-blue-900/20 active:scale-95 transition-transform">
                 Confirm Changes
             </button>
-            <a href="user_profile.html" class="block w-full py-2 text-slate-400 font-bold text-center hover:text-red-500 transition-colors">
-                Cancel
-            </a>
         </div>
     </main>
+
+    <div id="unsaved-modal" class="fixed inset-0 z-[100] hidden items-center justify-center px-6" role="dialog" aria-modal="true" aria-labelledby="unsaved-title">
+        <button type="button" onclick="closeUnsavedModal()" aria-label="Keep editing" class="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"></button>
+        <section class="relative w-full max-w-sm rounded-[28px] border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(0,27,63,0.28)]">
+            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-primary">
+                <span class="material-symbols-outlined">edit_note</span>
+            </div>
+            <h2 id="unsaved-title" class="mt-4 text-center text-xl font-extrabold text-primary">Save your changes?</h2>
+            <p class="mt-2 text-center text-sm leading-6 text-slate-500">You have unsaved profile changes. Save them before leaving?</p>
+            <div class="mt-6 space-y-3">
+                <button type="button" onclick="saveProfile()" class="h-13 w-full rounded-2xl bg-primary px-5 py-3.5 font-bold text-white shadow-lg shadow-blue-950/15 active:scale-[0.98] transition-transform">Save Changes</button>
+                <button type="button" onclick="discardProfileChanges()" class="h-13 w-full rounded-2xl border border-slate-200 bg-white px-5 py-3.5 font-bold text-red-500 active:scale-[0.98] transition-transform">Discard Changes</button>
+                <button type="button" onclick="closeUnsavedModal()" class="w-full py-2 text-sm font-bold text-slate-500">Keep Editing</button>
+            </div>
+        </section>
+    </div>
 
     <script>
         // DOM Elements
@@ -88,9 +119,14 @@
         const profileUpload = document.getElementById('profile-upload');
         const usernameInput = document.getElementById('username-input');
         const usernameHelp = document.getElementById('username-help');
+        const profileTypeSelect = document.getElementById('profile-type-select');
         const bioInput = document.getElementById('bio-input');
         const bioCharCount = document.getElementById('bio-char-count');
         const saveBtn = document.getElementById('save-btn');
+        const headerSaveBtn = document.getElementById('header-save-btn');
+        const unsavedModal = document.getElementById('unsaved-modal');
+        let pendingProfileImage = null;
+        let initialProfileState = null;
 
         // Initial values
         const defaultUsername = "@shreya_wellness";
@@ -115,13 +151,17 @@
             const storedUsername = localStorage.getItem('user_username') || defaultUsername;
             usernameInput.value = storedUsername;
 
-            // 3. Load Bio
+            // 3. Load profession / specialty
+            profileTypeSelect.value = localStorage.getItem('user_profile_type') || 'Personal';
+
+            // 4. Load Bio
             const storedBio = localStorage.getItem('user_bio') || defaultBio;
             bioInput.value = storedBio.substring(0, 13);
             updateBioCharCount();
 
-            // 4. Check Lockout Rule
+            // 5. Check Lockout Rule
             checkUsernameLockout(storedUsername);
+            initialProfileState = getCurrentProfileState();
         });
 
         // Bio character counting
@@ -139,7 +179,7 @@
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     profilePic.src = event.target.result;
-                    localStorage.setItem('user_profile_img', event.target.result);
+                    pendingProfileImage = event.target.result;
                 };
                 reader.readAsDataURL(file);
             }
@@ -174,20 +214,56 @@
                 const remaining = 30 - diffDays;
 
                 if (remaining > 0) {
-                    // Lock input and hide save buttons
+                    // Lock only the username; other profile details remain editable.
                     usernameInput.readOnly = true;
                     usernameInput.classList.remove('bg-slate-50');
                     usernameInput.classList.add('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
                     usernameHelp.innerHTML = `Username can only be changed once a month.<br><span class="text-secondary font-bold">Remaining ${remaining} days</span> <span class="text-slate-400 cursor-pointer hover:underline text-[10px] ml-1" onclick="clearLockoutForDemo()">[Reset for Demo]</span>`;
                     
-                    // Hide Save buttons
-                    saveBtn.style.display = 'none';
-                    headerSaveBtn.style.display = 'none';
                     return true;
                 }
             }
             usernameHelp.innerHTML = "You can change your username once a month. <span class='text-secondary font-bold cursor-pointer hover:underline' onclick='seedLockoutForDemo()'>[Lock for 28 Days]</span>";
             return false;
+        }
+
+        function getCurrentProfileState() {
+            return {
+                username: usernameInput.value.trim(),
+                bio: bioInput.value.trim(),
+                profileType: profileTypeSelect.value,
+                hasNewImage: pendingProfileImage !== null
+            };
+        }
+
+        function hasUnsavedChanges() {
+            if (!initialProfileState) return false;
+            const currentState = getCurrentProfileState();
+            return currentState.username !== initialProfileState.username
+                || currentState.bio !== initialProfileState.bio
+                || currentState.profileType !== initialProfileState.profileType
+                || currentState.hasNewImage;
+        }
+
+        function handleBack() {
+            if (!hasUnsavedChanges()) {
+                window.location.href = 'user_profile.html';
+                return;
+            }
+            unsavedModal.classList.remove('hidden');
+            unsavedModal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeUnsavedModal() {
+            unsavedModal.classList.add('hidden');
+            unsavedModal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function discardProfileChanges() {
+            pendingProfileImage = null;
+            window.location.href = 'user_profile.html';
         }
 
         // Save Profile Action
@@ -204,6 +280,10 @@
             // Save basic profile details
             localStorage.setItem('user_bio', newBio);
             localStorage.setItem('user_username', newUsername);
+            localStorage.setItem('user_profile_type', profileTypeSelect.value);
+            if (pendingProfileImage) {
+                localStorage.setItem('user_profile_img', pendingProfileImage);
+            }
 
             // If username changed, log the lockout timestamp
             if (newUsername !== oldUsername) {

@@ -29,16 +29,20 @@
         }
     </script>
 <style>
-    .timer-ring {
-        transition: stroke-dashoffset 0.35s;
-        transform: rotate(-90deg);
-        transform-origin: 50% 50%;
-    }
+    .timer-linear-progress{height:100%;width:0;border-radius:999px;background:#00193c;transition:width .8s linear,background .3s ease;}
+    .round-segment{height:6px;flex:1;border-radius:999px;background:#e2e8f0;transition:background .25s ease,transform .25s ease;}
+    .round-segment.is-complete{background:#2563eb;}
+    .round-segment.is-current{background:#00193c;transform:scaleY(1.45);}
+    .session-pulse{animation:session-pulse 1.8s ease-in-out infinite;}
+    .exercise-details{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:clamp(10px,1.8dvh,18px);}
+    .exercise-plan-block{align-self:stretch;display:flex;flex-direction:column;justify-content:center;}
+    .exercise-controls{align-self:end;}
+    @keyframes session-pulse{50%{transform:scale(1.025);}}
 </style>
 </head>
-<body class="bg-background text-on-surface font-manrope antialiased min-h-screen flex flex-col">
+<body class="bg-background text-on-surface font-manrope antialiased h-[100dvh] overflow-hidden flex flex-col">
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-6 py-4 flex justify-between items-center h-[72px]">
+    <header class="flex-none z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-5 py-2 flex justify-between items-center h-[60px]">
         <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
             <span class="material-symbols-outlined text-primary">close</span>
         </button>
@@ -46,13 +50,13 @@
         <div class="w-10"></div>
     </header>
 
-    <main class="flex-1 flex flex-col p-6 max-w-2xl mx-auto w-full">
+    <main class="flex-1 min-h-0 overflow-hidden flex flex-col px-4 py-3 max-w-2xl mx-auto w-full">
         <!-- Video Player -->
-        <div class="relative w-full aspect-video bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl mb-8 group">
+        <div class="relative flex-none w-full h-[clamp(150px,24dvh,205px)] bg-slate-900 rounded-[24px] overflow-hidden shadow-xl mb-3 group">
             <img class="w-full h-full object-cover opacity-60" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop">
             <div class="absolute inset-0 flex items-center justify-center">
-                <button id="video-play-btn" class="w-20 h-20 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 text-white hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                <button id="video-play-btn" type="button" onclick="toggleSession()" aria-label="Start session" class="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 text-white hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
                 </button>
             </div>
             <!-- Progress Bar -->
@@ -62,67 +66,225 @@
         </div>
 
         <!-- Exercise Details -->
-        <div class="flex-1 flex flex-col items-center justify-center text-center space-y-8">
+        <div class="exercise-details flex-1 min-h-0 text-center py-1">
             <div>
-                <h2 class="text-3xl font-extrabold text-primary mb-2">Gentle Stretching</h2>
-                <p class="text-slate-500 font-medium italic">Focus on your breathing and move slowly.</p>
+                <div id="phase-badge" class="inline-flex items-center h-7 px-3 mb-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-extrabold uppercase tracking-wider">Round 1 of 10</div>
+                <h2 id="exercise-title" class="text-2xl font-extrabold text-primary mb-1">Gentle Stretching</h2>
+                <p id="exercise-guidance" class="text-sm text-slate-500 font-medium">Focus on your breathing and move slowly.</p>
             </div>
 
-            <!-- Circular Timer -->
-            <div class="relative w-48 h-48 flex items-center justify-center">
-                <svg class="w-full h-full">
-                    <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="transparent" r="80" cx="96" cy="96" />
-                    <circle id="timer-progress" class="text-primary timer-ring" stroke-width="8" stroke-dasharray="502.65" stroke-dashoffset="125" stroke-linecap="round" stroke="currentColor" fill="transparent" r="80" cx="96" cy="96" />
-                </svg>
-                <div class="absolute flex flex-col items-center">
-                    <span id="timer-text" class="text-4xl font-black text-primary">05:42</span>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">remaining</span>
+            <div class="exercise-plan-block w-full space-y-3">
+            <!-- Session Plan -->
+            <div class="grid grid-cols-3 gap-2 w-full" aria-label="Session plan">
+                <div class="min-h-[54px] rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center">
+                    <span class="text-lg font-extrabold text-primary">10</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rounds</span>
                 </div>
+                <div class="min-h-[54px] rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center">
+                    <span class="text-lg font-extrabold text-primary">3 min</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Exercise</span>
+                </div>
+                <div class="min-h-[54px] rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center">
+                    <span class="text-lg font-extrabold text-primary">1 min</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Recovery</span>
+                </div>
+            </div>
+
+            <!-- Compact Timer -->
+            <div id="timer-wrap" class="w-full min-h-[60px] rounded-2xl bg-white border border-slate-100 shadow-sm px-3 py-2 flex items-center gap-3">
+                <div class="flex items-center gap-3 min-w-[132px]">
+                    <span class="material-symbols-outlined text-primary text-[25px]" aria-hidden="true">timer</span>
+                    <div class="flex flex-col">
+                        <span id="timer-text" class="text-2xl leading-none font-black text-primary tabular-nums" aria-live="polite">03:00</span>
+                        <span id="timer-phase" class="mt-1 text-[9px] font-bold text-slate-400 uppercase tracking-widest">Exercise</span>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between mb-2 text-[10px] font-bold uppercase tracking-wide">
+                        <span class="text-slate-400">Current interval</span>
+                        <span id="timer-percent" class="text-primary">0%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                        <div id="timer-progress" class="timer-linear-progress"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- Round Progress -->
+            <div class="w-full space-y-2">
+                <div id="round-progress" class="flex gap-1.5" aria-label="Round progress">
+                    <span class="round-segment is-current" data-round="1"></span><span class="round-segment" data-round="2"></span><span class="round-segment" data-round="3"></span><span class="round-segment" data-round="4"></span><span class="round-segment" data-round="5"></span><span class="round-segment" data-round="6"></span><span class="round-segment" data-round="7"></span><span class="round-segment" data-round="8"></span><span class="round-segment" data-round="9"></span><span class="round-segment" data-round="10"></span>
+                </div>
+                <div class="flex items-center justify-between text-xs font-bold">
+                    <span id="round-summary" class="text-slate-500">0 of 10 rounds completed</span>
+                    <span id="next-phase" class="text-blue-700">Next: 1 min recovery</span>
+                </div>
+                <button id="skip-break-btn" type="button" onclick="skipBreak()" class="hidden mx-auto h-9 px-4 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold border border-blue-100 active:scale-95 transition-all">Skip Recovery</button>
             </div>
 
             <!-- Controls -->
-            <div class="flex flex-col w-full gap-4 pt-4">
-                <button id="start-btn" onclick="startSession()" class="w-full h-16 bg-primary text-white rounded-[24px] font-bold text-lg shadow-xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-3">
+            <div class="exercise-controls flex flex-col w-full pb-1">
+                <button id="start-btn" type="button" onclick="toggleSession()" class="w-full h-14 bg-primary text-white rounded-[20px] font-bold text-base shadow-lg shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-3">
                     <span class="material-symbols-outlined">play_circle</span>
                     <span>Start Exercise</span>
-                </button>
-                <div class="flex gap-4">
-                    <button class="flex-1 h-14 bg-white border border-slate-200 rounded-[24px] font-bold text-slate-600 active:scale-95 transition-all flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-lg">bookmark</span>
-                        <span>Save</span>
-                    </button>
-                    <a href="activity_comments.html" class="flex-1 h-14 bg-white border border-slate-200 rounded-[24px] font-bold text-slate-600 active:scale-95 transition-all flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-lg">chat_bubble</span>
-                        <span>Comment</span>
-                    </a>
-                </div>
-                <button id="end-btn" onclick="history.back()" class="w-full h-14 bg-slate-50 text-slate-400 rounded-[24px] font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <span class="material-symbols-outlined text-lg">stop_circle</span>
-                    <span>End Session</span>
                 </button>
             </div>
         </div>
     </main>
 
     <script>
-        let isStarted = false;
-        function startSession() {
+        const ROUND_DURATION = 3 * 60;
+        const BREAK_DURATION = 60;
+        const TOTAL_ROUNDS = 10;
+        let currentRound = 1;
+        let currentPhase = 'exercise';
+        let remainingSeconds = ROUND_DURATION;
+        let isRunning = false;
+        let isComplete = false;
+        let timerId = null;
+
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function completedRounds() {
+            if (isComplete) return TOTAL_ROUNDS;
+            return currentPhase === 'recovery' ? currentRound : currentRound - 1;
+        }
+
+        function overallProgress() {
+            const completed = completedRounds();
+            const phaseDuration = currentPhase === 'exercise' ? ROUND_DURATION : BREAK_DURATION;
+            const phaseProgress = 1 - remainingSeconds / phaseDuration;
+            const completedRecoverySeconds = Math.max(0, currentRound - 1) * BREAK_DURATION;
+            const completedExerciseSeconds = completed * ROUND_DURATION;
+            const currentPhaseSeconds = currentPhase === 'exercise'
+                ? phaseProgress * ROUND_DURATION
+                : phaseProgress * BREAK_DURATION;
+            const totalSessionSeconds = TOTAL_ROUNDS * ROUND_DURATION + (TOTAL_ROUNDS - 1) * BREAK_DURATION;
+            return Math.min(100, ((completedExerciseSeconds + completedRecoverySeconds + currentPhaseSeconds) / totalSessionSeconds) * 100);
+        }
+
+        function renderSession() {
+            const phaseDuration = currentPhase === 'exercise' ? ROUND_DURATION : BREAK_DURATION;
+            const phaseProgress = isComplete ? 1 : 1 - remainingSeconds / phaseDuration;
             const startBtn = document.getElementById('start-btn');
-            const endBtn = document.getElementById('end-btn');
-            
-            if (!isStarted) {
-                isStarted = true;
-                startBtn.innerHTML = '<span class="material-symbols-outlined">pause_circle</span><span>Pause Session</span>';
-                startBtn.classList.remove('bg-primary');
-                startBtn.classList.add('bg-slate-800');
-                endBtn.classList.remove('text-slate-400', 'bg-slate-100');
-                endBtn.classList.add('text-error', 'bg-error-container/30', 'border', 'border-error/10');
+            const videoPlayBtn = document.getElementById('video-play-btn');
+            const timerProgress = document.getElementById('timer-progress');
+            const timerWrap = document.getElementById('timer-wrap');
+            const skipBreakBtn = document.getElementById('skip-break-btn');
+
+            document.getElementById('timer-text').textContent = formatTime(remainingSeconds);
+            document.getElementById('timer-phase').textContent = isComplete ? 'Complete' : currentPhase === 'exercise' ? 'Exercise' : 'Recovery';
+            document.getElementById('round-summary').textContent = `${completedRounds()} of ${TOTAL_ROUNDS} rounds completed`;
+            document.getElementById('video-progress').style.width = `${overallProgress()}%`;
+            timerProgress.style.width = `${Math.max(0, Math.min(100, phaseProgress * 100))}%`;
+            timerProgress.style.background = currentPhase === 'recovery' ? '#2563eb' : '#00193c';
+            document.getElementById('timer-percent').textContent = `${Math.round(phaseProgress * 100)}%`;
+            timerWrap.classList.toggle('session-pulse', isRunning);
+
+            document.querySelectorAll('[data-round]').forEach(segment => {
+                const round = Number(segment.dataset.round);
+                segment.classList.toggle('is-complete', round <= completedRounds());
+                segment.classList.toggle('is-current', !isComplete && round === currentRound);
+            });
+
+            if (isComplete) {
+                document.getElementById('phase-badge').textContent = 'Session Complete';
+                document.getElementById('exercise-title').textContent = 'Excellent Work';
+                document.getElementById('exercise-guidance').textContent = 'You completed all 10 rounds.';
+                document.getElementById('next-phase').textContent = '39 min total session';
+                startBtn.disabled = true;
+                startBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span><span>Session Complete</span>';
+                startBtn.classList.remove('bg-primary', 'bg-slate-800');
+                startBtn.classList.add('bg-emerald-600');
+                videoPlayBtn.innerHTML = '<span class="material-symbols-outlined text-5xl">check</span>';
+                videoPlayBtn.setAttribute('aria-label', 'Session complete');
+                skipBreakBtn.classList.add('hidden');
+                return;
+            }
+
+            const isRecovery = currentPhase === 'recovery';
+            document.getElementById('phase-badge').textContent = isRecovery ? `Recovery after round ${currentRound}` : `Round ${currentRound} of ${TOTAL_ROUNDS}`;
+            document.getElementById('exercise-title').textContent = isRecovery ? 'Recovery Break' : 'Gentle Stretching';
+            document.getElementById('exercise-guidance').textContent = isRecovery ? 'Breathe deeply, hydrate, and prepare for the next round.' : 'Focus on your breathing and move slowly.';
+            document.getElementById('next-phase').textContent = isRecovery ? `Next: Round ${currentRound + 1}` : currentRound === TOTAL_ROUNDS ? 'Final round' : 'Next: 1 min recovery';
+            skipBreakBtn.classList.toggle('hidden', !isRecovery);
+
+            startBtn.disabled = false;
+            startBtn.classList.remove('bg-emerald-600');
+            startBtn.innerHTML = isRunning
+                ? '<span class="material-symbols-outlined">pause_circle</span><span>Pause Session</span>'
+                : `<span class="material-symbols-outlined">play_circle</span><span>${remainingSeconds === phaseDuration ? 'Start Exercise' : 'Resume Session'}</span>`;
+            startBtn.classList.toggle('bg-slate-800', isRunning);
+            startBtn.classList.toggle('bg-primary', !isRunning);
+            videoPlayBtn.innerHTML = `<span class="material-symbols-outlined text-5xl" style="font-variation-settings:'FILL' 1;">${isRunning ? 'pause' : 'play_arrow'}</span>`;
+            videoPlayBtn.setAttribute('aria-label', isRunning ? 'Pause session' : 'Start session');
+        }
+
+        function toggleSession() {
+            if (isComplete) return;
+            isRunning = !isRunning;
+
+            if (isRunning) {
+                clearInterval(timerId);
+                timerId = setInterval(tickSession, 1000);
             } else {
-                isStarted = false;
-                startBtn.innerHTML = '<span class="material-symbols-outlined">play_circle</span><span>Resume Session</span>';
-                startBtn.classList.add('bg-primary');
-                startBtn.classList.remove('bg-slate-800');
+                clearInterval(timerId);
+                timerId = null;
+            }
+
+            renderSession();
+        }
+
+        function tickSession() {
+            if (!isRunning || isComplete) return;
+            remainingSeconds -= 1;
+
+            if (remainingSeconds <= 0) {
+                advancePhase();
+            } else {
+                renderSession();
             }
         }
+
+        function advancePhase() {
+            if (currentPhase === 'exercise') {
+                if (currentRound >= TOTAL_ROUNDS) {
+                    completeSession();
+                    return;
+                }
+                currentPhase = 'recovery';
+                remainingSeconds = BREAK_DURATION;
+            } else {
+                currentRound += 1;
+                currentPhase = 'exercise';
+                remainingSeconds = ROUND_DURATION;
+            }
+            renderSession();
+        }
+
+        function skipBreak() {
+            if (currentPhase !== 'recovery' || isComplete) return;
+            currentRound += 1;
+            currentPhase = 'exercise';
+            remainingSeconds = ROUND_DURATION;
+            renderSession();
+        }
+
+        function completeSession() {
+            isComplete = true;
+            isRunning = false;
+            remainingSeconds = 0;
+            clearInterval(timerId);
+            timerId = null;
+            renderSession();
+        }
+
+        window.addEventListener('beforeunload', () => clearInterval(timerId));
+        renderSession();
     </script>
 </body></html>

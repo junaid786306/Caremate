@@ -8,9 +8,11 @@
 <style>
 body{min-height:max(884px,100dvh);}
 .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
-input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:9999px;outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#00193c;cursor:pointer;box-shadow:0 2px 8px rgba(0,25,60,0.3);}
-input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#00193c;cursor:pointer;border:none;box-shadow:0 2px 8px rgba(0,25,60,0.3);}
+input[type=range]{-webkit-appearance:none;appearance:none;height:8px;border-radius:9999px;outline:none;background:linear-gradient(to right,#0b5dcc 0%,#0b5dcc 23.86%,#dbe5f1 23.86%,#dbe5f1 100%);}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border:4px solid #fff;border-radius:50%;background:#073b78;cursor:pointer;box-shadow:0 0 0 1px rgba(7,59,120,.16),0 5px 14px rgba(0,25,60,.3);transition:transform .18s ease,box-shadow .18s ease;}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border:4px solid #fff;border-radius:50%;background:#073b78;cursor:pointer;box-shadow:0 0 0 1px rgba(7,59,120,.16),0 5px 14px rgba(0,25,60,.3);transition:transform .18s ease,box-shadow .18s ease;}
+input[type=range]:focus-visible::-webkit-slider-thumb,input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08);box-shadow:0 0 0 5px rgba(11,93,204,.14),0 6px 16px rgba(0,25,60,.32);}
+input[type=range]:focus-visible::-moz-range-thumb,input[type=range]:active::-moz-range-thumb{transform:scale(1.08);box-shadow:0 0 0 5px rgba(11,93,204,.14),0 6px 16px rgba(0,25,60,.32);}
 </style>
 </head>
 <body class="bg-background text-on-background font-manrope antialiased pb-32">
@@ -34,8 +36,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <div class="px-6 mb-6">
     <div class="flex gap-3">
         <div class="flex-1 flex items-center h-14 bg-white rounded-[20px] pl-4 pr-2 border border-slate-200 shadow-sm focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10 transition-all">
-            <input class="flex-1 bg-transparent border-none text-base text-slate-800 focus:ring-0 placeholder-slate-400 outline-none" placeholder="Find doctors..." type="text">
-            <button class="w-10 h-10 bg-primary rounded-[14px] flex items-center justify-center text-white ml-2 active:scale-95 flex-shrink-0">
+            <input id="doctor-search" class="flex-1 bg-transparent border-none text-base text-slate-800 focus:ring-0 placeholder-slate-400 outline-none" placeholder="Find doctors..." type="search" autocomplete="off" aria-label="Search doctors by name or specialty">
+            <button type="button" onclick="runDoctorSearch()" aria-label="Search doctors" class="w-10 h-10 bg-primary rounded-[14px] flex items-center justify-center text-white ml-2 active:scale-95 flex-shrink-0">
                 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">search</span>
             </button>
         </div>
@@ -43,9 +45,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
             <span class="material-symbols-outlined text-xl">tune</span>
         </button>
     </div>
+    <div id="doctor-search-status" class="hidden mt-3 items-center justify-between px-1" aria-live="polite">
+        <p class="text-sm font-bold text-primary"><span id="doctor-search-count">0</span> doctors found</p>
+        <button type="button" onclick="clearDoctorSearch()" class="text-xs font-bold text-blue-700">Clear search</button>
+    </div>
 </div>
 <!-- Book New Card -->
-<div class="px-6 mb-6">
+<div id="appointment-hero" class="px-6 mb-6">
     <a href="add_appointment.html" class="flex items-center justify-between bg-gradient-to-br from-primary to-[#000c24] rounded-[24px] p-6 shadow-[0_12px_40px_rgba(0,45,98,0.2)] active:scale-[0.98] transition-transform border border-white/10">
         <div>
             <p class="font-bold text-xl text-white mb-1">Book New Appointment</p>
@@ -57,7 +63,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     </a>
 </div>
 <!-- Toggle -->
-<div class="px-6 mb-6">
+<div id="doctor-tabs" class="px-6 mb-6">
     <div class="relative bg-slate-200/70 p-1.5 rounded-full flex shadow-[inset_0_2px_4px_rgba(0,0,0,0.08)] items-center">
         <div id="toggle-bg" class="absolute left-[6px] w-[calc(50%-6px)] h-[calc(100%-12px)] bg-white rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-transform duration-300 ease-out"></div>
         <button onclick="switchTab('doctors')" id="tab-doctors" class="relative z-10 flex-1 h-10 flex items-center justify-center text-sm font-bold text-primary transition-colors">All Doctors</button>
@@ -67,12 +73,12 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <!-- ALL DOCTORS VIEW -->
 <div id="view-doctors" class="px-6 pb-8">
     <!-- Visited Doctors Section -->
-    <div class="flex items-center gap-3 mb-4">
+    <div id="visited-doctors-heading" class="flex items-center gap-3 mb-4">
         <h2 class="font-bold text-base text-slate-800">Visited Doctors</h2>
         <span class="text-[10px] font-black bg-primary/10 text-primary px-3 py-1 rounded-full uppercase tracking-widest">Recent</span>
     </div>
     <!-- Doctor Card 1 (Visited) -->
-    <div onclick="openDoctorPopup('Dr. Aris Thorne','Cardiologist','Vitality Heart Center, 24 MG Road, New Delhi','4.9','800','400','30 min','https://lh3.googleusercontent.com/aida-public/AB6AXuAy2-Rj3mcSvdPQMZ6mwXd0nHWmsR9ef5FI8c0EF0ee4BcuiImHZoZnKIVXBx6iSAU1Qu6Gr4yuvSkuIZ9kA2xtAnTR128WFqn3lZRkcyk4_Xm4rfEUyvsGuMs6X2u-MXY5uH0t9eT0Cmrx8d6i-jHzkqNSVp9CtQaUA0h4E-yqjIklTNFXb89FUB918v3HgiAIJNnn2HqchBAygDQOA8aU4in8cVPYVvQthvmNlmLCGfoQQIdwy6Am6SN9RTeVthOlJABcY7OZgVQ')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+    <div data-visited-doctor onclick="openDoctorPopup('Dr. Aris Thorne','Cardiologist','Vitality Heart Center, 24 MG Road, New Delhi','4.9','800','400','30 min','https://lh3.googleusercontent.com/aida-public/AB6AXuAy2-Rj3mcSvdPQMZ6mwXd0nHWmsR9ef5FI8c0EF0ee4BcuiImHZoZnKIVXBx6iSAU1Qu6Gr4yuvSkuIZ9kA2xtAnTR128WFqn3lZRkcyk4_Xm4rfEUyvsGuMs6X2u-MXY5uH0t9eT0Cmrx8d6i-jHzkqNSVp9CtQaUA0h4E-yqjIklTNFXb89FUB918v3HgiAIJNnn2HqchBAygDQOA8aU4in8cVPYVvQthvmNlmLCGfoQQIdwy6Am6SN9RTeVthOlJABcY7OZgVQ')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy2-Rj3mcSvdPQMZ6mwXd0nHWmsR9ef5FI8c0EF0ee4BcuiImHZoZnKIVXBx6iSAU1Qu6Gr4yuvSkuIZ9kA2xtAnTR128WFqn3lZRkcyk4_Xm4rfEUyvsGuMs6X2u-MXY5uH0t9eT0Cmrx8d6i-jHzkqNSVp9CtQaUA0h4E-yqjIklTNFXb89FUB918v3HgiAIJNnn2HqchBAygDQOA8aU4in8cVPYVvQthvmNlmLCGfoQQIdwy6Am6SN9RTeVthOlJABcY7OZgVQ" alt="Dr. Aris" class="w-[62px] h-[62px] rounded-[16px] object-cover border border-slate-100 flex-shrink-0">
         <div class="flex-1 min-w-0">
             <h3 class="font-bold text-slate-800">Dr. Aris Thorne</h3>
@@ -85,7 +91,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
     </div>
     <!-- Doctor Card 2 (Visited) -->
-    <div onclick="openDoctorPopup('Dr. Elena Rostova','General Physician','Apollo Clinic, 12 Park Street, Mumbai','4.7','500','250','20 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-6 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+    <div data-visited-doctor onclick="openDoctorPopup('Dr. Elena Rostova','General Physician','Apollo Clinic, 12 Park Street, Mumbai','4.7','500','250','20 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
         <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-slate-100 to-slate-200 border border-slate-100 flex items-center justify-center flex-shrink-0">
             <span class="material-symbols-outlined text-3xl text-slate-400">person</span>
         </div>
@@ -99,8 +105,25 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         </div>
         <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
     </div>
+    <!-- Doctor Card 3 (Visited) -->
+    <div data-visited-doctor onclick="openDoctorPopup('Dr. Marcus Vance','Dentist','Smile Care Clinic, 18 Central Avenue, Pune','4.8','700','350','30 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+        <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-100 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-3xl text-rose-400">dentistry</span></div>
+        <div class="flex-1 min-w-0"><h3 class="font-bold text-slate-800">Dr. Marcus Vance</h3><p class="text-[10px] font-black text-rose-500 uppercase tracking-widest mb-1">Dentist</p><div class="flex items-center gap-1 text-xs"><span class="material-symbols-outlined text-amber-400 text-[14px]" style="font-variation-settings:'FILL' 1;">star</span><span class="font-bold text-slate-700">4.8</span><span class="text-slate-400">(76)</span></div></div>
+        <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+    <!-- Doctor Card 4 (Visited, collapsed initially) -->
+    <div data-visited-doctor onclick="openDoctorPopup('Dr. Priya Nair','Dermatologist','Skin Health Centre, 6 Lake Road, Chennai','4.9','850','425','25 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+        <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-100 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-3xl text-emerald-500">dermatology</span></div>
+        <div class="flex-1 min-w-0"><h3 class="font-bold text-slate-800">Dr. Priya Nair</h3><p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">Dermatologist</p><div class="flex items-center gap-1 text-xs"><span class="material-symbols-outlined text-amber-400 text-[14px]" style="font-variation-settings:'FILL' 1;">star</span><span class="font-bold text-slate-700">4.9</span><span class="text-slate-400">(104)</span></div></div>
+        <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+    <button id="visited-doctors-toggle" type="button" onclick="toggleVisitedDoctors()" aria-expanded="false"
+        class="hidden w-full h-12 mb-6 rounded-2xl border border-slate-200 bg-white text-primary font-bold text-sm items-center justify-center gap-2 shadow-sm hover:bg-blue-50 active:scale-[0.98] transition-all">
+        <span id="visited-doctors-toggle-label">Show more visited doctors</span>
+        <span id="visited-doctors-toggle-icon" class="material-symbols-outlined text-xl">expand_more</span>
+    </button>
     <!-- All Doctors label -->
-    <div class="flex items-center gap-3 mb-4">
+    <div id="all-doctors-heading" class="flex items-center gap-3 mb-4">
         <h2 class="font-bold text-base text-slate-800">All Doctors</h2>
         <span class="text-[10px] font-black bg-slate-100 text-slate-500 px-3 py-1 rounded-full uppercase tracking-widest">Browse</span>
     </div>
@@ -120,7 +143,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
     </div>
     <!-- Doctor Card 4 -->
-    <div onclick="openDoctorPopup('Dr. Samuel Lee','Optometrist','Eye Care Centre, 3 MG Road, Bangalore','4.6','600','300','25 min','')" class="bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+    <div data-extra-doctor onclick="openDoctorPopup('Dr. Samuel Lee','Optometrist','Eye Care Centre, 3 MG Road, Bangalore','4.6','600','300','25 min','')" class="hidden bg-white rounded-[20px] p-4 shadow-sm border border-slate-100 items-center gap-4 mb-3 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
         <div class="w-[62px] h-[62px] rounded-[16px] bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-100 flex items-center justify-center flex-shrink-0">
             <span class="material-symbols-outlined text-3xl text-blue-400">person</span>
         </div>
@@ -133,6 +156,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
             </div>
         </div>
         <button onclick="event.stopPropagation();window.location='add_appointment.html'" class="px-4 h-9 bg-primary text-white rounded-full text-xs font-bold active:scale-95 flex-shrink-0 shadow-sm">Book</button>
+    </div>
+    <button id="view-more-doctors" type="button" onclick="toggleMoreDoctors()" aria-expanded="false"
+        class="w-full h-12 mt-2 rounded-2xl border border-slate-200 bg-white text-primary font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:bg-blue-50 active:scale-[0.98] transition-all">
+        <span id="view-more-doctors-label">View More Doctors</span>
+        <span id="view-more-doctors-icon" class="material-symbols-outlined text-xl transition-transform">expand_more</span>
+    </button>
+    <div id="doctor-search-empty" class="hidden py-14 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl">person_search</span>
+        </div>
+        <h3 class="font-extrabold text-primary text-lg">No doctors found</h3>
+        <p class="mt-1 text-sm text-slate-500">Try another doctor name or specialty.</p>
     </div>
 </div>
 <!-- UPCOMING VIEW -->
@@ -226,20 +261,26 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <!-- Doctor Profile Popup -->
 <div id="doc-popup" class="fixed inset-0 z-[200] flex items-center justify-center p-6 pointer-events-none">
     <div id="doc-popup-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeDoctorPopup()"></div>
-    <div id="doc-popup-card" class="relative w-full max-w-sm bg-white/80 backdrop-blur-[24px] border border-white/70 rounded-[32px] shadow-[0_20px_60px_rgba(0,45,98,0.2)] scale-90 opacity-0 transition-all duration-300 ease-out pointer-events-none overflow-hidden z-10">
-        <div class="bg-gradient-to-br from-primary to-[#000c24] px-6 pt-8 pb-10 relative">
-            <button onclick="closeDoctorPopup()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined text-white text-[18px]">close</span></button>
-            <div id="doc-popup-img-wrap" class="w-[80px] h-[80px] rounded-2xl border-2 border-white/40 overflow-hidden bg-white/20 mb-4 flex items-center justify-center">
-                <span class="material-symbols-outlined text-white text-4xl">person</span>
+    <div id="doc-popup-card" class="relative w-full max-w-sm bg-white border border-slate-200 rounded-[28px] shadow-[0_24px_70px_rgba(0,25,60,0.24)] scale-90 opacity-0 transition-all duration-300 ease-out pointer-events-none overflow-hidden z-10 max-h-[90vh] overflow-y-auto">
+        <div class="px-6 pt-6 pb-5 relative bg-gradient-to-br from-blue-50 via-white to-violet-50 border-b border-slate-100">
+            <button onclick="closeDoctorPopup()" aria-label="Close doctor preview" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 shadow-sm flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">close</span></button>
+            <div class="flex items-center gap-4 pr-10">
+            <div id="doc-popup-img-wrap" class="w-[76px] h-[76px] rounded-[20px] border-2 border-white overflow-hidden bg-primary-fixed shadow-md flex-shrink-0 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-4xl">person</span>
             </div>
-            <h2 id="doc-popup-name" class="text-white font-bold text-xl mb-0.5"></h2>
-            <p id="doc-popup-type" class="text-blue-200 text-xs font-black uppercase tracking-widest"></p>
+            <div class="min-w-0">
+                <div class="flex items-center gap-1.5"><h2 id="doc-popup-name" class="text-primary font-extrabold text-xl truncate"></h2><span class="material-symbols-outlined text-blue-600 text-[18px]" style="font-variation-settings:'FILL' 1;">verified</span></div>
+                <p id="doc-popup-type" class="text-secondary text-[11px] font-black uppercase tracking-widest mt-1"></p>
+                <div class="flex items-center gap-1.5 mt-2 text-sm"><span class="material-symbols-outlined text-amber-500 text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><strong id="doc-popup-rating" class="text-primary"></strong><span class="text-slate-400">(120 reviews)</span></div>
+            </div>
+            </div>
         </div>
-        <div class="-mt-4 bg-white/80 backdrop-blur-xl rounded-t-[24px] px-6 pt-6 pb-6 space-y-4">
+        <div class="px-6 pt-5 pb-6 space-y-4">
             <div class="flex items-start gap-3">
                 <span class="material-symbols-outlined text-primary text-[20px] mt-0.5" style="font-variation-settings:'FILL' 1;">location_on</span>
                 <p id="doc-popup-addr" class="text-sm text-slate-600 leading-relaxed"></p>
             </div>
+            <ul id="doc-popup-highlights" class="grid grid-cols-1 gap-2 text-sm text-slate-700"></ul>
             <div class="grid grid-cols-3 gap-3">
                 <div class="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Clinic Fee</p>
@@ -254,7 +295,16 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
                     <p id="doc-popup-dur" class="font-bold text-primary text-sm"></p>
                 </div>
             </div>
-            <a href="add_appointment.html" class="w-full h-12 bg-primary text-white rounded-[16px] flex items-center justify-center font-bold text-sm shadow-md active:scale-95 transition-transform">Book Appointment</a>
+            <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">reviews</span></div>
+                <div class="min-w-0 flex-1"><p class="font-bold text-sm text-primary">Excellent patient care</p><p class="text-xs text-slate-500 truncate">“Clear advice and a very reassuring consultation.”</p></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <a id="doc-popup-message" href="direct_message_chat.html" class="h-11 rounded-[14px] bg-blue-50 text-primary flex items-center justify-center gap-1.5 font-bold text-xs"><span class="material-symbols-outlined text-[19px]">chat</span>Message</a>
+                <a id="doc-popup-email" href="#" class="h-11 rounded-[14px] bg-violet-50 text-primary flex items-center justify-center gap-1.5 font-bold text-xs"><span class="material-symbols-outlined text-[19px]">mail</span>Email</a>
+                <a id="doc-popup-profile" href="doctor_profile.html" class="h-11 rounded-[14px] bg-slate-100 text-primary flex items-center justify-center gap-1.5 font-bold text-xs"><span class="material-symbols-outlined text-[19px]">account_circle</span>Profile</a>
+            </div>
+            <a id="doc-popup-book" href="add_appointment.html" class="w-full h-12 bg-primary text-white rounded-[16px] flex items-center justify-center gap-2 font-bold text-sm shadow-md active:scale-95 transition-transform"><span class="material-symbols-outlined text-[19px]">calendar_add_on</span>Book Appointment</a>
         </div>
     </div>
 </div>
@@ -268,44 +318,152 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     </div>
     <div class="space-y-6">
         <div>
-            <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">City</label>
-            <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold text-primary outline-none focus:border-primary">
-                <option>All Cities</option><option>New Delhi</option><option>Mumbai</option><option>Bangalore</option>
-            </select>
-        </div>
-        <div>
-            <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Specialty</label>
-            <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold text-primary outline-none focus:border-primary">
-                <option>All Specialties</option><option>Cardiology</option><option>Neurology</option><option>General Physician</option><option>Optometrist</option>
-            </select>
-        </div>
-        <div>
-            <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-3">Max Fees</label>
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs text-slate-400 font-semibold">?100</span>
-                <span class="text-sm font-black text-primary">Up to <span id="fee-val">?500</span></span>
-                <span class="text-xs text-slate-400 font-semibold">?1000</span>
-            </div>
+            <label for="city-filter" class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">City</label>
             <div class="relative">
-                <div class="absolute inset-0 flex items-center pointer-events-none">
-                    <div id="fee-track-fill" class="h-[6px] bg-primary rounded-full transition-all" style="width:40%"></div>
-                </div>
-                <input type="range" min="100" max="1000" step="100" value="500" id="fee-range"
-                    oninput="updateFee(this.value)"
-                    class="w-full relative z-10 bg-slate-200 cursor-pointer"
-                    style="background:linear-gradient(to right,#00193c 40%,#e2e8f0 40%)">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-blue-600 text-xl pointer-events-none">search</span>
+                <input id="city-filter" type="search" list="city-options" autocomplete="off" placeholder="Search or select a city"
+                    class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl pl-12 pr-4 font-bold text-primary placeholder:text-slate-400 placeholder:font-medium outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all">
+                <datalist id="city-options">
+                    <option value="New Delhi"></option>
+                    <option value="Mumbai"></option>
+                    <option value="Bengaluru"></option>
+                    <option value="Hyderabad"></option>
+                    <option value="Chennai"></option>
+                    <option value="Kolkata"></option>
+                    <option value="Pune"></option>
+                    <option value="Ahmedabad"></option>
+                    <option value="Jaipur"></option>
+                    <option value="Lucknow"></option>
+                    <option value="Chandigarh"></option>
+                    <option value="Surat"></option>
+                    <option value="Kochi"></option>
+                    <option value="Indore"></option>
+                    <option value="Bhopal"></option>
+                    <option value="Patna"></option>
+                    <option value="Nagpur"></option>
+                    <option value="Noida"></option>
+                    <option value="Gurugram"></option>
+                </datalist>
             </div>
-            <div class="flex justify-between mt-2">
-                <span class="text-[10px] text-slate-400 font-bold">?100</span>
-                <span class="text-[10px] text-slate-400 font-bold">?300</span>
-                <span class="text-[10px] text-slate-400 font-bold">?500</span>
-                <span class="text-[10px] text-slate-400 font-bold">?700</span>
-                <span class="text-[10px] text-slate-400 font-bold">?1000</span>
+            <p class="mt-2 text-[11px] font-semibold text-slate-400">Leave blank to search across all cities.</p>
+        </div>
+        <div>
+            <label for="pin-code-filter" class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">ZIP Code <span class="normal-case tracking-normal font-semibold">(Optional)</span></label>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-blue-600 text-xl pointer-events-none">location_on</span>
+                <input id="pin-code-filter" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="6" pattern="[0-9]{6}"
+                    oninput="this.value=this.value.replace(/\D/g,'').slice(0,6)"
+                    aria-describedby="pin-code-hint" placeholder="Enter 6-digit ZIP code"
+                    class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl pl-12 pr-4 font-bold text-primary placeholder:text-slate-400 placeholder:font-medium outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all">
+            </div>
+            <p id="pin-code-hint" class="mt-2 text-[11px] font-semibold text-slate-400">Find doctors near this ZIP code.</p>
+        </div>
+        <div class="relative" id="specialty-filter-wrap">
+            <label for="specialty-filter-button" class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Specialty</label>
+            <input id="specialty-filter" type="hidden" value="all">
+            <button id="specialty-filter-button" type="button" onclick="toggleSpecialtyMenu()" aria-haspopup="listbox" aria-expanded="false"
+                class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold text-primary outline-none focus:border-primary flex items-center justify-between text-left">
+                <span id="specialty-filter-label">All Specialties</span>
+                <span class="material-symbols-outlined text-slate-500 transition-transform" id="specialty-filter-arrow">expand_more</span>
+            </button>
+            <div id="specialty-options-panel" role="listbox" class="hidden absolute z-40 top-[82px] left-0 right-0 max-h-[220px] overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_rgba(0,25,60,0.18)]">
+                <button type="button" role="option" aria-selected="true" data-specialty-option="all" onclick="selectSpecialty('all','All Specialties')" class="specialty-option w-full min-h-11 px-3 rounded-xl flex items-center justify-between text-left text-sm font-bold text-primary bg-blue-50"><span>All Specialties</span><span class="material-symbols-outlined text-[18px]">check</span></button>
+                <button type="button" role="option" data-specialty-option="cardiology" onclick="selectSpecialty('cardiology','Cardiology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Cardiology</button>
+                <button type="button" role="option" data-specialty-option="dentistry" onclick="selectSpecialty('dentistry','Dentistry')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Dentistry</button>
+                <button type="button" role="option" data-specialty-option="dermatology" onclick="selectSpecialty('dermatology','Dermatology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Dermatology</button>
+                <button type="button" role="option" data-specialty-option="endocrinology" onclick="selectSpecialty('endocrinology','Endocrinology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Endocrinology</button>
+                <button type="button" role="option" data-specialty-option="ent" onclick="selectSpecialty('ent','ENT')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">ENT</button>
+                <button type="button" role="option" data-specialty-option="gastroenterology" onclick="selectSpecialty('gastroenterology','Gastroenterology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Gastroenterology</button>
+                <button type="button" role="option" data-specialty-option="general-physician" onclick="selectSpecialty('general-physician','General Physician')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">General Physician</button>
+                <button type="button" role="option" data-specialty-option="gynecology" onclick="selectSpecialty('gynecology','Gynecology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Gynecology</button>
+                <button type="button" role="option" data-specialty-option="nephrology" onclick="selectSpecialty('nephrology','Nephrology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Nephrology</button>
+                <button type="button" role="option" data-specialty-option="neurology" onclick="selectSpecialty('neurology','Neurology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Neurology</button>
+                <button type="button" role="option" data-specialty-option="oncology" onclick="selectSpecialty('oncology','Oncology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Oncology</button>
+                <button type="button" role="option" data-specialty-option="ophthalmology" onclick="selectSpecialty('ophthalmology','Ophthalmology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Ophthalmology</button>
+                <button type="button" role="option" data-specialty-option="optometry" onclick="selectSpecialty('optometry','Optometrist')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Optometrist</button>
+                <button type="button" role="option" data-specialty-option="orthopedics" onclick="selectSpecialty('orthopedics','Orthopedics')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Orthopedics</button>
+                <button type="button" role="option" data-specialty-option="pediatrics" onclick="selectSpecialty('pediatrics','Pediatrics')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Pediatrics</button>
+                <button type="button" role="option" data-specialty-option="psychiatry" onclick="selectSpecialty('psychiatry','Psychiatry')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Psychiatry</button>
+                <button type="button" role="option" data-specialty-option="pulmonology" onclick="selectSpecialty('pulmonology','Pulmonology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Pulmonology</button>
+                <button type="button" role="option" data-specialty-option="urology" onclick="selectSpecialty('urology','Urology')" class="specialty-option w-full min-h-11 px-3 rounded-xl text-left text-sm font-semibold text-slate-700">Urology</button>
+            </div>
+        </div>
+        <div>
+            <div class="flex items-center justify-between gap-4 mb-4">
+                <label for="fee-range" class="text-xs font-black text-slate-400 uppercase tracking-widest">Max Fees</label>
+                <output id="fee-val" for="fee-range" class="min-w-[118px] rounded-full bg-blue-50 border border-blue-100 px-3 py-2 text-center text-sm font-extrabold text-primary">Up to ₹5,000</output>
+            </div>
+            <div class="px-1">
+                <input type="range" min="300" max="20000" step="100" value="5000" id="fee-range"
+                    oninput="updateFee(this.value)"
+                    aria-label="Maximum consultation fee"
+                    aria-valuetext="Up to ₹5,000"
+                    class="w-full cursor-pointer">
+            </div>
+            <div class="flex justify-between mt-3 px-1">
+                <span class="text-[11px] text-slate-500 font-bold">₹300</span>
+                <span class="text-[11px] text-slate-400 font-bold">₹10,000</span>
+                <span class="text-[11px] text-slate-500 font-bold">₹20,000</span>
             </div>
         </div>
     </div>
 </div>
 <script>
+    function getSearchableDoctorCards() {
+        return Array.from(document.querySelectorAll('#view-doctors > div')).filter(card => {
+            const action = card.getAttribute('onclick') || '';
+            return card.hasAttribute('data-visited-doctor') || card.hasAttribute('data-extra-doctor') || action.includes('openDoctorPopup');
+        });
+    }
+
+    function runDoctorSearch() {
+        const input = document.getElementById('doctor-search');
+        const query = input.value.trim().toLocaleLowerCase();
+        const searching = query.length > 0;
+        const cards = getSearchableDoctorCards();
+        let resultCount = 0;
+
+        if (searching) switchTab('doctors');
+
+        cards.forEach(card => {
+            if (!searching) {
+                card.style.removeProperty('display');
+                return;
+            }
+            const searchableText = card.textContent.toLocaleLowerCase();
+            const matches = searchableText.includes(query);
+            card.style.display = matches ? 'flex' : 'none';
+            if (matches) resultCount += 1;
+        });
+
+        document.getElementById('appointment-hero').classList.toggle('hidden', searching);
+        document.getElementById('doctor-tabs').classList.toggle('hidden', searching);
+        document.getElementById('visited-doctors-heading').classList.toggle('hidden', searching);
+        document.getElementById('all-doctors-heading').classList.toggle('hidden', searching);
+        document.getElementById('view-more-doctors').classList.toggle('hidden', searching);
+
+        const visitedToggle = document.getElementById('visited-doctors-toggle');
+        if (searching) {
+            visitedToggle.classList.add('hidden');
+            visitedToggle.classList.remove('flex');
+        } else {
+            setupVisitedDoctors();
+        }
+
+        const status = document.getElementById('doctor-search-status');
+        status.classList.toggle('hidden', !searching);
+        status.classList.toggle('flex', searching);
+        document.getElementById('doctor-search-count').textContent = String(resultCount);
+        document.getElementById('doctor-search-empty').classList.toggle('hidden', !searching || resultCount > 0);
+    }
+
+    function clearDoctorSearch() {
+        const input = document.getElementById('doctor-search');
+        input.value = '';
+        runDoctorSearch();
+        input.focus();
+    }
+
     function switchTab(tab) {
         const bg = document.getElementById('toggle-bg');
         const tabDoc = document.getElementById('tab-doctors');
@@ -331,22 +489,138 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         document.getElementById('doctor-filter-modal').classList.remove('translate-y-full');
     }
     function closeFilter() {
+        closeSpecialtyMenu();
         document.getElementById('doctor-filter-modal').classList.add('translate-y-full');
     }
 
+    function toggleSpecialtyMenu() {
+        const panel = document.getElementById('specialty-options-panel');
+        const button = document.getElementById('specialty-filter-button');
+        const arrow = document.getElementById('specialty-filter-arrow');
+        const shouldOpen = panel.classList.contains('hidden');
+        panel.classList.toggle('hidden', !shouldOpen);
+        button.setAttribute('aria-expanded', String(shouldOpen));
+        arrow.style.transform = shouldOpen ? 'rotate(180deg)' : '';
+    }
+
+    function closeSpecialtyMenu() {
+        const panel = document.getElementById('specialty-options-panel');
+        const button = document.getElementById('specialty-filter-button');
+        const arrow = document.getElementById('specialty-filter-arrow');
+        panel.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+        arrow.style.transform = '';
+    }
+
+    function selectSpecialty(value, label) {
+        document.getElementById('specialty-filter').value = value;
+        document.getElementById('specialty-filter-label').textContent = label;
+        document.querySelectorAll('.specialty-option').forEach(option => {
+            const selected = option.dataset.specialtyOption === value;
+            option.setAttribute('aria-selected', String(selected));
+            option.classList.toggle('bg-blue-50', selected);
+            option.classList.toggle('text-primary', selected);
+            option.classList.toggle('text-slate-700', !selected);
+            const existingCheck = option.querySelector('.material-symbols-outlined');
+            if (existingCheck) existingCheck.remove();
+            if (selected) option.insertAdjacentHTML('beforeend', '<span class="material-symbols-outlined text-[18px]">check</span>');
+        });
+        closeSpecialtyMenu();
+    }
+
+    document.addEventListener('click', (event) => {
+        const wrapper = document.getElementById('specialty-filter-wrap');
+        if (wrapper && !wrapper.contains(event.target)) closeSpecialtyMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeSpecialtyMenu();
+    });
+
+    function toggleMoreDoctors() {
+        const button = document.getElementById('view-more-doctors');
+        const label = document.getElementById('view-more-doctors-label');
+        const icon = document.getElementById('view-more-doctors-icon');
+        const shouldExpand = button.getAttribute('aria-expanded') !== 'true';
+
+        document.querySelectorAll('[data-extra-doctor]').forEach(card => {
+            card.classList.toggle('hidden', !shouldExpand);
+            card.classList.toggle('flex', shouldExpand);
+        });
+
+        button.setAttribute('aria-expanded', String(shouldExpand));
+        label.textContent = shouldExpand ? 'View Fewer Doctors' : 'View More Doctors';
+        icon.textContent = shouldExpand ? 'expand_less' : 'expand_more';
+    }
+
+    function setupVisitedDoctors() {
+        const cards = Array.from(document.querySelectorAll('[data-visited-doctor]'));
+        const toggle = document.getElementById('visited-doctors-toggle');
+        cards.forEach((card, index) => card.classList.toggle('hidden', index >= 3));
+        toggle.classList.toggle('hidden', cards.length <= 3);
+        toggle.classList.toggle('flex', cards.length > 3);
+    }
+
+    function toggleVisitedDoctors() {
+        const toggle = document.getElementById('visited-doctors-toggle');
+        const expanded = toggle.getAttribute('aria-expanded') !== 'true';
+        document.querySelectorAll('[data-visited-doctor]').forEach((card, index) => card.classList.toggle('hidden', !expanded && index >= 3));
+        toggle.setAttribute('aria-expanded', String(expanded));
+        document.getElementById('visited-doctors-toggle-label').textContent = expanded ? 'Show fewer visited doctors' : 'Show more visited doctors';
+        document.getElementById('visited-doctors-toggle-icon').textContent = expanded ? 'expand_less' : 'expand_more';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setupVisitedDoctors();
+        const searchInput = document.getElementById('doctor-search');
+        searchInput.addEventListener('input', runDoctorSearch);
+        searchInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                runDoctorSearch();
+            }
+            if (event.key === 'Escape') clearDoctorSearch();
+        });
+    });
+
     function updateFee(val) {
-        document.getElementById('fee-val').innerText = '?' + val;
-        let percent = ((val - 100) / 900) * 100;
-        document.getElementById('fee-range').style.background = `linear-gradient(to right, #00193c ${percent}%, #e2e8f0 ${percent}%)`;
+        const range = document.getElementById('fee-range');
+        const formattedFee = new Intl.NumberFormat('en-IN').format(Number(val));
+        const label = `Up to ₹${formattedFee}`;
+        const percent = ((Number(val) - Number(range.min)) / (Number(range.max) - Number(range.min))) * 100;
+
+        document.getElementById('fee-val').textContent = label;
+        range.setAttribute('aria-valuetext', label);
+        range.style.background = `linear-gradient(to right, #0b5dcc 0%, #0b5dcc ${percent}%, #dbe5f1 ${percent}%, #dbe5f1 100%)`;
     }
 
     function openDoctorPopup(name, type, addr, rate, fee, online, dur, img) {
         document.getElementById('doc-popup-name').innerText = name;
         document.getElementById('doc-popup-type').innerText = type;
+        document.getElementById('doc-popup-rating').innerText = rate;
         document.getElementById('doc-popup-addr').innerText = addr;
-        document.getElementById('doc-popup-fee').innerText = '?' + fee;
-        document.getElementById('doc-popup-online').innerText = '?' + online;
+        document.getElementById('doc-popup-fee').innerText = '₹' + Number(fee).toLocaleString('en-IN');
+        document.getElementById('doc-popup-online').innerText = '₹' + Number(online).toLocaleString('en-IN');
         document.getElementById('doc-popup-dur').innerText = dur;
+
+        const expertiseByType = {
+            'Cardiologist': ['Heart health and preventive cardiac care', '12+ years of clinical experience'],
+            'General Physician': ['Adult primary care and routine checkups', 'Evidence-based preventive treatment'],
+            'Dentist': ['Dental wellness and restorative care', 'Comfort-focused treatment planning'],
+            'Dermatologist': ['Medical and cosmetic skin care', 'Personalized long-term skin plans'],
+            'Neurologist': ['Brain, nerve and headache care', 'Advanced neurological assessment'],
+            'Optometrist': ['Vision testing and eye wellness', 'Prescription and preventive eye care']
+        };
+        const highlights = expertiseByType[type] || [`Specialist care in ${type}`, 'Patient-centred consultation and follow-up'];
+        document.getElementById('doc-popup-highlights').innerHTML = highlights.map(item => `<li class="flex items-start gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px] mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span><span>${item}</span></li>`).join('');
+
+        const doctorParams = new URLSearchParams({ name, type, addr, rate, fee, online, dur, img: img || '' });
+        const profileUrl = `doctor_profile.html?${doctorParams.toString()}`;
+        const doctorSlug = name.replace(/^Dr\.\s*/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '');
+        document.getElementById('doc-popup-profile').href = profileUrl;
+        document.getElementById('doc-popup-email').href = `mailto:${doctorSlug}@caremate.health?subject=${encodeURIComponent('Caremate consultation enquiry')}`;
+        document.getElementById('doc-popup-message').href = `direct_message_chat.html?doctor=${encodeURIComponent(name)}`;
+        document.getElementById('doc-popup-book').href = `add_appointment.html?doctor=${encodeURIComponent(name)}&code=${encodeURIComponent('DOC-' + doctorSlug.split('.')[0].toUpperCase() + '01')}`;
         
         let wrap = document.getElementById('doc-popup-img-wrap');
         if (img) {

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>New Post - CareMate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100dvh; font-family: Manrope, sans-serif; color: #071d3d; background: #f6f8fc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 430, 'GRAD' 0, 'opsz' 24; }
+        .safe-top { padding-top: max(12px, env(safe-area-inset-top)); }
+        .safe-bottom { padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+        .toggle-track, .toggle-knob, #image-preview, #image-shell { transition: all .22s ease; }
+        .toggle-input:checked + .toggle-track { background: #0759d9; }
+        .toggle-input:checked + .toggle-track .toggle-knob { transform: translateX(20px); }
+        .sheet { transform: translateY(105%); transition: transform .32s cubic-bezier(.32,.72,0,1); }
+        .sheet.open { transform: translateY(0); }
+        .filter-chip.active, .ratio-chip.active { color: white; background: #062d63; border-color: #062d63; }
+    </style>
+</head>
+<body>
+    <header class="safe-top sticky top-0 z-40 h-[72px] bg-white/95 backdrop-blur-xl border-b border-slate-200 flex items-center justify-between px-4">
+        <button type="button" onclick="goBack()" aria-label="Go back" class="w-11 h-11 flex items-center justify-center text-[#08254b] active:scale-95"><span class="material-symbols-outlined">arrow_back</span></button>
+        <h1 class="text-lg font-extrabold">New post</h1>
+        <button type="button" onclick="publishPost()" class="h-10 px-4 rounded-xl bg-[#002b63] text-white text-sm font-bold shadow-md active:scale-95">Share</button>
+    </header>
+
+    <main class="max-w-xl mx-auto pb-28">
+        <section class="bg-white px-5 py-5 border-b border-slate-200">
+            <div id="image-shell" class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 shadow-sm flex items-center justify-center">
+                <img id="image-preview" alt="Post preview" class="hidden w-full h-full object-cover">
+                <div id="image-empty" class="text-center text-slate-400 px-6">
+                    <span class="material-symbols-outlined text-5xl">add_photo_alternate</span>
+                    <p class="mt-2 text-sm font-bold">No image selected</p>
+                    <button type="button" onclick="document.getElementById('replacement-image').click()" class="mt-4 h-10 px-4 rounded-xl bg-[#002b63] text-white text-xs font-bold">Choose image</button>
+                </div>
+                <button id="replace-btn" type="button" onclick="document.getElementById('replacement-image').click()" class="hidden absolute right-3 top-3 h-9 px-3 rounded-xl bg-black/55 text-white backdrop-blur-md text-xs font-bold items-center gap-1.5"><span class="material-symbols-outlined text-[17px]">swap_horiz</span> Replace</button>
+            </div>
+            <input id="replacement-image" type="file" accept="image/*" class="hidden">
+
+            <div class="mt-4">
+                <p class="text-xs font-extrabold text-slate-500 uppercase tracking-wide mb-2">Crop</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <button type="button" onclick="setRatio('original', this)" class="ratio-chip h-10 rounded-xl border border-slate-200 text-xs font-bold">Original</button>
+                    <button type="button" onclick="setRatio('square', this)" class="ratio-chip active h-10 rounded-xl border border-slate-200 text-xs font-bold">Square</button>
+                    <button type="button" onclick="setRatio('portrait', this)" class="ratio-chip h-10 rounded-xl border border-slate-200 text-xs font-bold">Portrait</button>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <p class="text-xs font-extrabold text-slate-500 uppercase tracking-wide mb-2">Filter</p>
+                <div class="flex gap-2 overflow-x-auto pb-1">
+                    <button type="button" onclick="setFilter('none', this)" class="filter-chip active h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Normal</button>
+                    <button type="button" onclick="setFilter('brightness(1.12) saturate(1.08)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Bright</button>
+                    <button type="button" onclick="setFilter('sepia(.16) saturate(1.18) contrast(1.04)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Warm</button>
+                    <button type="button" onclick="setFilter('hue-rotate(12deg) saturate(1.1)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Cool</button>
+                    <button type="button" onclick="setFilter('grayscale(1) contrast(1.08)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Mono</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white mt-3 border-y border-slate-200">
+            <div class="px-5 pt-5 pb-3">
+                <label for="caption" class="block text-xs font-extrabold text-slate-500 uppercase tracking-wide mb-2">Caption</label>
+                <textarea id="caption" maxlength="2200" rows="4" placeholder="Write a caption..." class="w-full resize-none border-0 outline-none text-sm leading-6 text-slate-700 placeholder:text-slate-400"></textarea>
+                <div class="flex justify-between items-center pt-2"><span class="text-xs font-bold text-[#315fba]"># Add hashtags</span><span id="caption-count" class="text-[11px] text-slate-400">0 / 2,200</span></div>
+            </div>
+            <div class="border-t border-slate-100">
+                <button type="button" onclick="openTagSheet()" class="w-full min-h-16 px-5 flex items-center gap-4 text-left active:bg-slate-50">
+                    <span class="material-symbols-outlined text-[#315fba]">person_add</span>
+                    <span class="flex-1"><span class="block text-sm font-bold">Tag people</span><span id="tag-summary" class="block text-xs text-slate-400 mt-0.5">Add people featured in this post</span></span>
+                    <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                </button>
+                <label class="w-full min-h-16 px-5 flex items-center gap-4 border-t border-slate-100 focus-within:bg-slate-50">
+                    <span class="material-symbols-outlined text-[#315fba]">location_on</span>
+                    <input id="location" type="text" placeholder="Add location" class="flex-1 bg-transparent outline-none text-sm font-bold placeholder:text-slate-700">
+                    <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                </label>
+                <label class="w-full min-h-16 px-5 flex items-center gap-4 border-t border-slate-100">
+                    <span class="material-symbols-outlined text-[#315fba]">music_note</span>
+                    <span class="flex-1 text-sm font-bold">Add music</span>
+                    <select id="music" class="max-w-[150px] bg-transparent text-xs font-bold text-slate-500 outline-none text-right">
+                        <option value="">None</option><option>Morning Calm</option><option>Gentle Energy</option><option>Nature Sounds</option><option>Ambient Flow</option>
+                    </select>
+                </label>
+                <label class="w-full min-h-16 px-5 flex items-center gap-4 border-t border-slate-100">
+                    <span class="material-symbols-outlined text-[#315fba]">group</span>
+                    <span class="flex-1 text-sm font-bold">Audience</span>
+                    <select id="audience" class="bg-transparent text-xs font-bold text-slate-500 outline-none text-right">
+                        <option value="everyone">Everyone</option><option value="followers">Followers</option><option value="close-friends">Close friends</option>
+                    </select>
+                </label>
+                <label class="w-full min-h-16 px-5 flex items-center gap-4 border-t border-slate-100">
+                    <span class="material-symbols-outlined text-[#315fba]">accessibility_new</span>
+                    <input id="alt-text" maxlength="300" type="text" placeholder="Write alternative text" class="flex-1 bg-transparent outline-none text-sm font-bold placeholder:text-slate-700">
+                    <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="bg-white mt-3 border-y border-slate-200">
+            <h2 class="px-5 pt-5 pb-2 text-xs font-extrabold text-slate-500 uppercase tracking-wide">Post settings</h2>
+            <label class="min-h-16 px-5 flex items-center gap-4"><span class="material-symbols-outlined text-[#315fba]">chat_bubble</span><span class="flex-1 text-sm font-bold">Allow comments</span><input id="allow-comments" type="checkbox" checked class="toggle-input sr-only"><span class="toggle-track w-11 h-6 p-0.5 rounded-full bg-slate-300"><span class="toggle-knob block w-5 h-5 rounded-full bg-white shadow"></span></span></label>
+            <label class="min-h-16 px-5 flex items-center gap-4 border-t border-slate-100"><span class="material-symbols-outlined text-[#315fba]">favorite</span><span class="flex-1 text-sm font-bold">Show like count</span><input id="show-likes" type="checkbox" checked class="toggle-input sr-only"><span class="toggle-track w-11 h-6 p-0.5 rounded-full bg-slate-300"><span class="toggle-knob block w-5 h-5 rounded-full bg-white shadow"></span></span></label>
+        </section>
+    </main>
+
+    <div class="safe-bottom fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-xl border-t border-slate-200 px-5 pt-3">
+        <button type="button" onclick="publishPost()" class="w-full h-14 rounded-2xl bg-[#002b63] text-white flex items-center justify-center gap-2 text-base font-extrabold shadow-lg active:scale-[.98]"><span class="material-symbols-outlined">ios_share</span> Share post</button>
+    </div>
+
+    <div id="tag-overlay" onclick="closeTagSheet()" class="fixed inset-0 z-50 bg-slate-950/45 opacity-0 pointer-events-none transition-opacity"></div>
+    <section id="tag-sheet" class="sheet fixed bottom-0 inset-x-0 z-[60] max-w-xl mx-auto max-h-[82vh] bg-white rounded-t-[28px] shadow-2xl flex flex-col safe-bottom">
+        <div class="w-10 h-1 rounded-full bg-slate-200 mx-auto mt-2.5"></div>
+        <header class="h-14 px-5 flex items-center justify-between border-b border-slate-100"><h2 class="font-extrabold">Tag people</h2><button type="button" onclick="closeTagSheet()" class="text-sm font-extrabold text-[#0759d9]">Done</button></header>
+        <div class="p-4"><label class="h-12 rounded-2xl bg-slate-100 px-4 flex items-center gap-3"><span class="material-symbols-outlined text-slate-400">search</span><input type="search" oninput="renderPeople(this.value)" placeholder="Search people" class="w-full bg-transparent outline-none text-sm"></label></div>
+        <div id="people-list" class="overflow-y-auto px-4 pb-4"></div>
+    </section>
+
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[100] rounded-full bg-[#071d3d] text-white px-5 py-3 text-sm font-bold shadow-xl opacity-0 pointer-events-none transition-opacity"></div>
+
+    <script>
+        let imageUrl = '';
+        let currentDraft = null;
+        let activeFilter = 'none';
+        let activeRatio = 'square';
+        let dirty = false;
+        const taggedPeople = new Set();
+        const people = [
+            { id: 'aris', name: 'Dr. Aris Thompson', username: '@dr_aris_t', seed: 'Aris' }, { id: 'elena', name: 'Elena Rostova', username: '@elena_active', seed: 'Elena' },
+            { id: 'sarah', name: 'Sarah Jenkins', username: '@sarah_wellness', seed: 'Sarah' }, { id: 'arthur', name: 'Arthur Miller', username: '@arthur_fit', seed: 'Arthur' },
+            { id: 'priya', name: 'Priya Mehta', username: '@priya_health', seed: 'Priya' }, { id: 'michael', name: 'Michael Vance', username: '@michael_moves', seed: 'Michael' }
+        ];
+
+        function openDraftDb() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('caremate-media-drafts', 1);
+                request.onupgradeneeded = () => { if (!request.result.objectStoreNames.contains('drafts')) request.result.createObjectStore('drafts'); };
+                request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+            });
+        }
+        async function readDraft() {
+            try {
+                const db = await openDraftDb(); const tx = db.transaction('drafts', 'readonly'); const request = tx.objectStore('drafts').get('community-image');
+                request.onsuccess = () => { db.close(); if (request.result?.file) setImageDraft(request.result); }; request.onerror = () => db.close();
+            } catch { showToast('Could not load the selected image'); }
+        }
+        function setImageDraft(draft) {
+            currentDraft = draft; if (imageUrl) URL.revokeObjectURL(imageUrl); imageUrl = URL.createObjectURL(draft.file);
+            const image = document.getElementById('image-preview'); image.src = imageUrl; image.classList.remove('hidden');
+            document.getElementById('image-empty').classList.add('hidden'); document.getElementById('replace-btn').classList.remove('hidden'); document.getElementById('replace-btn').classList.add('flex');
+        }
+        async function saveDraft(file) {
+            const draft = { file, name: file.name, type: file.type, updatedAt: Date.now() }; const db = await openDraftDb(); const tx = db.transaction('drafts', 'readwrite');
+            tx.objectStore('drafts').put(draft, 'community-image'); tx.oncomplete = () => { db.close(); setImageDraft(draft); dirty = true; }; tx.onerror = () => { db.close(); showToast('Could not prepare this image'); };
+        }
+        function setRatio(ratio, button) {
+            activeRatio = ratio; const shell = document.getElementById('image-shell'); shell.classList.remove('aspect-square', 'aspect-[4/3]', 'aspect-[4/5]');
+            shell.classList.add(ratio === 'square' ? 'aspect-square' : ratio === 'portrait' ? 'aspect-[4/5]' : 'aspect-[4/3]');
+            document.querySelectorAll('.ratio-chip').forEach(chip => chip.classList.remove('active')); button.classList.add('active'); dirty = true;
+        }
+        function setFilter(filter, button) {
+            activeFilter = filter; document.getElementById('image-preview').style.filter = filter;
+            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active')); button.classList.add('active'); dirty = true;
+        }
+        function renderPeople(query = '') {
+            const q = query.trim().toLowerCase(); const visible = people.filter(person => !q || `${person.name} ${person.username}`.toLowerCase().includes(q));
+            document.getElementById('people-list').innerHTML = visible.map(person => { const selected = taggedPeople.has(person.id); return `<button type="button" onclick="togglePerson('${person.id}')" class="w-full flex items-center gap-3 px-2 py-2.5 rounded-2xl hover:bg-slate-50 text-left"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(person.seed)}" class="w-11 h-11 rounded-full bg-slate-100 border border-slate-200" alt=""><span class="flex-1 min-w-0"><span class="block text-sm font-bold truncate">${person.name}</span><span class="block text-xs text-slate-400 truncate">${person.username}</span></span><span class="w-6 h-6 rounded-full border-2 ${selected ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-300'} flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">${selected ? 'check' : ''}</span></span></button>`; }).join('') || '<p class="py-8 text-center text-sm text-slate-400">No people found</p>';
+        }
+        function openTagSheet() { renderPeople(); document.getElementById('tag-sheet').classList.add('open'); document.getElementById('tag-overlay').classList.remove('opacity-0', 'pointer-events-none'); }
+        function closeTagSheet() { document.getElementById('tag-sheet').classList.remove('open'); document.getElementById('tag-overlay').classList.add('opacity-0', 'pointer-events-none'); const names = people.filter(person => taggedPeople.has(person.id)).map(person => person.name); document.getElementById('tag-summary').textContent = names.length ? names.join(', ') : 'Add people featured in this post'; }
+        function togglePerson(id) { if (taggedPeople.has(id)) taggedPeople.delete(id); else taggedPeople.add(id); dirty = true; renderPeople(); }
+        function goBack() { if (dirty && !confirm('Discard your post changes?')) return; window.location.href = 'community_hub.html'; }
+        async function publishPost() {
+            if (!currentDraft?.file) { showToast('Choose an image before sharing'); return; }
+            const post = { id: `image-${Date.now()}`, caption: document.getElementById('caption').value.trim(), location: document.getElementById('location').value.trim(), music: document.getElementById('music').value, audience: document.getElementById('audience').value, altText: document.getElementById('alt-text').value.trim(), tags: [...taggedPeople], ratio: activeRatio, filter: activeFilter, allowComments: document.getElementById('allow-comments').checked, showLikes: document.getElementById('show-likes').checked, createdAt: new Date().toISOString() };
+            const posts = JSON.parse(localStorage.getItem('caremate-image-posts') || '[]'); posts.unshift(post); localStorage.setItem('caremate-image-posts', JSON.stringify(posts.slice(0, 30)));
+            const db = await openDraftDb(); const tx = db.transaction('drafts', 'readwrite'); tx.objectStore('drafts').put(currentDraft, post.id);
+            tx.oncomplete = () => { db.close(); dirty = false; window.location.href = 'community_hub.html?published=1'; }; tx.onerror = () => { db.close(); showToast('Could not share this post'); };
+        }
+        function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 2200); }
+        document.getElementById('caption').addEventListener('input', event => { document.getElementById('caption-count').textContent = `${event.target.value.length.toLocaleString()} / 2,200`; dirty = true; });
+        document.getElementById('replacement-image').addEventListener('change', event => { const file = event.target.files?.[0]; if (file?.type.startsWith('image/')) saveDraft(file); });
+        document.querySelectorAll('input, select').forEach(control => control.addEventListener('change', () => { dirty = true; }));
+        window.addEventListener('beforeunload', () => { if (imageUrl) URL.revokeObjectURL(imageUrl); }); readDraft();
+    </script>
+</body>
+</html>

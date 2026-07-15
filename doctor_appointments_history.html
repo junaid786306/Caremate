@@ -122,56 +122,56 @@
 
 <!-- Filter Tabs -->
 <div class="bg-white border-b border-slate-100 px-6 py-3 flex gap-3 overflow-x-auto hide-scrollbar sticky top-20 z-40">
-    <div id="filter-all" onclick="filterAppts('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary cursor-pointer active:scale-95">
+    <div id="filter-all" role="button" tabindex="0" aria-pressed="true" onclick="filterAppts('all')" class="status-pill flex-shrink-0 flex items-center justify-center bg-white border border-slate-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all ring-2 ring-offset-2 ring-primary cursor-pointer active:scale-95">
         <span class="text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">All</span>
     </div>
-    <div id="filter-completed" onclick="filterAppts('completed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-blue-50 border border-blue-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50 cursor-pointer active:scale-95">
+    <div id="filter-completed" role="button" tabindex="0" aria-pressed="false" onclick="filterAppts('completed')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-blue-50 border border-blue-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50 cursor-pointer active:scale-95">
         <div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-[11px] font-extrabold text-blue-700 uppercase tracking-widest">Completed</span>
     </div>
-    <div id="filter-cancelled" onclick="filterAppts('cancelled')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-red-50 border border-red-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50 cursor-pointer active:scale-95">
+    <div id="filter-cancelled" role="button" tabindex="0" aria-pressed="false" onclick="filterAppts('cancelled')" class="status-pill flex-shrink-0 flex items-center gap-2 bg-gradient-to-r from-white to-red-50 border border-red-100 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.05)] px-4 py-2 rounded-full transition-all opacity-50 cursor-pointer active:scale-95">
         <div class="w-2 h-2 bg-red-500 rounded-full"></div><span class="text-[11px] font-extrabold text-red-700 uppercase tracking-widest">Cancelled</span>
     </div>
 </div>
 
 <main class="max-w-3xl mx-auto pt-6 px-6">
     <!-- September Block -->
-    <div class="day-block">
+    <div class="day-block" data-appointment-group>
         <h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">September 2023</h3>
         
-        <div class="bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
+        <div data-appointment-status="completed" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-blue-500 text-xl">stethoscope</span>
             </div>
             <div class="flex-1 min-w-0">
                 <h3 class="font-bold text-slate-800 text-base truncate">Dr. Elena Rostova</h3>
-                <p class="text-[11px] font-semibold text-slate-500">Sep 12 • General Checkup</p>
+                <p class="text-[11px] font-semibold text-slate-500">Sep 12 â€¢ General Checkup</p>
             </div>
             <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider bg-blue-100 text-blue-600">Completed</span>
         </div>
 
-        <div class="bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
+        <div data-appointment-status="cancelled" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-red-400 text-xl">event_busy</span>
             </div>
             <div class="flex-1 min-w-0">
                 <h3 class="font-bold text-slate-800 text-base truncate">Dr. Marcus Vance</h3>
-                <p class="text-[11px] font-semibold text-slate-500">Sep 04 • Dental Cleaning</p>
+                <p class="text-[11px] font-semibold text-slate-500">Sep 04 â€¢ Dental Cleaning</p>
             </div>
             <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider bg-red-100 text-red-600">Cancelled</span>
         </div>
     </div>
 
     <!-- August Block -->
-    <div class="day-block">
+    <div class="day-block" data-appointment-group>
         <h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">August 2023</h3>
         
-        <div class="bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
+        <div data-appointment-status="completed" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-blue-500 text-xl">visibility</span>
             </div>
             <div class="flex-1 min-w-0">
                 <h3 class="font-bold text-slate-800 text-base truncate">Dr. Samuel Lee</h3>
-                <p class="text-[11px] font-semibold text-slate-500">Aug 05 • Optometrist</p>
+                <p class="text-[11px] font-semibold text-slate-500">Aug 05 â€¢ Optometrist</p>
             </div>
             <span class="text-[10px] px-2 py-1 rounded-md font-black uppercase tracking-wider bg-blue-100 text-blue-600">Completed</span>
         </div>
@@ -183,12 +183,39 @@
     function filterAppts(status) {
         document.querySelectorAll('.status-pill').forEach(el => el.style.opacity = '0.5');
         document.querySelectorAll('.status-pill').forEach(el => el.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
-        const activeEl = document.getElementById(ilter-+status);
+        const activeEl = document.getElementById('filter-' + status);
         if (activeEl) {
             activeEl.style.opacity = '1';
             activeEl.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
         }
+
+        document.querySelectorAll('.status-pill').forEach(el => {
+            el.setAttribute('aria-pressed', String(el === activeEl));
+        });
+
+        document.querySelectorAll('.appointment-card').forEach(card => {
+            const shouldShow = status === 'all' || card.dataset.appointmentStatus === status;
+            card.style.display = shouldShow ? 'flex' : 'none';
+            card.setAttribute('aria-hidden', String(!shouldShow));
+        });
+
+        document.querySelectorAll('[data-appointment-group]').forEach(group => {
+            const hasVisibleAppointments = Array.from(group.querySelectorAll('.appointment-card'))
+                .some(card => card.style.display !== 'none');
+            group.style.display = hasVisibleAppointments ? '' : 'none';
+        });
     }
+
+    document.querySelectorAll('.status-pill').forEach(filter => {
+        filter.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                filter.click();
+            }
+        });
+    });
+
+    filterAppts('all');
 </script><!-- BottomNavBar -->
 <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pt-3 pb-8 h-[100px] bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl rounded-t-[32px] border-t border-white/30 dark:border-slate-800/30 shadow-[0_-10px_40px_rgba(0,45,98,0.08)] md:hidden">
 <!-- Home (Active) -->

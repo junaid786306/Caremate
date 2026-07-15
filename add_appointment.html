@@ -39,14 +39,12 @@
     </script>
 </head>
 <body class="bg-[#f8faff] text-on-surface font-manrope antialiased min-h-screen pb-[120px]">
-    <header class="flex justify-between items-center px-6 h-20 pt-2 pb-2 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
-    <div class="flex items-center gap-4">
-        <a href="doctor_appointments.html" class="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-slate-600 shadow-sm active:scale-95 transition-all">
-            <span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+    <header class="relative flex items-center px-6 h-20 pt-2 pb-2 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
+        <a href="doctor_appointments.html" aria-label="Go back" class="relative z-10 w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-100 active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
         </a>
-        <h1 class="text-xl font-bold text-primary tracking-tight">Book Appointment</h1>
-    </div>
-</header>
+        <h1 class="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-xl font-bold text-primary tracking-tight">Book Appointment</h1>
+    </header>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -65,8 +63,36 @@
                 <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Doctor Name</label>
                 <div class="relative group">
                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">medical_services</span>
-                    <input type="text" required placeholder="e.g., Dr. Elizabeth Smith" class="w-full h-14 pl-12 pr-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold">
+                    <input id="appointment-doctor-name" type="text" required placeholder="e.g., Dr. Elizabeth Smith" class="w-full h-14 pl-12 pr-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold">
                 </div>
+            </div>
+
+            <!-- Doctor Code -->
+            <div class="space-y-2">
+                <label for="doctor-code" class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Doctor Code</label>
+                <div class="relative group">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">badge</span>
+                    <input id="doctor-code" name="doctorCode" type="text" maxlength="20" autocomplete="off" placeholder="e.g., DOC-1024" required
+                        oninput="handleDoctorCodeInput(this)"
+                        aria-describedby="doctor-code-hint"
+                        class="w-full h-14 pl-12 pr-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold uppercase">
+                </div>
+                <p id="doctor-code-hint" class="px-1 text-[11px] font-semibold text-slate-400">Enter the code shared by your doctor or clinic.</p>
+            </div>
+
+            <!-- Doctor Code OTP -->
+            <div class="space-y-2">
+                <label for="doctor-otp" class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Verification OTP</label>
+                <div class="flex gap-3">
+                    <div class="relative group flex-1 min-w-0">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">password</span>
+                        <input id="doctor-otp" name="doctorOtp" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="Enter 6-digit OTP" required
+                            oninput="this.value=this.value.replace(/\D/g,'').slice(0,6)"
+                            class="w-full h-14 pl-12 pr-3 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold tracking-[0.16em]">
+                    </div>
+                    <button id="doctor-otp-button" type="button" onclick="requestDoctorOtp()" class="h-14 px-4 rounded-2xl bg-primary/10 border border-primary/10 text-primary font-extrabold text-sm whitespace-nowrap active:scale-95 transition-transform">Get OTP</button>
+                </div>
+                <p id="doctor-otp-status" class="px-1 text-[11px] font-semibold text-slate-400" aria-live="polite">Verify the doctor code before booking.</p>
             </div>
 
             <!-- Appointment Type -->
@@ -97,11 +123,11 @@
             <div class="grid grid-cols-2 gap-4">
                 <div class="space-y-2">
                     <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Date</label>
-                    <input type="date" required class="w-full h-14 px-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm">
+                    <input id="appointment-date" type="date" required class="w-full h-14 px-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm">
                 </div>
                 <div class="space-y-2">
                     <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Time</label>
-                    <input type="time" required class="w-full h-14 px-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm">
+                    <input id="appointment-time" type="time" required class="w-full h-14 px-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm">
                 </div>
             </div>
 
@@ -118,6 +144,33 @@
     <script>
 
         let selectedType = 'video';
+        let doctorOtpCode = '';
+
+        const appointmentDateInput = document.getElementById('appointment-date');
+        appointmentDateInput.min = new Date().toISOString().split('T')[0];
+
+        function handleDoctorCodeInput(input) {
+            input.value = input.value.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 20);
+            doctorOtpCode = '';
+            document.getElementById('doctor-otp').value = '';
+            document.getElementById('doctor-otp-button').textContent = 'Get OTP';
+            document.getElementById('doctor-otp-status').textContent = 'Verify the doctor code before booking.';
+        }
+
+        function requestDoctorOtp() {
+            const doctorCode = document.getElementById('doctor-code').value.trim();
+            if (!doctorCode) {
+                document.getElementById('doctor-code').focus();
+                alert('Enter your doctor code first.');
+                return;
+            }
+
+            doctorOtpCode = String(Math.floor(100000 + Math.random() * 900000));
+            document.getElementById('doctor-otp-button').textContent = 'Resend OTP';
+            document.getElementById('doctor-otp-status').textContent = 'OTP sent for this booking session.';
+            alert(`Your Caremate verification OTP is ${doctorOtpCode}`);
+            document.getElementById('doctor-otp').focus();
+        }
 
         function toggleType(type) {
             selectedType = type;
@@ -150,6 +203,38 @@
 
         function saveAppointment(event) {
             event.preventDefault();
+            const doctorName = document.getElementById('appointment-doctor-name').value.trim();
+            const enteredOtp = document.getElementById('doctor-otp').value;
+            const date = appointmentDateInput.value;
+            const time = document.getElementById('appointment-time').value;
+            const appointmentDate = new Date(`${date}T${time}`);
+
+            if (!doctorName || Number.isNaN(appointmentDate.getTime()) || appointmentDate <= new Date()) {
+                alert('Please choose a future appointment date and time.');
+                return;
+            }
+
+            if (!doctorOtpCode) {
+                alert('Get and verify the doctor code OTP before booking.');
+                return;
+            }
+
+            if (enteredOtp !== doctorOtpCode) {
+                alert('The verification OTP is incorrect. Please try again.');
+                document.getElementById('doctor-otp').focus();
+                return;
+            }
+
+            const appointments = JSON.parse(localStorage.getItem('caremateAppointments') || '[]');
+            appointments.push({
+                id: `appointment-${Date.now()}`,
+                doctorName,
+                specialty: 'Healthcare provider',
+                datetime: appointmentDate.toISOString(),
+                type: selectedType,
+                location: document.getElementById('dynamic-field').value.trim()
+            });
+            localStorage.setItem('caremateAppointments', JSON.stringify(appointments));
             localStorage.setItem('lastAppointmentType', selectedType);
             window.location.href = 'home_dashboard.html';
         }

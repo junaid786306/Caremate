@@ -75,6 +75,22 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .post-card { box-shadow: 0 10px 40px rgba(0,45,98,0.06); }
+        .community-share-button {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 9999px;
+            color: #24467c;
+            background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(237,244,255,0.9));
+            box-shadow: 0 7px 18px rgba(0, 45, 98, 0.1), inset 0 1px 0 rgba(255,255,255,0.95);
+            transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+        }
+        .community-share-button:hover { background: #fff; box-shadow: 0 9px 22px rgba(0,45,98,0.15); }
+        .community-share-button:active { transform: scale(0.92); }
+        .community-share-button .material-symbols-outlined { font-size: 21px; font-weight: 500; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -185,8 +201,8 @@
                     <span class="material-symbols-outlined">chat_bubble_outline</span>
                     <span class="text-xs font-bold">32</span>
                 </button>
-                <button class="flex items-center gap-2" onclick="sharePost()">
-                    <span class="material-symbols-outlined">share</span>
+                <button class="community-share-button" onclick="sharePost('nutrition-blog', '5 Heart-Healthy Recipes for Spring')" aria-label="Share this blog post" title="Share">
+                    <span class="material-symbols-outlined">ios_share</span>
                 </button>
                 <div class="ml-auto">
                     <button class="group" onclick="toggleSave(this)">
@@ -234,8 +250,8 @@
                     <span class="material-symbols-outlined">chat_bubble_outline</span>
                     <span class="text-xs font-bold">16</span>
                 </button>
-                <button class="flex items-center gap-2" onclick="sharePost()">
-                    <span class="material-symbols-outlined">share</span>
+                <button class="community-share-button" onclick="sharePost('morning-stretch', 'Morning stretching routine')" aria-label="Share this community post" title="Share">
+                    <span class="material-symbols-outlined">ios_share</span>
                 </button>
                 <div class="ml-auto">
                     <button class="group" onclick="toggleSave(this)">
@@ -303,8 +319,8 @@
                 <span class="material-symbols-outlined">chat_bubble_outline</span>
                 <span class="text-xs font-bold">4</span>
             </button>
-            <button class="flex items-center gap-2" onclick="sharePost()">
-                <span class="material-symbols-outlined">share</span>
+            <button class="community-share-button" onclick="sharePost('spring-garden', 'Spring mindfulness garden')" aria-label="Share this community post" title="Share">
+                <span class="material-symbols-outlined">ios_share</span>
             </button>
             <div class="ml-auto">
                 <button class="group" onclick="toggleSave(this)">
@@ -447,7 +463,17 @@
         list.scrollTop = list.scrollHeight;
     }
 
-    function sharePost() {
+    let activeShareItem = { id: 'community', title: 'Community post' };
+
+    function sharePost(id = 'community', title = 'Community post') {
+        activeShareItem = { id, title };
+        const context = document.getElementById('share-context-title');
+        if (context) context.textContent = title;
+        const search = document.getElementById('share-contact-search');
+        if (search) {
+            search.value = '';
+            filterShareContacts('');
+        }
         openShareSheet();
     }
 
@@ -480,8 +506,17 @@
         showFeedToast(`Shared with ${name}!`);
     }
 
+    function filterShareContacts(query) {
+        const term = query.trim().toLowerCase();
+        document.querySelectorAll('[data-share-contact]').forEach((row) => {
+            row.classList.toggle('hidden', !row.dataset.shareContact.includes(term));
+        });
+        const visible = [...document.querySelectorAll('[data-share-contact]')].some((row) => !row.classList.contains('hidden'));
+        document.getElementById('share-no-results').classList.toggle('hidden', visible);
+    }
+
     function copyLink() {
-        const url = window.location.href;
+        const url = `${window.location.origin}${window.location.pathname}?share=${encodeURIComponent(activeShareItem.id)}`;
         if (navigator.clipboard) {
             navigator.clipboard.writeText(url).then(() => {
                 closeShareSheet();
@@ -490,6 +525,40 @@
         } else {
             closeShareSheet();
             showFeedToast('🔗 Link copied!');
+        }
+    }
+
+    async function shareMore() {
+        const shareData = {
+            title: activeShareItem.title,
+            text: `See ${activeShareItem.title} on Caremate`,
+            url: `${window.location.origin}${window.location.pathname}?share=${encodeURIComponent(activeShareItem.id)}`
+        };
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+                closeShareSheet();
+            } catch (error) {
+                if (error.name !== 'AbortError') showFeedToast('Unable to open sharing options.');
+            }
+        } else {
+            copyLink();
+        }
+    }
+
+    function shareChannel(channel) {
+        const url = `${window.location.origin}${window.location.pathname}?share=${encodeURIComponent(activeShareItem.id)}`;
+        const message = `See ${activeShareItem.title} on Caremate: ${url}`;
+        if (channel === 'Gmail') {
+            window.location.href = `mailto:?subject=${encodeURIComponent(activeShareItem.title)}&body=${encodeURIComponent(message)}`;
+            return;
+        }
+        if (channel === 'WhatsApp') {
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+            return;
+        }
+        if (channel === 'Messages') {
+            window.location.href = 'messages.html';
         }
     }
 </script>
@@ -529,9 +598,8 @@
     </div>
 
     <!-- Main FAB -->
-    <button onclick="toggleFab()" class="relative w-16 h-16 rounded-[22px] flex items-center justify-center shadow-[0_12px_24px_rgba(0,45,98,0.3),inset_0_-6px_0_rgba(0,0,0,0.2),inset_0_4px_0_rgba(255,255,255,0.25)] active:scale-95 active:translate-y-1.5 active:shadow-[0_4px_12px_rgba(0,45,98,0.3),inset_0_-2px_0_rgba(0,0,0,0.2),inset_0_2px_0_rgba(255,255,255,0.25)] pointer-events-auto transition-all duration-300 z-10 overflow-hidden" id="main-fab" style="background: linear-gradient(135deg, #002d62 0%, #00193c 100%);">
-        <div class="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent opacity-60 pointer-events-none"></div>
-        <span class="material-symbols-outlined text-white text-[32px] transition-transform duration-300 relative z-10" id="fab-icon" style="text-shadow: 0 2px 4px rgba(0,0,0,0.4); font-variation-settings: 'wght' 600;">add</span>
+    <button onclick="toggleFab()" aria-label="Create community content" class="relative w-14 h-14 rounded-full bg-primary border border-white/80 flex items-center justify-center shadow-[0_8px_20px_rgba(0,45,98,0.22)] hover:bg-[#001f46] active:scale-95 pointer-events-auto transition-all duration-300 z-10" id="main-fab">
+        <span class="material-symbols-outlined text-white text-2xl transition-transform duration-300" id="fab-icon" style="font-variation-settings: 'wght' 500;">add</span>
     </button>
 </div>
 
@@ -539,7 +607,7 @@
 <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[55] opacity-0 pointer-events-none transition-opacity duration-300" id="fab-overlay" onclick="toggleFab()"></div>
 
 <!-- ── IMAGE PREVIEW MODAL ── -->
-<div id="img-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
+<div id="img-modal" class="hidden fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
     <div id="img-backdrop" class="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeImgModal()"></div>
     <div id="img-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-6 translate-y-full transition-transform duration-500 pointer-events-none">
         <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5"></div>
@@ -564,27 +632,6 @@
     </div>
 </div>
 
-<!-- VIDEO PREVIEW MODAL -->
-<div id="vid-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
-    <div id="vid-backdrop" class="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeVidModal()"></div>
-    <div id="vid-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-6 translate-y-full transition-transform duration-500 pointer-events-none">
-        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5"></div>
-        <h2 class="font-bold text-xl text-primary mb-4 text-center">Preview Video</h2>
-        <div class="w-full h-56 rounded-2xl bg-slate-100 overflow-hidden mb-4 flex items-center justify-center relative">
-            <video id="vid-preview" class="w-full h-full object-cover hidden" controls></video>
-            <div id="vid-placeholder" class="flex flex-col items-center gap-2 text-slate-400">
-                <span class="material-symbols-outlined text-5xl">videocam</span>
-                <p class="text-sm font-bold">Video selected</p>
-            </div>
-        </div>
-        <textarea id="vid-caption" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-700 focus:ring-2 focus:ring-blue-100 focus:border-primary outline-none resize-none mb-4" placeholder="Write something about this video... 🎥"></textarea>
-        <div class="flex gap-3">
-            <button onclick="closeVidModal()" class="flex-1 h-12 border border-slate-200 rounded-2xl text-sm font-bold text-slate-500 active:scale-95">Cancel</button>
-            <button onclick="publishVideo()" class="flex-1 h-12 bg-primary text-white rounded-2xl text-sm font-bold shadow-lg active:scale-95">Share Video</button>
-        </div>
-    </div>
-</div>
-
 <script>
     let fabOpen = false;
     function toggleFab() {
@@ -604,32 +651,67 @@
     }
 
     // ── Image Upload ──
-    function handleImagePick(input) {
+    async function handleImagePick(input) {
         if (!input.files || !input.files[0]) return;
         toggleFab();
         const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = e => {
-            const preview = document.getElementById('img-preview');
-            const placeholder = preview.previousElementSibling;
-            preview.src = e.target.result;
-            preview.classList.remove('hidden');
-            if (placeholder) placeholder.classList.add('hidden');
-            openModal('img');
-        };
-        reader.readAsDataURL(file);
+        if (!file.type.startsWith('image/')) {
+            showFeedToast('Please choose an image file');
+            return;
+        }
+        try {
+            const db = await openVideoDraftDb();
+            const transaction = db.transaction('drafts', 'readwrite');
+            transaction.objectStore('drafts').put({ file, name: file.name, type: file.type, updatedAt: Date.now() }, 'community-image');
+            transaction.oncomplete = () => {
+                db.close();
+                window.location.href = 'publish_post.html';
+            };
+            transaction.onerror = () => {
+                db.close();
+                showFeedToast('Could not prepare this image');
+            };
+        } catch {
+            showFeedToast('Image upload is unavailable in this browser');
+        }
     }
 
-    function handleVideoPick(input) {
+    function openVideoDraftDb() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open('caremate-media-drafts', 1);
+            request.onupgradeneeded = () => {
+                if (!request.result.objectStoreNames.contains('drafts')) {
+                    request.result.createObjectStore('drafts');
+                }
+            };
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function handleVideoPick(input) {
         if (!input.files || !input.files[0]) return;
         toggleFab();
         const file = input.files[0];
-        const vid = document.getElementById('vid-preview');
-        const placeholder = document.getElementById('vid-placeholder');
-        vid.src = URL.createObjectURL(file);
-        vid.classList.remove('hidden');
-        if (placeholder) placeholder.classList.add('hidden');
-        openModal('vid');
+        if (!file.type.startsWith('video/')) {
+            showFeedToast('Please choose a video file');
+            return;
+        }
+        try {
+            const db = await openVideoDraftDb();
+            const transaction = db.transaction('drafts', 'readwrite');
+            transaction.objectStore('drafts').put({ file, name: file.name, type: file.type, updatedAt: Date.now() }, 'community-video');
+            transaction.oncomplete = () => {
+                db.close();
+                window.location.href = 'publish_video.html';
+            };
+            transaction.onerror = () => {
+                db.close();
+                showFeedToast('Could not prepare this video');
+            };
+        } catch {
+            showFeedToast('Video upload is unavailable in this browser');
+        }
     }
 
     function openModal(type) {
@@ -642,7 +724,6 @@
     }
 
     function closeImgModal() { closeModal('img'); }
-    function closeVidModal() { closeModal('vid'); }
 
     function closeModal(type) {
         const backdrop = document.getElementById(type+'-backdrop');
@@ -678,19 +759,14 @@
                 <button class="flex items-center gap-1.5 text-sm font-bold">
                     <span class="material-symbols-outlined">chat_bubble_outline</span> 0
                 </button>
-                <button onclick="sharePost()" class="flex items-center gap-1.5 text-sm font-bold">
-                    <span class="material-symbols-outlined">share</span>
+                <button onclick="sharePost('new-community-post', 'New community post')" class="community-share-button" aria-label="Share this community post" title="Share">
+                    <span class="material-symbols-outlined">ios_share</span>
                 </button>
             </div>
         </div>`;
         const firstPost = document.querySelector('.post-card');
         if (firstPost) firstPost.insertAdjacentHTML('beforebegin', postHTML);
         showFeedToast('✅ Your post is live!');
-    }
-
-    function publishVideo() {
-        closeVidModal();
-        showFeedToast('🎥 Video posted successfully!');
     }
 
     function showFeedToast(msg) {
@@ -739,7 +815,10 @@
         </div>
         <!-- Header -->
         <div class="px-6 pb-4 flex items-center justify-between flex-shrink-0">
-            <h3 class="font-bold text-lg text-primary">Share with Friends</h3>
+            <div>
+                <h3 class="font-bold text-lg text-primary">Share with</h3>
+                <p id="share-context-title" class="text-[11px] text-slate-400 mt-0.5 max-w-[260px] truncate">Community post</p>
+            </div>
             <button onclick="closeShareSheet()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
                 <span class="material-symbols-outlined text-lg">close</span>
             </button>
@@ -748,13 +827,13 @@
         <div class="px-6 pb-4 flex-shrink-0">
             <div class="flex items-center gap-2 bg-slate-100 rounded-full px-4 py-2.5">
                 <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
-                <input type="text" placeholder="Search friends…" class="bg-transparent text-sm outline-none flex-1 text-slate-700">
+                <input id="share-contact-search" type="search" placeholder="Search people" oninput="filterShareContacts(this.value)" class="bg-transparent border-0 focus:ring-0 text-sm outline-none flex-1 text-slate-700 p-0">
             </div>
         </div>
         <!-- Contacts list -->
         <div class="overflow-y-auto flex-1 px-4 pb-8 space-y-2">
             <!-- Contact rows -->
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="eleanor fitzgerald guardian family" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Eleanor" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Eleanor Fitzgerald</p>
@@ -762,7 +841,7 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="elena sterling elena active" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Elena Sterling</p>
@@ -770,7 +849,7 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="doctor arthur pen arthur fit" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arthur" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Dr. Arthur Pen</p>
@@ -778,7 +857,7 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="margaret clarke margaret joy" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Margaret" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Margaret Clarke</p>
@@ -786,7 +865,7 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="ruth nakamura ruth zen" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ruth" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Ruth Nakamura</p>
@@ -794,7 +873,7 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="dorothy mills dorothy m" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dorothy" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Dorothy Mills</p>
@@ -802,7 +881,7 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+            <div data-share-contact="betty ann wilson bettyann cooks" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=BettyAnn" class="w-12 h-12 rounded-full flex-shrink-0 border border-slate-100">
                 <div class="flex-1 min-w-0">
                     <p class="font-bold text-sm text-primary truncate">Betty Ann Wilson</p>
@@ -810,16 +889,28 @@
                 </div>
                 <button onclick="sendToContact(this)" class="flex-shrink-0 bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full active:scale-95 transition-all">Send</button>
             </div>
-            <!-- Copy link row -->
-            <div class="pt-2 border-t border-slate-100 mt-2">
-                <button onclick="copyLink()" class="w-full flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors text-left">
-                    <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
-                        <span class="material-symbols-outlined text-slate-600">link</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-sm text-primary">Copy Link</p>
-                        <p class="text-[11px] text-slate-400">Share anywhere</p>
-                    </div>
+            <p id="share-no-results" class="hidden py-8 text-center text-sm text-slate-400">No people found</p>
+            <!-- Share actions -->
+            <div class="pt-4 border-t border-slate-100 mt-3 flex gap-4 overflow-x-auto hide-scrollbar px-1 pb-2">
+                <button onclick="shareChannel('WhatsApp')" class="min-w-[64px] flex flex-col items-center gap-2 p-1 active:scale-95 transition-transform">
+                    <span class="w-12 h-12 rounded-full bg-emerald-500 text-white shadow-md flex items-center justify-center"><span class="material-symbols-outlined">chat</span></span>
+                    <span class="font-bold text-[10px] text-primary">WhatsApp</span>
+                </button>
+                <button onclick="shareChannel('Gmail')" class="min-w-[64px] flex flex-col items-center gap-2 p-1 active:scale-95 transition-transform">
+                    <span class="w-12 h-12 rounded-full bg-white border border-slate-200 text-red-500 shadow-sm flex items-center justify-center"><span class="material-symbols-outlined">mail</span></span>
+                    <span class="font-bold text-[10px] text-primary">Gmail</span>
+                </button>
+                <button onclick="shareChannel('Messages')" class="min-w-[64px] flex flex-col items-center gap-2 p-1 active:scale-95 transition-transform">
+                    <span class="w-12 h-12 rounded-full bg-blue-500 text-white shadow-md flex items-center justify-center"><span class="material-symbols-outlined">chat_bubble</span></span>
+                    <span class="font-bold text-[10px] text-primary">Messages</span>
+                </button>
+                <button onclick="copyLink()" class="min-w-[64px] flex flex-col items-center gap-2 p-1 active:scale-95 transition-transform">
+                    <span class="w-12 h-12 rounded-full bg-slate-100 text-primary flex items-center justify-center"><span class="material-symbols-outlined">link</span></span>
+                    <span class="font-bold text-[10px] text-primary">Copy link</span>
+                </button>
+                <button onclick="shareMore()" class="min-w-[64px] flex flex-col items-center gap-2 p-1 active:scale-95 transition-transform">
+                    <span class="w-12 h-12 rounded-full bg-violet-100 text-primary flex items-center justify-center"><span class="material-symbols-outlined">more_horiz</span></span>
+                    <span class="font-bold text-[10px] text-primary">More</span>
                 </button>
             </div>
         </div>

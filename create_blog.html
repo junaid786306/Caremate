@@ -40,19 +40,55 @@
     </header>
 
     <main class="flex-1 p-6 max-w-2xl mx-auto w-full space-y-8">
-        <!-- Image Upload (full page width) -->
-        <div class="relative w-full aspect-[4/5] bg-slate-100 rounded-[32px] overflow-hidden border-2 border-dashed border-slate-200 flex flex-col items-center justify-center group cursor-pointer" onclick="document.getElementById('blog-image').click()">
-            <img id="image-preview" class="absolute inset-0 w-full h-full object-cover hidden">
-            <div id="upload-placeholder" class="flex flex-col items-center gap-3 text-slate-400 group-hover:text-primary transition-colors">
+        <!-- Cover editor -->
+        <div class="space-y-4">
+        <div id="cover-editor" class="relative w-full aspect-[16/10] bg-slate-100 rounded-[28px] overflow-hidden border border-slate-200 flex flex-col items-center justify-center group">
+            <img id="image-preview" draggable="false" class="absolute inset-0 w-full h-full object-cover hidden select-none" style="touch-action:none; cursor:grab; transform-origin:center;">
+            <button id="upload-placeholder" type="button" onclick="document.getElementById('blog-image').click()" class="flex flex-col items-center gap-3 text-slate-400 group-hover:text-primary transition-colors">
                 <span class="material-symbols-outlined text-5xl">add_a_photo</span>
-                <span class="font-bold text-sm uppercase tracking-widest">Add Featured Image</span>
-                <span class="text-xs text-slate-300">Tap to upload</span>
-            </div>
+                <span class="font-bold text-sm uppercase tracking-widest">Add Cover Image</span>
+                <span class="text-xs text-slate-300">Choose a photo to begin</span>
+            </button>
             <input type="file" id="blog-image" accept="image/*" class="hidden" onchange="previewImage(this)">
-            <!-- Caption overlay when image is selected -->
+            <button id="change-cover-btn" type="button" onclick="event.stopPropagation(); document.getElementById('blog-image').click()" class="hidden absolute top-3 right-3 h-9 px-3 rounded-xl bg-black/55 text-white backdrop-blur-md text-xs font-bold items-center gap-1.5">
+                <span class="material-symbols-outlined text-[17px]">swap_horiz</span> Change
+            </button>
             <div id="caption-overlay" class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent hidden">
                 <input type="text" id="image-caption" placeholder="Add a caption..." class="w-full bg-transparent border-b border-white/50 text-white placeholder-white/60 text-sm focus:outline-none focus:border-white pb-1" onclick="event.stopPropagation()">
             </div>
+        </div>
+
+        <section id="cover-controls" class="hidden bg-white border border-slate-200 rounded-2xl p-4 space-y-4 shadow-sm">
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <h2 class="text-sm font-extrabold text-primary">Cover image</h2>
+                    <p class="text-xs text-slate-400 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">pan_tool_alt</span> Drag the photo to reposition it</p>
+                </div>
+                <button type="button" onclick="resetCoverPosition()" class="h-9 px-3 rounded-xl bg-slate-100 text-xs font-bold text-slate-600">Reset</button>
+            </div>
+            <div>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Cover size</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <button type="button" onclick="setCoverRatio('wide', this)" class="cover-ratio h-10 rounded-xl bg-primary text-white text-xs font-bold">Wide</button>
+                    <button type="button" onclick="setCoverRatio('square', this)" class="cover-ratio h-10 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold">Square</button>
+                    <button type="button" onclick="setCoverRatio('portrait', this)" class="cover-ratio h-10 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold">Portrait</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="setCoverFit('cover', this)" class="cover-fit h-10 rounded-xl bg-primary text-white text-xs font-bold flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[17px]">crop_free</span> Fill frame</button>
+                <button type="button" onclick="setCoverFit('contain', this)" class="cover-fit h-10 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[17px]">fit_screen</span> Fit image</button>
+            </div>
+            <label class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-slate-400">zoom_in</span>
+                <input id="cover-zoom" type="range" min="100" max="220" value="100" oninput="setCoverZoom(this.value)" class="flex-1 accent-primary">
+                <span id="zoom-value" class="w-10 text-right text-xs font-bold text-slate-500">100%</span>
+            </label>
+            <label class="min-h-12 flex items-center gap-3 border-t border-slate-100 pt-3 cursor-pointer">
+                <span class="material-symbols-outlined text-secondary">account_circle</span>
+                <span class="flex-1"><span class="block text-sm font-bold text-primary">Use as profile cover</span><span class="block text-[11px] text-slate-400 mt-0.5">Also update your public profile cover</span></span>
+                <input id="use-profile-cover" type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary">
+            </label>
+        </section>
         </div>
 
         <!-- Inputs -->
@@ -94,18 +130,102 @@
     </main>
 
     <script>
+        let coverX = 0;
+        let coverY = 0;
+        let coverZoom = 1;
+        let coverFit = 'cover';
+        let coverRatio = 'wide';
+        let dragStart = null;
+
+        function applyCoverTransform() {
+            const image = document.getElementById('image-preview');
+            image.style.transform = `translate3d(${coverX}px, ${coverY}px, 0) scale(${coverZoom})`;
+            image.style.objectFit = coverFit;
+        }
+
         function previewImage(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('image-preview').src = e.target.result;
-                    document.getElementById('image-preview').classList.remove('hidden');
+                    const image = document.getElementById('image-preview');
+                    image.src = e.target.result;
+                    image.classList.remove('hidden');
                     document.getElementById('upload-placeholder').classList.add('hidden');
                     document.getElementById('caption-overlay').classList.remove('hidden');
+                    document.getElementById('cover-controls').classList.remove('hidden');
+                    document.getElementById('change-cover-btn').classList.remove('hidden');
+                    document.getElementById('change-cover-btn').classList.add('flex');
+                    resetCoverPosition();
                 }
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        function setCoverRatio(ratio, button) {
+            coverRatio = ratio;
+            const editor = document.getElementById('cover-editor');
+            editor.classList.remove('aspect-[16/10]', 'aspect-square', 'aspect-[4/5]');
+            editor.classList.add(ratio === 'square' ? 'aspect-square' : ratio === 'portrait' ? 'aspect-[4/5]' : 'aspect-[16/10]');
+            document.querySelectorAll('.cover-ratio').forEach(item => {
+                item.classList.remove('bg-primary', 'text-white');
+                item.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            button.classList.remove('bg-slate-100', 'text-slate-600');
+            button.classList.add('bg-primary', 'text-white');
+            resetCoverPosition();
+        }
+
+        function setCoverFit(fit, button) {
+            coverFit = fit;
+            document.querySelectorAll('.cover-fit').forEach(item => {
+                item.classList.remove('bg-primary', 'text-white');
+                item.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            button.classList.remove('bg-slate-100', 'text-slate-600');
+            button.classList.add('bg-primary', 'text-white');
+            resetCoverPosition();
+        }
+
+        function setCoverZoom(value) {
+            coverZoom = Number(value) / 100;
+            document.getElementById('zoom-value').textContent = `${value}%`;
+            applyCoverTransform();
+        }
+
+        function resetCoverPosition() {
+            coverX = 0;
+            coverY = 0;
+            coverZoom = 1;
+            const slider = document.getElementById('cover-zoom');
+            slider.value = 100;
+            document.getElementById('zoom-value').textContent = '100%';
+            applyCoverTransform();
+        }
+
+        const coverImage = document.getElementById('image-preview');
+        coverImage.addEventListener('pointerdown', event => {
+            if (coverImage.classList.contains('hidden')) return;
+            dragStart = { x: event.clientX, y: event.clientY, coverX, coverY };
+            coverImage.setPointerCapture(event.pointerId);
+            coverImage.style.cursor = 'grabbing';
+        });
+        coverImage.addEventListener('pointermove', event => {
+            if (!dragStart) return;
+            const editor = document.getElementById('cover-editor');
+            const limitX = editor.clientWidth * .42;
+            const limitY = editor.clientHeight * .42;
+            coverX = Math.max(-limitX, Math.min(limitX, dragStart.coverX + event.clientX - dragStart.x));
+            coverY = Math.max(-limitY, Math.min(limitY, dragStart.coverY + event.clientY - dragStart.y));
+            applyCoverTransform();
+        });
+        function endCoverDrag(event) {
+            if (!dragStart) return;
+            dragStart = null;
+            coverImage.style.cursor = 'grab';
+            if (coverImage.hasPointerCapture(event.pointerId)) coverImage.releasePointerCapture(event.pointerId);
+        }
+        coverImage.addEventListener('pointerup', endCoverDrag);
+        coverImage.addEventListener('pointercancel', endCoverDrag);
 
         function selectCategory(btn) {
             document.querySelectorAll('#category-row button').forEach(b => {
@@ -140,6 +260,19 @@
         }
 
         function publishBlog() {
+            const coverImage = document.getElementById('image-preview');
+            const blogDraft = {
+                title: document.querySelector('input[placeholder="Enter an engaging title..."]').value.trim(),
+                content: document.querySelector('textarea[placeholder="Start writing your thoughts..."]').value.trim(),
+                imageCaption: document.getElementById('image-caption').value.trim(),
+                coverImage: coverImage.src || '',
+                coverPosition: { x: coverX, y: coverY, zoom: coverZoom, fit: coverFit, ratio: coverRatio },
+                publishedAt: new Date().toISOString()
+            };
+            localStorage.setItem('caremate-latest-blog', JSON.stringify(blogDraft));
+            if (document.getElementById('use-profile-cover').checked && coverImage.src) {
+                localStorage.setItem('user_profile_cover', coverImage.src);
+            }
             alert('Your blog post has been published successfully!');
             window.location.href = 'community_hub.html';
         }

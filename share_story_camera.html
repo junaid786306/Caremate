@@ -73,18 +73,21 @@
     </header>
 
     <!-- Text Styling Toolbar -->
-    <div id="text-toolbar" class="fixed left-1/2 bottom-32 z-[70] flex -translate-x-1/2 translate-y-4 items-center gap-2 rounded-full border border-white/20 bg-black/45 px-2 py-2 opacity-0 shadow-2xl backdrop-blur-xl transition-all pointer-events-none">
-        <button onclick="cycleTextFont()" id="font-toggle-btn" class="h-10 min-w-[86px] rounded-full bg-white text-primary px-4 text-[11px] font-black uppercase tracking-wide shadow-lg active:scale-95 transition-all">Classic</button>
-        <button onclick="openTextColorPicker()" id="text-color-btn" class="h-10 w-10 rounded-full border-2 border-white bg-white text-primary shadow-lg flex items-center justify-center active:scale-95 transition-all">
-            <span class="material-symbols-outlined text-[20px]">format_color_text</span>
+    <div id="text-toolbar" role="toolbar" aria-label="Text formatting tools" class="fixed left-1/2 bottom-32 z-[70] flex -translate-x-1/2 translate-y-4 items-center gap-1.5 rounded-2xl border border-white/30 bg-slate-950/55 p-2 opacity-0 shadow-[0_16px_40px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-all pointer-events-none">
+        <button onclick="cycleTextFont()" id="font-toggle-btn" type="button" title="Change font" aria-label="Change text font" class="h-11 min-w-[104px] rounded-xl border border-white/70 bg-white/95 text-primary px-3 flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[19px]" aria-hidden="true">text_fields</span>
+            <span id="font-toggle-label" class="text-[11px] font-extrabold uppercase tracking-wide">Classic</span>
+        </button>
+        <button onclick="openTextColorPicker()" id="text-color-btn" type="button" title="Text color" aria-label="Choose text color" class="h-11 w-11 rounded-xl border border-white/70 bg-white text-primary shadow-sm flex items-center justify-center active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[21px]" aria-hidden="true">format_color_text</span>
         </button>
         <input type="color" id="text-color-input" value="#ffffff" class="sr-only" oninput="setTextColor(this.value)">
-        <button onclick="openTextBgColorPicker()" id="text-bg-btn" class="h-10 w-10 rounded-full border-2 border-white bg-primary text-white shadow-lg flex items-center justify-center active:scale-95 transition-all">
-            <span class="material-symbols-outlined text-[20px]">format_color_fill</span>
+        <button onclick="openTextBgColorPicker()" id="text-bg-btn" type="button" title="Background color" aria-label="Choose text background color" class="h-11 w-11 rounded-xl border border-white/70 bg-primary text-white shadow-sm flex items-center justify-center active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[21px]" aria-hidden="true">format_color_fill</span>
         </button>
         <input type="color" id="text-bg-input" value="#001b3f" class="sr-only" oninput="setTextBackgroundColor(this.value)">
-        <button onclick="toggleTextBackground()" id="text-bg-mode-btn" class="h-10 w-10 rounded-full bg-white/15 text-white border border-white/30 shadow-lg flex items-center justify-center active:scale-95 transition-all">
-            <span class="material-symbols-outlined text-[20px]">format_shapes</span>
+        <button onclick="toggleTextBackground()" id="text-bg-mode-btn" type="button" title="Toggle text background" aria-label="Toggle text background" aria-pressed="true" class="btn-active h-11 w-11 rounded-xl bg-white/15 text-white border border-white/40 shadow-sm flex items-center justify-center active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[21px]" aria-hidden="true">format_shapes</span>
         </button>
     </div>
 
@@ -134,6 +137,11 @@
                         <span class="material-symbols-outlined">title</span>
                         <span class="text-[9px] font-black uppercase tracking-wide">Text</span>
                     </button>
+
+                    <button onclick="addNoteSticker()" id="tool-note" title="Add a note (20 characters maximum)" class="w-14 h-14 rounded-2xl bg-white/75 border border-white/50 backdrop-blur-md shadow-xl flex flex-col items-center justify-center gap-0.5 text-primary hover:bg-white/90 active:scale-95 transition-all">
+                        <span class="material-symbols-outlined">sticky_note_2</span>
+                        <span class="text-[9px] font-black uppercase tracking-wide">Note</span>
+                    </button>
                     
                     <button onclick="clearCanvas()" class="w-14 h-14 rounded-2xl bg-white/75 border border-white/50 backdrop-blur-md shadow-xl flex flex-col items-center justify-center gap-0.5 text-red-500 hover:bg-white/90 active:scale-95 transition-all">
                         <span class="material-symbols-outlined">delete_sweep</span>
@@ -181,7 +189,9 @@
                         <button onclick="selectColor(this, '#94a3b8')" class="color-swatch w-8 h-8 shrink-0 rounded-full border-2 border-white transition-all" style="background:#94a3b8"></button>
                         <button onclick="selectColor(this, '#475569')" class="color-swatch w-8 h-8 shrink-0 rounded-full border-2 border-white transition-all" style="background:#475569"></button>
                         <button onclick="selectColor(this, '#111827')" class="color-swatch w-8 h-8 shrink-0 rounded-full border-2 border-white transition-all" style="background:#111827"></button>
-                        <button type="button" onclick="openCustomColorPicker()" id="custom-color-btn" class="color-swatch w-9 h-9 shrink-0 rounded-full bg-white border-2 border-white shadow-md flex items-center justify-center text-[11px] font-black text-primary transition-all">#</button>
+                        <button type="button" onclick="openCustomColorPicker()" id="custom-color-btn" title="Choose custom color" aria-label="Choose custom color" class="color-swatch w-9 h-9 shrink-0 rounded-full bg-white border-2 border-white shadow-md flex items-center justify-center text-primary transition-all">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">colorize</span>
+                        </button>
                         <input type="color" id="custom-color-input" value="#ef4444" class="sr-only" oninput="selectCustomColor(this.value)">
                     </div>
                 </div>
@@ -309,11 +319,27 @@
         let recordingTriggered = false;
         let cameraStream = null;
         let currentFacingMode = 'environment';
+        let currentCameraDeviceId = '';
+        let availableVideoDevices = [];
+        let cameraSwitching = false;
         let liveCameraReady = false;
         let cameraPermissionTimer = null;
         let currentUploadUrl = null;
 
-        async function getCameraStream(facingMode) {
+        async function refreshVideoDevices() {
+            if (!navigator.mediaDevices?.enumerateDevices) return [];
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            availableVideoDevices = devices.filter(device => device.kind === 'videoinput');
+            return availableVideoDevices;
+        }
+
+        async function getCameraStream(facingMode, deviceId = '') {
+            if (deviceId) {
+                return navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: { exact: deviceId } },
+                    audio: false
+                });
+            }
             try {
                 return await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: { exact: facingMode } },
@@ -333,7 +359,7 @@
             switchCameraBtn.title = label;
         }
 
-        async function startLiveCamera(facingMode = currentFacingMode) {
+        async function startLiveCamera(facingMode = currentFacingMode, deviceId = '') {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 showCameraFallback('Camera is not supported in this browser. Upload a photo instead.');
                 return false;
@@ -355,13 +381,17 @@
             }, 1500);
 
             try {
-                const stream = await getCameraStream(facingMode);
+                const stream = await getCameraStream(facingMode, deviceId);
                 clearTimeout(cameraPermissionTimer);
                 cameraStream = stream;
                 cameraVideo.srcObject = stream;
                 await cameraVideo.play();
-                currentFacingMode = facingMode;
+                const trackSettings = stream.getVideoTracks()[0]?.getSettings?.() || {};
+                currentCameraDeviceId = trackSettings.deviceId || deviceId || '';
+                currentFacingMode = trackSettings.facingMode || facingMode;
+                cameraVideo.style.transform = currentFacingMode === 'user' ? 'scaleX(-1)' : 'scaleX(1)';
                 liveCameraReady = true;
+                await refreshVideoDevices().catch(() => []);
                 updateCameraButtonLabel();
                 cameraStatus.classList.add('hidden');
                 cameraVideo.classList.remove('hidden');
@@ -442,14 +472,40 @@
         }
 
         async function switchCamera() {
+            if (cameraSwitching) return;
+            cameraSwitching = true;
+            switchCameraBtn.disabled = true;
+            switchCameraBtn.setAttribute('aria-busy', 'true');
             const previousFacingMode = currentFacingMode;
+            const previousDeviceId = currentCameraDeviceId;
             const nextFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
             cameraStatusText.textContent = nextFacingMode === 'environment' ? 'Switching to back camera...' : 'Switching to front camera...';
             cameraStatus.classList.remove('hidden');
-            const switched = await startLiveCamera(nextFacingMode);
-            if (!switched) {
-                await startLiveCamera(previousFacingMode);
-                showToast('This camera is not available on this device.');
+            try {
+                await refreshVideoDevices().catch(() => []);
+                let targetDeviceId = '';
+                if (availableVideoDevices.length > 1) {
+                    const currentIndex = availableVideoDevices.findIndex(device => device.deviceId === previousDeviceId);
+                    const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % availableVideoDevices.length : 0;
+                    targetDeviceId = availableVideoDevices[nextIndex].deviceId;
+                }
+
+                const switched = await startLiveCamera(nextFacingMode, targetDeviceId);
+                const receivedSameCamera = Boolean(previousDeviceId && currentCameraDeviceId === previousDeviceId);
+                if (!switched || receivedSameCamera) {
+                    if (!switched && previousDeviceId) await startLiveCamera(previousFacingMode, previousDeviceId);
+                    else {
+                        currentFacingMode = previousFacingMode;
+                        cameraVideo.style.transform = currentFacingMode === 'user' ? 'scaleX(-1)' : 'scaleX(1)';
+                        updateCameraButtonLabel();
+                        cameraStatus.classList.add('hidden');
+                    }
+                    showToast(availableVideoDevices.length < 2 ? 'Only one camera is available.' : 'The other camera could not be opened.');
+                }
+            } finally {
+                cameraSwitching = false;
+                switchCameraBtn.disabled = false;
+                switchCameraBtn.removeAttribute('aria-busy');
             }
         }
 
@@ -525,6 +581,7 @@
         function toggleDrawMode() {
             drawModeActive = !drawModeActive;
             if (drawModeActive) {
+                resetBrushPalettePosition();
                 canvas.className = "absolute inset-0 z-20 pointer-events-auto cursor-crosshair";
                 toolDraw.classList.add('btn-active');
                 brushPalette.classList.remove('translate-x-10', 'opacity-0', 'pointer-events-none');
@@ -538,6 +595,12 @@
                 closeBrushPanels();
                 focusRing.style.opacity = '1';
             }
+        }
+
+        function resetBrushPalettePosition() {
+            ['left', 'top', 'right', 'bottom', 'transform'].forEach(property => {
+                brushPalette.style.removeProperty(property);
+            });
         }
 
         function closeBrushPanels() {
@@ -635,7 +698,6 @@
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             textContainer.innerHTML = '';
-            showToast('Canvas reset successfully!');
         }
 
         // Draggable Editable Text Sticker
@@ -678,7 +740,7 @@
         function cycleTextFont() {
             if (!activeSticker) return;
             textFontIndex = (textFontIndex + 1) % fonts.length;
-            document.getElementById('font-toggle-btn').innerText = fontLabels[textFontIndex];
+            document.getElementById('font-toggle-label').textContent = fontLabels[textFontIndex];
             applyTextStickerStyle();
         }
 
@@ -713,7 +775,10 @@
                 btn.style.backgroundColor = color;
                 btn.style.color = getReadableTextColor(color);
             }
-            if (modeBtn) modeBtn.classList.add('btn-active');
+            if (modeBtn) {
+                modeBtn.classList.add('btn-active');
+                modeBtn.setAttribute('aria-pressed', 'true');
+            }
             applyTextStickerStyle();
         }
 
@@ -721,7 +786,10 @@
             if (!activeSticker) return;
             textHasBackground = !textHasBackground;
             const modeBtn = document.getElementById('text-bg-mode-btn');
-            if (modeBtn) modeBtn.classList.toggle('btn-active', textHasBackground);
+            if (modeBtn) {
+                modeBtn.classList.toggle('btn-active', textHasBackground);
+                modeBtn.setAttribute('aria-pressed', String(textHasBackground));
+            }
             applyTextStickerStyle();
         }
 
@@ -733,17 +801,51 @@
             openTextColorPicker();
         }
 
-        function addTextSticker() {
+        function addNoteSticker() {
+            addTextSticker({ note: true, placeholder: 'Add a note', maxLength: 20 });
+        }
+
+        function addTextSticker(options = {}) {
             // Disable draw mode to prevent overlaps
             if (drawModeActive) toggleDrawMode();
 
+            const isNote = options.note === true;
+            const placeholder = options.placeholder || 'Double tap to edit';
+            const maxLength = Number(options.maxLength) || 0;
             const sticker = document.createElement('div');
             sticker.className = `absolute z-30 ${fonts[textFontIndex]} font-extrabold text-sm px-4 py-2.5 rounded-2xl border select-text cursor-move min-w-[140px] text-center pointer-events-auto select-none outline-none focus:ring-2 focus:ring-secondary/50 transition-all`;
             sticker.contentEditable = "true";
-            sticker.innerText = "Double tap to edit";
+            sticker.innerText = placeholder;
+            sticker.setAttribute('role', 'textbox');
+            sticker.setAttribute('aria-label', isNote ? 'Story note, maximum 20 characters' : 'Story text');
             sticker.style.top = '40%';
             sticker.style.left = '25%';
-            applyTextStickerStyle(sticker);
+            if (isNote) {
+                sticker.classList.add('max-w-[190px]', 'whitespace-nowrap', 'overflow-hidden');
+                sticker.style.color = '#001b3f';
+                sticker.style.background = 'rgba(255, 255, 255, 0.88)';
+                sticker.style.borderColor = 'rgba(255, 255, 255, 0.7)';
+                sticker.style.boxShadow = '0 16px 34px rgba(0, 27, 63, 0.24)';
+                sticker.style.backdropFilter = 'blur(18px)';
+            } else {
+                applyTextStickerStyle(sticker);
+            }
+
+            if (maxLength) {
+                sticker.addEventListener('beforeinput', (event) => {
+                    const selectionLength = window.getSelection()?.toString().length || 0;
+                    const nextLength = sticker.innerText.length - selectionLength + (event.data?.length || 0);
+                    if (event.inputType.startsWith('insert') && nextLength > maxLength) event.preventDefault();
+                });
+                sticker.addEventListener('paste', (event) => {
+                    event.preventDefault();
+                    const pastedText = event.clipboardData.getData('text').replace(/\s+/g, ' ');
+                    document.execCommand('insertText', false, pastedText.slice(0, Math.max(0, maxLength - sticker.innerText.length)));
+                });
+                sticker.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') event.preventDefault();
+                });
+            }
 
             // Simple Drag Mechanics
             let isDraggingSticker = false;
@@ -808,17 +910,17 @@
 
             // Focus interactions
             sticker.addEventListener('focus', () => {
-                if (sticker.innerText === "Double tap to edit") {
+                if (sticker.innerText === placeholder) {
                     sticker.innerText = "";
                 }
-                showTextToolbar(sticker);
+                if (!isNote) showTextToolbar(sticker);
             });
 
             sticker.addEventListener('blur', () => {
                 if (sticker.innerText.trim() === "") {
-                    sticker.innerText = "Double tap to edit";
+                    sticker.innerText = placeholder;
                 }
-                hideTextToolbar();
+                if (!isNote) hideTextToolbar();
             });
 
             textContainer.appendChild(sticker);

@@ -63,8 +63,8 @@
                 <span class="text-xs font-bold text-white">8</span>
             </button>
             <!-- Share -->
-            <button onclick="openShare()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
-                <span class="material-symbols-outlined text-white text-3xl">send</span>
+            <button onclick="openShare('r1')" aria-label="Share this video" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl drop-shadow-md">ios_share</span>
                 <span class="text-xs font-bold text-white">Share</span>
             </button>
             <!-- More -->
@@ -112,8 +112,8 @@
                 <span class="material-symbols-outlined text-white text-3xl">chat_bubble</span>
                 <span class="text-xs font-bold text-white">22</span>
             </button>
-            <button onclick="openShare()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
-                <span class="material-symbols-outlined text-white text-3xl">send</span>
+            <button onclick="openShare('r2')" aria-label="Share this video" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl drop-shadow-md">ios_share</span>
                 <span class="text-xs font-bold text-white">Share</span>
             </button>
             <button onclick="openMore()" class="active:scale-90 transition-transform"><span class="material-symbols-outlined text-white text-3xl">more_vert</span></button>
@@ -156,8 +156,8 @@
                 <span class="material-symbols-outlined text-white text-3xl">chat_bubble</span>
                 <span class="text-xs font-bold text-white">15</span>
             </button>
-            <button onclick="openShare()" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
-                <span class="material-symbols-outlined text-white text-3xl">send</span>
+            <button onclick="openShare('r3')" aria-label="Share this video" class="flex flex-col items-center gap-1 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-white text-3xl drop-shadow-md">ios_share</span>
                 <span class="text-xs font-bold text-white">Share</span>
             </button>
             <button onclick="openMore()" class="active:scale-90 transition-transform"><span class="material-symbols-outlined text-white text-3xl">more_vert</span></button>
@@ -192,40 +192,49 @@
         </button>
     </div>
     <div id="comments-list" class="flex-1 overflow-y-auto px-6 py-4 space-y-4"></div>
-    <div class="px-6 py-4 border-t border-slate-100 flex items-center gap-3 flex-shrink-0 bg-white pb-8">
+    <div class="px-6 py-3 border-t border-slate-100 flex flex-col gap-2 flex-shrink-0 bg-white pb-8">
+        <div id="reply-context" class="hidden items-center justify-between rounded-xl bg-blue-50 px-3 py-2 text-xs text-blue-800">
+            <span id="reply-context-text" class="font-semibold"></span>
+            <button type="button" onclick="cancelReply()" aria-label="Cancel reply" class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-blue-100">
+                <span class="material-symbols-outlined text-base">close</span>
+            </button>
+        </div>
+        <div class="flex items-center gap-3">
         <div class="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 flex items-center gap-2 focus-within:border-secondary transition-colors">
             <input id="comment-input" type="text" placeholder="Add a comment..." class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder:text-slate-400" onkeydown="if(event.key==='Enter') postComment()">
         </div>
-        <button onclick="postComment()" class="w-10 h-10 bg-[#00193c] text-white rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform flex-shrink-0">
+        <button type="button" onclick="postComment()" aria-label="Post comment" class="w-10 h-10 bg-[#00193c] text-white rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform flex-shrink-0">
             <span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">send</span>
         </button>
+        </div>
     </div>
 </div>
 
 <!-- Share Sheet -->
-<div id="share-sheet" class="sheet fixed bottom-0 left-0 right-0 z-[110] bg-white text-slate-800 rounded-t-[32px] shadow-2xl pb-10">
-    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-        <h3 class="font-bold text-[#00193c] text-base">Share Reel</h3>
+<div id="share-sheet" class="sheet fixed bottom-0 left-0 right-0 z-[110] bg-white text-slate-800 rounded-t-[28px] shadow-2xl max-h-[78vh] flex flex-col pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+    <div class="w-10 h-1 rounded-full bg-slate-200 mx-auto mt-2.5"></div>
+    <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
+        <h3 class="font-extrabold text-[#00193c] text-lg">Share with</h3>
         <button onclick="closeAllSheets()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
             <span class="material-symbols-outlined text-slate-500 text-[20px]">close</span>
         </button>
     </div>
-    <div class="grid grid-cols-4 gap-4 px-6 py-6">
-        <button onclick="doAction('WhatsApp')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
-            <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-green-700 text-2xl">chat</span></div>
-            <span class="text-[10px] font-bold text-slate-500">WhatsApp</span>
+    <div class="px-5 pt-4 pb-3 flex-shrink-0">
+        <label class="h-12 rounded-2xl bg-slate-100 border border-slate-200 px-4 flex items-center gap-3 focus-within:border-blue-400 focus-within:bg-white transition-colors">
+            <span class="material-symbols-outlined text-slate-400 text-[21px]">search</span>
+            <input id="share-search" type="search" oninput="filterShareUsers(this.value)" placeholder="Search people" class="w-full bg-transparent outline-none text-sm text-[#00193c] placeholder:text-slate-400">
+        </label>
+    </div>
+    <div id="share-user-list" class="flex-1 overflow-y-auto px-5 pb-3 space-y-1"></div>
+    <div class="grid grid-cols-3 gap-3 px-5 pt-3 border-t border-slate-100 flex-shrink-0">
+        <button onclick="shareUtility('Copy link')" class="h-12 rounded-2xl bg-slate-100 text-[#00193c] flex items-center justify-center gap-2 text-xs font-bold active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[20px]">link</span> Copy link
         </button>
-        <button onclick="doAction('Messages')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
-            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-blue-700 text-2xl">sms</span></div>
-            <span class="text-[10px] font-bold text-slate-500">Messages</span>
+        <button onclick="shareUtility('Messages')" class="h-12 rounded-2xl bg-slate-100 text-[#00193c] flex items-center justify-center gap-2 text-xs font-bold active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[20px]">chat</span> Messages
         </button>
-        <button onclick="doAction('Copy Link')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
-            <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-slate-700 text-2xl">link</span></div>
-            <span class="text-[10px] font-bold text-slate-500">Copy Link</span>
-        </button>
-        <button onclick="doAction('Email')" class="flex flex-col items-center gap-2 active:scale-95 transition-transform">
-            <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center"><span class="material-symbols-outlined text-slate-700 text-2xl">mail</span></div>
-            <span class="text-[10px] font-bold text-slate-500">Email</span>
+        <button onclick="shareUtility('More')" class="h-12 rounded-2xl bg-slate-100 text-[#00193c] flex items-center justify-center gap-2 text-xs font-bold active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[20px]">more_horiz</span> More
         </button>
     </div>
 </div>
@@ -290,6 +299,8 @@
         document.getElementById('comment-sheet').classList.remove('open');
         document.getElementById('share-sheet').classList.remove('open');
         document.getElementById('more-sheet').classList.remove('open');
+        const shareSearch = document.getElementById('share-search');
+        if (shareSearch) shareSearch.value = '';
         hideOverlay();
     }
 
@@ -335,9 +346,244 @@
         showToast('Comment posted!');
     }
 
-    function openShare() {
+    const currentUserName = localStorage.getItem('user_full_name') || localStorage.getItem('user_username') || 'Shreya';
+    let replyingTo = null;
+
+    function normalizeComment(comment, index, isReply = false) {
+        return {
+            id: comment.id || `${isReply ? 'reply' : 'comment'}-${Date.now()}-${index}`,
+            name: comment.name === 'You' ? currentUserName : comment.name,
+            text: comment.text,
+            time: comment.time || 'Now',
+            likes: Number(comment.likes || 0),
+            liked: Boolean(comment.liked),
+            owner: Boolean(comment.owner || comment.name === 'You' || comment.name === currentUserName),
+            replies: isReply ? undefined : (comment.replies || []).map((reply, replyIndex) => normalizeComment(reply, replyIndex, true))
+        };
+    }
+
+    try {
+        const savedComments = JSON.parse(localStorage.getItem('caremate-reel-comments') || 'null');
+        if (savedComments) {
+            Object.keys(commentData).forEach(key => delete commentData[key]);
+            Object.assign(commentData, savedComments);
+        }
+    } catch {
+        // Keep the bundled starter comments when saved data is unavailable.
+    }
+    Object.keys(commentData).forEach(postId => {
+        commentData[postId] = commentData[postId].map((comment, index) => normalizeComment(comment, index));
+    });
+
+    function saveComments() {
+        localStorage.setItem('caremate-reel-comments', JSON.stringify(commentData));
+    }
+
+    function escapeComment(value) {
+        return String(value).replace(/[&<>'"]/g, character => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        })[character]);
+    }
+
+    function openComments(postId) {
+        activePost = postId;
+        cancelReply();
+        renderComments(postId);
+        document.getElementById('comment-sheet').classList.add('open');
+        showOverlay();
+    }
+
+    function renderComments(postId) {
+        const list = document.getElementById('comments-list');
+        const comments = commentData[postId] || [];
+        list.innerHTML = comments.length === 0
+            ? '<div class="text-center py-10"><span class="material-symbols-outlined text-4xl text-slate-300">chat_bubble_outline</span><p class="mt-2 text-slate-400 text-sm">No comments yet. Start the conversation.</p></div>'
+            : comments.map((comment, commentIndex) => renderComment(comment, commentIndex)).join('');
+    }
+
+    function renderComment(comment, commentIndex) {
+        const replies = Array.isArray(comment.replies) ? comment.replies : [];
+        return `
+            <article class="flex gap-3">
+                <div class="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs flex-shrink-0">${escapeComment(comment.name.charAt(0).toUpperCase())}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="bg-slate-50 rounded-2xl rounded-tl-sm px-4 py-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-bold text-[#00193c] text-sm">${escapeComment(comment.name)}</span>
+                            <span class="text-[10px] text-slate-400">${escapeComment(comment.time)}</span>
+                            ${comment.owner ? `<button type="button" onclick="deleteComment(${commentIndex})" aria-label="Delete your comment" class="ml-auto w-7 h-7 rounded-full text-slate-400 hover:bg-red-50 hover:text-red-600 flex items-center justify-center"><span class="material-symbols-outlined text-[17px]">delete</span></button>` : ''}
+                        </div>
+                        <p class="text-sm leading-5 text-slate-600 break-words">${escapeComment(comment.text)}</p>
+                    </div>
+                    <div class="flex items-center gap-4 px-2 pt-1.5 text-[11px] font-bold">
+                        <button type="button" onclick="toggleCommentLike(${commentIndex})" class="${comment.liked ? 'text-red-500' : 'text-slate-500'} hover:text-red-500">${comment.liked ? 'Liked' : 'Like'}${comment.likes ? ` - ${comment.likes}` : ''}</button>
+                        <button type="button" onclick="beginReply(${commentIndex})" class="text-slate-500 hover:text-primary">Reply</button>
+                    </div>
+                    ${replies.length ? `<div class="mt-3 ml-2 space-y-3 border-l-2 border-slate-100 pl-3">${replies.map((reply, replyIndex) => renderReply(reply, commentIndex, replyIndex)).join('')}</div>` : ''}
+                </div>
+            </article>`;
+    }
+
+    function renderReply(reply, commentIndex, replyIndex) {
+        return `
+            <div class="flex gap-2">
+                <div class="w-7 h-7 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-[10px] flex-shrink-0">${escapeComment(reply.name.charAt(0).toUpperCase())}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="rounded-2xl rounded-tl-sm bg-white border border-slate-100 px-3 py-2">
+                        <div class="flex items-center gap-2 mb-0.5">
+                            <span class="font-bold text-primary text-xs">${escapeComment(reply.name)}</span>
+                            <span class="text-[9px] text-slate-400">${escapeComment(reply.time)}</span>
+                            ${reply.owner ? `<button type="button" onclick="deleteComment(${commentIndex}, ${replyIndex})" aria-label="Delete your reply" class="ml-auto text-slate-400 hover:text-red-600"><span class="material-symbols-outlined text-[15px]">delete</span></button>` : ''}
+                        </div>
+                        <p class="text-xs leading-5 text-slate-600 break-words">${escapeComment(reply.text)}</p>
+                    </div>
+                    <button type="button" onclick="toggleCommentLike(${commentIndex}, ${replyIndex})" class="px-2 pt-1 text-[10px] font-bold ${reply.liked ? 'text-red-500' : 'text-slate-500'}">${reply.liked ? 'Liked' : 'Like'}${reply.likes ? ` - ${reply.likes}` : ''}</button>
+                </div>
+            </div>`;
+    }
+
+    function toggleCommentLike(commentIndex, replyIndex = null) {
+        const comment = commentData[activePost][commentIndex];
+        const target = replyIndex === null ? comment : comment.replies[replyIndex];
+        target.liked = !target.liked;
+        target.likes = Math.max(0, Number(target.likes || 0) + (target.liked ? 1 : -1));
+        saveComments();
+        renderComments(activePost);
+    }
+
+    function beginReply(commentIndex) {
+        const comment = commentData[activePost][commentIndex];
+        replyingTo = { commentIndex, name: comment.name };
+        const context = document.getElementById('reply-context');
+        context.classList.remove('hidden');
+        context.classList.add('flex');
+        document.getElementById('reply-context-text').textContent = `Replying to ${comment.name}`;
+        const input = document.getElementById('comment-input');
+        input.placeholder = `Reply to ${comment.name}...`;
+        input.focus();
+    }
+
+    function cancelReply() {
+        replyingTo = null;
+        const context = document.getElementById('reply-context');
+        context.classList.add('hidden');
+        context.classList.remove('flex');
+        document.getElementById('comment-input').placeholder = 'Add a comment...';
+    }
+
+    function deleteComment(commentIndex, replyIndex = null) {
+        const comment = commentData[activePost][commentIndex];
+        const target = replyIndex === null ? comment : comment.replies[replyIndex];
+        if (!target.owner || !window.confirm('Delete this comment?')) return;
+        if (replyIndex === null) commentData[activePost].splice(commentIndex, 1);
+        else comment.replies.splice(replyIndex, 1);
+        cancelReply();
+        saveComments();
+        renderComments(activePost);
+        showToast('Comment deleted');
+    }
+
+    function postComment() {
+        const input = document.getElementById('comment-input');
+        const message = input.value.trim();
+        if (!message || !activePost) return;
+        if (!commentData[activePost]) commentData[activePost] = [];
+        const wasReply = Boolean(replyingTo);
+        const newComment = { id: `comment-${Date.now()}`, name: currentUserName, text: message, time: 'Now', likes: 0, liked: false, owner: true };
+        if (replyingTo) {
+            const parent = commentData[activePost][replyingTo.commentIndex];
+            if (!Array.isArray(parent.replies)) parent.replies = [];
+            parent.replies.push(newComment);
+        } else {
+            newComment.replies = [];
+            commentData[activePost].unshift(newComment);
+        }
+        input.value = '';
+        cancelReply();
+        saveComments();
+        renderComments(activePost);
+        showToast(wasReply ? 'Reply posted!' : 'Comment posted!');
+    }
+
+    const shareUsers = [
+        { id: 'aris', name: 'Dr. Aris Thompson', username: '@dr_aris_t', seed: 'Aris' },
+        { id: 'elena', name: 'Elena Rostova', username: '@elena_active', seed: 'Elena' },
+        { id: 'sarah', name: 'Sarah Jenkins', username: '@sarah_wellness', seed: 'Sarah' },
+        { id: 'arthur', name: 'Arthur Miller', username: '@arthur_fit', seed: 'Arthur' },
+        { id: 'michael', name: 'Michael Vance', username: '@michael_moves', seed: 'Michael' },
+        { id: 'family', name: 'Sharma Family', username: 'Family group', seed: 'Sharma Family' },
+        { id: 'priya', name: 'Priya Mehta', username: '@priya_health', seed: 'Priya' },
+        { id: 'samuel', name: 'Dr. Samuel Lee', username: '@dr_samuel', seed: 'Samuel' }
+    ];
+    let activeSharePost = null;
+    const sentShares = new Set();
+
+    function renderShareUsers(query = '') {
+        const normalizedQuery = query.trim().toLowerCase();
+        const visibleUsers = shareUsers.filter(user =>
+            !normalizedQuery || `${user.name} ${user.username}`.toLowerCase().includes(normalizedQuery)
+        );
+        const list = document.getElementById('share-user-list');
+        if (!visibleUsers.length) {
+            list.innerHTML = '<div class="py-8 text-center text-sm text-slate-400">No people found</div>';
+            return;
+        }
+        list.innerHTML = visibleUsers.map(user => {
+            const shareKey = `${activeSharePost}-${user.id}`;
+            const sent = sentShares.has(shareKey);
+            return `
+                <div class="flex items-center gap-3 rounded-2xl px-2 py-2 hover:bg-slate-50 transition-colors">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.seed)}" alt="" class="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 object-cover flex-shrink-0">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-bold text-sm text-[#00193c] truncate">${escapeComment(user.name)}</p>
+                        <p class="text-xs text-slate-400 truncate">${escapeComment(user.username)}</p>
+                    </div>
+                    <button type="button" onclick="sendShare('${user.id}')" class="min-w-[72px] h-9 px-4 rounded-xl text-xs font-bold transition-all active:scale-95 ${sent ? 'bg-slate-100 text-slate-500' : 'bg-[#001f4d] text-white shadow-md'}">${sent ? 'Sent' : 'Send'}</button>
+                </div>`;
+        }).join('');
+    }
+
+    function filterShareUsers(query) {
+        renderShareUsers(query);
+    }
+
+    function openShare(postId) {
+        activeSharePost = postId;
+        renderShareUsers();
         document.getElementById('share-sheet').classList.add('open');
         showOverlay();
+        setTimeout(() => document.getElementById('share-search').focus(), 380);
+    }
+
+    function sendShare(userId) {
+        const user = shareUsers.find(item => item.id === userId);
+        if (!user || !activeSharePost) return;
+        sentShares.add(`${activeSharePost}-${userId}`);
+        renderShareUsers(document.getElementById('share-search').value);
+        showToast(`Sent to ${user.name}`);
+    }
+
+    async function shareUtility(action) {
+        const shareUrl = `${window.location.origin}${window.location.pathname}#${activeSharePost || 'video'}`;
+        if (action === 'Copy link') {
+            try {
+                await navigator.clipboard.writeText(shareUrl);
+                showToast('Link copied');
+            } catch {
+                showToast('Copy is unavailable');
+            }
+            return;
+        }
+        if (action === 'More' && navigator.share) {
+            try {
+                await navigator.share({ title: 'CareMate video', url: shareUrl });
+            } catch {
+                return;
+            }
+            return;
+        }
+        closeAllSheets();
+        showToast(`${action} opened`);
     }
     function openMore() {
         document.getElementById('more-sheet').classList.add('open');

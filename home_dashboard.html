@@ -705,7 +705,7 @@
     <span class="absolute inset-x-0 top-0 h-[46%] bg-gradient-to-b from-white/55 to-transparent pointer-events-none"></span>
     <span class="relative z-10 w-[58px] h-[58px] rounded-full border border-white/90 flex items-center justify-center flex-none overflow-hidden shadow-[inset_6px_7px_13px_rgba(255,255,255,0.42),inset_-6px_-8px_14px_rgba(77,57,188,0.24),0_10px_23px_rgba(104,88,218,0.25)]" style="background:linear-gradient(145deg,#76ecff 0%,#7285ff 42%,#ac63f4 72%,#ff82bd 100%);">
       <span class="absolute top-1.5 left-2.5 w-7 h-3 rounded-full bg-white/55 blur-[1px]"></span>
-      <span class="material-symbols-outlined relative z-10 text-[30px] text-white drop-shadow-[0_2px_4px_rgba(52,35,133,0.35)]" style="font-variation-settings: 'FILL' 1, 'wght' 450;">neurology</span>
+      <span class="material-symbols-outlined relative z-10 text-[32px] text-[#17265f] drop-shadow-[0_1px_0_rgba(255,255,255,0.72)]" style="font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 100, 'opsz' 32;">auto_awesome</span>
     </span>
     <span class="relative z-10 flex-1 text-left leading-tight">
       <span class="block text-[19px] font-semibold text-on-surface">Caremate AI</span>
@@ -800,72 +800,107 @@
 
 <!-- Doctor Appointments Section -->
 <section class="flex flex-col gap-stack-sm mt-4 pb-4">
-<div class="flex justify-between items-center mb-4 px-4 py-3 bg-white/70 backdrop-blur-xl border border-white rounded-[24px] shadow-[0_8px_30px_rgba(0,45,98,0.06)]">
-    <h2 class="font-headline-md text-primary font-bold tracking-tight">Doctor Appointments</h2>
-    <a href="doctor_appointments.html" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-md active:scale-95 transition-transform">
-        <span class="material-symbols-outlined text-xl">add</span>
+<div class="flex justify-between items-center min-h-[76px] mb-4 px-5 py-4 bg-white/70 backdrop-blur-xl border border-white rounded-[24px] shadow-[0_8px_30px_rgba(0,45,98,0.06)]">
+    <h2 class="font-headline-md text-[20px] leading-tight text-primary font-bold tracking-tight">Doctor Appointments</h2>
+    <a href="doctor_appointments.html" class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-md active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-[27px]">add</span>
     </a>
 </div>
-<!-- Upcoming Appointment Card -->
-<div class="bg-white/70 backdrop-blur-[20px] border border-white rounded-[24px] shadow-[0_8px_30px_rgba(0,45,98,0.06)] p-6 flex flex-col gap-6">
-<!-- Doctor Info -->
-<div class="flex items-center gap-4">
-<div class="w-[72px] h-[72px] rounded-2xl overflow-hidden border-2 border-white flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_0_4px_8px_rgba(255,255,255,0.9),_0_8px_20px_rgba(0,45,98,0.15)]">
-    <img src="hospital_3d.png" alt="Hospital" class="w-[56px] h-[56px] object-contain">
-</div>
-<div class="flex flex-col gap-0.5">
-<h3 class="font-headline-md text-headline-md text-on-surface">Dr. Aris Thorne</h3>
-<p class="font-body-md text-on-surface-variant font-medium">Cardiologist</p>
-</div>
-</div>
-<!-- Appointment Time -->
-<div class="flex items-center gap-3 py-1 px-3 bg-primary-fixed/30 w-fit rounded-full text-on-primary-fixed-variant">
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
-<span class="font-body-md font-bold text-[16px]">Today at 10:30 AM</span>
-</div>
-<!-- Action Buttons Container -->
-<div class="flex flex-col gap-2" id="appointment-actions">
-    <!-- Buttons will be dynamically shown here -->
-</div>
-</div>
+<div id="appointment-list" class="flex flex-col gap-3"></div>
+<button id="appointments-toggle" class="hidden self-center min-h-11 px-5 rounded-full bg-white border border-slate-200 text-primary text-sm font-bold shadow-sm active:scale-[0.98] transition-transform" type="button" aria-expanded="false">
+    <span>Show more</span>
+    <span class="material-symbols-outlined align-middle text-[18px] ml-1">expand_more</span>
+</button>
 </section>
 </main>
 
 <script>
     
     document.addEventListener('DOMContentLoaded', () => {
-        const type = localStorage.getItem('lastAppointmentType') || 'video';
-        const container = document.getElementById('appointment-actions');
-        
-        if (type === 'video') {
-            container.innerHTML = `
-                <div class="flex gap-2">
-                    <button class="flex-1 h-[56px] bg-gradient-to-br from-primary to-[#000c24] text-white rounded-[18px] flex items-center justify-center gap-2 font-bold shadow-lg active:scale-[0.98] transition-all">
-                        <span class="material-symbols-outlined text-xl">videocam</span><span class="text-sm">Video</span>
-                    </button>
-                    <a href="direct_message_chat.html" class="h-[56px] px-4 bg-primary/10 text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
-                        <span class="material-symbols-outlined text-xl">chat</span><span class="text-sm">Chat</span>
-                    </a>
-                    <a href="doctor_notes.html" class="h-[56px] px-4 border-2 border-primary text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
-                        <span class="material-symbols-outlined text-xl">description</span><span class="text-sm">Notes</span>
-                    </a>
-                </div>
-            `;
-        } else {
-            container.innerHTML = `
-                <div class="flex gap-2">
-                    <button class="flex-1 h-[56px] bg-gradient-to-br from-primary to-[#000c24] text-white rounded-[18px] flex items-center justify-center gap-2 font-bold shadow-lg active:scale-[0.98] transition-all">
-                        <span class="material-symbols-outlined text-xl">location_on</span><span class="text-sm">Directions</span>
-                    </button>
-                    <a href="direct_message_chat.html" class="h-[56px] px-4 bg-primary/10 text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
-                        <span class="material-symbols-outlined text-xl">chat</span><span class="text-sm">Chat</span>
-                    </a>
-                    <a href="doctor_notes.html" class="h-[56px] px-4 border-2 border-primary text-primary rounded-[18px] flex items-center justify-center gap-2 font-bold active:scale-[0.98] transition-all">
-                        <span class="material-symbols-outlined text-xl">description</span><span class="text-sm">Notes</span>
-                    </a>
-                </div>
-            `;
+        const appointmentsList = document.getElementById('appointment-list');
+        const appointmentsToggle = document.getElementById('appointments-toggle');
+        let appointmentsExpanded = false;
+
+        const escapeAppointmentText = (value) => String(value || '').replace(/[&<>'"]/g, (character) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        })[character]);
+
+        const createDefaultAppointments = () => {
+            const futureDate = (days, hour, minute = 0) => {
+                const date = new Date();
+                date.setDate(date.getDate() + days);
+                date.setHours(hour, minute, 0, 0);
+                return date.toISOString();
+            };
+            return [
+                { id: 'default-aris', doctorName: 'Dr. Aris Thorne', specialty: 'Cardiologist', datetime: futureDate(1, 10, 30), type: 'video' },
+                { id: 'default-elena', doctorName: 'Dr. Elena Rostova', specialty: 'General Physician', datetime: futureDate(3, 9), type: 'direct' },
+                { id: 'default-sarah', doctorName: 'Dr. Sarah Jenkins', specialty: 'Neurologist', datetime: futureDate(5, 14), type: 'video' },
+                { id: 'default-samuel', doctorName: 'Dr. Samuel Lee', specialty: 'Optometrist', datetime: futureDate(7, 11, 15), type: 'direct' }
+            ];
+        };
+
+        let savedAppointments;
+        try {
+            savedAppointments = JSON.parse(localStorage.getItem('caremateAppointments') || 'null');
+        } catch {
+            savedAppointments = null;
         }
+        if (!Array.isArray(savedAppointments)) {
+            savedAppointments = createDefaultAppointments();
+            localStorage.setItem('caremateAppointments', JSON.stringify(savedAppointments));
+        }
+
+        const formatAppointmentDate = (isoDate) => {
+            const date = new Date(isoDate);
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            const sameDay = (left, right) => left.toDateString() === right.toDateString();
+            const day = sameDay(date, today) ? 'Today' : sameDay(date, tomorrow) ? 'Tomorrow' : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+            return `${day} at ${date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+        };
+
+        const futureAppointments = savedAppointments
+            .filter((appointment) => new Date(appointment.datetime).getTime() > Date.now())
+            .sort((left, right) => new Date(left.datetime) - new Date(right.datetime));
+
+        const appointmentMarkup = (appointment) => {
+            const isVideo = appointment.type === 'video';
+            return `<article class="bg-white/70 backdrop-blur-[20px] border border-white rounded-[24px] shadow-[0_8px_30px_rgba(0,45,98,0.06)] p-5 flex flex-col gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-[64px] h-[64px] rounded-2xl overflow-hidden border-2 border-white flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_0_4px_8px_rgba(255,255,255,0.9),_0_8px_20px_rgba(0,45,98,0.12)] flex-none">
+                        <img src="hospital_3d.png" alt="Hospital" class="w-[50px] h-[50px] object-contain">
+                    </div>
+                    <div class="min-w-0"><h3 class="font-headline-md text-[19px] text-on-surface truncate">${escapeAppointmentText(appointment.doctorName)}</h3><p class="font-body-md text-on-surface-variant font-medium truncate">${escapeAppointmentText(appointment.specialty)}</p></div>
+                </div>
+                <div class="flex items-center gap-2 py-1.5 px-3 bg-primary-fixed/30 w-fit rounded-full text-on-primary-fixed-variant">
+                    <span class="material-symbols-outlined text-[19px]" style="font-variation-settings:'FILL' 1;">calendar_today</span><span class="font-body-md font-bold text-[14px]">${formatAppointmentDate(appointment.datetime)}</span>
+                </div>
+                <div class="flex gap-2">
+                    <button class="flex-1 h-12 bg-gradient-to-br from-primary to-[#000c24] text-white rounded-[16px] flex items-center justify-center gap-2 font-bold shadow-md"><span class="material-symbols-outlined text-xl">${isVideo ? 'videocam' : 'location_on'}</span><span class="text-sm">${isVideo ? 'Video' : 'Directions'}</span></button>
+                    <a href="direct_message_chat.html" class="h-12 px-4 bg-primary/10 text-primary rounded-[16px] flex items-center justify-center font-bold" aria-label="Chat"><span class="material-symbols-outlined text-xl">chat</span></a>
+                    <a href="doctor_notes.html" class="h-12 px-4 border-2 border-primary text-primary rounded-[16px] flex items-center justify-center font-bold" aria-label="Notes"><span class="material-symbols-outlined text-xl">description</span></a>
+                </div>
+            </article>`;
+        };
+
+        const renderAppointments = () => {
+            const visibleAppointments = appointmentsExpanded ? futureAppointments : futureAppointments.slice(0, 3);
+            appointmentsList.innerHTML = visibleAppointments.length
+                ? visibleAppointments.map(appointmentMarkup).join('')
+                : '<div class="rounded-[22px] bg-white/70 border border-white px-5 py-6 text-center text-sm font-semibold text-slate-500">No upcoming appointments</div>';
+            appointmentsToggle.classList.toggle('hidden', futureAppointments.length <= 3);
+            appointmentsToggle.setAttribute('aria-expanded', String(appointmentsExpanded));
+            appointmentsToggle.innerHTML = `<span>${appointmentsExpanded ? 'Show less' : `Show ${futureAppointments.length - 3} more`}</span><span class="material-symbols-outlined align-middle text-[18px] ml-1">${appointmentsExpanded ? 'expand_less' : 'expand_more'}</span>`;
+        };
+
+        appointmentsToggle.addEventListener('click', () => {
+            appointmentsExpanded = !appointmentsExpanded;
+            renderAppointments();
+        });
+        renderAppointments();
+
         const storedUsername = localStorage.getItem('user_username');
         if (storedUsername) {
             const cleanName = storedUsername.startsWith('@') ? storedUsername.substring(1).replace(/_wellness|health/g, '') : storedUsername;

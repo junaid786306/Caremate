@@ -217,9 +217,8 @@
     </nav>
 
     <!-- Floating Action Button with OTP Gate -->
-    <button onclick="openOTPModal('diet')" class="fixed right-6 bottom-28 w-16 h-16 rounded-[22px] flex items-center justify-center shadow-[0_12px_24px_rgba(0,45,98,0.3),inset_0_-6px_0_rgba(0,0,0,0.2),inset_0_4px_0_rgba(255,255,255,0.25)] active:scale-95 active:translate-y-1.5 active:shadow-[0_4px_12px_rgba(0,45,98,0.3),inset_0_-2px_0_rgba(0,0,0,0.2),inset_0_2px_0_rgba(255,255,255,0.25)] transition-all z-40 overflow-hidden" style="background: linear-gradient(135deg, #002d62 0%, #00193c 100%);">
-        <div class="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent opacity-60 pointer-events-none"></div>
-        <span class="material-symbols-outlined text-white text-3xl relative z-10" style="text-shadow: 0 2px 4px rgba(0,0,0,0.4); font-variation-settings: 'wght' 600;">add</span>
+    <button onclick="openOTPModal('diet')" aria-label="Add diet reminder" class="fixed right-6 bottom-28 w-14 h-14 rounded-full bg-primary border border-white/80 flex items-center justify-center shadow-[0_8px_20px_rgba(0,45,98,0.22)] hover:bg-[#001f46] active:scale-95 transition-all z-40">
+        <span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings: 'wght' 500;">add</span>
     </button>
 
     <!-- OTP Verification Modal -->

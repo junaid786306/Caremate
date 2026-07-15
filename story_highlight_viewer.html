@@ -73,7 +73,7 @@
         </div>
 
         <!-- ── BOTTOM REPLY BAR ── -->
-        <div class="absolute bottom-0 left-0 right-0 z-30 px-4 pb-10 pt-3">
+        <div id="story-reply-bar" class="absolute bottom-0 left-0 right-0 z-30 px-4 pb-10 pt-3">
             <div class="flex items-center gap-3">
                 <div class="reply-bar flex-1 h-11 rounded-full flex items-center px-4 gap-2">
                     <input id="reply-input" type="text" placeholder="Reply to Shreya..." class="bg-transparent border-none text-white placeholder-white/50 text-sm flex-1 outline-none focus:ring-0 font-medium">
@@ -202,12 +202,14 @@
         };
 
         const currentAuthor = catAuthors[cat] || catAuthors.wellness;
+        const isOwnStory = params.get('owner') === 'me';
         const nameEl = document.getElementById('story-name');
         const avatarEl = document.getElementById('avatar');
         const viewersBtn = document.getElementById('viewers-btn');
         const replyInput = document.getElementById('reply-input');
+        const replyBar = document.getElementById('story-reply-bar');
 
-        if (currentAuthor.name === 'Shreya') {
+        if (isOwnStory) {
             const rawUser = localStorage.getItem('user_username') || '@shreya_wellness';
             nameEl.innerText = rawUser.startsWith('@') ? rawUser.substring(1) : rawUser;
             const storedImg = localStorage.getItem('user_profile_img');
@@ -217,10 +219,12 @@
                 avatarEl.src = currentAuthor.avatar;
             }
             viewersBtn.style.display = 'flex';
+            replyBar.style.display = 'none';
         } else {
             nameEl.innerText = currentAuthor.name;
             avatarEl.src = currentAuthor.avatar;
             viewersBtn.style.display = 'none';
+            replyBar.style.display = 'block';
         }
         replyInput.placeholder = `Reply to ${nameEl.innerText}...`;
 

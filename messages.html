@@ -77,6 +77,19 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .message-card { box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .message-mode-switch {
+            background: linear-gradient(180deg, #e9edf5 0%, #f8faff 100%);
+            box-shadow: inset 0 2px 5px rgba(15, 42, 78, 0.12), 0 8px 20px rgba(15, 42, 78, 0.07);
+        }
+        .message-mode-button {
+            color: #64748b;
+            box-shadow: none;
+        }
+        .message-mode-button.is-active {
+            color: #001b3f;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 5px 14px rgba(15, 42, 78, 0.15), inset 0 1px 0 #ffffff;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-on-surface font-manrope antialiased min-h-screen pb-[120px]">
@@ -90,22 +103,33 @@
     </header>
 
     <main class="max-w-md mx-auto pt-4 px-6 space-y-6">
-        <!-- Search Bar with Group create icon -->
+        <!-- Conversation type switch -->
+        <div class="message-mode-switch grid grid-cols-2 gap-1 rounded-2xl p-1.5" role="tablist" aria-label="Message type">
+            <button id="mode-individual" type="button" role="tab" aria-selected="true" class="message-mode-button is-active h-12 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all duration-200">
+                <span class="material-symbols-outlined text-[20px]">person</span>
+                Individual
+            </button>
+            <button id="mode-groups" type="button" role="tab" aria-selected="false" class="message-mode-button h-12 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all duration-200">
+                <span class="material-symbols-outlined text-[20px]">groups</span>
+                Groups
+            </button>
+        </div>
+
+        <!-- Search Bar with context-aware create icon -->
         <div class="flex items-center gap-3">
             <div class="relative flex-1">
                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-                <input type="text" placeholder="Search messages..." class="w-full h-14 bg-[#f1f3f9] border-none rounded-full pl-12 pr-4 text-sm placeholder:text-slate-400 focus:ring-2 focus:ring-primary/10 transition-all">
+                <input id="message-search" type="search" placeholder="Search individuals..." class="w-full h-14 bg-[#f1f3f9] border-none rounded-full pl-12 pr-4 text-sm placeholder:text-slate-400 focus:ring-2 focus:ring-primary/10 transition-all">
             </div>
-            <a href="create_group.html" class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-full bg-primary text-white shadow-md active:scale-95 transition-transform">
-                <span class="material-symbols-outlined">group_add</span>
+            <a id="add-conversation" href="followers_list.html" aria-label="Start an individual conversation" title="Start an individual conversation" class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-2xl bg-primary text-white shadow-[0_8px_18px_rgba(0,27,63,0.24)] active:scale-95 transition-all">
+                <span id="add-conversation-icon" class="material-symbols-outlined">person_add</span>
             </a>
         </div>
 
         <!-- Message List -->
-        <div class="space-y-4">
+        <div id="message-list" class="space-y-4">
             <!-- The Sharma Family (Group) -->
-            <a href="chat.html" class="bg-gradient-to-r from-white to-blue-50/30 rounded-[32px] p-5 flex items-center gap-4 message-card border border-primary/10 block transition-all hover:bg-slate-50 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-2 h-full bg-primary"></div>
+            <a href="chat.html" data-message-type="group" data-message-name="The Sharma Family" class="bg-gradient-to-r from-white to-blue-50/30 rounded-[32px] p-5 flex items-center gap-4 message-card border border-primary/10 block transition-all hover:bg-slate-50 relative overflow-hidden">
                 <div class="relative">
                     <div class="w-16 h-16 rounded-full border-2 border-primary p-0.5 shadow-md">
                         <img class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop">
@@ -128,7 +152,7 @@
             </a>
 
             <!-- Dr. Aris -->
-            <a href="direct_message_chat.html" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Dr. Aris Thorne" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="relative">
                     <div class="w-16 h-16 rounded-full border-2 border-[#4f55ae] p-0.5 shadow-sm">
                         <img class="w-full h-full rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIg_eeayxQnb-CUuc8BGHEW72ccntd3mjlw8I11wtxuHNsmnU3XbVC5R-9Px9ZgdQUA_gus30-TvHI2e0d0IW_ZoQsXqGPZRYF1InW5ThyLuW6dMpRielFPxZbAPbWEb1u95ShFJfWg-PKkNQsw_KwuuAppimcUiVe9Ug25pn4Qr-I2ERzR8qAmIrAa6JTQ3yVgEE0OszgZPSbgj0L7NGkBe0djq4q8v0zOFRWfDBBgadlYQY5hbrQVlQPUbC0VKQEXSFKLdLXmsI">
@@ -149,7 +173,7 @@
             </a>
 
             <!-- Sarah Jenkins -->
-            <a href="direct_message_chat.html" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Sarah Jenkins" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full overflow-hidden shadow-sm">
                     <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA">
                 </div>
@@ -164,7 +188,7 @@
             </a>
 
             <!-- Michael Vance -->
-            <a href="direct_message_chat.html" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Michael Vance" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full overflow-hidden shadow-sm">
                     <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_xyDJlUZhNjHZC7VzGa9pfzcUVwjk75FeGKJOKZbegigHhaeRpyLA0NVHaFjSDhNltaVBBakKV9nip4A4RlD488B_ELwct6tQ1vlRKdaq5BrF3omcOdoaUrRsm9crAhB709BwJUBHzbfUXKIOuBKFIVe-0-IWPyF1rreeQwfhLQC4FyVQmRgIcw4sGPEq_KK12H_fN_09eyI-6ezys1IQhNK5Rv_XxQ0Y8t2OwJDQgIOsJErYYFgNqfbJVgbq_4zc9RqGgaMtzjs">
                 </div>
@@ -179,7 +203,7 @@
             </a>
 
             <!-- Family Circle -->
-            <a href="chat.html" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="chat.html" data-message-type="group" data-message-name="Family Circle" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full bg-[#d7e2ff] flex items-center justify-center shadow-sm">
                     <span class="material-symbols-outlined text-[#00193c] text-3xl" style="font-variation-settings: 'FILL' 1;">groups</span>
                 </div>
@@ -194,7 +218,7 @@
             </a>
 
             <!-- Safety Support -->
-            <a href="direct_message_chat.html" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Safety Support" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center shadow-sm">
                     <span class="material-symbols-outlined text-slate-700 text-3xl" style="font-variation-settings: 'FILL' 1;">support_agent</span>
                 </div>
@@ -207,6 +231,11 @@
                 </div>
                 <span class="material-symbols-outlined text-slate-300">chevron_right</span>
             </a>
+            <div id="message-empty" class="hidden py-14 text-center">
+                <span class="material-symbols-outlined text-4xl text-slate-300">forum</span>
+                <p class="mt-3 font-bold text-primary">No conversations found</p>
+                <p class="mt-1 text-sm text-slate-400">Try a different search.</p>
+            </div>
         </div>
     </main>
 
@@ -233,5 +262,53 @@
             <span class="text-[9px] font-extrabold uppercase tracking-widest">Profile</span>
         </a>
     </nav>
+    <script>
+        const modeButtons = {
+            individual: document.getElementById('mode-individual'),
+            group: document.getElementById('mode-groups')
+        };
+        const messageCards = Array.from(document.querySelectorAll('[data-message-type]'));
+        const messageSearch = document.getElementById('message-search');
+        const messageEmpty = document.getElementById('message-empty');
+        const addConversation = document.getElementById('add-conversation');
+        const addConversationIcon = document.getElementById('add-conversation-icon');
+        let activeMessageType = 'individual';
+
+        function filterMessages() {
+            const query = messageSearch.value.trim().toLowerCase();
+            let visibleCount = 0;
+            messageCards.forEach(card => {
+                const matchesType = card.dataset.messageType === activeMessageType;
+                const matchesSearch = card.dataset.messageName.toLowerCase().includes(query);
+                const shouldShow = matchesType && matchesSearch;
+                card.classList.toggle('hidden', !shouldShow);
+                if (shouldShow) visibleCount += 1;
+            });
+            messageEmpty.classList.toggle('hidden', visibleCount !== 0);
+        }
+
+        function setMessageType(type) {
+            activeMessageType = type;
+            Object.entries(modeButtons).forEach(([key, button]) => {
+                const isActive = key === type;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-selected', String(isActive));
+            });
+
+            const isGroupMode = type === 'group';
+            messageSearch.value = '';
+            messageSearch.placeholder = isGroupMode ? 'Search groups...' : 'Search individuals...';
+            addConversation.href = isGroupMode ? 'create_group.html' : 'followers_list.html';
+            addConversation.setAttribute('aria-label', isGroupMode ? 'Create a group' : 'Start an individual conversation');
+            addConversation.title = isGroupMode ? 'Create a group' : 'Start an individual conversation';
+            addConversationIcon.textContent = isGroupMode ? 'group_add' : 'person_add';
+            filterMessages();
+        }
+
+        modeButtons.individual.addEventListener('click', () => setMessageType('individual'));
+        modeButtons.group.addEventListener('click', () => setMessageType('group'));
+        messageSearch.addEventListener('input', filterMessages);
+        setMessageType('individual');
+    </script>
 </body>
 </html>

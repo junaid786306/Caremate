@@ -117,11 +117,7 @@
 </a>
 </div>
 <h1 class="font-manrope font-bold text-lg tracking-tight text-blue-900 dark:text-blue-50">@dr_aris_t</h1>
-<div class="flex items-center gap-4">
-<a href="settings_information.html" class="active:scale-95 duration-200 hover:opacity-80 transition-opacity">
-<span class="material-symbols-outlined text-blue-900 dark:text-blue-50">settings</span>
-</a>
-</div>
+<div class="w-6" aria-hidden="true"></div>
 </header>
 <main class="pt-[84px] pb-32 px-margin-page max-w-2xl mx-auto space-y-stack-md">
 <!-- Profile Header Section -->
@@ -162,38 +158,38 @@
 <section class="bg-white rounded-lg border border-slate-200/50 p-4 shadow-[0_4px_16px_rgba(0,45,98,0.04)]">
 <div class="flex justify-between items-center mb-4">
 <h3 class="font-label-caps text-on-surface-variant uppercase">Today's Vitals</h3>
-<span class="text-[12px] font-bold text-primary-container bg-primary-fixed-dim px-2 py-0.5 rounded-full">LIVE</span>
+<span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wide text-amber-700 bg-amber-50 border border-amber-100 px-3 py-1.5 rounded-full" title="Current wellness streak"><span class="material-symbols-outlined text-[14px]" style="font-variation-settings:'FILL' 1;">local_fire_department</span>9 Day Streak</span>
 </div>
 <div class="grid grid-cols-3 gap-3">
 <!-- Steps -->
 <div class="bg-surface-container-low p-3 rounded-DEFAULT flex flex-col items-center gap-1 border border-white/50">
-<span class="material-symbols-outlined text-blue-600 text-[20px]" style="font-variation-settings: 'FILL' 1;">footprint</span>
+<span class="material-symbols-outlined text-blue-600 text-[20px]" style="font-variation-settings: 'FILL' 1;" title="Steps goal completed">footprint</span>
 <span class="font-headline-md text-primary text-[16px]">8.2k</span>
 <span class="text-[10px] font-bold text-on-surface-variant uppercase">Steps</span>
 </div>
 <!-- Meds -->
 <div class="bg-surface-container-low p-3 rounded-DEFAULT flex flex-col items-center gap-1 border border-white/50">
-<span class="material-symbols-outlined text-red-500 text-[20px]" style="font-variation-settings: 'FILL' 1;">pill</span>
+<span class="material-symbols-outlined text-red-500 text-[20px]" title="Medication goal in progress">pill</span>
 <span class="font-headline-md text-primary text-[16px]">3/4</span>
 <span class="text-[10px] font-bold text-on-surface-variant uppercase">Meds</span>
 </div>
 <!-- Diet -->
 <div class="bg-surface-container-low p-3 rounded-DEFAULT flex flex-col items-center gap-1 border border-white/50">
-<span class="material-symbols-outlined text-emerald-600 text-[20px]" style="font-variation-settings: 'FILL' 1;">nutrition</span>
+<span class="material-symbols-outlined text-emerald-600 text-[20px]" title="Diet goal in progress">nutrition</span>
 <span class="font-headline-md text-primary text-[16px]">92%</span>
 <span class="text-[10px] font-bold text-on-surface-variant uppercase">Diet</span>
 </div>
 </div>
 </section>
 <!-- Content Tabs -->
-<section class="space-y-4">
+<section class="space-y-4" data-profile-media>
 <div class="flex border-b border-slate-100">
-<button class="flex-1 pb-3 text-primary font-bold border-b-2 border-primary transition-colors">Images</button>
-<button class="flex-1 pb-3 text-on-surface-variant font-medium hover:text-primary transition-colors">Videos</button>
-<button class="flex-1 pb-3 text-on-surface-variant font-medium hover:text-primary transition-colors">Vlogs</button>
+<button type="button" role="tab" aria-selected="true" data-media-tab="images" class="flex-1 border-b-4 border-primary py-4 text-center font-bold text-primary transition-colors">Images</button>
+<button type="button" role="tab" aria-selected="false" data-media-tab="videos" class="flex-1 border-b-4 border-transparent py-4 text-center font-bold text-on-surface-variant transition-colors">Videos</button>
+<button type="button" role="tab" aria-selected="false" data-media-tab="blogs" class="flex-1 border-b-4 border-transparent py-4 text-center font-bold text-on-surface-variant transition-colors">Blogs</button>
 </div>
 <!-- Grid Content -->
-<div class="grid grid-cols-3 gap-1">
+<div class="grid grid-cols-3 gap-1 px-1 pb-10" data-media-grid>
 <!-- Photo 1 -->
 <div class="aspect-square bg-surface-variant rounded-sm overflow-hidden group">
 <img alt="Content 1" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" data-alt="A scenic shot of a lush green park with a sun-drenched walking path during golden hour. Large oak trees cast long, soft shadows over the mowed grass. The lighting is warm and inviting, capturing a peaceful morning routine in a premium community park. High-resolution digital photography with vibrant natural greens and warm amber highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTwhp0FmPkXrFCBVevIA20A947kOYAp0ic-AR2IJbfpBgFxOFmiQxaO0r50vLPFF8ax6hwfKTZhb7yAEQiqpJct83BDcC7hYP2CaTh7fha_rd8gFjK-3ikh6HZG8qN5M5JMTo7zzCMHCwsOYiBC_la4gU7W9u7TejsNYwwQEN-ixJ0cVjhg-uoTuyDuGBnRYWCrKjVf6X2EI8BTkMbc1VVi7o4tmoH9OWQYRJxmr_GQKwkn6Fn0spy16JMDAdB5IdzdKbMaDUm0Xs">
@@ -249,4 +245,5 @@
         <span class="font-manrope text-[10px] font-semibold tracking-wide uppercase">Profile</span>
     </a>
 </nav>
+<script type="module" src="./profile-media-tabs.js"></script>
 </body></html>

@@ -11,44 +11,74 @@
 <style>
 body{min-height:max(884px,100dvh);}
 .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.consultation-content{position:relative;transition:max-height .32s ease;}
+.consultation-card.is-collapsible:not(.is-expanded) .consultation-content{max-height:240px;overflow:hidden;}
+.consultation-card.is-collapsible:not(.is-expanded) .consultation-content::after{position:absolute;right:0;bottom:0;left:0;height:54px;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 88%);content:"";pointer-events:none;}
+.consultation-toggle{display:none;width:100%;align-items:center;justify-content:center;gap:5px;margin-top:12px;padding:8px;border:0;color:#3159a6;background:transparent;font-size:12px;font-weight:800;cursor:pointer;}
+.consultation-card.is-collapsible .consultation-toggle{display:flex;}
+.consultation-toggle .material-symbols-outlined{font-size:18px;transition:transform .25s ease;}
+.consultation-card.is-expanded .consultation-toggle .material-symbols-outlined{transform:rotate(180deg);}
+.doctor-picker{position:fixed;inset:0;z-index:100;visibility:hidden;pointer-events:none;}
+.doctor-picker.is-open{visibility:visible;pointer-events:auto;}
+.doctor-picker-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;background:rgba(15,27,49,.3);backdrop-filter:blur(5px);transition:opacity .25s ease;}
+.doctor-picker.is-open .doctor-picker-backdrop{opacity:1;}
+.doctor-picker-sheet{position:absolute;right:0;bottom:0;left:0;width:min(100%,520px);max-height:min(76dvh,650px);margin:auto;padding:10px 20px max(22px,env(safe-area-inset-bottom));overflow:auto;border:1px solid rgba(255,255,255,.92);border-radius:28px 28px 0 0;background:rgba(250,251,255,.96);box-shadow:0 -18px 55px rgba(20,43,79,.18);backdrop-filter:blur(28px);transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.25,1);}
+.doctor-picker.is-open .doctor-picker-sheet{transform:translateY(0);}
+.doctor-picker-handle{width:42px;height:4px;margin:0 auto 16px;border-radius:999px;background:#d5dbe7;}
+.doctor-picker-search{position:relative;margin-top:18px;}
+.doctor-picker-search .material-symbols-outlined{position:absolute;top:50%;left:15px;color:#70819d;font-size:21px;transform:translateY(-50%);pointer-events:none;}
+.doctor-picker-search input{width:100%;height:50px;padding:0 16px 0 46px;border:1px solid #dfe6f1;border-radius:15px;outline:0;color:#17223a;background:rgba(255,255,255,.9);font-size:14px;box-shadow:0 4px 14px rgba(35,60,97,.04);transition:border-color .2s,box-shadow .2s;}
+.doctor-picker-search input:focus{border-color:#7eacf2;box-shadow:0 0 0 3px rgba(80,133,218,.12);}
+.doctor-options-scroll{max-height:min(46dvh,390px);margin-top:8px;padding:0 4px 8px 0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#bfd0e8 transparent;}
+.doctor-options-empty{padding:34px 12px;color:#758096;font-size:13px;text-align:center;}
+.doctor-option{display:grid;width:100%;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:12px;margin-top:10px;padding:12px;border:1px solid #edf0f5;border-radius:18px;color:#17223a;background:#fff;text-align:left;box-shadow:0 5px 16px rgba(35,60,97,.05);cursor:pointer;}
+.doctor-option.is-selected{border-color:#abc8fa;background:#f2f7ff;box-shadow:0 7px 20px rgba(57,101,175,.11);}
+.doctor-option-icon{display:grid;width:48px;height:48px;place-items:center;border-radius:15px;background:linear-gradient(145deg,#dcecff,#bad8ff);color:#2865c7;}
+.doctor-option-copy{min-width:0;}
+.doctor-option-copy strong,.doctor-option-copy span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.doctor-option-copy strong{font-size:14px;}
+.doctor-option-copy span{margin-top:3px;color:#758096;font-size:11px;}
+.doctor-option-meta{color:#71809a;font-size:10px;font-weight:800;text-align:right;}
 </style>
 </head>
 <body class="bg-background text-on-background font-manrope antialiased pb-32">
 
 <!-- Header -->
-<header class="flex justify-between items-center px-6 h-20 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
+<header class="relative flex justify-between items-center px-6 h-20 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,45,98,0.03)]">
     <div class="flex items-center gap-3">
         <button onclick="history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
             <span class="material-symbols-outlined text-primary">arrow_back</span>
         </button>
-        <h1 class="text-xl font-bold text-primary">Doctor Notes</h1>
     </div>
-    <div class="flex items-center gap-2">
-        <a href="doctor_appointments_history.html" class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 transition-colors" title="History">
-            <span class="material-symbols-outlined text-xl">history</span>
-        </a>
-    </div>
+    <h1 class="absolute left-1/2 -translate-x-1/2 text-xl font-bold text-primary whitespace-nowrap">Doctor Notes</h1>
+    <div class="w-10 h-10" aria-hidden="true"></div>
 </header>
 
 <main class="max-w-2xl mx-auto pt-6 px-6 pb-8 space-y-6">
 
     <!-- Doctor Header -->
     <div class="bg-white rounded-[24px] p-5 shadow-sm border border-slate-100 flex items-center gap-4">
-        <div class="w-[68px] h-[68px] rounded-[20px] bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-white flex items-center justify-center flex-shrink-0 shadow-sm">
+        <div id="selected-doctor-icon" class="w-[68px] h-[68px] rounded-[20px] bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-white flex items-center justify-center flex-shrink-0 shadow-sm">
             <span class="material-symbols-outlined text-3xl text-blue-600" style="font-variation-settings:'FILL' 1;">local_hospital</span>
         </div>
-        <div>
-            <h2 class="font-bold text-lg text-slate-800">Dr. Aris Thorne</h2>
-            <p class="text-[10px] font-black text-primary uppercase tracking-widest">Cardiologist</p>
+        <div class="min-w-0">
+            <h2 id="selected-doctor-name" class="font-bold text-lg text-slate-800 truncate">Dr. Aris Thorne</h2>
+            <p id="selected-doctor-specialty" class="text-[10px] font-black text-primary uppercase tracking-widest truncate">Cardiologist</p>
         </div>
+        <button id="doctor-picker-open" class="ml-auto h-11 px-3 rounded-xl bg-slate-50 border border-slate-100 text-primary flex items-center gap-1.5 font-bold text-xs hover:bg-blue-50 transition-colors flex-shrink-0" type="button" aria-haspopup="dialog" aria-controls="doctor-picker">
+            <span class="material-symbols-outlined text-[19px]">group</span>
+            <span>Doctors</span>
+            <span class="material-symbols-outlined text-[17px]">expand_more</span>
+        </button>
     </div>
 
     <!-- Notes List -->
-    <div class="space-y-4">
+    <div>
         <h3 class="font-bold text-base text-slate-800 ml-1">Recent Consultations</h3>
+        <div id="consultation-notes" class="space-y-4 mt-4">
         
         <!-- Note Card 1 -->
-        <div class="bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
+        <div class="consultation-card bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings:'FILL' 1;">event_note</span>
@@ -57,7 +87,7 @@ body{min-height:max(884px,100dvh);}
                 <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">Video Call</span>
             </div>
             
-            <div class="space-y-4">
+            <div class="consultation-content space-y-4">
                 <div>
                     <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Diagnosis</h4>
                     <p class="text-sm font-medium text-slate-800">Routine Checkup. BP is slightly elevated.</p>
@@ -76,10 +106,14 @@ body{min-height:max(884px,100dvh);}
                     <p class="text-sm text-slate-600 leading-relaxed">Reduce sodium intake. Continue daily 30-min walking. Schedule a follow-up in 4 weeks to monitor blood pressure levels.</p>
                 </div>
             </div>
+            <button class="consultation-toggle" type="button" aria-expanded="false">
+                <span class="consultation-toggle-label">Read more</span>
+                <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </button>
         </div>
 
         <!-- Note Card 2 -->
-        <div class="bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
+        <div class="consultation-card bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-slate-400 text-[20px]" style="font-variation-settings:'FILL' 1;">event_note</span>
@@ -88,7 +122,7 @@ body{min-height:max(884px,100dvh);}
                 <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">Clinic Visit</span>
             </div>
             
-            <div class="space-y-4">
+            <div class="consultation-content space-y-4">
                 <div>
                     <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Diagnosis</h4>
                     <p class="text-sm font-medium text-slate-800">Initial consultation for mild chest pain.</p>
@@ -98,10 +132,224 @@ body{min-height:max(884px,100dvh);}
                     <p class="text-sm text-slate-600 leading-relaxed">ECG results are normal. Pain is likely muscular. Recommended rest and prescribed a mild muscle relaxant for 3 days if pain persists.</p>
                 </div>
             </div>
+            <button class="consultation-toggle" type="button" aria-expanded="false">
+                <span class="consultation-toggle-label">Read more</span>
+                <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </button>
+        </div>
         </div>
     </div>
 
 </main>
+
+<div id="doctor-picker" class="doctor-picker" aria-hidden="true">
+    <button class="doctor-picker-backdrop" type="button" aria-label="Close doctor selector"></button>
+    <section class="doctor-picker-sheet" role="dialog" aria-modal="true" aria-labelledby="doctor-picker-title">
+        <div class="doctor-picker-handle"></div>
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <p class="text-[10px] font-black tracking-[0.16em] text-blue-600 uppercase">Care team</p>
+                <h2 id="doctor-picker-title" class="mt-1 text-xl font-extrabold text-slate-900">Choose a doctor</h2>
+                <p class="mt-1 text-xs text-slate-500">View consultation notes from your connected doctors.</p>
+            </div>
+            <button id="doctor-picker-close" class="w-10 h-10 rounded-full bg-white border border-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0" type="button" aria-label="Close doctor selector">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+        <label class="doctor-picker-search" for="doctor-search">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <input id="doctor-search" type="search" placeholder="Search doctor or specialty" autocomplete="off">
+        </label>
+        <div class="doctor-options-scroll">
+            <div id="doctor-options"></div>
+        </div>
+    </section>
+</div>
+
+<script>
+(() => {
+    const collapsedHeight = 240;
+    const doctors = {
+        aris: {
+            name: 'Dr. Aris Thorne',
+            specialty: 'Cardiologist',
+            notes: [
+                { date: 'June 15, 2026', type: 'Video Call', diagnosis: 'Routine Checkup. BP is slightly elevated.', prescriptions: ['Lisinopril 10mg - 1 tablet daily (Morning)', 'Atorvastatin 20mg - 1 tablet daily (Night)'], advice: 'Reduce sodium intake. Continue daily 30-min walking. Schedule a follow-up in 4 weeks to monitor blood pressure levels.' },
+                { date: 'May 10, 2026', type: 'Clinic Visit', diagnosis: 'Initial consultation for mild chest pain.', advice: 'ECG results are normal. Pain is likely muscular. Recommended rest and prescribed a mild muscle relaxant for 3 days if pain persists.' }
+            ]
+        },
+        elena: {
+            name: 'Dr. Elena Rostova',
+            specialty: 'General Physician',
+            notes: [
+                { date: 'July 4, 2026', type: 'Clinic Visit', diagnosis: 'Seasonal fatigue and mild dehydration.', prescriptions: ['Oral rehydration salts - once daily for 3 days', 'Vitamin B complex - 1 tablet after breakfast'], advice: 'Increase water intake, maintain regular meals, and repeat the blood test if fatigue continues beyond two weeks.' },
+                { date: 'April 18, 2026', type: 'Video Call', diagnosis: 'Follow-up for seasonal allergies.', advice: 'Continue the prescribed antihistamine when needed and avoid known pollen triggers during early morning hours.' }
+            ]
+        },
+        sarah: {
+            name: 'Dr. Sarah Jenkins',
+            specialty: 'Neurologist',
+            notes: [
+                { date: 'June 3, 2026', type: 'Clinic Visit', diagnosis: 'Migraine follow-up with reduced episode frequency.', prescriptions: ['Sumatriptan 50mg - as directed at migraine onset'], advice: 'Maintain a headache diary, continue consistent sleep hours, limit screen brightness at night, and schedule a review in six weeks.' }
+            ]
+        }
+    };
+
+    const additionalDoctors = [
+        ['marcus', 'Dr. Marcus Vance', 'Dentist'],
+        ['samuel', 'Dr. Samuel Lee', 'Ophthalmologist'],
+        ['priya', 'Dr. Priya Nair', 'Dermatologist'],
+        ['daniel', 'Dr. Daniel Brooks', 'Orthopedic Surgeon'],
+        ['aisha', 'Dr. Aisha Khan', 'Endocrinologist'],
+        ['michael', 'Dr. Michael Chen', 'Pulmonologist'],
+        ['ananya', 'Dr. Ananya Rao', 'Gynecologist'],
+        ['james', 'Dr. James Wilson', 'Gastroenterologist'],
+        ['meera', 'Dr. Meera Patel', 'Psychiatrist'],
+        ['robert', 'Dr. Robert Davis', 'Urologist'],
+        ['fatima', 'Dr. Fatima Sheikh', 'Pediatrician'],
+        ['liam', 'Dr. Liam Anderson', 'ENT Specialist'],
+        ['sophia', 'Dr. Sophia Martinez', 'Rheumatologist'],
+        ['vikram', 'Dr. Vikram Singh', 'Nephrologist'],
+        ['olivia', 'Dr. Olivia Brown', 'Oncologist'],
+        ['ethan', 'Dr. Ethan Clark', 'Physiotherapist'],
+        ['neha', 'Dr. Neha Gupta', 'Dietitian']
+    ];
+
+    additionalDoctors.forEach(([key, name, specialty], index) => {
+        doctors[key] = {
+            name,
+            specialty,
+            notes: [{
+                date: `${index > 7 ? 'June' : 'May'} ${8 + (index % 19)}, 2026`,
+                type: index % 2 ? 'Video Call' : 'Clinic Visit',
+                diagnosis: `${specialty} consultation and routine follow-up completed.`,
+                advice: 'Continue the current care plan, monitor symptoms, and schedule another review if symptoms change or persist.'
+            }]
+        };
+    });
+
+    const notesContainer = document.getElementById('consultation-notes');
+    const picker = document.getElementById('doctor-picker');
+    const options = document.getElementById('doctor-options');
+    const openButton = document.getElementById('doctor-picker-open');
+    const closeButton = document.getElementById('doctor-picker-close');
+    const searchInput = document.getElementById('doctor-search');
+    const backdrop = picker.querySelector('.doctor-picker-backdrop');
+    let selectedDoctor = 'aris';
+
+    const noteMarkup = (note, index) => `
+        <article class="consultation-card bg-white rounded-[24px] p-6 shadow-[0_4px_16px_rgba(0,45,98,0.04)] border border-slate-100 group">
+            <div class="flex items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="material-symbols-outlined ${index ? 'text-slate-400' : 'text-primary'} text-[20px] flex-shrink-0" style="font-variation-settings:'FILL' 1;">event_note</span>
+                    <span class="font-bold ${index ? 'text-slate-600' : 'text-primary'} truncate">${note.date}</span>
+                </div>
+                <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 whitespace-nowrap">${note.type}</span>
+            </div>
+            <div class="consultation-content space-y-4">
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Diagnosis</h4>
+                    <p class="text-sm font-medium text-slate-800">${note.diagnosis}</p>
+                </div>
+                ${note.prescriptions ? `
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Prescriptions</h4>
+                    <div class="bg-primary/5 rounded-[16px] p-3 border border-primary/10">
+                        <ul class="list-disc pl-4 text-sm text-slate-700 font-medium space-y-1">${note.prescriptions.map((item) => `<li>${item}</li>`).join('')}</ul>
+                    </div>
+                </div>` : ''}
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Advice</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">${note.advice}</p>
+                </div>
+            </div>
+            <button class="consultation-toggle" type="button" aria-expanded="false">
+                <span class="consultation-toggle-label">Read more</span>
+                <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </button>
+        </article>`;
+
+    const updateCards = () => {
+        document.querySelectorAll('.consultation-card').forEach((card) => {
+            const content = card.querySelector('.consultation-content');
+            const toggle = card.querySelector('.consultation-toggle');
+            const needsToggle = content.scrollHeight > collapsedHeight + 2;
+            card.classList.toggle('is-collapsible', needsToggle);
+            if (!needsToggle) {
+                card.classList.remove('is-expanded');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    };
+
+    const bindCardToggles = () => {
+        document.querySelectorAll('.consultation-card').forEach((card) => {
+            card.querySelector('.consultation-toggle').addEventListener('click', (event) => {
+                const toggle = event.currentTarget;
+                const expanded = card.classList.toggle('is-expanded');
+                toggle.setAttribute('aria-expanded', String(expanded));
+                toggle.querySelector('.consultation-toggle-label').textContent = expanded ? 'Show less' : 'Read more';
+            });
+        });
+    };
+
+    const renderNotes = (doctorKey) => {
+        const doctor = doctors[doctorKey];
+        document.getElementById('selected-doctor-name').textContent = doctor.name;
+        document.getElementById('selected-doctor-specialty').textContent = doctor.specialty;
+        notesContainer.innerHTML = doctor.notes.map(noteMarkup).join('');
+        bindCardToggles();
+        requestAnimationFrame(updateCards);
+    };
+
+    const renderOptions = (query = '') => {
+        const normalizedQuery = query.trim().toLowerCase();
+        const matchingDoctors = Object.entries(doctors).filter(([, doctor]) =>
+            `${doctor.name} ${doctor.specialty}`.toLowerCase().includes(normalizedQuery)
+        );
+        options.innerHTML = matchingDoctors.length ? matchingDoctors.map(([key, doctor]) => `
+            <button class="doctor-option ${key === selectedDoctor ? 'is-selected' : ''}" type="button" data-doctor="${key}">
+                <span class="doctor-option-icon"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">medical_services</span></span>
+                <span class="doctor-option-copy"><strong>${doctor.name}</strong><span>${doctor.specialty}</span></span>
+                <span class="doctor-option-meta">${doctor.notes.length} ${doctor.notes.length === 1 ? 'NOTE' : 'NOTES'}${key === selectedDoctor ? '<br><span class="text-blue-600">SELECTED</span>' : ''}</span>
+            </button>`).join('') : '<p class="doctor-options-empty">No connected doctors found.</p>';
+        options.querySelectorAll('.doctor-option').forEach((button) => {
+            button.addEventListener('click', () => {
+                selectedDoctor = button.dataset.doctor;
+                renderNotes(selectedDoctor);
+                closePicker();
+            });
+        });
+    };
+
+    const openPicker = () => {
+        searchInput.value = '';
+        renderOptions();
+        picker.classList.add('is-open');
+        picker.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeButton.focus();
+    };
+
+    const closePicker = () => {
+        picker.classList.remove('is-open');
+        picker.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        openButton.focus();
+    };
+
+    openButton.addEventListener('click', openPicker);
+    closeButton.addEventListener('click', closePicker);
+    backdrop.addEventListener('click', closePicker);
+    searchInput.addEventListener('input', () => renderOptions(searchInput.value));
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && picker.classList.contains('is-open')) closePicker();
+    });
+
+    renderNotes(selectedDoctor);
+    window.addEventListener('resize', updateCards);
+})();
+</script>
 
 </body>
 </html>

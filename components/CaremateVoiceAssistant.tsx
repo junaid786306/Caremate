@@ -57,6 +57,7 @@ function CaremateVoiceAssistant() {
   const transcriptRef = useRef('');
   const aliveRef = useRef(true);
   const inputRef = useRef<HTMLInputElement>(null);
+  const voiceModeOpenedAtRef = useRef(0);
   const displayName = localStorage.getItem('user_full_name') || localStorage.getItem('user_username') || 'Shreya';
 
   useEffect(() => () => {
@@ -174,6 +175,9 @@ function CaremateVoiceAssistant() {
   };
 
   const handleOrbClick = () => {
+    // Ignore the same touch/click that switched from the keyboard composer.
+    // Listening must always require a separate, deliberate tap.
+    if (Date.now() - voiceModeOpenedAtRef.current < 700) return;
     if (state === 'listening') stopListening();
     else if (state === 'speaking') {
       window.speechSynthesis?.cancel();
@@ -189,7 +193,8 @@ function CaremateVoiceAssistant() {
     setTypingOpen(false);
     setVoiceMode(true);
     setState('idle');
-    setAssistantText('Tap the orb to start listening.');
+    voiceModeOpenedAtRef.current = Date.now();
+    setAssistantText('How can I help you today?');
   };
 
   const closeVoiceMode = () => {

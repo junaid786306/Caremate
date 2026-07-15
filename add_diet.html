@@ -91,6 +91,20 @@
                     </div>
                 </div>
 
+                <!-- Date Range -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2 min-w-0">
+                        <label for="meal-start-date" class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Start Date</label>
+                        <input id="meal-start-date" name="mealStartDate" type="date" required onchange="syncMealDates()"
+                            class="w-full h-14 px-3 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm cursor-pointer">
+                    </div>
+                    <div class="space-y-2 min-w-0">
+                        <label for="meal-end-date" class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">End Date</label>
+                        <input id="meal-end-date" name="mealEndDate" type="date" required onchange="validateMealEndDate()"
+                            class="w-full h-14 px-3 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none font-bold text-sm cursor-pointer">
+                    </div>
+                </div>
+
                 <!-- Calories (Optional) -->
                 <div class="space-y-2">
                     <label class="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Calories (Approx)</label>
@@ -112,7 +126,18 @@
     </main>
 
     <script>
+        function syncMealDates() {
+            const startDate = document.getElementById('meal-start-date');
+            const endDate = document.getElementById('meal-end-date');
+            endDate.min = startDate.value;
+            if (endDate.value && endDate.value < startDate.value) endDate.value = startDate.value;
+        }
 
+        function validateMealEndDate() {
+            const startDate = document.getElementById('meal-start-date');
+            const endDate = document.getElementById('meal-end-date');
+            if (startDate.value && endDate.value < startDate.value) endDate.value = startDate.value;
+        }
     </script>
 
     <!-- BottomNavBar spacer -->
