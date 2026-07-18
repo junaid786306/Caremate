@@ -80,10 +80,13 @@
         .message-mode-switch {
             background: linear-gradient(180deg, #e9edf5 0%, #f8faff 100%);
             box-shadow: inset 0 2px 5px rgba(15, 42, 78, 0.12), 0 8px 20px rgba(15, 42, 78, 0.07);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 9999px;
         }
         .message-mode-button {
             color: #64748b;
             box-shadow: none;
+            border-radius: 9999px;
         }
         .message-mode-button.is-active {
             color: #001b3f;
@@ -104,15 +107,24 @@
 
     <main class="max-w-md mx-auto pt-4 px-6 space-y-6">
         <!-- Conversation type switch -->
-        <div class="message-mode-switch grid grid-cols-2 gap-1 rounded-2xl p-1.5" role="tablist" aria-label="Message type">
-            <button id="mode-individual" type="button" role="tab" aria-selected="true" class="message-mode-button is-active h-12 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all duration-200">
+        <div class="message-mode-switch grid grid-cols-2 gap-1 p-1.5" role="tablist" aria-label="Message type">
+            <button id="mode-individual" type="button" role="tab" aria-selected="true" class="message-mode-button is-active h-12 flex items-center justify-center gap-2 text-sm font-bold transition-all duration-200">
                 <span class="material-symbols-outlined text-[20px]">person</span>
                 Individual
             </button>
-            <button id="mode-groups" type="button" role="tab" aria-selected="false" class="message-mode-button h-12 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all duration-200">
+            <button id="mode-groups" type="button" role="tab" aria-selected="false" class="message-mode-button h-12 flex items-center justify-center gap-2 text-sm font-bold transition-all duration-200">
                 <span class="material-symbols-outlined text-[20px]">groups</span>
                 Groups
             </button>
+        </div>
+
+        <div id="care-role-filters" class="flex gap-2 overflow-x-auto hide-scrollbar -mt-2" role="tablist" aria-label="Filter individual conversations by role">
+            <button type="button" data-role-filter="all" aria-selected="true" class="care-role-filter h-9 px-4 rounded-full bg-primary text-white text-xs font-extrabold whitespace-nowrap">All</button>
+            <button type="button" data-role-filter="doctor" aria-selected="false" class="care-role-filter h-9 px-4 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-extrabold whitespace-nowrap">Doctors</button>
+            <button type="button" data-role-filter="dietitian" aria-selected="false" class="care-role-filter h-9 px-4 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-extrabold whitespace-nowrap">Dietitians</button>
+            <button type="button" data-role-filter="fitness" aria-selected="false" class="care-role-filter h-9 px-4 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-extrabold whitespace-nowrap">Fitness Coaches</button>
+            <button type="button" data-role-filter="guardian" aria-selected="false" class="care-role-filter h-9 px-4 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-extrabold whitespace-nowrap">Guardians</button>
+            <button type="button" data-role-filter="user" aria-selected="false" class="care-role-filter h-9 px-4 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-extrabold whitespace-nowrap">Users</button>
         </div>
 
         <!-- Search Bar with context-aware create icon -->
@@ -152,7 +164,7 @@
             </a>
 
             <!-- Dr. Aris -->
-            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Dr. Aris Thorne" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-role="doctor" data-message-name="Dr. Aris Thorne" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="relative">
                     <div class="w-16 h-16 rounded-full border-2 border-[#4f55ae] p-0.5 shadow-sm">
                         <img class="w-full h-full rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIg_eeayxQnb-CUuc8BGHEW72ccntd3mjlw8I11wtxuHNsmnU3XbVC5R-9Px9ZgdQUA_gus30-TvHI2e0d0IW_ZoQsXqGPZRYF1InW5ThyLuW6dMpRielFPxZbAPbWEb1u95ShFJfWg-PKkNQsw_KwuuAppimcUiVe9Ug25pn4Qr-I2ERzR8qAmIrAa6JTQ3yVgEE0OszgZPSbgj0L7NGkBe0djq4q8v0zOFRWfDBBgadlYQY5hbrQVlQPUbC0VKQEXSFKLdLXmsI">
@@ -173,7 +185,7 @@
             </a>
 
             <!-- Sarah Jenkins -->
-            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Sarah Jenkins" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-role="fitness" data-message-name="Sarah Jenkins" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full overflow-hidden shadow-sm">
                     <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO4nWaNF_fq-G8oKMYam6jQCfDBBRxq5XicIBgcc1mowjYfXJAJSO0M-OCGhjX-GA1JNPiEq1ABXEgd8ySxORSto1jAeFvwivyuqOgkDwuRfKsEfRLEVctFeU7WWr8hMuKkb0zGxXUOdnAPufswBVSdbMAXatHU23yZEgpweyVk73X8bqxYHqJADZW58QJYO8Qlt41B46O66otGL7vlwqhYKgFOJDL1ldgYdxRjSJ8KRIu2ezUJgl4tLI4pD5VQU8GZjKlYMGbgcA">
                 </div>
@@ -188,7 +200,7 @@
             </a>
 
             <!-- Michael Vance -->
-            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Michael Vance" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-role="user" data-message-name="Michael Vance" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full overflow-hidden shadow-sm">
                     <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_xyDJlUZhNjHZC7VzGa9pfzcUVwjk75FeGKJOKZbegigHhaeRpyLA0NVHaFjSDhNltaVBBakKV9nip4A4RlD488B_ELwct6tQ1vlRKdaq5BrF3omcOdoaUrRsm9crAhB709BwJUBHzbfUXKIOuBKFIVe-0-IWPyF1rreeQwfhLQC4FyVQmRgIcw4sGPEq_KK12H_fN_09eyI-6ezys1IQhNK5Rv_XxQ0Y8t2OwJDQgIOsJErYYFgNqfbJVgbq_4zc9RqGgaMtzjs">
                 </div>
@@ -198,6 +210,15 @@
                         <span class="text-[11px] font-bold text-slate-400 uppercase">Tuesday</span>
                     </div>
                     <p class="text-sm text-slate-500 truncate">Don't forget your m...</p>
+                </div>
+                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+            </a>
+
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-role="dietitian" data-message-name="Ruth Nakamura" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+                <div class="w-16 h-16 rounded-full overflow-hidden shadow-sm"><img class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ruth" alt="Ruth Nakamura"></div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center mb-1"><h4 class="font-bold text-slate-800 truncate">Ruth Nakamura</h4><span class="text-[11px] font-bold text-slate-400 uppercase">Monday</span></div>
+                    <p class="text-sm text-slate-500 truncate">Your meal plan is ready...</p>
                 </div>
                 <span class="material-symbols-outlined text-slate-300">chevron_right</span>
             </a>
@@ -218,7 +239,7 @@
             </a>
 
             <!-- Safety Support -->
-            <a href="direct_message_chat.html" data-message-type="individual" data-message-name="Safety Support" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
+            <a href="direct_message_chat.html" data-message-type="individual" data-message-role="guardian" data-message-name="Safety Support" class="bg-white rounded-[32px] p-5 flex items-center gap-4 message-card border border-slate-100/50 block transition-all hover:bg-slate-50">
                 <div class="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center shadow-sm">
                     <span class="material-symbols-outlined text-slate-700 text-3xl" style="font-variation-settings: 'FILL' 1;">support_agent</span>
                 </div>
@@ -272,15 +293,19 @@
         const messageEmpty = document.getElementById('message-empty');
         const addConversation = document.getElementById('add-conversation');
         const addConversationIcon = document.getElementById('add-conversation-icon');
+        const careRoleFilters = document.getElementById('care-role-filters');
+        const careRoleButtons = Array.from(document.querySelectorAll('[data-role-filter]'));
         let activeMessageType = 'individual';
+        let activeCareRole = 'all';
 
         function filterMessages() {
             const query = messageSearch.value.trim().toLowerCase();
             let visibleCount = 0;
             messageCards.forEach(card => {
                 const matchesType = card.dataset.messageType === activeMessageType;
+                const matchesRole = activeMessageType === 'group' || activeCareRole === 'all' || card.dataset.messageRole === activeCareRole;
                 const matchesSearch = card.dataset.messageName.toLowerCase().includes(query);
-                const shouldShow = matchesType && matchesSearch;
+                const shouldShow = matchesType && matchesRole && matchesSearch;
                 card.classList.toggle('hidden', !shouldShow);
                 if (shouldShow) visibleCount += 1;
             });
@@ -296,6 +321,7 @@
             });
 
             const isGroupMode = type === 'group';
+            careRoleFilters.classList.toggle('hidden', isGroupMode);
             messageSearch.value = '';
             messageSearch.placeholder = isGroupMode ? 'Search groups...' : 'Search individuals...';
             addConversation.href = isGroupMode ? 'create_group.html' : 'followers_list.html';
@@ -307,6 +333,20 @@
 
         modeButtons.individual.addEventListener('click', () => setMessageType('individual'));
         modeButtons.group.addEventListener('click', () => setMessageType('group'));
+        careRoleButtons.forEach(button => button.addEventListener('click', () => {
+            activeCareRole = button.dataset.roleFilter;
+            careRoleButtons.forEach(item => {
+                const active = item === button;
+                item.setAttribute('aria-selected', String(active));
+                item.classList.toggle('bg-primary', active);
+                item.classList.toggle('text-white', active);
+                item.classList.toggle('bg-white', !active);
+                item.classList.toggle('text-slate-600', !active);
+                item.classList.toggle('border', !active);
+                item.classList.toggle('border-slate-200', !active);
+            });
+            filterMessages();
+        }));
         messageSearch.addEventListener('input', filterMessages);
         setMessageType('individual');
     </script>

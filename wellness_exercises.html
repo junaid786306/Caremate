@@ -120,6 +120,57 @@
         70% { box-shadow: 0 0 0 22px rgba(79,85,174,0); }
         100% { box-shadow: 0 0 0 0 rgba(79,85,174,0); }
     }
+    .coach-switch {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        padding: 4px;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: 8px;
+        background: #eef3f9;
+        box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.07), 0 8px 20px rgba(0, 45, 98, 0.07);
+    }
+    .coach-switch__button {
+        display: flex;
+        min-width: 0;
+        min-height: 54px;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 8px 10px;
+        border: 0;
+        border-radius: 6px;
+        color: #64748b;
+        background: transparent;
+        font-size: 13px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform .25s ease, color .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+    .coach-switch__button .material-symbols-outlined { font-size: 21px; }
+    .coach-switch__button + .coach-switch__button {
+        border-left: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .coach-switch__button.is-active {
+        color: #00193c;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0, 45, 98, 0.12), inset 0 1px 0 #fff;
+        transform: none;
+    }
+    .coach-mode-panel {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-top: 12px;
+        padding: 13px 14px;
+        border-radius: 18px;
+        border: 1px solid rgba(171, 199, 255, 0.45);
+        background: rgba(255,255,255,.72);
+        box-shadow: 0 8px 22px rgba(0,45,98,.06);
+    }
+    .coach-mode-panel__icon { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border-radius:14px; color:#234f91; background:#dbe7ff; }
+    .coach-mode-panel strong { display:block; color:#00193c; font-size:14px; }
+    .coach-mode-panel p { margin:2px 0 0; color:#64748b; font-size:12px; line-height:1.45; }
   </style>
 </head>
 <body class="bg-background text-on-background font-manrope antialiased min-h-screen pb-[120px]">
@@ -131,8 +182,22 @@
 
     <!-- Main Content -->
     <main class="flex-1 w-full max-w-2xl mx-auto p-margin-page md:pb-margin-page flex flex-col gap-stack-lg pt-8">
-
-
+        <section aria-label="Choose exercise coach">
+            <div class="coach-switch" role="tablist" aria-label="Coach type">
+                <button id="caremate-coach-tab" class="coach-switch__button is-active" type="button" role="tab" aria-selected="true" onclick="selectCoachMode('caremate')">
+                    <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+                    <span>CareMate Coach</span>
+                </button>
+                <button id="personal-coach-tab" class="coach-switch__button" type="button" role="tab" aria-selected="false" onclick="selectCoachMode('personal')">
+                    <span class="material-symbols-outlined" aria-hidden="true">fitness_center</span>
+                    <span>Personal Coach</span>
+                </button>
+            </div>
+            <div class="coach-mode-panel" aria-live="polite">
+                <span id="coach-mode-icon" class="coach-mode-panel__icon material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+                <div><strong id="coach-mode-title">CareMate guided plan</strong><p id="coach-mode-description">Adaptive exercise guidance based on your wellness goals and progress.</p></div>
+            </div>
+        </section>
 
 <!-- Exercises Section -->
 <section class="flex flex-col gap-stack-lg">
@@ -382,5 +447,22 @@
 
         messages.scrollTop = messages.scrollHeight;
     }
+    function selectCoachMode(mode) {
+        const personalTab = document.getElementById('personal-coach-tab');
+        const caremateTab = document.getElementById('caremate-coach-tab');
+        const isPersonal = mode === 'personal';
+        personalTab.classList.toggle('is-active', isPersonal);
+        caremateTab.classList.toggle('is-active', !isPersonal);
+        personalTab.setAttribute('aria-selected', String(isPersonal));
+        caremateTab.setAttribute('aria-selected', String(!isPersonal));
+        document.getElementById('coach-mode-icon').textContent = isPersonal ? 'fitness_center' : 'auto_awesome';
+        document.getElementById('coach-mode-title').textContent = isPersonal ? 'Personal coach plan' : 'CareMate guided plan';
+        document.getElementById('coach-mode-description').textContent = isPersonal
+            ? 'Exercises selected and monitored by your connected fitness coach.'
+            : 'Adaptive exercise guidance based on your wellness goals and progress.';
+        localStorage.setItem('caremate-exercise-coach-mode', mode);
+    }
+
+    selectCoachMode(localStorage.getItem('caremate-exercise-coach-mode') === 'personal' ? 'personal' : 'caremate');
 </script>
 </body></html>

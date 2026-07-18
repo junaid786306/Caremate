@@ -18,6 +18,10 @@ body{min-height:max(884px,100dvh);}
 .consultation-card.is-collapsible .consultation-toggle{display:flex;}
 .consultation-toggle .material-symbols-outlined{font-size:18px;transition:transform .25s ease;}
 .consultation-card.is-expanded .consultation-toggle .material-symbols-outlined{transform:rotate(180deg);}
+.consultation-share{display:grid;width:34px;height:34px;place-items:center;padding:0;border:1px solid #e7ebf2;border-radius:10px;color:#244f91;background:#f7f9fc;cursor:pointer;transition:background .2s,transform .2s;}
+.consultation-share:hover{background:#eaf2ff;}
+.consultation-share:active{transform:scale(.94);}
+.consultation-share .material-symbols-outlined{font-size:18px;}
 .doctor-picker{position:fixed;inset:0;z-index:100;visibility:hidden;pointer-events:none;}
 .doctor-picker.is-open{visibility:visible;pointer-events:auto;}
 .doctor-picker-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;background:rgba(15,27,49,.3);backdrop-filter:blur(5px);transition:opacity .25s ease;}
@@ -25,7 +29,12 @@ body{min-height:max(884px,100dvh);}
 .doctor-picker-sheet{position:absolute;right:0;bottom:0;left:0;width:min(100%,520px);max-height:min(76dvh,650px);margin:auto;padding:10px 20px max(22px,env(safe-area-inset-bottom));overflow:auto;border:1px solid rgba(255,255,255,.92);border-radius:28px 28px 0 0;background:rgba(250,251,255,.96);box-shadow:0 -18px 55px rgba(20,43,79,.18);backdrop-filter:blur(28px);transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.25,1);}
 .doctor-picker.is-open .doctor-picker-sheet{transform:translateY(0);}
 .doctor-picker-handle{width:42px;height:4px;margin:0 auto 16px;border-radius:999px;background:#d5dbe7;}
-.doctor-picker-search{position:relative;margin-top:18px;}
+.doctor-picker-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;}
+.doctor-picker-heading-copy{min-width:0;padding:2px 0 4px;}
+.doctor-picker-eyebrow{margin:0 0 7px;color:#2563c7;font-size:10px;font-weight:900;line-height:1;letter-spacing:.16em;text-transform:uppercase;}
+.doctor-picker-title{margin:0;color:#17223a;font-size:21px;font-weight:800;line-height:1.25;}
+.doctor-picker-description{max-width:320px;margin:8px 0 0;color:#718096;font-size:12px;line-height:1.5;}
+.doctor-picker-search{position:relative;display:block;margin-top:16px;}
 .doctor-picker-search .material-symbols-outlined{position:absolute;top:50%;left:15px;color:#70819d;font-size:21px;transform:translateY(-50%);pointer-events:none;}
 .doctor-picker-search input{width:100%;height:50px;padding:0 16px 0 46px;border:1px solid #dfe6f1;border-radius:15px;outline:0;color:#17223a;background:rgba(255,255,255,.9);font-size:14px;box-shadow:0 4px 14px rgba(35,60,97,.04);transition:border-color .2s,box-shadow .2s;}
 .doctor-picker-search input:focus{border-color:#7eacf2;box-shadow:0 0 0 3px rgba(80,133,218,.12);}
@@ -146,11 +155,11 @@ body{min-height:max(884px,100dvh);}
     <button class="doctor-picker-backdrop" type="button" aria-label="Close doctor selector"></button>
     <section class="doctor-picker-sheet" role="dialog" aria-modal="true" aria-labelledby="doctor-picker-title">
         <div class="doctor-picker-handle"></div>
-        <div class="flex items-start justify-between gap-4">
-            <div>
-                <p class="text-[10px] font-black tracking-[0.16em] text-blue-600 uppercase">Care team</p>
-                <h2 id="doctor-picker-title" class="mt-1 text-xl font-extrabold text-slate-900">Choose a doctor</h2>
-                <p class="mt-1 text-xs text-slate-500">View consultation notes from your connected doctors.</p>
+        <div class="doctor-picker-heading">
+            <div class="doctor-picker-heading-copy">
+                <p class="doctor-picker-eyebrow">Care team</p>
+                <h2 id="doctor-picker-title" class="doctor-picker-title">Choose a doctor</h2>
+                <p class="doctor-picker-description">View consultation notes from your connected doctors.</p>
             </div>
             <button id="doctor-picker-close" class="w-10 h-10 rounded-full bg-white border border-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0" type="button" aria-label="Close doctor selector">
                 <span class="material-symbols-outlined text-xl">close</span>
@@ -244,7 +253,12 @@ body{min-height:max(884px,100dvh);}
                     <span class="material-symbols-outlined ${index ? 'text-slate-400' : 'text-primary'} text-[20px] flex-shrink-0" style="font-variation-settings:'FILL' 1;">event_note</span>
                     <span class="font-bold ${index ? 'text-slate-600' : 'text-primary'} truncate">${note.date}</span>
                 </div>
-                <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 whitespace-nowrap">${note.type}</span>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <span class="text-xs font-bold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 whitespace-nowrap">${note.type}</span>
+                    <button class="consultation-share" type="button" data-note-index="${index}" aria-label="Share consultation note">
+                        <span class="material-symbols-outlined" aria-hidden="true">ios_share</span>
+                    </button>
+                </div>
             </div>
             <div class="consultation-content space-y-4">
                 <div>
@@ -289,6 +303,32 @@ body{min-height:max(884px,100dvh);}
                 const expanded = card.classList.toggle('is-expanded');
                 toggle.setAttribute('aria-expanded', String(expanded));
                 toggle.querySelector('.consultation-toggle-label').textContent = expanded ? 'Show less' : 'Read more';
+            });
+        });
+        document.querySelectorAll('.consultation-share').forEach((button) => {
+            button.addEventListener('click', async () => {
+                const doctor = doctors[selectedDoctor];
+                const note = doctor.notes[Number(button.dataset.noteIndex)];
+                const prescriptions = note.prescriptions?.length
+                    ? `\nPrescriptions:\n- ${note.prescriptions.join('\n- ')}`
+                    : '';
+                const text = `${doctor.name} - ${doctor.specialty}\n${note.date} | ${note.type}\n\nDiagnosis: ${note.diagnosis}${prescriptions}\n\nAdvice: ${note.advice}`;
+                try {
+                    if (navigator.share) {
+                        await navigator.share({ title: `Consultation note from ${doctor.name}`, text });
+                    } else {
+                        await navigator.clipboard.writeText(text);
+                        const icon = button.querySelector('.material-symbols-outlined');
+                        icon.textContent = 'check';
+                        button.setAttribute('aria-label', 'Consultation note copied');
+                        setTimeout(() => {
+                            icon.textContent = 'ios_share';
+                            button.setAttribute('aria-label', 'Share consultation note');
+                        }, 1600);
+                    }
+                } catch (error) {
+                    if (error?.name !== 'AbortError') console.error('Unable to share consultation note.', error);
+                }
             });
         });
     };

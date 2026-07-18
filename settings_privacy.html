@@ -83,4 +83,52 @@
             </div>
         </section>
     </main>
+
+    <div id="privacy-toast" role="status" aria-live="polite" class="fixed top-[88px] left-1/2 z-[100] w-[calc(100%-32px)] max-w-sm -translate-x-1/2 -translate-y-3 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/95 px-4 py-3.5 shadow-[0_14px_36px_rgba(0,25,60,0.16)] backdrop-blur-xl">
+            <span id="privacy-toast-icon-wrap" class="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl bg-primary text-white">
+                <span id="privacy-toast-icon" class="material-symbols-outlined text-[21px]">lock</span>
+            </span>
+            <span class="min-w-0 flex-1">
+                <strong id="privacy-toast-title" class="block text-sm font-extrabold text-primary">Your account is private</strong>
+                <span id="privacy-toast-message" class="mt-0.5 block text-xs leading-relaxed text-slate-500">Only people you approve can view your content.</span>
+            </span>
+            <span class="material-symbols-outlined text-emerald-500 text-[20px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        </div>
+    </div>
+
+    <script>
+        const privacyToggle = document.getElementById('privacy-toggle');
+        const privacyToast = document.getElementById('privacy-toast');
+        const privacyToastIconWrap = document.getElementById('privacy-toast-icon-wrap');
+        const privacyToastIcon = document.getElementById('privacy-toast-icon');
+        const privacyToastTitle = document.getElementById('privacy-toast-title');
+        const privacyToastMessage = document.getElementById('privacy-toast-message');
+        let privacyToastTimer;
+
+        privacyToggle.checked = localStorage.getItem('caremate_privacy_mode') === 'private';
+
+        function showPrivacyToast(isPrivate) {
+            clearTimeout(privacyToastTimer);
+            privacyToastIcon.textContent = isPrivate ? 'lock' : 'public';
+            privacyToastTitle.textContent = isPrivate ? 'Your account is private' : 'Your account is public';
+            privacyToastMessage.textContent = isPrivate
+                ? 'Only people you approve can view your content.'
+                : 'Anyone on CareMate can now view your public content.';
+            privacyToastIconWrap.classList.toggle('bg-primary', isPrivate);
+            privacyToastIconWrap.classList.toggle('bg-sky-600', !isPrivate);
+            privacyToast.classList.remove('-translate-y-3', 'opacity-0');
+            privacyToast.classList.add('translate-y-0', 'opacity-100');
+
+            privacyToastTimer = setTimeout(() => {
+                privacyToast.classList.add('-translate-y-3', 'opacity-0');
+                privacyToast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        privacyToggle.addEventListener('change', () => {
+            localStorage.setItem('caremate_privacy_mode', privacyToggle.checked ? 'private' : 'public');
+            showPrivacyToast(privacyToggle.checked);
+        });
+    </script>
 </body></html>

@@ -6,9 +6,9 @@
     ];
 
     const blogItems = [
-        { title: 'Simple Ways to Feel Better Every Day', date: 'Oct 12', tag: 'Wellness' },
-        { title: 'Building a Healthy Daily Routine', date: 'Oct 10', tag: 'Lifestyle' },
-        { title: 'Small Habits That Make a Difference', date: 'Oct 08', tag: 'Health' }
+        { title: 'Simple Ways to Feel Better Every Day', date: 'Oct 12', tag: 'Wellness', likes: 24, comments: 8 },
+        { title: 'Building a Healthy Daily Routine', date: 'Oct 10', tag: 'Lifestyle', likes: 31, comments: 6 },
+        { title: 'Small Habits That Make a Difference', date: 'Oct 08', tag: 'Health', likes: 18, comments: 4 }
     ];
 
     document.querySelectorAll('[data-profile-media]').forEach((section) => {
@@ -52,18 +52,33 @@
         }
 
         function renderBlogs() {
-            grid.className = 'space-y-3 px-4 pb-10';
+            grid.className = 'space-y-4 px-6 pb-10';
             grid.innerHTML = blogItems.map((item) => `
-                <a href="blog_post_detail.html" class="block rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
-                    <div class="mb-2 flex items-center justify-between gap-3">
-                        <span class="rounded-full bg-secondary/5 px-2 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-secondary">${item.tag}</span>
+                <article class="rounded-[32px] border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="mb-3 flex items-center justify-between gap-3">
+                        <span class="rounded-full bg-secondary/5 px-2 py-1 text-[9px] font-black uppercase tracking-[0.15em] text-secondary">${item.tag}</span>
                         <span class="text-[10px] font-bold text-slate-400">${item.date}</span>
                     </div>
-                    <div class="flex items-center justify-between gap-3">
-                        <h3 class="text-sm font-bold text-primary">${item.title}</h3>
-                        <span class="material-symbols-outlined text-lg text-slate-400">arrow_forward</span>
+                    <h3 class="mb-2 text-lg font-bold text-primary">${item.title}</h3>
+                    <p class="mb-4 text-sm leading-relaxed text-slate-600">Sharing practical ideas for staying active, healthy, and connected through simple habits that fit naturally into everyday life...</p>
+                    <div class="flex items-center gap-4 border-t border-slate-50 pt-4">
+                        <button type="button" aria-label="Like blog" class="flex items-center gap-1.5 text-slate-400 transition-colors hover:text-rose-500">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                            <span class="text-xs font-bold">${item.likes}</span>
+                        </button>
+                        <button type="button" aria-label="Comment on blog" class="flex items-center gap-2 text-slate-400 transition-colors hover:text-primary">
+                            <span class="material-symbols-outlined grid h-[38px] w-[38px] place-items-center rounded-full border border-slate-200/70 bg-gradient-to-br from-white to-blue-50 text-[21px] text-[#24467c] shadow-[0_7px_18px_rgba(0,45,98,0.1)]">chat_bubble_outline</span>
+                            <span class="text-xs font-bold">${item.comments}</span>
+                        </button>
+                        <button type="button" aria-label="Share blog" class="grid h-[38px] w-[38px] place-items-center rounded-full border border-slate-200/70 bg-gradient-to-br from-white to-blue-50 text-[#24467c] shadow-[0_7px_18px_rgba(0,45,98,0.1)] transition-transform active:scale-95">
+                            <span class="material-symbols-outlined text-[21px]">ios_share</span>
+                        </button>
+                        <button type="button" aria-label="Save blog" class="flex items-center text-slate-400 transition-colors hover:text-primary">
+                            <span class="material-symbols-outlined text-lg">bookmark</span>
+                        </button>
+                        <a href="blog_post_detail.html" class="ml-auto text-xs font-bold text-secondary">Read More</a>
                     </div>
-                </a>
+                </article>
             `).join('');
         }
 

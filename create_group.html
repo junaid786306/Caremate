@@ -51,13 +51,19 @@
             <!-- Selected chips go here -->
         </div>
 
-        <!-- Contacts List -->
+        <!-- Following and followers list -->
         <div class="space-y-6">
-            <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Contacts</h3>
+            <div class="flex items-center justify-between gap-4">
+                <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Add people</h3>
+                <div class="grid grid-cols-2 rounded-2xl bg-slate-100 p-1 min-w-[220px]" role="tablist" aria-label="Choose people list">
+                    <button id="following-tab" type="button" role="tab" aria-selected="true" class="people-tab h-9 rounded-xl bg-white text-primary shadow-sm text-xs font-extrabold transition-all">Following</button>
+                    <button id="followers-tab" type="button" role="tab" aria-selected="false" class="people-tab h-9 rounded-xl text-slate-500 text-xs font-extrabold transition-all">Followers</button>
+                </div>
+            </div>
             
             <div class="space-y-2">
                 <!-- Contact 1 -->
-                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-id="1" data-name="Dr. Aris Thompson">
+                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-list="following" data-id="1" data-name="Dr. Aris Thompson">
                     <div class="flex items-center gap-4">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIg_eeayxQnb-CUuc8BGHEW72ccntd3mjlw8I11wtxuHNsmnU3XbVC5R-9Px9ZgdQUA_gus30-TvHI2e0d0IW_ZoQsXqGPZRYF1InW5ThyLuW6dMpRielFPxZbAPbWEb1u95ShFJfWg-PKkNQsw_KwuuAppimcUiVe9Ug25pn4Qr-I2ERzR8qAmIrAa6JTQ3yVgEE0OszgZPSbgj0L7NGkBe0djq4q8v0zOFRWfDBBgadlYQY5hbrQVlQPUbC0VKQEXSFKLdLXmsI" class="w-12 h-12 rounded-full">
                         <div>
@@ -71,7 +77,7 @@
                 </div>
 
                 <!-- Contact 2 -->
-                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-id="2" data-name="Nurse Betty">
+                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-list="following" data-id="2" data-name="Nurse Betty">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold">NB</div>
                         <div>
@@ -85,7 +91,7 @@
                 </div>
 
                 <!-- Contact 3 -->
-                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-id="3" data-name="John Doe">
+                <div class="contact-item flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-list="following" data-id="3" data-name="John Doe">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">JD</div>
                         <div>
@@ -97,6 +103,30 @@
                         <span class="material-symbols-outlined text-[16px] text-white hidden">check</span>
                     </div>
                 </div>
+
+                <div class="contact-item hidden flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-list="followers" data-id="4" data-name="Sarah Jenkins">
+                    <div class="flex items-center gap-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" class="w-12 h-12 rounded-full" alt="Sarah Jenkins">
+                        <div><p class="font-bold">Sarah Jenkins</p><p class="text-xs text-slate-400">Wellness community</p></div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center transition-colors checkbox-indicator"><span class="material-symbols-outlined text-[16px] text-white hidden">check</span></div>
+                </div>
+
+                <div class="contact-item hidden flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-list="followers" data-id="5" data-name="Michael Vance">
+                    <div class="flex items-center gap-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Michael" class="w-12 h-12 rounded-full" alt="Michael Vance">
+                        <div><p class="font-bold">Michael Vance</p><p class="text-xs text-slate-400">Community member</p></div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center transition-colors checkbox-indicator"><span class="material-symbols-outlined text-[16px] text-white hidden">check</span></div>
+                </div>
+
+                <div class="contact-item hidden flex items-center justify-between p-4 bg-white rounded-3xl border border-slate-50 shadow-sm active:scale-[0.98] transition-all" data-list="followers" data-id="6" data-name="Eleanor Fitzgerald">
+                    <div class="flex items-center gap-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Eleanor" class="w-12 h-12 rounded-full" alt="Eleanor Fitzgerald">
+                        <div><p class="font-bold">Eleanor Fitzgerald</p><p class="text-xs text-slate-400">Family</p></div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center transition-colors checkbox-indicator"><span class="material-symbols-outlined text-[16px] text-white hidden">check</span></div>
+                </div>
             </div>
         </div>
     </main>
@@ -107,6 +137,23 @@
         const selectedList = document.getElementById('selected-list');
         const createBtn = document.getElementById('create-btn');
         const groupNameInput = document.getElementById('group-name');
+        const followingTab = document.getElementById('following-tab');
+        const followersTab = document.getElementById('followers-tab');
+
+        function showPeopleList(listName) {
+            contactItems.forEach(item => item.classList.toggle('hidden', item.dataset.list !== listName));
+            [followingTab, followersTab].forEach(tab => {
+                const active = tab.id === `${listName}-tab`;
+                tab.setAttribute('aria-selected', String(active));
+                tab.classList.toggle('bg-white', active);
+                tab.classList.toggle('text-primary', active);
+                tab.classList.toggle('shadow-sm', active);
+                tab.classList.toggle('text-slate-500', !active);
+            });
+        }
+
+        followingTab.addEventListener('click', () => showPeopleList('following'));
+        followersTab.addEventListener('click', () => showPeopleList('followers'));
 
         function updateUI() {
             selectedList.innerHTML = '';

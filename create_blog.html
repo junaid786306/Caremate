@@ -36,10 +36,10 @@
             <span class="material-symbols-outlined text-primary">close</span>
         </button>
         <h1 class="font-bold text-xl tracking-tight text-primary text-center flex-1">Create Blog</h1>
-        <button onclick="publishBlog()" class="text-primary font-bold text-sm px-4 py-2 hover:bg-slate-50 rounded-full transition-colors">Publish</button>
+        <span class="w-10 h-10" aria-hidden="true"></span>
     </header>
 
-    <main class="flex-1 p-6 max-w-2xl mx-auto w-full space-y-8">
+    <main class="flex-1 p-6 pb-28 max-w-2xl mx-auto w-full space-y-8">
         <!-- Cover editor -->
         <div class="space-y-4">
         <div id="cover-editor" class="relative w-full aspect-[16/10] bg-slate-100 rounded-[28px] overflow-hidden border border-slate-200 flex flex-col items-center justify-center group">
@@ -101,13 +101,13 @@
             <div class="space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Category</label>
                 <div id="category-row" class="flex gap-2 overflow-x-auto pb-1" style="scrollbar-width:none">
-                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Health</button>
-                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Lifestyle</button>
-                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Nutrition</button>
-                    <button onclick="selectCategory(this)" class="px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Story</button>
-                    <button onclick="addCategory()" class="px-5 py-2 border-2 border-dashed border-slate-300 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0 flex items-center gap-1 hover:border-primary hover:text-primary transition-colors">
+                    <button id="add-category-button" onclick="addCategory()" class="px-5 py-2 border-2 border-dashed border-slate-300 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0 flex items-center gap-1 hover:border-primary hover:text-primary transition-colors">
                         <span class="material-symbols-outlined text-sm">add</span> New
                     </button>
+                    <button onclick="selectCategory(this)" class="category-option px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Health</button>
+                    <button onclick="selectCategory(this)" class="category-option px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Lifestyle</button>
+                    <button onclick="selectCategory(this)" class="category-option px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Nutrition</button>
+                    <button onclick="selectCategory(this)" class="category-option px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Story</button>
                 </div>
             </div>
 
@@ -128,6 +128,13 @@
             </div>
         </div>
     </main>
+
+    <div class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-t border-slate-200 px-5 pt-3" style="padding-bottom:max(18px, env(safe-area-inset-bottom));">
+        <button type="button" onclick="publishBlog()" class="w-full h-14 rounded-2xl bg-[#002b63] text-white flex items-center justify-center gap-2 text-base font-extrabold shadow-lg active:scale-[.98]">
+            <span class="material-symbols-outlined">publish</span>
+            Publish
+        </button>
+    </div>
 
     <script>
         let coverX = 0;
@@ -228,22 +235,22 @@
         coverImage.addEventListener('pointercancel', endCoverDrag);
 
         function selectCategory(btn) {
-            document.querySelectorAll('#category-row button').forEach(b => {
-                b.className = 'px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
+            document.querySelectorAll('#category-row .category-option').forEach(b => {
+                b.className = 'category-option px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
             });
-            btn.className = 'px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
+            btn.className = 'category-option px-5 py-2 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
         }
 
         function addCategory() {
             const name = prompt('Enter new category name:');
             if (name && name.trim()) {
                 const row = document.getElementById('category-row');
-                const addBtn = row.querySelector('button:last-child');
+                const addBtn = document.getElementById('add-category-button');
                 const newBtn = document.createElement('button');
                 newBtn.onclick = function() { selectCategory(this); };
-                newBtn.className = 'px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
+                newBtn.className = 'category-option px-5 py-2 bg-slate-100 text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0';
                 newBtn.textContent = name.trim().toUpperCase();
-                row.insertBefore(newBtn, addBtn);
+                row.insertBefore(newBtn, addBtn.nextSibling);
             }
         }
 

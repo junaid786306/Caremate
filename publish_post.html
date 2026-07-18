@@ -18,14 +18,22 @@
         .toggle-input:checked + .toggle-track .toggle-knob { transform: translateX(20px); }
         .sheet { transform: translateY(105%); transition: transform .32s cubic-bezier(.32,.72,0,1); }
         .sheet.open { transform: translateY(0); }
-        .filter-chip.active, .ratio-chip.active { color: white; background: #062d63; border-color: #062d63; }
+        .ratio-chip.active { color: white; background: #062d63; border-color: #062d63; }
+        .filter-chip { display:flex; width:68px; flex:0 0 68px; flex-direction:column; align-items:center; gap:7px; padding:0; border:0; color:#64748b; background:transparent; font-size:11px; font-weight:700; cursor:pointer; }
+        .filter-chip__preview { width:60px; height:60px; overflow:hidden; border:2px solid transparent; border-radius:50%; background:#e8edf5; box-shadow:0 4px 12px rgba(7,29,61,.1); transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; }
+        .filter-chip__preview img { width:100%; height:100%; object-fit:cover; }
+        .filter-chip.active { color:#062d63; }
+        .filter-chip.active .filter-chip__preview { border-color:#0759d9; box-shadow:0 0 0 3px #fff,0 0 0 5px #0759d9,0 7px 18px rgba(7,89,217,.22); transform:scale(.96); }
+        .filter-chip:active .filter-chip__preview { transform:scale(.9); }
+        .hide-scrollbar { scrollbar-width:none; }
+        .hide-scrollbar::-webkit-scrollbar { display:none; }
     </style>
 </head>
 <body>
     <header class="safe-top sticky top-0 z-40 h-[72px] bg-white/95 backdrop-blur-xl border-b border-slate-200 flex items-center justify-between px-4">
         <button type="button" onclick="goBack()" aria-label="Go back" class="w-11 h-11 flex items-center justify-center text-[#08254b] active:scale-95"><span class="material-symbols-outlined">arrow_back</span></button>
         <h1 class="text-lg font-extrabold">New post</h1>
-        <button type="button" onclick="publishPost()" class="h-10 px-4 rounded-xl bg-[#002b63] text-white text-sm font-bold shadow-md active:scale-95">Share</button>
+        <span class="w-11 h-11" aria-hidden="true"></span>
     </header>
 
     <main class="max-w-xl mx-auto pb-28">
@@ -52,12 +60,12 @@
 
             <div class="mt-4">
                 <p class="text-xs font-extrabold text-slate-500 uppercase tracking-wide mb-2">Filter</p>
-                <div class="flex gap-2 overflow-x-auto pb-1">
-                    <button type="button" onclick="setFilter('none', this)" class="filter-chip active h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Normal</button>
-                    <button type="button" onclick="setFilter('brightness(1.12) saturate(1.08)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Bright</button>
-                    <button type="button" onclick="setFilter('sepia(.16) saturate(1.18) contrast(1.04)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Warm</button>
-                    <button type="button" onclick="setFilter('hue-rotate(12deg) saturate(1.1)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Cool</button>
-                    <button type="button" onclick="setFilter('grayscale(1) contrast(1.08)', this)" class="filter-chip h-10 px-4 rounded-xl border border-slate-200 text-xs font-bold flex-shrink-0">Mono</button>
+                <div class="flex gap-3 overflow-x-auto px-1 pt-1 pb-2 hide-scrollbar">
+                    <button type="button" onclick="setFilter('none', this)" class="filter-chip active"><span class="filter-chip__preview"><img class="filter-preview-image" alt="Normal filter preview"></span><span>Normal</span></button>
+                    <button type="button" onclick="setFilter('brightness(1.12) saturate(1.08)', this)" class="filter-chip"><span class="filter-chip__preview"><img class="filter-preview-image" style="filter:brightness(1.12) saturate(1.08)" alt="Bright filter preview"></span><span>Bright</span></button>
+                    <button type="button" onclick="setFilter('sepia(.16) saturate(1.18) contrast(1.04)', this)" class="filter-chip"><span class="filter-chip__preview"><img class="filter-preview-image" style="filter:sepia(.16) saturate(1.18) contrast(1.04)" alt="Warm filter preview"></span><span>Warm</span></button>
+                    <button type="button" onclick="setFilter('hue-rotate(12deg) saturate(1.1)', this)" class="filter-chip"><span class="filter-chip__preview"><img class="filter-preview-image" style="filter:hue-rotate(12deg) saturate(1.1)" alt="Cool filter preview"></span><span>Cool</span></button>
+                    <button type="button" onclick="setFilter('grayscale(1) contrast(1.08)', this)" class="filter-chip"><span class="filter-chip__preview"><img class="filter-preview-image" style="filter:grayscale(1) contrast(1.08)" alt="Mono filter preview"></span><span>Mono</span></button>
                 </div>
             </div>
         </section>
@@ -78,13 +86,6 @@
                     <span class="material-symbols-outlined text-[#315fba]">location_on</span>
                     <input id="location" type="text" placeholder="Add location" class="flex-1 bg-transparent outline-none text-sm font-bold placeholder:text-slate-700">
                     <span class="material-symbols-outlined text-slate-400">chevron_right</span>
-                </label>
-                <label class="w-full min-h-16 px-5 flex items-center gap-4 border-t border-slate-100">
-                    <span class="material-symbols-outlined text-[#315fba]">music_note</span>
-                    <span class="flex-1 text-sm font-bold">Add music</span>
-                    <select id="music" class="max-w-[150px] bg-transparent text-xs font-bold text-slate-500 outline-none text-right">
-                        <option value="">None</option><option>Morning Calm</option><option>Gentle Energy</option><option>Nature Sounds</option><option>Ambient Flow</option>
-                    </select>
                 </label>
                 <label class="w-full min-h-16 px-5 flex items-center gap-4 border-t border-slate-100">
                     <span class="material-symbols-outlined text-[#315fba]">group</span>
@@ -152,6 +153,7 @@
             currentDraft = draft; if (imageUrl) URL.revokeObjectURL(imageUrl); imageUrl = URL.createObjectURL(draft.file);
             const image = document.getElementById('image-preview'); image.src = imageUrl; image.classList.remove('hidden');
             document.getElementById('image-empty').classList.add('hidden'); document.getElementById('replace-btn').classList.remove('hidden'); document.getElementById('replace-btn').classList.add('flex');
+            document.querySelectorAll('.filter-preview-image').forEach(preview => { preview.src = imageUrl; });
         }
         async function saveDraft(file) {
             const draft = { file, name: file.name, type: file.type, updatedAt: Date.now() }; const db = await openDraftDb(); const tx = db.transaction('drafts', 'readwrite');
@@ -176,7 +178,7 @@
         function goBack() { if (dirty && !confirm('Discard your post changes?')) return; window.location.href = 'community_hub.html'; }
         async function publishPost() {
             if (!currentDraft?.file) { showToast('Choose an image before sharing'); return; }
-            const post = { id: `image-${Date.now()}`, caption: document.getElementById('caption').value.trim(), location: document.getElementById('location').value.trim(), music: document.getElementById('music').value, audience: document.getElementById('audience').value, altText: document.getElementById('alt-text').value.trim(), tags: [...taggedPeople], ratio: activeRatio, filter: activeFilter, allowComments: document.getElementById('allow-comments').checked, showLikes: document.getElementById('show-likes').checked, createdAt: new Date().toISOString() };
+            const post = { id: `image-${Date.now()}`, caption: document.getElementById('caption').value.trim(), location: document.getElementById('location').value.trim(), audience: document.getElementById('audience').value, altText: document.getElementById('alt-text').value.trim(), tags: [...taggedPeople], ratio: activeRatio, filter: activeFilter, allowComments: document.getElementById('allow-comments').checked, showLikes: document.getElementById('show-likes').checked, createdAt: new Date().toISOString() };
             const posts = JSON.parse(localStorage.getItem('caremate-image-posts') || '[]'); posts.unshift(post); localStorage.setItem('caremate-image-posts', JSON.stringify(posts.slice(0, 30)));
             const db = await openDraftDb(); const tx = db.transaction('drafts', 'readwrite'); tx.objectStore('drafts').put(currentDraft, post.id);
             tx.oncomplete = () => { db.close(); dirty = false; window.location.href = 'community_hub.html?published=1'; }; tx.onerror = () => { db.close(); showToast('Could not share this post'); };

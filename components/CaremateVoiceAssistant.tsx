@@ -27,6 +27,7 @@ type ChatHistoryItem = {
   user: string;
   assistant: string;
   createdAt: string;
+  pinned?: boolean;
 };
 
 declare global {
@@ -38,6 +39,31 @@ declare global {
 
 const fallbackReply = 'I could not reach the assistant right now. Please try again in a moment.';
 
+const sampleChatHistory: ChatHistoryItem[] = [
+  {
+    id: 'sample-medication',
+    title: 'Taking medication on time',
+    user: 'Why is it important to take my medication on time?',
+    assistant: 'Taking medicine on schedule helps maintain the right level in your body and makes treatment more effective. A daily reminder can help you stay consistent.',
+    createdAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+    pinned: true,
+  },
+  {
+    id: 'sample-sleep',
+    title: 'Improving sleep quality',
+    user: 'How can I improve my sleep quality?',
+    assistant: 'Keep a regular sleep schedule, reduce caffeine late in the day, dim screens before bed, and make your room cool and quiet.',
+    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'sample-walk',
+    title: 'A safe daily walking routine',
+    user: 'How much should I walk every day?',
+    assistant: 'Start with a comfortable 10 to 15 minute walk and increase gradually. Stop and seek medical advice if you feel chest pain, dizziness, or unusual shortness of breath.',
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
 function CaremateVoiceAssistant() {
   const [state, setState] = useState<AssistantOrbState>('idle');
   const [userText, setUserText] = useState('');
@@ -46,11 +72,14 @@ function CaremateVoiceAssistant() {
   const [typingOpen, setTypingOpen] = useState(false);
   const [voiceMode, setVoiceMode] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [historyMenuId, setHistoryMenuId] = useState<string | null>(null);
+  const [activeHistoryItem, setActiveHistoryItem] = useState<ChatHistoryItem | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatHistoryItem[]>(() => {
     try {
-      return JSON.parse(localStorage.getItem('caremate-chat-history') || '[]');
+      const saved = JSON.parse(localStorage.getItem('caremate-chat-history') || '[]');
+      return Array.isArray(saved) && saved.length > 0 ? saved : sampleChatHistory;
     } catch {
-      return [];
+      return sampleChatHistory;
     }
   });
   const recognitionRef = useRef<RecognitionInstance | null>(null);
@@ -102,6 +131,7 @@ function CaremateVoiceAssistant() {
   const askAssistant = async (message: string) => {
     const cleanMessage = message.trim();
     if (!cleanMessage) return;
+    setActiveHistoryItem(null);
     recognitionRef.current?.abort();
     setUserText(cleanMessage);
     setAssistantText('Thinking...');
@@ -235,6 +265,7 @@ function CaremateVoiceAssistant() {
     setInput('');
     setTypingOpen(false);
     setVoiceMode(false);
+    setActiveHistoryItem(null);
     setHistoryOpen(false);
   };
 
@@ -244,6 +275,7 @@ function CaremateVoiceAssistant() {
     setState('idle');
     setUserText(item.user);
     setAssistantText(item.assistant);
+    setActiveHistoryItem(item);
     setVoiceMode(false);
     setHistoryOpen(false);
   };
@@ -251,6 +283,24 @@ function CaremateVoiceAssistant() {
   const clearHistory = () => {
     setChatHistory([]);
     localStorage.removeItem('caremate-chat-history');
+  };
+
+  const updateHistory = (items: ChatHistoryItem[]) => {
+    setChatHistory(items);
+    localStorage.setItem('caremate-chat-history', JSON.stringify(items));
+  };
+
+  const togglePinnedChat = (id: string) => {
+    const updated = chatHistory
+      .map((item) => item.id === id ? { ...item, pinned: !item.pinned } : item)
+      .sort((left, right) => Number(Boolean(right.pinned)) - Number(Boolean(left.pinned)));
+    updateHistory(updated);
+    setHistoryMenuId(null);
+  };
+
+  const deleteChat = (id: string) => {
+    updateHistory(chatHistory.filter((item) => item.id !== id));
+    setHistoryMenuId(null);
   };
 
   const status = state === 'listening'
@@ -281,7 +331,22 @@ function CaremateVoiceAssistant() {
       </header>
 
       <section className="voice-assistant__stage" aria-live="polite">
-        {!typingOpen && (voiceMode || userText || assistantText !== 'How can I help you today?') && (
+        {!typingOpen && activeHistoryItem ? (
+          <div className="voice-assistant__conversation" aria-label={`Conversation: ${activeHistoryItem.title}`}>
+            <div className="voice-assistant__conversation-heading">
+              <strong>{activeHistoryItem.title}</strong>
+              <span>{new Date(activeHistoryItem.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            </div>
+            <div className="voice-assistant__message voice-assistant__message--user">
+              <span>You</span>
+              <p>{activeHistoryItem.user}</p>
+            </div>
+            <div className="voice-assistant__message voice-assistant__message--assistant">
+              <span>CareMate Assistant</span>
+              <p>{activeHistoryItem.assistant}</p>
+            </div>
+          </div>
+        ) : !typingOpen && (voiceMode || userText || assistantText !== 'How can I help you today?') && (
           <div className="voice-assistant__copy">
             {userText && <p className="voice-assistant__user-text">"{userText}"</p>}
             <p className="voice-assistant__reply">{assistantText}</p>
@@ -292,7 +357,7 @@ function CaremateVoiceAssistant() {
       <footer className="voice-assistant__footer">
         {typingOpen ? (
           <form className="voice-assistant__composer" onSubmit={submitTypedMessage}>
-            <AnimatedAssistantOrb state="idle" onClick={enterVoiceMode} size={38} tone="soft" />
+            <AnimatedAssistantOrb state="idle" onClick={closeVoiceMode} size={38} tone="soft" />
             <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask CareMate Assistant" aria-label="Message CareMate Assistant" />
             <button type="submit" aria-label="Send message" disabled={!input.trim()}>
               <span className="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
@@ -327,9 +392,6 @@ function CaremateVoiceAssistant() {
               <span>CAREMATE</span>
               <h2>Chat history</h2>
             </div>
-            <button type="button" onClick={() => setHistoryOpen(false)} aria-label="Close chat history">
-              <span className="material-symbols-outlined" aria-hidden="true">close</span>
-            </button>
           </header>
 
           <button className="chat-history__new" type="button" onClick={startNewChat}>
@@ -340,18 +402,43 @@ function CaremateVoiceAssistant() {
           <div className="chat-history__list">
             {chatHistory.length === 0 ? (
               <div className="chat-history__empty">
-                <span className="material-symbols-outlined" aria-hidden="true">chat_bubble_outline</span>
                 <strong>No conversations yet</strong>
                 <p>Your Caremate chats will appear here.</p>
               </div>
             ) : chatHistory.map((item) => (
-              <button className="chat-history__item" type="button" key={item.id} onClick={() => openHistoryItem(item)}>
-                <span className="material-symbols-outlined" aria-hidden="true">chat_bubble</span>
-                <span>
-                  <strong>{item.title}</strong>
-                  <small>{new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</small>
-                </span>
-              </button>
+              <div className="chat-history__item" key={item.id}>
+                <button className="chat-history__item-main" type="button" onClick={() => openHistoryItem(item)}>
+                  <span className="material-symbols-outlined" aria-hidden="true">chat_bubble</span>
+                  <span>
+                    <strong>{item.title}</strong>
+                    <small>
+                      {item.pinned && <span className="material-symbols-outlined" aria-hidden="true">keep</span>}
+                      {new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                    </small>
+                  </span>
+                </button>
+                <button
+                  className="chat-history__item-more"
+                  type="button"
+                  onClick={() => setHistoryMenuId((current) => current === item.id ? null : item.id)}
+                  aria-label={`Options for ${item.title}`}
+                  aria-expanded={historyMenuId === item.id}
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">more_vert</span>
+                </button>
+                {historyMenuId === item.id && (
+                  <div className="chat-history__item-menu">
+                    <button type="button" onClick={() => togglePinnedChat(item.id)}>
+                      <span className="material-symbols-outlined" aria-hidden="true">{item.pinned ? 'keep_off' : 'keep'}</span>
+                      {item.pinned ? 'Unpin' : 'Pin'}
+                    </button>
+                    <button className="chat-history__item-delete" type="button" onClick={() => deleteChat(item.id)}>
+                      <span className="material-symbols-outlined" aria-hidden="true">delete</span>
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 

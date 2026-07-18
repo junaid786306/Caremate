@@ -16,9 +16,44 @@
         .story-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: opacity 0.3s; }
         .story-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.7) 100%); }
         .reply-bar { backdrop-filter: blur(20px); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); }
+        .story-share-button { display:grid; width:34px; height:34px; flex:0 0 34px; place-items:center; padding:0; border:0; border-radius:50%; color:#fff; background:transparent; text-shadow:0 2px 8px rgba(0,0,0,.35); transition:transform .2s,opacity .2s; }
+        .story-share-button:hover { opacity:.82; }
+        .story-share-button:active { transform:scale(.92); }
+        .story-share-button .material-symbols-outlined { font-size:19px; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         .reaction { animation: float 2s infinite; }
         .nav-zone { position: absolute; top: 0; bottom: 0; width: 40%; }
+    </style>
+    <style>
+        #viewers-sheet .viewers-list > div {
+            min-height: 64px;
+            padding: 10px 12px;
+            border: 1px solid #eef2f7;
+            border-radius: 16px;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        #viewers-sheet .viewers-list img {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .12);
+        }
+        #viewers-sheet .viewers-list p:first-child {
+            color: #0f172a;
+            font-size: 14px;
+            line-height: 20px;
+        }
+        #viewers-sheet .viewers-list p:last-child {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 18px;
+        }
+        #viewers-sheet .viewers-list {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
     </style>
 </head>
 <body class="font-manrope text-white h-screen flex flex-col select-none">
@@ -77,8 +112,8 @@
             <div class="flex items-center gap-3">
                 <div class="reply-bar flex-1 h-11 rounded-full flex items-center px-4 gap-2">
                     <input id="reply-input" type="text" placeholder="Reply to Shreya..." class="bg-transparent border-none text-white placeholder-white/50 text-sm flex-1 outline-none focus:ring-0 font-medium">
-                    <button onclick="sendReply()" class="text-white/70 hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">send</span>
+                    <button onclick="shareCurrentStory()" class="story-share-button" type="button" aria-label="Share this story">
+                        <span class="material-symbols-outlined" aria-hidden="true">send</span>
                     </button>
                 </div>
                 <!-- Quick Reactions -->
@@ -90,15 +125,16 @@
         </div>
 
         <!-- ── VIEWERS MODAL ── -->
-        <div id="viewers-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none">
+        <div id="viewers-modal" class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none" onclick="handleViewersOutsideTap(event)">
             <div id="viewers-backdrop" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 pointer-events-none" onclick="closeViewers()"></div>
-            <div id="viewers-sheet" class="relative w-full max-w-md bg-white rounded-t-[40px] p-6 pb-10 translate-y-full transition-transform duration-500 pointer-events-none text-primary max-h-[70vh] flex flex-col">
+            <div id="viewers-sheet" class="relative w-full max-w-md bg-white rounded-t-[32px] px-5 pt-3 pb-8 translate-y-full transition-transform duration-500 pointer-events-none text-primary max-h-[78vh] flex flex-col shadow-2xl" onclick="event.stopPropagation()">
                 <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4 flex-shrink-0"></div>
-                <div class="flex items-center justify-between mb-4 flex-shrink-0">
-                    <h2 class="font-bold text-lg flex items-center gap-2"><span class="material-symbols-outlined">visibility</span> 42 Viewers</h2>
-                    <button onclick="closeViewers()" class="w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full"><span class="material-symbols-outlined text-sm">close</span></button>
+                <div class="flex items-center justify-between pb-4 mb-3 border-b border-slate-100 flex-shrink-0">
+                    <div><h2 class="font-bold text-xl text-slate-900">Story activity</h2><p class="text-sm font-medium text-slate-500 mt-0.5">42 people viewed this story</p></div>
+                    <button onclick="closeViewers()" aria-label="Close viewers" class="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-700 rounded-full active:scale-95 transition-transform"><span class="material-symbols-outlined">close</span></button>
                 </div>
-                <div class="overflow-y-auto hide-scrollbar flex-1 space-y-4 pr-2">
+                <div class="flex items-center justify-between mb-3 flex-shrink-0"><span class="text-xs font-bold uppercase text-slate-500">All viewers</span><span class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold">42 total</span></div>
+                <div class="viewers-list overflow-y-auto hide-scrollbar flex-1 space-y-2 pb-2">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <img class="w-10 h-10 rounded-full object-cover" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="">
@@ -210,6 +246,8 @@
         const replyBar = document.getElementById('story-reply-bar');
 
         if (isOwnStory) {
+            const latestStoryNote = localStorage.getItem('caremate_latest_story_note');
+            if (latestStoryNote) catStories[0].caption = latestStoryNote;
             const rawUser = localStorage.getItem('user_username') || '@shreya_wellness';
             nameEl.innerText = rawUser.startsWith('@') ? rawUser.substring(1) : rawUser;
             const storedImg = localStorage.getItem('user_profile_img');
@@ -325,6 +363,25 @@
             }
         }
 
+        async function shareCurrentStory() {
+            const story = catStories[currentIdx];
+            const shareData = {
+                title: `${currentAuthor.name}'s story`,
+                text: story.caption,
+                url: location.href
+            };
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+                    react('✓');
+                }
+            } catch (error) {
+                if (error?.name !== 'AbortError') console.error('Unable to share story.', error);
+            }
+        }
+
         // Viewers Modal
         function openViewers() {
             if (!isPaused) togglePause();
@@ -343,6 +400,10 @@
             backdrop.classList.add('opacity-0'); sheet.classList.add('translate-y-full');
             setTimeout(() => { modal.classList.add('pointer-events-none'); backdrop.classList.add('pointer-events-none'); sheet.classList.add('pointer-events-none'); }, 400);
             if (isPaused) togglePause();
+        }
+
+        function handleViewersOutsideTap(event) {
+            if (!event.target.closest('#viewers-sheet')) closeViewers();
         }
 
         // Long-press to pause

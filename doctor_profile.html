@@ -10,6 +10,7 @@
     <script>tailwind.config={theme:{extend:{colors:{primary:'#00193c',secondary:'#4f55ae',background:'#f7f9fd','primary-fixed':'#d7e2ff'},fontFamily:{manrope:['Manrope','sans-serif']}}}}</script>
     <style>
         body{min-height:100dvh}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+        .review-star{padding:0;border:0;color:#cbd5e1;background:transparent;font-size:30px;line-height:1;cursor:pointer}.review-star.is-active{color:#f59e0b}.review-star:focus-visible{outline:2px solid #4f55ae;outline-offset:3px;border-radius:6px}
     </style>
 </head>
 <body class="bg-background text-slate-800 font-manrope antialiased pb-28">
@@ -18,9 +19,6 @@
             <span class="material-symbols-outlined">arrow_back</span>
         </button>
         <h1 class="text-xl font-bold text-primary">Doctor Profile</h1>
-        <button aria-label="Save doctor" class="absolute right-5 w-10 h-10 flex items-center justify-center text-primary rounded-full hover:bg-slate-100" onclick="toggleSave(this)">
-            <span class="material-symbols-outlined">bookmark_border</span>
-        </button>
     </header>
 
     <main class="max-w-2xl mx-auto px-5 py-6 space-y-5">
@@ -32,7 +30,7 @@
                 <div class="min-w-0 pt-1">
                     <div class="flex items-center gap-1.5"><h2 id="doctor-name" class="text-xl font-extrabold text-primary truncate">Doctor</h2><span class="material-symbols-outlined text-blue-600 text-[19px]" style="font-variation-settings:'FILL' 1">verified</span></div>
                     <p id="doctor-type" class="mt-1 text-xs font-black uppercase tracking-widest text-secondary"></p>
-                    <div class="mt-3 flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-amber-500 text-[19px]" style="font-variation-settings:'FILL' 1">star</span><strong id="doctor-rating" class="text-primary"></strong><span class="text-slate-400">120 reviews</span></div>
+                    <div class="mt-3 flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-amber-500 text-[19px]" style="font-variation-settings:'FILL' 1">star</span><strong id="doctor-rating" class="text-primary"></strong><span id="doctor-review-count" class="text-slate-400">120 reviews</span></div>
                 </div>
             </div>
             <div class="mt-5 flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-primary text-[20px]">location_on</span><span id="doctor-address"></span></div>
@@ -57,8 +55,24 @@
             <div class="flex items-center justify-between"><h3 class="font-extrabold text-primary text-lg">Patient reviews</h3><button class="text-xs font-bold text-secondary">View all</button></div>
             <div class="flex items-center gap-4 mt-4 rounded-2xl bg-amber-50/70 p-4">
                 <div><p id="review-rating" class="text-3xl font-extrabold text-primary"></p><div class="text-amber-500 text-sm">★★★★★</div></div>
-                <div class="text-sm text-slate-600"><strong class="text-primary">Excellent</strong><br>Based on 120 verified reviews</div>
+                <div class="text-sm text-slate-600"><strong class="text-primary">Excellent</strong><br>Based on <span id="verified-review-count">120</span> verified reviews</div>
             </div>
+            <form id="verified-review-form" class="hidden mt-4 rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-blue-600" style="font-variation-settings:'FILL' 1">verified</span>
+                    <div><h4 class="font-extrabold text-primary text-sm">Review your completed visit</h4><p class="mt-1 text-[11px] leading-relaxed text-slate-500">Only patients with a completed appointment can submit this verified review.</p></div>
+                </div>
+                <div id="review-stars" class="mt-3 flex gap-2" aria-label="Select a rating">
+                    <button class="review-star" type="button" data-rating="1" aria-label="1 star">★</button>
+                    <button class="review-star" type="button" data-rating="2" aria-label="2 stars">★</button>
+                    <button class="review-star" type="button" data-rating="3" aria-label="3 stars">★</button>
+                    <button class="review-star" type="button" data-rating="4" aria-label="4 stars">★</button>
+                    <button class="review-star" type="button" data-rating="5" aria-label="5 stars">★</button>
+                </div>
+                <textarea id="review-message" class="mt-3 w-full min-h-[96px] resize-none rounded-xl border-slate-200 bg-white text-sm focus:border-secondary focus:ring-secondary" maxlength="300" placeholder="Share your experience"></textarea>
+                <button id="review-submit" type="submit" class="mt-3 w-full h-11 rounded-xl bg-primary text-white text-sm font-bold disabled:opacity-40" disabled>Submit verified review</button>
+                <p id="review-confirmation" class="hidden mt-3 text-center text-xs font-bold text-emerald-700">Your review has been added.</p>
+            </form>
             <article class="mt-4 border-t border-slate-100 pt-4">
                 <div class="flex items-center justify-between"><div class="flex items-center gap-3"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Meera" class="w-10 h-10 rounded-full bg-slate-100" alt=""><div><p class="font-bold text-sm text-primary">Meera Patel</p><p class="text-[11px] text-slate-400">Verified patient</p></div></div><span class="text-xs text-amber-500">★★★★★</span></div>
                 <p class="mt-3 text-sm leading-relaxed text-slate-600">The consultation was clear, thoughtful, and never rushed. The follow-up plan was easy to understand.</p>
@@ -100,6 +114,48 @@
         document.getElementById('email-link').href=`mailto:${slug}@caremate.health`;
         document.getElementById('message-link').href=`direct_message_chat.html?doctor=${encodeURIComponent(doctor.name)}`;
         document.getElementById('book-link').href=`add_appointment.html?doctor=${encodeURIComponent(doctor.name)}&code=${encodeURIComponent('DOC-'+slug.split('.')[0].toUpperCase()+'01')}`;
+        const reviewKey=`caremate-doctor-reviews:${slug}`;
+        const storedReviews=JSON.parse(localStorage.getItem(reviewKey)||'[]');
+        const baseRating=Number(doctor.rate);
+        const reviewCount=120+storedReviews.length;
+        const liveRating=storedReviews.length
+            ? ((baseRating*120+storedReviews.reduce((sum,item)=>sum+item.rating,0))/reviewCount).toFixed(1)
+            : doctor.rate;
+        document.getElementById('doctor-rating').textContent=liveRating;
+        document.getElementById('review-rating').textContent=liveRating;
+        document.getElementById('doctor-review-count').textContent=`${reviewCount} reviews`;
+        document.getElementById('verified-review-count').textContent=reviewCount;
+
+        const reviewForm=document.getElementById('verified-review-form');
+        if(params.get('completed')==='1'){
+            reviewForm.classList.remove('hidden');
+            let selectedRating=0;
+            const stars=[...document.querySelectorAll('.review-star')];
+            const submit=document.getElementById('review-submit');
+            const message=document.getElementById('review-message');
+            stars.forEach(star=>star.addEventListener('click',()=>{
+                selectedRating=Number(star.dataset.rating);
+                stars.forEach(item=>item.classList.toggle('is-active',Number(item.dataset.rating)<=selectedRating));
+                submit.disabled=false;
+            }));
+            reviewForm.addEventListener('submit',event=>{
+                event.preventDefault();
+                if(!selectedRating)return;
+                const reviews=JSON.parse(localStorage.getItem(reviewKey)||'[]');
+                reviews.unshift({rating:selectedRating,message:message.value.trim(),createdAt:new Date().toISOString(),verified:true});
+                localStorage.setItem(reviewKey,JSON.stringify(reviews));
+                reviewForm.reset();
+                stars.forEach(item=>item.classList.remove('is-active'));
+                submit.disabled=true;
+                document.getElementById('review-confirmation').classList.remove('hidden');
+                const updatedCount=120+reviews.length;
+                const updatedRating=((baseRating*120+reviews.reduce((sum,item)=>sum+item.rating,0))/updatedCount).toFixed(1);
+                document.getElementById('doctor-rating').textContent=updatedRating;
+                document.getElementById('review-rating').textContent=updatedRating;
+                document.getElementById('doctor-review-count').textContent=`${updatedCount} reviews`;
+                document.getElementById('verified-review-count').textContent=updatedCount;
+            });
+        }
         function toggleSave(button){const icon=button.querySelector('span');const saved=icon.textContent==='bookmark';icon.textContent=saved?'bookmark_border':'bookmark';icon.style.fontVariationSettings=saved?"'FILL' 0":"'FILL' 1";}
     </script>
 </body>

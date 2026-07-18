@@ -125,6 +125,16 @@
             <!-- TEXT OVERLAY CONTAINER -->
             <div id="text-container" class="absolute inset-0 z-30 pointer-events-none"></div>
 
+            <!-- Fixed story note/caption. This stays at the bottom in the published story. -->
+            <div id="story-note-editor" class="absolute left-6 right-6 bottom-28 z-40 hidden">
+                <div class="flex items-end gap-2 rounded-2xl border border-white/35 bg-black/35 px-4 py-3 shadow-xl backdrop-blur-xl">
+                    <input id="story-note-input" type="text" maxlength="20" autocomplete="off" placeholder="Add a story note..." aria-label="Story note, maximum 20 characters" class="min-w-0 flex-1 border-0 bg-transparent p-0 text-sm font-semibold text-white placeholder:text-white/60 focus:ring-0">
+                    <span id="story-note-count" class="shrink-0 text-[10px] font-bold text-white/65">0/20</span>
+                    <button id="story-note-done" type="button" class="shrink-0 text-xs font-extrabold text-white">Done</button>
+                </div>
+            </div>
+            <p id="story-note-preview" class="absolute left-6 right-24 bottom-28 z-30 hidden text-sm font-semibold leading-relaxed text-white drop-shadow-lg pointer-events-none"></p>
+
             <!-- Left Sidebar Tools -->
             <div class="absolute left-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40">
                 <div class="flex flex-col items-center gap-4">
@@ -302,6 +312,11 @@
         const videoTimer = document.getElementById('video-timer');
         const focusRing = document.getElementById('focus-ring');
         const captureLabel = document.getElementById('capture-label');
+        const storyNoteEditor = document.getElementById('story-note-editor');
+        const storyNoteInput = document.getElementById('story-note-input');
+        const storyNoteCount = document.getElementById('story-note-count');
+        const storyNoteDone = document.getElementById('story-note-done');
+        const storyNotePreview = document.getElementById('story-note-preview');
 
         // State
         let isDrawing = false;
@@ -802,8 +817,33 @@
         }
 
         function addNoteSticker() {
-            addTextSticker({ note: true, placeholder: 'Add a note', maxLength: 20 });
+            if (drawModeActive) toggleDrawMode();
+            hideTextToolbar();
+            storyNotePreview.classList.add('hidden');
+            storyNoteEditor.classList.remove('hidden');
+            requestAnimationFrame(() => storyNoteInput.focus());
         }
+
+        function finishStoryNote() {
+            storyNoteInput.value = storyNoteInput.value.trim().slice(0, 20);
+            storyNoteCount.textContent = `${storyNoteInput.value.length}/20`;
+            storyNoteEditor.classList.add('hidden');
+            storyNotePreview.textContent = storyNoteInput.value;
+            storyNotePreview.classList.toggle('hidden', !storyNoteInput.value);
+            storyNoteInput.blur();
+        }
+
+        storyNoteInput.addEventListener('input', () => {
+            storyNoteInput.value = storyNoteInput.value.slice(0, 20);
+            storyNoteCount.textContent = `${storyNoteInput.value.length}/20`;
+        });
+        storyNoteInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                finishStoryNote();
+            }
+        });
+        storyNoteDone.addEventListener('click', finishStoryNote);
 
         function addTextSticker(options = {}) {
             // Disable draw mode to prevent overlaps
@@ -1036,6 +1076,8 @@
         }
 
         function publishStory() {
+            const storyNote = storyNoteInput.value.trim().slice(0, 20);
+            localStorage.setItem('caremate_latest_story_note', storyNote);
             showToast('Uploading Story... 🚀');
             setTimeout(() => {
                 showToast('Story Shared Successfully! ✨');

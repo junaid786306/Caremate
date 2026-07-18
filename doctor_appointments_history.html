@@ -118,6 +118,9 @@
     .hide-scrollbar::-webkit-scrollbar{display:none;} .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
     .day-block{border-left:3px solid #e2e8f0;padding-left:20px;position:relative;margin-bottom:24px;}
     .day-block::before{content:'';position:absolute;left:-7px;top:4px;width:11px;height:11px;border-radius:50%;background:#00193c;border:2px solid #fff;box-shadow:0 0 0 2px #e2e8f0;}
+    .appointment-card[data-appointment-status="completed"]{cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;}
+    .appointment-card[data-appointment-status="completed"]:hover{border-color:#b9d2ff;box-shadow:0 8px 24px rgba(28,78,150,.1);transform:translateY(-1px);}
+    .appointment-card[data-appointment-status="completed"]:focus-visible{outline:3px solid rgba(59,130,246,.3);outline-offset:2px;}
 </style>
 
 <!-- Filter Tabs -->
@@ -138,7 +141,7 @@
     <div class="day-block" data-appointment-group>
         <h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">September 2023</h3>
         
-        <div data-appointment-status="completed" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
+        <div data-appointment-status="completed" data-doctor="Dr. Elena Rostova" data-type="General Physician" data-rate="4.7" role="link" tabindex="0" aria-label="Open Dr. Elena Rostova profile and leave a review" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-blue-500 text-xl">stethoscope</span>
             </div>
@@ -165,7 +168,7 @@
     <div class="day-block" data-appointment-group>
         <h3 class="font-black text-sm text-slate-800 uppercase tracking-wide mb-3">August 2023</h3>
         
-        <div data-appointment-status="completed" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
+        <div data-appointment-status="completed" data-doctor="Dr. Samuel Lee" data-type="Optometrist" data-rate="4.8" role="link" tabindex="0" aria-label="Open Dr. Samuel Lee profile and leave a review" class="appointment-card bg-white rounded-[24px] p-4 shadow-sm border border-slate-100 flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-blue-500 text-xl">visibility</span>
             </div>
@@ -211,6 +214,27 @@
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 filter.click();
+            }
+        });
+    });
+
+    const openCompletedDoctor = card => {
+        const params = new URLSearchParams({
+            name: card.dataset.doctor,
+            type: card.dataset.type,
+            rate: card.dataset.rate,
+            completed: '1',
+            source: 'appointment-history'
+        });
+        location.href = `doctor_profile.html?${params.toString()}`;
+    };
+
+    document.querySelectorAll('.appointment-card[data-appointment-status="completed"]').forEach(card => {
+        card.addEventListener('click', () => openCompletedDoctor(card));
+        card.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openCompletedDoctor(card);
             }
         });
     });
